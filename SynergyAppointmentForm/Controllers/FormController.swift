@@ -22,14 +22,25 @@ class FormController {
         Time: \(form.time)
         Date: \(form.date)
         Name: \(form.firstName + " " + form.lastName)
-        Spouse: \(form.spouse ?? "")
+        Spouse: \(form.spouse)
         Address: \(form.address)
         Zip: \(form.zip)
         City: \(form.city)
         State: \(form.state)
         Phone: \(form.phone)
-        Email: \(form.email ?? "")
+        Email: \(form.email)
         
+        Number of windows: \(form.numberOfWindows)
+        Energy bill (average): \(form.energyBill)
+        Retail Quote: \(form.retailQuote)
+        Finance Options: \(form.financeOptions)
+        Years Owned: \(form.yearsOwned)
+        
+        Reason you need window replacement: \(form.reason)
+        
+        Rate 1-10: \(form.rate)
+        
+        Comments: \(form.comments)
         
         """
     }

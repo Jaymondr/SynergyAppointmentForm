@@ -14,19 +14,19 @@ struct Form {
     var date: String
     var firstName: String
     var lastName: String
-    var spouse: String?
+    var spouse: String
     var address: String
     var zip: String
     var city: String
     var state: String
     var phone: String
-    var email: String?
-//    var numberOfWindows: String
-//    var energyBill: String?
-//    var retailQuote: String?
-//    var financeOptions: String?
-//    var yearsOwned: String?
-//    var reason: String
-//    var rate: String
-//    var comments: String
+    var email: String
+    var numberOfWindows: String
+    var energyBill: String
+    var retailQuote: String
+    var financeOptions: String
+    var yearsOwned: String
+    var reason: String
+    var rate: String
+    var comments: String
 }
