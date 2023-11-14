@@ -404,10 +404,21 @@
                                 <viewLayoutGuide key="contentLayoutGuide" id="xbz-pW-4uN"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="lws-gO-7vO"/>
                             </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fz8-nB-nQS">
+                                <rect key="frame" x="323" y="75" width="52" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="doc.on.clipboard" catalog="system">
+                                    <color key="baseForegroundColor" red="0.078431372550000003" green="0.30588235289999999" blue="0.33725490200000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="copyButtonPressed:" destination="ncR-vK-5yf" eventType="touchUpInside" id="Q1u-Uj-NhI"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Appointment Form" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="saP-W9-lyZ">
                                 <rect key="frame" x="90" y="75" width="213" height="31.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="0.078431372550000003" green="0.30588235289999999" blue="0.33725490200000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -425,6 +436,19 @@
                         </constraints>
                     </view>
                     <size key="freeformSize" width="393" height="1000"/>
+                    <connections>
+                        <outlet property="addressTextfield" destination="Nq9-se-clN" id="rUH-ZB-uXg"/>
+                        <outlet property="appointmentDayTextfield" destination="Vx7-Je-oEu" id="hVw-uE-BEP"/>
+                        <outlet property="cityTextfield" destination="FPV-Ih-DIi" id="dAD-io-Hfe"/>
+                        <outlet property="dateTimeTextfield" destination="Nqc-25-wad" id="ekx-vH-lj9"/>
+                        <outlet property="emailTextfield" destination="dSo-9I-5dP" id="hVF-D8-Mdj"/>
+                        <outlet property="firstNameTextfield" destination="vBh-Ov-Fwq" id="QaA-jv-Kre"/>
+                        <outlet property="lastNameTextfield" destination="co6-i7-kPk" id="8rD-5n-LM3"/>
+                        <outlet property="phoneTextfield" destination="v7m-5m-1NL" id="o78-b5-Y8k"/>
+                        <outlet property="spouseTextfield" destination="rEb-t7-Nli" id="smX-I4-c39"/>
+                        <outlet property="stateTextfield" destination="9AB-vd-aGB" id="ZMb-dU-fPG"/>
+                        <outlet property="zipTextfield" destination="bss-iL-rSd" id="fi8-lP-c2J"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gAn-5j-mir" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -432,6 +456,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="doc.on.clipboard" catalog="system" width="116" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

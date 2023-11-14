@@ -12,8 +12,23 @@ class FormController {
 //    var form: Form?
     static let shared = FormController()
     
-    func createAndCopyForm(name: String) {
-        guard !name.isEmpty else {return}
-        UIPasteboard.general.string = "First name \(name)"
+    func createAndCopyForm(form: Form) {
+
+        UIPasteboard.general.string =
+        """
+        APT FORM
+        
+        Appointment Day: \(form.day)
+        Time: \(form.time)
+        Date: \(form.date)
+        Name: \(form.firstName + " " + form.lastName)
+        Spouse: \(form.spouse ?? "")
+        Address: \(form.address)
+        Zip: \(form.zip)
+        City: \(form.city)
+        State: \(form.state)
+        Phone: \(form.phone)
+        Email: \(form.email ?? "")
+        """
     }
 }

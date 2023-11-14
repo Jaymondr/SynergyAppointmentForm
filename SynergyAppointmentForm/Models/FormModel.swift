@@ -9,6 +9,7 @@ import Foundation
 
 struct Form {
     
+    var day: String
     var time: String
     var date: String
     var firstName: String
@@ -20,12 +21,12 @@ struct Form {
     var state: String
     var phone: String
     var email: String?
-    var numberOfWindows: String
-    var energyBill: String?
-    var retailQuote: String?
-    var financeOptions: String?
-    var yearsOwned: String?
-    var reason: String
-    var rate: String
-    var comments: String
+//    var numberOfWindows: String
+//    var energyBill: String?
+//    var retailQuote: String?
+//    var financeOptions: String?
+//    var yearsOwned: String?
+//    var reason: String
+//    var rate: String
+//    var comments: String
 }
