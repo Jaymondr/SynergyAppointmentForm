@@ -8,6 +8,7 @@
 import Foundation
 
 struct Form {
+    let myName: String = "Jaymond"
     let day: String
     let time: String
     let date: String

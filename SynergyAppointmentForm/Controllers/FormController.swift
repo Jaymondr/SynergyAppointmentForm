@@ -41,7 +41,14 @@ class FormController {
         Rate 1-10: \(form.rate)
         
         Comments: \(form.comments)
-        
+        """
+    }
+    
+    func createAndCopyTrello(form: Form) {
+
+        UIPasteboard.general.string =
+        """
+        \(form.day) \(form.date) @\(form.time) \(form.firstName) & \(form.spouse) \(form.lastName) (\(form.city)) -\(form.myName)
         """
     }
 }

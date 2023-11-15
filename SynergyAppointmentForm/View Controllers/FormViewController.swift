@@ -30,6 +30,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var rateTextfield: UITextField!
     @IBOutlet weak var commentsTextview: UITextView!
     @IBOutlet weak var locationButton: UIButton!
+    @IBOutlet weak var trelloButton: UIButton!
     
     var locationManager = CLLocationManager()
     let geocoder = CLGeocoder()
@@ -37,15 +38,27 @@ class FormViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.delegate = self
-        
+        reasonTextview.layer.cornerRadius = 5.0
+        commentsTextview.layer.cornerRadius = 5.0
     }
     
     // MARK: BUTTONS
+    @IBAction func trelloButtonPressed(_ sender: Any) {
+        let form = createForm()
+        FormController.shared.createAndCopyTrello(form: form)
+        // CREATE ALERT
+        let alert = UIAlertController(title: "Trello Title Copied!", message: nil, preferredStyle: .alert)
+        self.present(alert, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.65) {
+            alert.dismiss(animated: true)
+        }
+    }
+    
     @IBAction func copyButtonPressed(_ sender: Any) {
         let form = createForm()
         FormController.shared.createAndCopyForm(form: form)
         // CREATE ALERT
-        let alert = UIAlertController(title: "Copied!", message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: "Form Copied!", message: nil, preferredStyle: .alert)
         self.present(alert, animated: true)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             alert.dismiss(animated: true)
