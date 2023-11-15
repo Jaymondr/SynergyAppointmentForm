@@ -44,6 +44,33 @@ class FormViewController: UIViewController {
             alert.dismiss(animated: true)
         }
     }
+    @IBAction func clearReasonButtonPressed(_ sender: Any) {
+        let alert = UIAlertController(title: nil, message: "Are you sure you want to clear this section?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Clear", style: .default) {_ in
+            self.reasonTextview.text = ""
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true)
+    }
+    @IBAction func clearCommentsButtonPressed(_ sender: Any) {
+        let alert = UIAlertController(title: nil, message: "Are you sure you want to clear this section?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Clear", style: .default) {_ in
+            self.commentsTextview.text = ""
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true)
+
+    }
+    
+    
     
     // MARK: FUNCTIONS
     func createForm() -> Form {
