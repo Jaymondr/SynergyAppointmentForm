@@ -12,9 +12,10 @@
 		674603A92B03D8F700756102 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 674603A72B03D8F700756102 /* Main.storyboard */; };
 		674603AB2B03D8FA00756102 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 674603AA2B03D8FA00756102 /* Assets.xcassets */; };
 		674603AE2B03D8FA00756102 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 674603AC2B03D8FA00756102 /* LaunchScreen.storyboard */; };
-		674603B92B03DB0400756102 /* FormModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674603B82B03DB0400756102 /* FormModel.swift */; };
+		674603B92B03DB0400756102 /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674603B82B03DB0400756102 /* Form.swift */; };
 		674603BC2B03DE0E00756102 /* FormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674603BB2B03DE0E00756102 /* FormController.swift */; };
 		674603C12B03E51000756102 /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674603C02B03E51000756102 /* FormViewController.swift */; };
+		67E4A6692B054BCF00024F06 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E4A6682B054BCF00024F06 /* Address.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,9 +26,10 @@
 		674603AA2B03D8FA00756102 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		674603AD2B03D8FA00756102 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		674603AF2B03D8FA00756102 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		674603B82B03DB0400756102 /* FormModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormModel.swift; sourceTree = "<group>"; };
+		674603B82B03DB0400756102 /* Form.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Form.swift; sourceTree = "<group>"; };
 		674603BB2B03DE0E00756102 /* FormController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormController.swift; sourceTree = "<group>"; };
 		674603C02B03E51000756102 /* FormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
+		67E4A6682B054BCF00024F06 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,7 +102,8 @@
 		674603BA2B03DB0B00756102 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				674603B82B03DB0400756102 /* FormModel.swift */,
+				674603B82B03DB0400756102 /* Form.swift */,
+				67E4A6682B054BCF00024F06 /* Address.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -184,9 +187,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67E4A6692B054BCF00024F06 /* Address.swift in Sources */,
 				674603A22B03D8F700756102 /* AppDelegate.swift in Sources */,
 				674603A42B03D8F700756102 /* SceneDelegate.swift in Sources */,
-				674603B92B03DB0400756102 /* FormModel.swift in Sources */,
+				674603B92B03DB0400756102 /* Form.swift in Sources */,
 				674603C12B03E51000756102 /* FormViewController.swift in Sources */,
 				674603BC2B03DE0E00756102 /* FormController.swift in Sources */,
 			);
