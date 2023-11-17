@@ -60,6 +60,18 @@ class FormController {
         UIPasteboard.general.string = phone
     }
     
+    func createText(from form: Form) -> String {
+        let text =
+        """
+        Hey \(form.firstName), it's Jaymond with Synergy.
+        
+        Your appointment is good to go for \(form.day) \(form.date) at \(form.time). Thanks for your time, and if you need anything just call or text!
+        
+        - Jaymond
+        """
+        return text
+    }
+    
     // LOCATION
     func getLocationData(manager: inout CLLocationManager, completion: @escaping (Address?) -> Void) {
         manager.startUpdatingLocation()

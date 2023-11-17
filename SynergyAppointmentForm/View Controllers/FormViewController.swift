@@ -43,12 +43,41 @@ class FormViewController: UIViewController, CLLocationManagerDelegate {
     
     // MARK: BUTTONS
     @IBAction func messageButtonPressed(_ sender: Any) {
+        let form = createForm()
+        let text = FormController.shared.createText(from: form)
+        
         // CREATE ALERT
         let alert = UIAlertController(title: "Send message?", message: nil, preferredStyle: .alert)
-        self.present(alert, animated: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.65) {
-            alert.dismiss(animated: true)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { _ in
+            if let phoneNumber = self.phoneTextfield.text {
+                
+                let phoneNumber = phoneNumber
+                let message = text
+                
+                let urlString = "sms:\(phoneNumber)&body=\(message)"
+                
+                if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                } else {
+                    // Handle the case where the Messages app or the URL scheme is not available
+                    print("Messages app is not installed or the URL scheme is not supported.")
+                }
+            } else {
+                // CREATE ALERT
+                let alert = UIAlertController(title: "Enter Phone Number", message: nil, preferredStyle: .alert)
+                self.present(alert, animated: true)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.65) {
+                    alert.dismiss(animated: true)
+                }
+
+            }
         }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        alert.addAction(yesAction)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true)
     }
     
     @IBAction func trelloButtonPressed(_ sender: Any) {
@@ -118,7 +147,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate {
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true)
-
+        
     }
     
     // MARK: FUNCTIONS
@@ -131,16 +160,14 @@ class FormViewController: UIViewController, CLLocationManagerDelegate {
         if dateTimeArray.count >= 2 {
             time = String(dateTimeArray[1])
             date = String(dateTimeArray[0])
-            } else {
-                time = ""
-                date = ""
-            }
+        } else {
+            time = ""
+            date = ""
+        }
         let form = Form(day: appointmentDayTextfield.text ?? "", time: time, date: date, firstName: firstNameTextfield.text ?? "", lastName: lastNameTextfield.text ?? "", spouse: spouseTextfield.text ?? "", address: addressTextfield.text ?? "", zip: zipTextfield.text ?? "", city: cityTextfield.text ?? "", state: stateTextfield.text ?? "", phone: phoneTextfield.text ?? "", email: emailTextfield.text ?? "", numberOfWindows: numberOfWindowsTexfield.text ?? "", energyBill: energyBillTextfield.text ?? "", retailQuote: quoteTextfield.text ?? "", financeOptions: financeTextfield.text ?? "", yearsOwned: yearsOwnedTextfield.text ?? "", reason: reasonTextview.text ?? "", rate: rateTextfield.text ?? "", comments: commentsTextview.text ?? "")
         
         return form
     }
-    
-
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
@@ -153,7 +180,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate {
             break
             
         case .notDetermined:        // Authorization not determined yet.
-           manager.requestWhenInUseAuthorization()
+            manager.requestWhenInUseAuthorization()
             break
             
         default:
