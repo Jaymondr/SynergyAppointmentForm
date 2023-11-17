@@ -33,7 +33,6 @@ class FormViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var trelloButton: UIButton!
     
     var locationManager = CLLocationManager()
-    let geocoder = CLGeocoder()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +42,15 @@ class FormViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     // MARK: BUTTONS
+    @IBAction func messageButtonPressed(_ sender: Any) {
+        // CREATE ALERT
+        let alert = UIAlertController(title: "Send message?", message: nil, preferredStyle: .alert)
+        self.present(alert, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.65) {
+            alert.dismiss(animated: true)
+        }
+    }
+    
     @IBAction func trelloButtonPressed(_ sender: Any) {
         let form = createForm()
         FormController.shared.createAndCopyTrello(form: form)
@@ -63,15 +71,25 @@ class FormViewController: UIViewController, CLLocationManagerDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             alert.dismiss(animated: true)
         }
-        
     }
     
     @IBAction func locationButtonPressed(_ sender: Any) {
-        getLocationData { address in
+        FormController.shared.getLocationData(manager: &locationManager) { address in
             self.addressTextfield.text = address?.address
             self.zipTextfield.text = address?.zip
             self.cityTextfield.text = address?.city
             self.stateTextfield.text = address?.state
+        }
+    }
+    
+    @IBAction func copyPhoneNumberPressed(_ sender: Any) {
+        
+        FormController.shared.createAndCopy(phone: phoneTextfield.text ?? "")
+        // CREATE ALERT
+        let alert = UIAlertController(title: "Phone Number Copied!", message: nil, preferredStyle: .alert)
+        self.present(alert, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            alert.dismiss(animated: true)
         }
     }
     
@@ -103,7 +121,6 @@ class FormViewController: UIViewController, CLLocationManagerDelegate {
 
     }
     
-    
     // MARK: FUNCTIONS
     func createForm() -> Form {
         // Separate date time
@@ -123,32 +140,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate {
         return form
     }
     
-    // LOCATION
-    func getLocationData(completion: @escaping (Address?) -> Void) {
-        locationManager.startUpdatingLocation()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        // FILL LOCATION INFO
-        if let location = locationManager.location {
-            geocoder.reverseGeocodeLocation(location, preferredLocale: .current) { placemarks, error in
-                guard let place = placemarks?.first, error == nil else {
-                    completion(nil)
-                    return
-                }
-                
-                let address = place.name ?? ""
-                let zip = place.postalCode ?? ""
-                let city = place.locality ?? ""
-                let state = place.administrativeArea ?? ""
-                
-                let addressObject = Address(address: address, zip: zip, city: city, state: state)
-                completion(addressObject)
-            }
-        } else {
-            print("No location")
-            completion(nil)
-        }
-        self.locationManager.stopUpdatingLocation()
-    }
+
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
