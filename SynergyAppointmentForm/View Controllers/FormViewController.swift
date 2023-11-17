@@ -40,6 +40,23 @@ class FormViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     // MARK: BUTTONS
+    @IBAction func saveButtonPressed(_ sender: Any) {
+        
+        FormController.shared.fetchFormsWith { (_) in
+        }
+//        let newForm = createForm()
+//        FormController.shared.saveForm(form: newForm) { result in
+//            let alert = UIAlertController(title: "Saved", message: nil, preferredStyle: .alert)
+//            DispatchQueue.main.async {
+//                self.present(alert, animated: true)
+//            }
+//            
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                alert.dismiss(animated: true)
+//            }
+//        }
+    }
+    
     @IBAction func messageButtonPressed(_ sender: Any) {
         let form = createForm()
         let text = FormController.shared.createText(from: form)

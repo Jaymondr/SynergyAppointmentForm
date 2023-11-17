@@ -21,12 +21,56 @@ class FormController {
     
     // MARK: CRUD FUNCTIONS
     
-    func createFormWith(form: Form, completion: @escaping (Result<Form?, FormError>) -> Void) {
-        saveEn
+//    func createFormWith(form: Form, completion: @escaping (Result<Form?, FormError>) -> Void) {
+//        let newForm = createAndCopyForm(form: form)
+//        saveForm(form: newForm, completion: completion)
+//    }
+    
+    
+    func fetchFormsWith(completion: @escaping(_ result: Result<[Form]?, FormError>) -> Void ) {
+        
+        let fetchAllPredicates = NSPredicate(value: true)
+        
+        let query = CKQuery(recordType: CloudStrings.recordTypeKey, predicate: fetchAllPredicates)
+        privateDB.perform(query, inZoneWith: nil) { records, error in
+            if let error = error {return completion(.failure(.ckError(error)))}
+            
+            
+            guard let records = records else {return completion(.failure(.couldNotUnwrap))}
+            print("You did the Fetching of the Forms!")
+            
+            let forms = records.compactMap({Form(ckRecord: $0)})
+            
+            self.forms = forms
+            
+            
+            DispatchQueue.main.async {
+                for form in forms {
+                    print("name: \(form.firstName), \(form.phone)")
+                }
+
+                completion(.success(forms))
+            }
+            
+            
+        }
     }
     
     func saveForm(form: Form, completion: @escaping (Result<Form, FormError>) -> Void) {
         let formRecord = CKRecord(form: form)
+        privateDB.save(formRecord) { record, error in
+            if let error = error {
+                return completion(.failure(.ckError(error)))
+            }
+            
+            guard let record = record,
+                  let savedForm = Form(ckRecord: record) else { completion(.failure(.couldNotUnwrap)); return }
+            print("Saved form")
+            
+            self.forms.insert(savedForm, at: 0)
+            
+            DispatchQueue.main.async { completion(.success(savedForm))}
+        }
     }
     
     // MARK: FUNCTIONS
