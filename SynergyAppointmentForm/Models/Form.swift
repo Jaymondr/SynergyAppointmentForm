@@ -42,6 +42,7 @@ class Form {
     var day: String
     var time: String
     var date: String
+    var ampm: String
     var firstName: String
     var lastName: String
     var spouse: String
@@ -60,13 +61,14 @@ class Form {
     var rate: String
     var comments: String
     
-    init(ckRecordID: CKRecord.ID = CKRecord.ID(recordName: UUID().uuidString), myName: String = "Jaymond", day: String, time: String, date: String, firstName: String, lastName: String, spouse: String, address: String, zip: String, city: String, state: String, phone: String, email: String, numberOfWindows: String, energyBill: String, retailQuote: String, financeOptions: String, yearsOwned: String, reason: String, rate: String, comments: String) {
+    init(ckRecordID: CKRecord.ID = CKRecord.ID(recordName: UUID().uuidString), myName: String = "Jaymond", day: String, time: String, date: String, ampm: String, firstName: String, lastName: String, spouse: String, address: String, zip: String, city: String, state: String, phone: String, email: String, numberOfWindows: String, energyBill: String, retailQuote: String, financeOptions: String, yearsOwned: String, reason: String, rate: String, comments: String) {
         
         self.ckRecordID = ckRecordID
         self.myName = myName
         self.day = day
         self.time = time
         self.date = date
+        self.ampm = ampm
         self.firstName = firstName
         self.lastName = lastName
         self.spouse = spouse

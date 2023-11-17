@@ -87,7 +87,7 @@ class FormController {
         APT FORM
         
         Appointment Day: \(form.day)
-        Time: \(form.time)
+        Time: \(form.time)\(form.ampm.lowercased())
         Date: \(form.date)
         Name: \(form.firstName + " " + form.lastName)
         Spouse: \(form.spouse)
@@ -118,7 +118,7 @@ class FormController {
         APT FORM
                 
         Appointment Day: \(form.day)
-        Time: \(form.time)
+        Time: \(form.time)\(form.ampm.lowercased())
         Date: \(form.date)
         Name: \(form.firstName + " " + form.lastName)
         Spouse: \(form.spouse)
@@ -129,7 +129,7 @@ class FormController {
         Phone: \(form.phone)
         Email: \(form.email)
                 
-                Number of windows: \(form.numberOfWindows)
+        Number of windows: \(form.numberOfWindows)
         Energy bill (average): \(form.energyBill)
         Retail Quote: \(form.retailQuote)
         Finance Options: \(form.financeOptions)
@@ -161,7 +161,7 @@ class FormController {
         """
         Hey \(form.firstName), it's \(form.myName) with Synergy.
         
-        Your appointment is good to go for \(form.day) \(form.date) at \(form.time). Thanks for your time, and if you need anything just call or text!
+        Your appointment is good to go for \(form.day) \(form.date) at \(form.time)\(form.ampm.lowercased()). Thanks for your time, and if you need anything just call or text!
         
         - Jaymond
         """

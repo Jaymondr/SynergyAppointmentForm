@@ -11,7 +11,7 @@ import CoreLocation
 class FormViewController: UIViewController, CLLocationManagerDelegate {
     // MARK: OUTLETS
     @IBOutlet weak var appointmentDayTextfield: UITextField!
-    @IBOutlet weak var dateTimeTextfield: UITextField!
+    @IBOutlet weak var dateTimePicker: UIDatePicker!
     @IBOutlet weak var firstNameTextfield: UITextField!
     @IBOutlet weak var lastNameTextfield: UITextField!
     @IBOutlet weak var spouseTextfield: UITextField!
@@ -160,20 +160,32 @@ class FormViewController: UIViewController, CLLocationManagerDelegate {
 
     }
     
+    func formatDate(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd h a"
+        
+        let formattedDate = formatter.string(from: date)
+        return formattedDate
+    }
+    
     func createForm() -> Form {
         // Separate date time
         var time: String
         var date: String
-        let dateTimeText = dateTimeTextfield.text ?? ""
+        var ampm: String
+        let dateTimeText = formatDate(date: dateTimePicker.date)
+        print(dateTimeText)
         let dateTimeArray = dateTimeText.split(separator: " ")
         if dateTimeArray.count >= 2 {
             time = String(dateTimeArray[1])
             date = String(dateTimeArray[0])
+            ampm = String(dateTimeArray[2])
         } else {
             time = ""
             date = ""
+            ampm = ""
         }
-        let form = Form(day: appointmentDayTextfield.text ?? "", time: time, date: date, firstName: firstNameTextfield.text ?? "", lastName: lastNameTextfield.text ?? "", spouse: spouseTextfield.text ?? "", address: addressTextfield.text ?? "", zip: zipTextfield.text ?? "", city: cityTextfield.text ?? "", state: stateTextfield.text ?? "", phone: phoneTextfield.text ?? "", email: emailTextfield.text ?? "", numberOfWindows: numberOfWindowsTexfield.text ?? "", energyBill: energyBillTextfield.text ?? "", retailQuote: quoteTextfield.text ?? "", financeOptions: financeTextfield.text ?? "", yearsOwned: yearsOwnedTextfield.text ?? "", reason: reasonTextview.text ?? "", rate: rateTextfield.text ?? "", comments: commentsTextview.text ?? "")
+        let form = Form(day: appointmentDayTextfield.text ?? "", time: time, date: date, ampm: ampm, firstName: firstNameTextfield.text ?? "", lastName: lastNameTextfield.text ?? "", spouse: spouseTextfield.text ?? "", address: addressTextfield.text ?? "", zip: zipTextfield.text ?? "", city: cityTextfield.text ?? "", state: stateTextfield.text ?? "", phone: phoneTextfield.text ?? "", email: emailTextfield.text ?? "", numberOfWindows: numberOfWindowsTexfield.text ?? "", energyBill: energyBillTextfield.text ?? "", retailQuote: quoteTextfield.text ?? "", financeOptions: financeTextfield.text ?? "", yearsOwned: yearsOwnedTextfield.text ?? "", reason: reasonTextview.text ?? "", rate: rateTextfield.text ?? "", comments: commentsTextview.text ?? "")
         
         return form
     }
