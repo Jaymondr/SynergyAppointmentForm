@@ -40,44 +40,16 @@ class FormViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     // MARK: BUTTONS
-    @IBAction func fetchFormsButtonPressed(_ sender: Any) {
-        
-        FormController.shared.fetchFormsWith { forms, error in
-            if let error = error {
-                print("There is an error with fetching forms")
-            } else {
-                guard let forms = forms else { print("There are no forms"); return }
-                for form in forms {
-                    print("Form info: \(form.firstName) \(form.lastName)")
-                }
-            }
-        }
-    }
-    
-    
     @IBAction func saveButtonPressed(_ sender: Any) {
-        let form = createForm()
-        FormController.shared.saveForm(form: form) { form, error in
+        let formRecord = FormController.shared.createFormRecord(with: createForm())
+        FormController.shared.saveFormRecord(formRecord: formRecord) { form, error in
             if let error = error {
-                print("There was an error saving the form")
+                print("There was an error saving the form: \(error)")
             } else {
                 guard let form = form else { print("there was an error with the form after saving"); return }
                 print("Saved form: \(form.firstName) \(form.lastName)")
             }
         }
-
-        
-//        let newForm = createForm()
-//        FormController.shared.saveForm(form: newForm) { result in
-//            let alert = UIAlertController(title: "Saved", message: nil, preferredStyle: .alert)
-//            DispatchQueue.main.async {
-//                self.present(alert, animated: true)
-//            }
-//            
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                alert.dismiss(animated: true)
-//            }
-//        }
     }
     
     @IBAction func messageButtonPressed(_ sender: Any) {

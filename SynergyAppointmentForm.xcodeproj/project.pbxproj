@@ -16,6 +16,7 @@
 		674603BC2B03DE0E00756102 /* FormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674603BB2B03DE0E00756102 /* FormController.swift */; };
 		674603C12B03E51000756102 /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674603C02B03E51000756102 /* FormViewController.swift */; };
 		67DAFE932B073028003D6B5B /* FormError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DAFE922B073028003D6B5B /* FormError.swift */; };
+		67DAFEA12B08109A003D6B5B /* FormRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DAFEA02B08109A003D6B5B /* FormRecord.swift */; };
 		67E4A6692B054BCF00024F06 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E4A6682B054BCF00024F06 /* Address.swift */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +33,7 @@
 		674603C02B03E51000756102 /* FormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
 		67DAFE922B073028003D6B5B /* FormError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormError.swift; sourceTree = "<group>"; };
 		67DAFE952B073FBB003D6B5B /* SynergyAppointmentForm.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SynergyAppointmentForm.entitlements; sourceTree = "<group>"; };
+		67DAFEA02B08109A003D6B5B /* FormRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormRecord.swift; sourceTree = "<group>"; };
 		67E4A6682B054BCF00024F06 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -109,6 +111,7 @@
 			children = (
 				674603B82B03DB0400756102 /* Form.swift */,
 				67E4A6682B054BCF00024F06 /* Address.swift */,
+				67DAFEA02B08109A003D6B5B /* FormRecord.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -206,6 +209,7 @@
 				674603B92B03DB0400756102 /* Form.swift in Sources */,
 				67DAFE932B073028003D6B5B /* FormError.swift in Sources */,
 				674603C12B03E51000756102 /* FormViewController.swift in Sources */,
+				67DAFEA12B08109A003D6B5B /* FormRecord.swift in Sources */,
 				674603BC2B03DE0E00756102 /* FormController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
