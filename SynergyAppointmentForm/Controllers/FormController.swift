@@ -21,22 +21,29 @@ class FormController {
     
     // MARK: CRUD FUNCTIONS
     
-//    func createFormWith(form: Form, completion: @escaping (Result<Form?, FormError>) -> Void) {
-//        let newForm = createAndCopyForm(form: form)
-//        saveForm(form: newForm, completion: completion)
-//    }
+    func createFormWith(newForm: Form, completion: @escaping (_ form: Form?, _ error: Error?) -> Void) {
+        saveForm(form: newForm) { form, error in
+            if let error = error {
+                print("There was an error saving your form")
+                completion(nil, error)
+            } else {
+                guard let form = form else { return completion(nil, error) }
+                completion(form, nil)
+            }
+        }
+    }
     
     
-    func fetchFormsWith(completion: @escaping(_ result: Result<[Form]?, FormError>) -> Void ) {
+    func fetchFormsWith(completion: @escaping(_ forms: [Form]?, _ error: Error?) -> Void ) {
         
         let fetchAllPredicates = NSPredicate(value: true)
         
         let query = CKQuery(recordType: CloudStrings.recordTypeKey, predicate: fetchAllPredicates)
         privateDB.perform(query, inZoneWith: nil) { records, error in
-            if let error = error {return completion(.failure(.ckError(error)))}
+            if let error = error { print("The error is here 1: \(error)"); return completion(nil, error) }
             
             
-            guard let records = records else {return completion(.failure(.couldNotUnwrap))}
+            guard let records = records else {return completion(nil, error)}
             print("You did the Fetching of the Forms!")
             
             let forms = records.compactMap({Form(ckRecord: $0)})
@@ -49,27 +56,28 @@ class FormController {
                     print("name: \(form.firstName), \(form.phone)")
                 }
 
-                completion(.success(forms))
+                completion(forms, nil)
             }
             
             
         }
     }
     
-    func saveForm(form: Form, completion: @escaping (Result<Form, FormError>) -> Void) {
+    func saveForm(form: Form, completion: @escaping (_ form: Form?, _ error: Error?) -> Void) {
         let formRecord = CKRecord(form: form)
-        privateDB.save(formRecord) { record, error in
+        privateDB.save(formRecord) { (record, error) in
             if let error = error {
-                return completion(.failure(.ckError(error)))
+                print("Error: \(error)")
+                return completion(nil, error)
             }
             
             guard let record = record,
-                  let savedForm = Form(ckRecord: record) else { completion(.failure(.couldNotUnwrap)); return }
+                  let savedForm = Form(ckRecord: record) else { completion(nil, error); return }
             print("Saved form")
             
             self.forms.insert(savedForm, at: 0)
             
-            DispatchQueue.main.async { completion(.success(savedForm))}
+            DispatchQueue.main.async { completion(savedForm, nil)}
         }
     }
     

@@ -40,10 +40,33 @@ class FormViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     // MARK: BUTTONS
-    @IBAction func saveButtonPressed(_ sender: Any) {
+    @IBAction func fetchFormsButtonPressed(_ sender: Any) {
         
-        FormController.shared.fetchFormsWith { (_) in
+        FormController.shared.fetchFormsWith { forms, error in
+            if let error = error {
+                print("There is an error with fetching forms")
+            } else {
+                guard let forms = forms else { print("There are no forms"); return }
+                for form in forms {
+                    print("Form info: \(form.firstName) \(form.lastName)")
+                }
+            }
         }
+    }
+    
+    
+    @IBAction func saveButtonPressed(_ sender: Any) {
+        let form = createForm()
+        FormController.shared.saveForm(form: form) { form, error in
+            if let error = error {
+                print("There was an error saving the form")
+            } else {
+                guard let form = form else { print("there was an error with the form after saving"); return }
+                print("Saved form: \(form.firstName) \(form.lastName)")
+            }
+        }
+
+        
 //        let newForm = createForm()
 //        FormController.shared.saveForm(form: newForm) { result in
 //            let alert = UIAlertController(title: "Saved", message: nil, preferredStyle: .alert)
