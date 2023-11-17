@@ -15,6 +15,7 @@
 		674603B92B03DB0400756102 /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674603B82B03DB0400756102 /* Form.swift */; };
 		674603BC2B03DE0E00756102 /* FormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674603BB2B03DE0E00756102 /* FormController.swift */; };
 		674603C12B03E51000756102 /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674603C02B03E51000756102 /* FormViewController.swift */; };
+		67DAFE932B073028003D6B5B /* FormError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DAFE922B073028003D6B5B /* FormError.swift */; };
 		67E4A6692B054BCF00024F06 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E4A6682B054BCF00024F06 /* Address.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +30,7 @@
 		674603B82B03DB0400756102 /* Form.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Form.swift; sourceTree = "<group>"; };
 		674603BB2B03DE0E00756102 /* FormController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormController.swift; sourceTree = "<group>"; };
 		674603C02B03E51000756102 /* FormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
+		67DAFE922B073028003D6B5B /* FormError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormError.swift; sourceTree = "<group>"; };
 		67E4A6682B054BCF00024F06 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -67,6 +69,7 @@
 				674603B62B03DADE00756102 /* View Controllers */,
 				674603B72B03DAED00756102 /* Storyboards */,
 				674603B52B03D99600756102 /* Resources */,
+				67DAFE942B073069003D6B5B /* Helper */,
 			);
 			path = SynergyAppointmentForm;
 			sourceTree = "<group>";
@@ -114,6 +117,14 @@
 				674603BB2B03DE0E00756102 /* FormController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		67DAFE942B073069003D6B5B /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				67DAFE922B073028003D6B5B /* FormError.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -191,6 +202,7 @@
 				674603A22B03D8F700756102 /* AppDelegate.swift in Sources */,
 				674603A42B03D8F700756102 /* SceneDelegate.swift in Sources */,
 				674603B92B03DB0400756102 /* Form.swift in Sources */,
+				67DAFE932B073028003D6B5B /* FormError.swift in Sources */,
 				674603C12B03E51000756102 /* FormViewController.swift in Sources */,
 				674603BC2B03DE0E00756102 /* FormController.swift in Sources */,
 			);

@@ -471,25 +471,11 @@
                                 <color key="textColor" red="0.078431372550000003" green="0.30588235289999999" blue="0.33725490200000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GG2-2I-gQR">
-                                <rect key="frame" x="280" y="113.33333333333331" width="102" height="34"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="GG2-2I-gQR">
+                                <rect key="frame" x="276" y="113.33333333333331" width="106" height="34"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Vk-e7-3Bi">
-                                        <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="1Vk-e7-3Bi" secondAttribute="height" multiplier="1:1" id="kwX-j8-9pn"/>
-                                        </constraints>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain">
-                                            <imageReference key="image" image="plus.message" catalog="system" symbolScale="large"/>
-                                            <color key="baseForegroundColor" red="0.078431372550000003" green="0.30588235289999999" blue="0.33725490200000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </buttonConfiguration>
-                                        <connections>
-                                            <action selector="messageButtonPressed:" destination="ncR-vK-5yf" eventType="touchUpInside" id="dDl-Z7-T3p"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oeb-Z6-YjI">
-                                        <rect key="frame" x="34" y="0.0" width="34" height="34"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="oeb-Z6-YjI" secondAttribute="height" multiplier="1:1" id="seu-3G-Lb4"/>
                                         </constraints>
@@ -501,8 +487,22 @@
                                             <action selector="trelloButtonPressed:" destination="ncR-vK-5yf" eventType="touchUpInside" id="83q-6Y-1xx"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Vk-e7-3Bi">
+                                        <rect key="frame" x="36" y="0.0" width="34" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="1Vk-e7-3Bi" secondAttribute="height" multiplier="1:1" id="kwX-j8-9pn"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain">
+                                            <imageReference key="image" image="message.fill" catalog="system" symbolScale="large"/>
+                                            <color key="baseForegroundColor" red="0.078431372550000003" green="0.30588235289999999" blue="0.33725490200000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="messageButtonPressed:" destination="ncR-vK-5yf" eventType="touchUpInside" id="dDl-Z7-T3p"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fz8-nB-nQS">
-                                        <rect key="frame" x="68" y="0.0" width="34" height="34"/>
+                                        <rect key="frame" x="72" y="0.0" width="34" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Fz8-nB-nQS" secondAttribute="height" multiplier="1:1" id="8WE-aS-DFo"/>
                                         </constraints>
@@ -521,7 +521,7 @@
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="2q5-Dc-TYY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="saP-W9-lyZ" firstAttribute="top" secondItem="jUC-Ka-Ti8" secondAttribute="top" constant="75" id="AWd-Sb-Bkf"/>
                             <constraint firstItem="2q5-Dc-TYY" firstAttribute="trailing" secondItem="saP-W9-lyZ" secondAttribute="trailing" constant="70" id="OaS-jC-ikt"/>
@@ -570,12 +570,9 @@
         <image name="clear" catalog="system" width="128" height="114"/>
         <image name="doc.on.clipboard" catalog="system" width="116" height="128"/>
         <image name="location.fill.viewfinder" catalog="system" width="128" height="115"/>
-        <image name="plus.message" catalog="system" width="128" height="116"/>
+        <image name="message.fill" catalog="system" width="128" height="114"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

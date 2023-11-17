@@ -7,14 +7,27 @@
 
 import UIKit
 import CoreLocation
+import CloudKit
 
 class FormController {
     
     // MARK: SHARED INSTANCE
     static let shared = FormController()
     
-    // MARK: VARIABLES
+    // MARK: PROPERTIES
     let geocoder = CLGeocoder()
+    let privateDB = CKContainer.default().privateCloudDatabase
+    var forms: [Form] = []
+    
+    // MARK: CRUD FUNCTIONS
+    
+    func createFormWith(form: Form, completion: @escaping (Result<Form?, FormError>) -> Void) {
+        saveEn
+    }
+    
+    func saveForm(form: Form, completion: @escaping (Result<Form, FormError>) -> Void) {
+        let formRecord = CKRecord(form: form)
+    }
     
     // MARK: FUNCTIONS
     func createAndCopyForm(form: Form) {
@@ -63,7 +76,7 @@ class FormController {
     func createText(from form: Form) -> String {
         let text =
         """
-        Hey \(form.firstName), it's Jaymond with Synergy.
+        Hey \(form.firstName), it's \(form.myName) with Synergy.
         
         Your appointment is good to go for \(form.day) \(form.date) at \(form.time). Thanks for your time, and if you need anything just call or text!
         

@@ -37,44 +37,35 @@ class FormViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.delegate = self
-        reasonTextview.layer.cornerRadius = 5.0
-        commentsTextview.layer.cornerRadius = 5.0
     }
     
     // MARK: BUTTONS
     @IBAction func messageButtonPressed(_ sender: Any) {
         let form = createForm()
         let text = FormController.shared.createText(from: form)
+        var title: String = "Send Message?"
         
         // CREATE ALERT
-        let alert = UIAlertController(title: "Send message?", message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         let yesAction = UIAlertAction(title: "Yes", style: .default) { _ in
-            if let phoneNumber = self.phoneTextfield.text {
-                
-                let phoneNumber = phoneNumber
-                let message = text
-                
-                let urlString = "sms:\(phoneNumber)&body=\(message)"
-                
-                if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                } else {
-                    // Handle the case where the Messages app or the URL scheme is not available
-                    print("Messages app is not installed or the URL scheme is not supported.")
-                }
+            guard let phoneNumber = self.phoneTextfield.text else { return }
+            let urlString = "sms:\(phoneNumber)&body=\(text)"
+            
+            if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
             } else {
-                // CREATE ALERT
-                let alert = UIAlertController(title: "Enter Phone Number", message: nil, preferredStyle: .alert)
-                self.present(alert, animated: true)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.65) {
+                // Handle the case where the Messages app or the URL scheme is not available
+                print("Messages app is not installed or the URL scheme is not supported.")
+                title = "Unable to open messages"
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                     alert.dismiss(animated: true)
                 }
-
             }
+            
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        
+        // ADD ALERT
         alert.addAction(yesAction)
         alert.addAction(cancelAction)
         self.present(alert, animated: true)
@@ -151,6 +142,12 @@ class FormViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     // MARK: FUNCTIONS
+    func setupView() {
+        reasonTextview.layer.cornerRadius = 5.0
+        commentsTextview.layer.cornerRadius = 5.0
+
+    }
+    
     func createForm() -> Form {
         // Separate date time
         var time: String
