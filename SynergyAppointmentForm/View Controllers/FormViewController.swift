@@ -38,6 +38,8 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.delegate = self
+        phoneTextfield.layer.borderWidth = 1.0
+        phoneTextfield.layer.cornerRadius = 5
         setupView()
         setTextFieldsDelegate()
 
@@ -164,15 +166,11 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         commentsTextview.layer.cornerRadius = 5.0
         saveButton.isHidden = true
         // Create a gradient layer
-               let gradientLayer = CAGradientLayer()
-               gradientLayer.frame = view.bounds
-               gradientLayer.colors = [UIColor.white.cgColor, UIColor.systemTeal.cgColor, UIColor.systemBlue.cgColor] // Gradient colors
-               gradientLayer.locations = [0.0, 1.0] // Gradient locations (start and end)
-               
-               // If you want to add more colors, you can extend the colors and locations arrays accordingly.
-               
-               // Add the gradient layer to the view's layer
-               view.layer.insertSublayer(gradientLayer, at: 0)
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [UIColor.white.cgColor, UIColor.lightGray.cgColor, UIColor.systemBlue.cgColor] // Gradient colors
+        gradientLayer.locations = [0.0, 1.0] // Gradient locations (start and end)
+        view.layer.insertSublayer(gradientLayer, at: 0)
     }
     
     func setTextFieldsDelegate() {
@@ -239,6 +237,22 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         else {
             textField.resignFirstResponder()
         }
+        return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // Check if the current length is less than or equal to 10
+        let currentLength = (textField.text ?? "").count
+        let newLength = currentLength + string.count - range.length
+
+        // Change the border color based on the condition
+        if newLength != 10 {
+            textField.layer.borderColor = UIColor.red.cgColor
+        } else {
+            textField.layer.borderColor = UIColor.gray.cgColor
+        }
+
+        // Allow the text change if needed
         return true
     }
     
