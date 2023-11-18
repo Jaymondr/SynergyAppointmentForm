@@ -8,7 +8,7 @@
 import UIKit
 import CoreLocation
 
-class FormViewController: UIViewController, CLLocationManagerDelegate {
+class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDelegate, UITextViewDelegate {
     // MARK: OUTLETS
     @IBOutlet weak var appointmentDayTextfield: UITextField!
     @IBOutlet weak var dateTimePicker: UIDatePicker!
@@ -31,12 +31,16 @@ class FormViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var commentsTextview: UITextView!
     @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var trelloButton: UIButton!
+    @IBOutlet weak var saveButton: UIButton!
     
     var locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.delegate = self
+        setupView()
+        setTextFieldsDelegate()
+
     }
     
     // MARK: BUTTONS
@@ -111,6 +115,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate {
             self.zipTextfield.text = address?.zip
             self.cityTextfield.text = address?.city
             self.stateTextfield.text = address?.state
+            self.phoneTextfield.becomeFirstResponder()
         }
     }
     
@@ -157,7 +162,84 @@ class FormViewController: UIViewController, CLLocationManagerDelegate {
     func setupView() {
         reasonTextview.layer.cornerRadius = 5.0
         commentsTextview.layer.cornerRadius = 5.0
+        saveButton.isHidden = true
+        // Create a gradient layer
+               let gradientLayer = CAGradientLayer()
+               gradientLayer.frame = view.bounds
+               gradientLayer.colors = [UIColor.white.cgColor, UIColor.systemTeal.cgColor, UIColor.systemBlue.cgColor] // Gradient colors
+               gradientLayer.locations = [0.0, 1.0] // Gradient locations (start and end)
+               
+               // If you want to add more colors, you can extend the colors and locations arrays accordingly.
+               
+               // Add the gradient layer to the view's layer
+               view.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    func setTextFieldsDelegate() {
+        appointmentDayTextfield.delegate = self
+        firstNameTextfield.delegate = self
+        lastNameTextfield.delegate = self
+        spouseTextfield.delegate = self
+        addressTextfield.delegate = self
+        zipTextfield.delegate = self
+        cityTextfield.delegate = self
+        stateTextfield.delegate = self
+        phoneTextfield.delegate = self
+        emailTextfield.delegate = self
+        numberOfWindowsTexfield.delegate = self
+        energyBillTextfield.delegate = self
+        quoteTextfield.delegate = self
+        financeTextfield.delegate = self
+        reasonTextview.delegate = self
+        rateTextfield.delegate = self
+        commentsTextview.delegate = self
+        
 
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if textField == appointmentDayTextfield {
+            firstNameTextfield.becomeFirstResponder()
+        } else if textField == firstNameTextfield {
+            lastNameTextfield.becomeFirstResponder()
+        } else if textField == lastNameTextfield {
+            spouseTextfield.becomeFirstResponder()
+        } else if textField == spouseTextfield {
+            addressTextfield.becomeFirstResponder()
+        } else if textField == addressTextfield {
+            zipTextfield.becomeFirstResponder()
+        } else if textField == zipTextfield {
+            cityTextfield.becomeFirstResponder()
+        } else if textField == cityTextfield {
+            stateTextfield.becomeFirstResponder()
+        } else if textField == stateTextfield {
+            phoneTextfield.becomeFirstResponder()
+        } else if textField == phoneTextfield {
+            emailTextfield.becomeFirstResponder()
+        } else if textField == emailTextfield {
+            numberOfWindowsTexfield.becomeFirstResponder()
+        } else if textField == numberOfWindowsTexfield {
+            energyBillTextfield.becomeFirstResponder()
+        } else if textField == energyBillTextfield {
+            quoteTextfield.becomeFirstResponder()
+        } else if textField == quoteTextfield {
+            financeTextfield.becomeFirstResponder()
+        } else if textField == financeTextfield {
+            yearsOwnedTextfield.becomeFirstResponder()
+        } else if textField == yearsOwnedTextfield {
+            reasonTextview.becomeFirstResponder()
+        } else if textField == reasonTextview {
+            rateTextfield.becomeFirstResponder()
+        } else if textField == rateTextfield {
+            commentsTextview.becomeFirstResponder()
+        } else if textField == commentsTextview {
+            textField.resignFirstResponder()
+        }
+        else {
+            textField.resignFirstResponder()
+        }
+        return true
     }
     
     func formatDate(date: Date) -> String {

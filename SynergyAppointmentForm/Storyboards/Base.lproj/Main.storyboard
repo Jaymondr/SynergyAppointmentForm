@@ -35,7 +35,7 @@
                                                     <textField opaque="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Appointment Day" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vx7-Je-oEu">
                                                         <rect key="frame" x="145" y="0.0" width="228" height="34"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                                     </textField>
                                                 </subviews>
                                             </stackView>
@@ -229,7 +229,7 @@
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VEh-R0-stV">
                                                         <rect key="frame" x="0.0" y="0.0" width="373" height="34"/>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="C0n-y4-0LM"/>
                                                         </constraints>
@@ -324,7 +324,7 @@
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HYZ-w3-Jcz">
                                                         <rect key="frame" x="0.0" y="0.0" width="373" height="34"/>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="VfY-Qa-2gB"/>
                                                         </constraints>
@@ -431,7 +431,7 @@
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="msM-DK-D3E">
                                                         <rect key="frame" x="0.0" y="0.0" width="373" height="400"/>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -561,9 +561,10 @@
                         <outlet property="quoteTextfield" destination="H01-Aq-fMI" id="nb2-2k-Hh5"/>
                         <outlet property="rateTextfield" destination="JZF-Al-DTV" id="x6A-H7-AxR"/>
                         <outlet property="reasonTextview" destination="3EA-k7-1k2" id="fpD-Jh-wDu"/>
+                        <outlet property="saveButton" destination="7pA-Kl-Dmt" id="tr6-be-vm9"/>
                         <outlet property="spouseTextfield" destination="rEb-t7-Nli" id="smX-I4-c39"/>
                         <outlet property="stateTextfield" destination="9AB-vd-aGB" id="ZMb-dU-fPG"/>
-                        <outlet property="trelloButton" destination="oeb-Z6-YjI" id="YzV-1X-j7a"/>
+                        <outlet property="trelloButton" destination="oeb-Z6-YjI" id="mP6-8Q-Ax9"/>
                         <outlet property="yearsOwnedTextfield" destination="emz-B6-m47" id="xg8-hL-KIl"/>
                         <outlet property="zipTextfield" destination="bss-iL-rSd" id="fi8-lP-c2J"/>
                     </connections>
