@@ -17,12 +17,12 @@ class FormController {
     // MARK: PROPERTIES
     let geocoder = CLGeocoder()
     let privateDB = CKContainer.default().privateCloudDatabase
-    var forms: [Form] = []
+    var formRecords: [FormRecord] = []
     
     // MARK: CRUD FUNCTIONS
     
-    func createFormWith(newForm: Form, completion: @escaping (_ form: Form?, _ error: Error?) -> Void) {
-        saveForm(form: newForm) { form, error in
+    func createFormRecordWith(newFormRecord: FormRecord, completion: @escaping (_ form: FormRecord?, _ error: Error?) -> Void) {
+        saveFormRecord(formRecord: newFormRecord) { form, error in
             if let error = error {
                 print("There was an error saving your form")
                 completion(nil, error)
@@ -34,11 +34,11 @@ class FormController {
     }
     
     
-    func fetchFormsWith(completion: @escaping(_ forms: [Form]?, _ error: Error?) -> Void ) {
+    func fetchFormRecordsWith(completion: @escaping(_ forms: [FormRecord]?, _ error: Error?) -> Void ) {
         
         let fetchAllPredicates = NSPredicate(value: true)
         
-        let query = CKQuery(recordType: CloudStrings.recordTypeKey, predicate: fetchAllPredicates)
+        let query = CKQuery(recordType: FormRecordCloudStrings.recordTypeKey, predicate: fetchAllPredicates)
         privateDB.perform(query, inZoneWith: nil) { records, error in
             if let error = error { print("The error is here 1: \(error)"); return completion(nil, error) }
             
@@ -46,9 +46,9 @@ class FormController {
             guard let records = records else {return completion(nil, error)}
             print("You did the Fetching of the Forms!")
             
-            let forms = records.compactMap({Form(ckRecord: $0)})
+            let forms = records.compactMap({FormRecord(ckRecord: $0)})
             
-            self.forms = forms
+            self.formRecords = forms
             
             
             DispatchQueue.main.async {
@@ -58,13 +58,11 @@ class FormController {
 
                 completion(forms, nil)
             }
-            
-            
         }
     }
     
-    func saveForm(form: Form, completion: @escaping (_ form: Form?, _ error: Error?) -> Void) {
-        let formRecord = CKRecord(form: form)
+    func saveFormRecord(formRecord: FormRecord, completion: @escaping (_ form: FormRecord?, _ error: Error?) -> Void) {
+        let formRecord = CKRecord(formRecord: formRecord)
         privateDB.save(formRecord) { (record, error) in
             if let error = error {
                 print("Error: \(error)")
@@ -72,10 +70,10 @@ class FormController {
             }
             
             guard let record = record,
-                  let savedForm = Form(ckRecord: record) else { completion(nil, error); return }
+                  let savedForm = FormRecord(ckRecord: record) else { completion(nil, error); return }
             print("Saved form")
             
-            self.forms.insert(savedForm, at: 0)
+            self.formRecords.insert(savedForm, at: 0)
             
             DispatchQueue.main.async { completion(savedForm, nil)}
         }
@@ -89,7 +87,7 @@ class FormController {
         APT FORM
         
         Appointment Day: \(form.day)
-        Time: \(form.time)
+        Time: \(form.time)\(form.ampm.lowercased())
         Date: \(form.date)
         Name: \(form.firstName + " " + form.lastName)
         Spouse: \(form.spouse)
@@ -114,6 +112,39 @@ class FormController {
         """
     }
     
+    func createFormRecord(with form: Form) -> FormRecord {
+        let body = 
+        """
+        APT FORM
+                
+        Appointment Day: \(form.day)
+        Time: \(form.time)\(form.ampm.lowercased())
+        Date: \(form.date)
+        Name: \(form.firstName + " " + form.lastName)
+        Spouse: \(form.spouse)
+        Address: \(form.address)
+        Zip: \(form.zip)
+        City: \(form.city)
+        State: \(form.state)
+        Phone: \(form.phone)
+        Email: \(form.email)
+                
+        Number of windows: \(form.numberOfWindows)
+        Energy bill (average): \(form.energyBill)
+        Retail Quote: \(form.retailQuote)
+        Finance Options: \(form.financeOptions)
+        Years Owned: \(form.yearsOwned)
+                
+        Reason you need window replacement: \(form.reason)
+                
+        Rate 1-10: \(form.rate)
+                
+        Comments: \(form.comments)
+        """
+        let formRecord = FormRecord(firstName: form.firstName, lastName: form.lastName, day: form.day, time: form.time, date: form.date, address: form.address, phone: form.phone, body: body)
+        return formRecord
+    }
+    
     func createAndCopyTrello(form: Form) {
         UIPasteboard.general.string =
         """
@@ -130,7 +161,7 @@ class FormController {
         """
         Hey \(form.firstName), it's \(form.myName) with Synergy.
         
-        Your appointment is good to go for \(form.day) \(form.date) at \(form.time). Thanks for your time, and if you need anything just call or text!
+        Your appointment is good to go for \(form.day) \(form.date) at \(form.time)\(form.ampm.lowercased()). Thanks for your time, and if you need anything just call or text!
         
         - Jaymond
         """

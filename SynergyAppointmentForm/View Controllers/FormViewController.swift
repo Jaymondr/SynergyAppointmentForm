@@ -8,10 +8,10 @@
 import UIKit
 import CoreLocation
 
-class FormViewController: UIViewController, CLLocationManagerDelegate {
+class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDelegate, UITextViewDelegate {
     // MARK: OUTLETS
     @IBOutlet weak var appointmentDayTextfield: UITextField!
-    @IBOutlet weak var dateTimeTextfield: UITextField!
+    @IBOutlet weak var dateTimePicker: UIDatePicker!
     @IBOutlet weak var firstNameTextfield: UITextField!
     @IBOutlet weak var lastNameTextfield: UITextField!
     @IBOutlet weak var spouseTextfield: UITextField!
@@ -31,53 +31,31 @@ class FormViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var commentsTextview: UITextView!
     @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var trelloButton: UIButton!
+    @IBOutlet weak var saveButton: UIButton!
     
     var locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.delegate = self
+        phoneTextfield.layer.borderWidth = 1.0
+        phoneTextfield.layer.cornerRadius = 5
+        setupView()
+        setTextFieldsDelegate()
+
     }
     
     // MARK: BUTTONS
-    @IBAction func fetchFormsButtonPressed(_ sender: Any) {
-        
-        FormController.shared.fetchFormsWith { forms, error in
-            if let error = error {
-                print("There is an error with fetching forms")
-            } else {
-                guard let forms = forms else { print("There are no forms"); return }
-                for form in forms {
-                    print("Form info: \(form.firstName) \(form.lastName)")
-                }
-            }
-        }
-    }
-    
-    
     @IBAction func saveButtonPressed(_ sender: Any) {
-        let form = createForm()
-        FormController.shared.saveForm(form: form) { form, error in
+        let formRecord = FormController.shared.createFormRecord(with: createForm())
+        FormController.shared.saveFormRecord(formRecord: formRecord) { form, error in
             if let error = error {
-                print("There was an error saving the form")
+                print("There was an error saving the form: \(error)")
             } else {
                 guard let form = form else { print("there was an error with the form after saving"); return }
                 print("Saved form: \(form.firstName) \(form.lastName)")
             }
         }
-
-        
-//        let newForm = createForm()
-//        FormController.shared.saveForm(form: newForm) { result in
-//            let alert = UIAlertController(title: "Saved", message: nil, preferredStyle: .alert)
-//            DispatchQueue.main.async {
-//                self.present(alert, animated: true)
-//            }
-//            
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                alert.dismiss(animated: true)
-//            }
-//        }
     }
     
     @IBAction func messageButtonPressed(_ sender: Any) {
@@ -139,6 +117,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate {
             self.zipTextfield.text = address?.zip
             self.cityTextfield.text = address?.city
             self.stateTextfield.text = address?.state
+            self.phoneTextfield.becomeFirstResponder()
         }
     }
     
@@ -185,23 +164,124 @@ class FormViewController: UIViewController, CLLocationManagerDelegate {
     func setupView() {
         reasonTextview.layer.cornerRadius = 5.0
         commentsTextview.layer.cornerRadius = 5.0
+        saveButton.isHidden = true
+        // Create a gradient layer
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [UIColor.white.cgColor, UIColor.lightGray.cgColor, UIColor.systemBlue.cgColor] // Gradient colors
+        gradientLayer.locations = [0.0, 1.0] // Gradient locations (start and end)
+        view.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    func setTextFieldsDelegate() {
+        appointmentDayTextfield.delegate = self
+        firstNameTextfield.delegate = self
+        lastNameTextfield.delegate = self
+        spouseTextfield.delegate = self
+        addressTextfield.delegate = self
+        zipTextfield.delegate = self
+        cityTextfield.delegate = self
+        stateTextfield.delegate = self
+        phoneTextfield.delegate = self
+        emailTextfield.delegate = self
+        numberOfWindowsTexfield.delegate = self
+        energyBillTextfield.delegate = self
+        quoteTextfield.delegate = self
+        financeTextfield.delegate = self
+        reasonTextview.delegate = self
+        rateTextfield.delegate = self
+        commentsTextview.delegate = self
+        
 
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if textField == appointmentDayTextfield {
+            firstNameTextfield.becomeFirstResponder()
+        } else if textField == firstNameTextfield {
+            lastNameTextfield.becomeFirstResponder()
+        } else if textField == lastNameTextfield {
+            spouseTextfield.becomeFirstResponder()
+        } else if textField == spouseTextfield {
+            addressTextfield.becomeFirstResponder()
+        } else if textField == addressTextfield {
+            zipTextfield.becomeFirstResponder()
+        } else if textField == zipTextfield {
+            cityTextfield.becomeFirstResponder()
+        } else if textField == cityTextfield {
+            stateTextfield.becomeFirstResponder()
+        } else if textField == stateTextfield {
+            phoneTextfield.becomeFirstResponder()
+        } else if textField == phoneTextfield {
+            emailTextfield.becomeFirstResponder()
+        } else if textField == emailTextfield {
+            numberOfWindowsTexfield.becomeFirstResponder()
+        } else if textField == numberOfWindowsTexfield {
+            energyBillTextfield.becomeFirstResponder()
+        } else if textField == energyBillTextfield {
+            quoteTextfield.becomeFirstResponder()
+        } else if textField == quoteTextfield {
+            financeTextfield.becomeFirstResponder()
+        } else if textField == financeTextfield {
+            yearsOwnedTextfield.becomeFirstResponder()
+        } else if textField == yearsOwnedTextfield {
+            reasonTextview.becomeFirstResponder()
+        } else if textField == reasonTextview {
+            rateTextfield.becomeFirstResponder()
+        } else if textField == rateTextfield {
+            commentsTextview.becomeFirstResponder()
+        } else if textField == commentsTextview {
+            textField.resignFirstResponder()
+        }
+        else {
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // Check if the current length is less than or equal to 10
+        let currentLength = (textField.text ?? "").count
+        let newLength = currentLength + string.count - range.length
+
+        // Change the border color based on the condition
+        if newLength != 10 {
+            textField.layer.borderColor = UIColor.red.cgColor
+        } else {
+            textField.layer.borderColor = UIColor.gray.cgColor
+        }
+
+        // Allow the text change if needed
+        return true
+    }
+    
+    func formatDate(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd h a"
+        
+        let formattedDate = formatter.string(from: date)
+        return formattedDate
     }
     
     func createForm() -> Form {
         // Separate date time
         var time: String
         var date: String
-        let dateTimeText = dateTimeTextfield.text ?? ""
+        var ampm: String
+        let dateTimeText = formatDate(date: dateTimePicker.date)
+        print(dateTimeText)
         let dateTimeArray = dateTimeText.split(separator: " ")
         if dateTimeArray.count >= 2 {
             time = String(dateTimeArray[1])
             date = String(dateTimeArray[0])
+            ampm = String(dateTimeArray[2])
         } else {
             time = ""
             date = ""
+            ampm = ""
         }
-        let form = Form(day: appointmentDayTextfield.text ?? "", time: time, date: date, firstName: firstNameTextfield.text ?? "", lastName: lastNameTextfield.text ?? "", spouse: spouseTextfield.text ?? "", address: addressTextfield.text ?? "", zip: zipTextfield.text ?? "", city: cityTextfield.text ?? "", state: stateTextfield.text ?? "", phone: phoneTextfield.text ?? "", email: emailTextfield.text ?? "", numberOfWindows: numberOfWindowsTexfield.text ?? "", energyBill: energyBillTextfield.text ?? "", retailQuote: quoteTextfield.text ?? "", financeOptions: financeTextfield.text ?? "", yearsOwned: yearsOwnedTextfield.text ?? "", reason: reasonTextview.text ?? "", rate: rateTextfield.text ?? "", comments: commentsTextview.text ?? "")
+        let form = Form(day: appointmentDayTextfield.text ?? "", time: time, date: date, ampm: ampm, firstName: firstNameTextfield.text ?? "", lastName: lastNameTextfield.text ?? "", spouse: spouseTextfield.text ?? "", address: addressTextfield.text ?? "", zip: zipTextfield.text ?? "", city: cityTextfield.text ?? "", state: stateTextfield.text ?? "", phone: phoneTextfield.text ?? "", email: emailTextfield.text ?? "", numberOfWindows: numberOfWindowsTexfield.text ?? "", energyBill: energyBillTextfield.text ?? "", retailQuote: quoteTextfield.text ?? "", financeOptions: financeTextfield.text ?? "", yearsOwned: yearsOwnedTextfield.text ?? "", reason: reasonTextview.text ?? "", rate: rateTextfield.text ?? "", comments: commentsTextview.text ?? "")
         
         return form
     }
