@@ -165,11 +165,15 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         reasonTextview.layer.cornerRadius = 5.0
         commentsTextview.layer.cornerRadius = 5.0
         saveButton.isHidden = true
-        // Create a gradient layer
+        
+        // TEXTFIELDS
+        
+        
+        // BACKGROUND
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = view.bounds
         gradientLayer.colors = [UIColor.white.cgColor, UIColor.lightGray.cgColor, UIColor.eden.cgColor] // Gradient colors
-        gradientLayer.locations = [0.0, 0.65, 4.0] // Gradient locations (start and end)
+        gradientLayer.locations = [-0.05, 0.65, 3.0] // Gradient locations (start and end)
         view.layer.insertSublayer(gradientLayer, at: 0)
     }
     
