@@ -168,8 +168,8 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         // Create a gradient layer
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = view.bounds
-        gradientLayer.colors = [UIColor.white.cgColor, UIColor.lightGray.cgColor, UIColor.systemBlue.cgColor] // Gradient colors
-        gradientLayer.locations = [0.0, 1.0] // Gradient locations (start and end)
+        gradientLayer.colors = [UIColor.white.cgColor, UIColor.lightGray.cgColor, UIColor.eden.cgColor] // Gradient colors
+        gradientLayer.locations = [0.0, 0.65, 4.0] // Gradient locations (start and end)
         view.layer.insertSublayer(gradientLayer, at: 0)
     }
     
