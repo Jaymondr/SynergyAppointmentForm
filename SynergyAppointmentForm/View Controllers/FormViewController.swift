@@ -39,6 +39,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         locationManager.delegate = self
         phoneTextfield.layer.borderWidth = 1.0
         phoneTextfield.layer.cornerRadius = 5
+        phoneTextfield.layer.borderColor = UIColor.clear.cgColor
         setupView()
         setTextFieldsDelegate()
 
@@ -245,7 +246,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         if newLength != 10 {
             textField.layer.borderColor = UIColor.red.cgColor
         } else {
-            textField.layer.borderColor = UIColor.gray.cgColor
+            textField.layer.borderColor = UIColor.clear.cgColor
         }
 
         // Allow the text change if needed
