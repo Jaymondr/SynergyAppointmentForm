@@ -10,7 +10,6 @@ import CoreLocation
 
 class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDelegate, UITextViewDelegate {
     // MARK: OUTLETS
-    @IBOutlet weak var appointmentDayTextfield: UITextField!
     @IBOutlet weak var dateTimePicker: UIDatePicker!
     @IBOutlet weak var firstNameTextfield: UITextField!
     @IBOutlet weak var lastNameTextfield: UITextField!
@@ -174,7 +173,6 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     }
     
     func setTextFieldsDelegate() {
-        appointmentDayTextfield.delegate = self
         firstNameTextfield.delegate = self
         lastNameTextfield.delegate = self
         spouseTextfield.delegate = self
@@ -197,9 +195,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
-        if textField == appointmentDayTextfield {
-            firstNameTextfield.becomeFirstResponder()
-        } else if textField == firstNameTextfield {
+        if textField == firstNameTextfield {
             lastNameTextfield.becomeFirstResponder()
         } else if textField == lastNameTextfield {
             spouseTextfield.becomeFirstResponder()
@@ -258,7 +254,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     
     func formatDate(date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd h a"
+        formatter.dateFormat = "EEEE MM/dd h a"
         
         let formattedDate = formatter.string(from: date)
         return formattedDate
@@ -266,22 +262,25 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     
     func createForm() -> Form {
         // Separate date time
-        var time: String
+        var day: String
         var date: String
+        var time: String
         var ampm: String
         let dateTimeText = formatDate(date: dateTimePicker.date)
         print(dateTimeText)
         let dateTimeArray = dateTimeText.split(separator: " ")
         if dateTimeArray.count >= 2 {
-            time = String(dateTimeArray[1])
-            date = String(dateTimeArray[0])
-            ampm = String(dateTimeArray[2])
+            day = String(dateTimeArray[0])
+            date = String(dateTimeArray[1])
+            time = String(dateTimeArray[2])
+            ampm = String(dateTimeArray[3])
         } else {
-            time = ""
+            day = ""
             date = ""
+            time = ""
             ampm = ""
         }
-        let form = Form(day: appointmentDayTextfield.text ?? "", time: time, date: date, ampm: ampm, firstName: firstNameTextfield.text ?? "", lastName: lastNameTextfield.text ?? "", spouse: spouseTextfield.text ?? "", address: addressTextfield.text ?? "", zip: zipTextfield.text ?? "", city: cityTextfield.text ?? "", state: stateTextfield.text ?? "", phone: phoneTextfield.text ?? "", email: emailTextfield.text ?? "", numberOfWindows: numberOfWindowsTexfield.text ?? "", energyBill: energyBillTextfield.text ?? "", retailQuote: quoteTextfield.text ?? "", financeOptions: financeTextfield.text ?? "", yearsOwned: yearsOwnedTextfield.text ?? "", reason: reasonTextview.text ?? "", rate: rateTextfield.text ?? "", comments: commentsTextview.text ?? "")
+        let form = Form(day: day, time: time, date: date, ampm: ampm, firstName: firstNameTextfield.text ?? "", lastName: lastNameTextfield.text ?? "", spouse: spouseTextfield.text ?? "", address: addressTextfield.text ?? "", zip: zipTextfield.text ?? "", city: cityTextfield.text ?? "", state: stateTextfield.text ?? "", phone: phoneTextfield.text ?? "", email: emailTextfield.text ?? "", numberOfWindows: numberOfWindowsTexfield.text ?? "", energyBill: energyBillTextfield.text ?? "", retailQuote: quoteTextfield.text ?? "", financeOptions: financeTextfield.text ?? "", yearsOwned: yearsOwnedTextfield.text ?? "", reason: reasonTextview.text ?? "", rate: rateTextfield.text ?? "", comments: commentsTextview.text ?? "")
         
         return form
     }
