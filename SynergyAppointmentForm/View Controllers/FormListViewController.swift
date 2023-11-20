@@ -36,7 +36,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         
         
         let form = forms[indexPath.row]
-        cell.setDataFor(form: form)
+        cell.setCellData(with: form)
        
         return cell
     }

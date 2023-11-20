@@ -23,7 +23,7 @@ class FormTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setDataFor(form: Form) {
+    func setCellData(with form: Form) {
         dateLabel.text = form.day
     }
 
