@@ -17,18 +17,20 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     // MARK: PROPERTIES
-    var forms: [Form] = []
+    var forms: [String] = []
     
     // MARK: FUNCTIONS
     
-    func loadForms() {
-        let form1 = Form(day: "Monday", time: "11", date: "11/9", ampm: "pm", firstName: "Jaymond", lastName: "richardson", spouse: "Taylor", address: "132424 23jk", zip: "80003", city: "Draper", state: "Utah", phone: "2087039282`", email: "GMAILS", numberOfWindows: "1", energyBill: "2", retailQuote: "1", financeOptions: "WEFA``", yearsOwned: "SF", reason: "SDFA", rate: "ASF", comments: "SF")
-        let form2 = Form(day: "TUESDAY", time: "11", date: "11/9", ampm: "pm", firstName: "TAYLOR", lastName: "richardson", spouse: "Taylor", address: "132424 23jk", zip: "80003", city: "Draper", state: "Utah", phone: "2087039282`", email: "GMAILS", numberOfWindows: "1", energyBill: "2", retailQuote: "1", financeOptions: "WEFA``", yearsOwned: "SF", reason: "SDFA", rate: "ASF", comments: "SF")
-        self.forms = [form1, form2]
+    func loadForms() {        
+        FirebaseController.shared.getNames { names, error in
+            print("Names: \(names)")
+            self.forms = names
+            self.tableView.reloadData()
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return forms.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
