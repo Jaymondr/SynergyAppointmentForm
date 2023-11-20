@@ -42,6 +42,8 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         phoneTextfield.layer.borderColor = UIColor.clear.cgColor
         setupView()
         setTextFieldsDelegate()
+        navigationController?.navigationBar.tintColor = UIColor.eden
+
 
     }
     
