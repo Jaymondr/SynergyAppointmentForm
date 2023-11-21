@@ -10,6 +10,7 @@ import UIKit
 class FormListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
+    
     let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {

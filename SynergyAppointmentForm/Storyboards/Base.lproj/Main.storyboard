@@ -833,6 +833,7 @@
                         <outlet property="rateTextField" destination="Ts2-ZY-Beg" id="vap-oE-BLm"/>
                         <outlet property="reasonTextView" destination="G23-Oz-F8q" id="9zZ-Yt-51K"/>
                         <outlet property="spouseTextField" destination="x5m-f3-aZ7" id="s1f-Op-Qtf"/>
+                        <outlet property="stateTextField" destination="7HF-df-Hto" id="DGt-0z-RJ1"/>
                         <outlet property="yearsOwnedTextField" destination="h8z-1j-4Hi" id="Clk-DT-p3l"/>
                         <outlet property="zipTextField" destination="5Bw-l7-nQ9" id="Zhk-Pk-npj"/>
                     </connections>

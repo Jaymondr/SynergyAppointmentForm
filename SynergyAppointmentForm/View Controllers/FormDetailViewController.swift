@@ -34,14 +34,31 @@ class FormDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = UIColor.eden
-
-        
+        setUpView(with: form)
     }
     
     // MARK: PROPERTIES
     var form: Form?
     
     // MARK: FUNCTIONS
-    
-
+    func setUpView(with form: Form?) {
+        guard let form = form else { print("No Form!"); return }
+        firstNameTextField?.text = form.firstName
+        lastNameTextField?.text = form.lastName
+        spouseTextField?.text = form.spouse
+        addressTextField.text = form.address
+        zipTextField.text = form.zip
+        cityTextField.text = form.city
+        stateTextField.text = form.state
+        phoneTextField.text = form.phone
+        emailTextField.text = form.email
+        numberOfWindowsTextField.text = form.numberOfWindows
+        energyBillTextField.text = form.energyBill
+        quoteTextField.text = form.retailQuote
+        financeOptionsTextField.text = form.financeOptions
+        yearsOwnedTextField.text = form.yearsOwned
+        reasonTextView.text = form.reason
+        rateTextField.text = form.rate
+        commentsTextView.text = form.comments
+    }
 }
