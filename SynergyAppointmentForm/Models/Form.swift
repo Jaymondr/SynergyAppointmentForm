@@ -117,9 +117,27 @@ class Form {
     
     static func firebaseRepresentation(form: Form, completion: @escaping (_ formDictionary: [String : Any]) -> Void) {
         let data = [
-        FormFirebaseKey.fAddress : form.address,
-        FormFirebaseKey.fAmpm : form.ampm,
-        // TODO: Finish
+            FormFirebaseKey.fAddress: form.address,
+            FormFirebaseKey.fAmpm: form.ampm.lowercased(),
+            FormFirebaseKey.fCity: form.city,
+            FormFirebaseKey.fComments: form.comments,
+            FormFirebaseKey.fDate: form.date,
+            FormFirebaseKey.fDay: form.day,
+            FormFirebaseKey.fEmail: form.email,
+            FormFirebaseKey.fEnergyBill: form.energyBill,
+            FormFirebaseKey.fFinanceOptions: form.financeOptions,
+            FormFirebaseKey.fFirstName: form.firstName,
+            FormFirebaseKey.fLastName: form.lastName,
+            FormFirebaseKey.fNumberOfWindows: form.numberOfWindows,
+            FormFirebaseKey.fPhone: form.phone,
+            FormFirebaseKey.fRate: form.rate,
+            FormFirebaseKey.fReason: form.reason,
+            FormFirebaseKey.fRetailQuote: form.retailQuote,
+            FormFirebaseKey.fSpouse: form.spouse,
+            FormFirebaseKey.fState: form.state,
+            FormFirebaseKey.fTime: form.time,
+            FormFirebaseKey.fYearsOwned: form.yearsOwned,
+            FormFirebaseKey.fZip: form.zip
         ]
         
         completion(data)
