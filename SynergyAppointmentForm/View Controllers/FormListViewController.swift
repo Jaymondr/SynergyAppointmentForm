@@ -14,15 +14,11 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadForms()
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         tableView.refreshControl = refreshControl
+        setTitleAttributes()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        loadForms()
-    }
-    
     
     // MARK: PROPERTIES
     var forms: [Form] = []
@@ -37,6 +33,14 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             }
             self.forms = forms
             self.tableView.reloadData()
+        }
+    }
+    
+    func setTitleAttributes() {
+        if let navigationController = self.navigationController {
+            self.navigationItem.title = "FORMS"
+            navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.eden]
+            navigationController.navigationBar.titleTextAttributes?[NSAttributedString.Key.font] = UIFont.systemFont(ofSize: 24.0, weight: .medium)
         }
     }
     
@@ -69,14 +73,17 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "toFormDetail",
+           let indexPath = tableView.indexPathForSelectedRow,
+           let destinationVC = segue.destination as? FormDetailViewController {
+            
+            let selectedForm = forms[indexPath.row]
+            
+            destinationVC.form = selectedForm
+        }
     }
-    */
-
 }

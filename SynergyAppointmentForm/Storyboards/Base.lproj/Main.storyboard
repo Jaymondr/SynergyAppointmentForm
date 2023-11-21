@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Form List View Controller-->
+        <!--Forms-->
         <scene sceneID="At3-en-Jv6">
             <objects>
-                <viewController id="JHj-3R-XoM" customClass="FormListViewController" customModule="SynergyAppointmentForm" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Forms" id="JHj-3R-XoM" customClass="FormListViewController" customModule="SynergyAppointmentForm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Qux-la-YYr">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -21,14 +21,14 @@
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tqp-d2-q3O">
                                 <rect key="frame" x="0.0" y="50" width="393" height="44"/>
                                 <items>
-                                    <navigationItem title="FORM" id="2OE-fC-BZ4"/>
+                                    <navigationItem id="2OE-fC-BZ4"/>
                                 </items>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="BvH-az-xey">
                                 <rect key="frame" x="0.0" y="103" width="393" height="666"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="formCell" rowHeight="138" id="4nh-tc-2PR" customClass="FormTableViewCell" customModule="SynergyAppointmentForm" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="formCell" rowHeight="138" id="4nh-tc-2PR" customClass="FormTableViewCell" customModule="SynergyAppointmentForm" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="393" height="138"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4nh-tc-2PR" id="Amh-71-OWP">
@@ -120,6 +120,7 @@
                                             <outlet property="dayLabel" destination="XdU-SK-72q" id="IZh-3X-xkX"/>
                                             <outlet property="firstNameLabel" destination="WvX-J8-lhM" id="V1e-hE-qX7"/>
                                             <outlet property="timeLabel" destination="KvD-Sv-yli" id="EMs-i1-wm5"/>
+                                            <segue destination="mzI-Pq-KQL" kind="show" identifier="toFormDetail" id="WqX-tD-Frz"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -814,11 +815,31 @@
                             <constraint firstItem="bUT-f1-drS" firstAttribute="leading" secondItem="Myy-u9-RXG" secondAttribute="leading" id="sUC-uz-f39"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="8Id-yA-iaf"/>
                     <size key="freeformSize" width="393" height="2000"/>
+                    <connections>
+                        <outlet property="addressTextField" destination="W4H-HC-dP7" id="DVk-aj-Iyq"/>
+                        <outlet property="cityTextField" destination="iqC-q9-dAm" id="Lkl-95-nME"/>
+                        <outlet property="commentsTextView" destination="8YP-i2-Zvd" id="xdk-D2-fkF"/>
+                        <outlet property="dateTimePicker" destination="HHr-JJ-iOb" id="9pq-2U-QkS"/>
+                        <outlet property="emailTextField" destination="3Xi-t9-FUK" id="w3T-PU-PiT"/>
+                        <outlet property="energyBillTextField" destination="9uu-sJ-fOJ" id="r5N-I9-nrQ"/>
+                        <outlet property="financeOptionsTextField" destination="MyG-fj-sSM" id="Srb-s4-Zys"/>
+                        <outlet property="firstNameTextField" destination="gcG-Er-mtO" id="FZb-nK-RED"/>
+                        <outlet property="lastNameTextField" destination="B6u-ox-gua" id="kmV-Yr-Wbg"/>
+                        <outlet property="numberOfWindowsTextField" destination="Prb-yK-aEB" id="YNC-3P-19W"/>
+                        <outlet property="phoneTextField" destination="GdM-Sc-2B5" id="cfn-mf-hgT"/>
+                        <outlet property="quoteTextField" destination="MMY-YT-QPg" id="YjV-G0-99r"/>
+                        <outlet property="rateTextField" destination="Ts2-ZY-Beg" id="vap-oE-BLm"/>
+                        <outlet property="reasonTextView" destination="G23-Oz-F8q" id="9zZ-Yt-51K"/>
+                        <outlet property="spouseTextField" destination="x5m-f3-aZ7" id="s1f-Op-Qtf"/>
+                        <outlet property="yearsOwnedTextField" destination="h8z-1j-4Hi" id="Clk-DT-p3l"/>
+                        <outlet property="zipTextField" destination="5Bw-l7-nQ9" id="Zhk-Pk-npj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uvv-HJ-5Iz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1969" y="245"/>
+            <point key="canvasLocation" x="1978" y="63"/>
         </scene>
         <!--Form View Controller-->
         <scene sceneID="yqO-lF-YeP">
@@ -1502,7 +1523,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gAn-5j-mir" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2027" y="-1120"/>
+            <point key="canvasLocation" x="2619" y="-1268"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sft-NI-bf2">
