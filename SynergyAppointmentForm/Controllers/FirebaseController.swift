@@ -14,8 +14,21 @@ class FirebaseController {
     let db = Firestore.firestore()
     
     
-    // MARK: FUNCTIONS
+    // MARK: CRUD FUNCTIONS
     
+    // CREATE
+    func saveForm(data: [String : Any], completion: @escaping (_ error: Error?) -> Void) {
+        db.collection(FormFirebaseKey.collectionID).addDocument(data: data) { error in
+            if let error = error {
+                completion(error)
+            } else {
+                print("No Errors saving document")
+                completion(nil)
+            }
+        }
+    }
+    
+    // READ
     func getNames(completion: @escaping (_ names: [String], _ error: Error? ) -> Void) {
         db.collection("Forms").getDocuments { snapshot, error in
             if let error = error {

@@ -13,7 +13,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadForms()
+//        loadForms()
     }
     
     // MARK: PROPERTIES
@@ -21,7 +21,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: FUNCTIONS
     
-    func loadForms() {        
+    func loadForms() {
         FirebaseController.shared.getNames { names, error in
             print("Names: \(names)")
             self.forms = names
