@@ -29,24 +29,29 @@ class FirebaseController {
     }
     
     // READ
-    func getNames(completion: @escaping (_ names: [String], _ error: Error? ) -> Void) {
-        db.collection("Forms").getDocuments { snapshot, error in
+    func getForms(completion: @escaping (_ forms: [Form], _ error: Error? ) -> Void) {
+        db.collection(FormFirebaseKey.collectionID).getDocuments { snapshot, error in
             if let error = error {
                 completion([], error)
                 return
             }
-            
-            guard let documents = snapshot?.documents else{
+            guard let documents = snapshot?.documents else {
                 completion([], nil)
                     return
             }
-            var names: [String] = []
+            var forms: [Form] = []
             for document in documents {
                 let data = document.data()
-                let name = data["name"] as? String ?? ""
-                names.append(name)
+                let form = Form(firebaseID: document.documentID, firebaseData: data)
+                forms.append(form)
             }
-            completion(names, nil)
+            completion(forms, nil)
         }
     }
+    
+    // UPDATE
+    
+    
+    // DELETE
+    
 }

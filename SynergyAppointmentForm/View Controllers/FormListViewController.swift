@@ -10,24 +10,38 @@ import UIKit
 class FormListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
-    
+    let refreshControl = UIRefreshControl()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-//        loadForms()
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        tableView.refreshControl = refreshControl
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadForms()
+    }
+    
+    
     // MARK: PROPERTIES
-    var forms: [String] = []
+    var forms: [Form] = []
+
     
     // MARK: FUNCTIONS
-    
+        
     func loadForms() {
-        FirebaseController.shared.getNames { names, error in
-            print("Names: \(names)")
-            self.forms = names
+        FirebaseController.shared.getForms { forms, error in
+            for form in forms {
+                print("Name: \(form.firstName)")
+            }
+            self.forms = forms
             self.tableView.reloadData()
         }
     }
+    
+    
+    // MARK: TABLEVIEW
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return forms.count
@@ -47,6 +61,12 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         return 200
     }
     
+    @objc private func refreshData(_ sender: Any) {
+        loadForms()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.65) {
+            self.refreshControl.endRefreshing()
+        }
+    }
 
 
     /*

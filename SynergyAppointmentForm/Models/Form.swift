@@ -86,7 +86,7 @@ class Form {
 
     }
     
-    convenience init?(firebaseID: String, firebaseData: [String : Any]) {
+    convenience init(firebaseID: String, firebaseData: [String : Any]) {
         let address = firebaseData[FormFirebaseKey.fAddress] as? String ?? ""
         let ampm = firebaseData[FormFirebaseKey.fAmpm] as? String ?? ""
         let city = firebaseData[FormFirebaseKey.fCity] as? String ?? ""
@@ -143,44 +143,3 @@ class Form {
         completion(data)
     }
 }
-
-//extension CKRecord {
-//    convenience init(form: Form) {
-//        self.init(recordType: FormCloudStrings.recordTypeKey)
-//        self.setValuesForKeys([
-//            FormCloudStrings.cDay : form.day,
-//            FormCloudStrings.cTime : form.time,
-//            FormCloudStrings.cDate : form.date,
-//            FormCloudStrings.cFirstName : form.firstName,
-//            FormCloudStrings.cLastName : form.lastName,
-//            FormCloudStrings.cSpouse : form.spouse,
-//            FormCloudStrings.cAddress : form.address,
-//            FormCloudStrings.cZip : form.zip,
-//            FormCloudStrings.cCity : form.city,
-//            FormCloudStrings.cState : form.state,
-//            FormCloudStrings.cPhone : form.phone,
-//            FormCloudStrings.cEmail : form.email,
-//            FormCloudStrings.cNumberOfWindows : form.numberOfWindows,
-//            FormCloudStrings.cEnergyBill : form.energyBill,
-//            FormCloudStrings.cRetailQuote : form.retailQuote,
-//            FormCloudStrings.cFinanceOptions : form.financeOptions,
-//            FormCloudStrings.cYearsOwned : form.yearsOwned,
-//            FormCloudStrings.cReason : form.reason,
-//            FormCloudStrings.cRate : form.rate,
-//            FormCloudStrings.cComments : form.comments
-//        ])
-//    }
-    
-//    convenience init(formRecord: FormRecord) {
-//        self.init(recordType: FormCloudStrings.recordTypeKey)
-//        self.setValuesForKeys([
-//            FormCloudStrings.cFirstName : formRecord.firstName,
-//            FormCloudStrings.cLastName : formRecord.lastName,
-//            FormCloudStrings.cDay : formRecord.day,
-//            FormCloudStrings.cTime : formRecord.time,
-//            FormCloudStrings.cDate : formRecord.date,
-//            FormCloudStrings.cPhone : formRecord.phoneNumber,
-//            FormCloudStrings.cBody : formRecord.body
-//        ])
-//    }
-//}

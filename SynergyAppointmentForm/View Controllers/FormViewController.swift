@@ -54,9 +54,9 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
             FirebaseController.shared.saveForm(data: formDictionary) { error in
                 if let error = error {
                     print("Error: \(error)")
+                    UIAlertController.presentDismissingAlert(title: "Failed to Save Form", dismissAfter: 1.2)
                 } else {
-                    //Insert UIAlert
-                    print("Saved Form")
+                    UIAlertController.presentDismissingAlert(title: "Form Saved!", dismissAfter: 0.5)
                 }
             }
         }
@@ -97,11 +97,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         let form = createForm()
         FormController.shared.createAndCopyTrello(form: form)
         // CREATE ALERT
-        let alert = UIAlertController(title: "Trello Title Copied!", message: nil, preferredStyle: .alert)
-        self.present(alert, animated: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.65) {
-            alert.dismiss(animated: true)
-        }
+        UIAlertController.presentDismissingAlert(title: "Trello Title Copied!", dismissAfter: 0.65)
     }
     
     @IBAction func copyButtonPressed(_ sender: Any) {

@@ -19,12 +19,11 @@ class FormTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        print("Selected")
         // Configure the view for the selected state
     }
     
-    func setCellData(with form: String) {
-        dateLabel.text = form
+    func setCellData(with form: Form) {
+        dateLabel.text = form.day
     }
 
     
