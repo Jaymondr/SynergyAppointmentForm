@@ -42,18 +42,22 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         phoneTextfield.layer.borderColor = UIColor.clear.cgColor
         setupView()
         setTextFieldsDelegate()
+        navigationController?.navigationBar.tintColor = UIColor.eden
+
 
     }
     
     // MARK: BUTTONS
     @IBAction func saveButtonPressed(_ sender: Any) {
-        let formRecord = FormController.shared.createFormRecord(with: createForm())
-        FormController.shared.saveFormRecord(formRecord: formRecord) { form, error in
-            if let error = error {
-                print("There was an error saving the form: \(error)")
-            } else {
-                guard let form = form else { print("there was an error with the form after saving"); return }
-                print("Saved form: \(form.firstName) \(form.lastName)")
+        let form = createForm()
+        Form.firebaseRepresentation(form: form) { formDictionary in
+            FirebaseController.shared.saveForm(data: formDictionary) { error in
+                if let error = error {
+                    print("Error: \(error)")
+                    UIAlertController.presentDismissingAlert(title: "Failed to Save Form", dismissAfter: 1.2)
+                } else {
+                    UIAlertController.presentDismissingAlert(title: "Form Saved!", dismissAfter: 0.5)
+                }
             }
         }
     }
@@ -93,11 +97,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         let form = createForm()
         FormController.shared.createAndCopyTrello(form: form)
         // CREATE ALERT
-        let alert = UIAlertController(title: "Trello Title Copied!", message: nil, preferredStyle: .alert)
-        self.present(alert, animated: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.65) {
-            alert.dismiss(animated: true)
-        }
+        UIAlertController.presentDismissingAlert(title: "Trello Title Copied!", dismissAfter: 0.65)
     }
     
     @IBAction func copyButtonPressed(_ sender: Any) {
@@ -164,7 +164,6 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     func setupView() {
         reasonTextview.layer.cornerRadius = 5.0
         commentsTextview.layer.cornerRadius = 5.0
-        saveButton.isHidden = true
         
         // TEXTFIELDS
         
@@ -285,7 +284,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
             time = ""
             ampm = ""
         }
-        let form = Form(day: day, time: time, date: date, ampm: ampm, firstName: firstNameTextfield.text ?? "", lastName: lastNameTextfield.text ?? "", spouse: spouseTextfield.text ?? "", address: addressTextfield.text ?? "", zip: zipTextfield.text ?? "", city: cityTextfield.text ?? "", state: stateTextfield.text ?? "", phone: phoneTextfield.text ?? "", email: emailTextfield.text ?? "", numberOfWindows: numberOfWindowsTexfield.text ?? "", energyBill: energyBillTextfield.text ?? "", retailQuote: quoteTextfield.text ?? "", financeOptions: financeTextfield.text ?? "", yearsOwned: yearsOwnedTextfield.text ?? "", reason: reasonTextview.text ?? "", rate: rateTextfield.text ?? "", comments: commentsTextview.text ?? "")
+        let form = Form(address: addressTextfield.text ?? "", ampm: ampm, city: cityTextfield.text ?? "", comments: commentsTextview.text ?? "", date: date, day: day, email: emailTextfield.text ?? "", energyBill: energyBillTextfield.text ?? "", financeOptions: financeTextfield.text ?? "", firstName: firstNameTextfield.text ?? "", lastName: lastNameTextfield.text ?? "", numberOfWindows: numberOfWindowsTexfield.text ?? "", phone: phoneTextfield.text ?? "", rate: rateTextfield.text ?? "", reason: reasonTextview.text ?? "", retailQuote: quoteTextfield.text ?? "", spouse: spouseTextfield.text ?? "", state: stateTextfield.text ?? "", time: time, yearsOwned: yearsOwnedTextfield.text ?? "", zip: zipTextfield.text ?? "")
         
         return form
     }

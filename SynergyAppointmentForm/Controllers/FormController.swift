@@ -15,69 +15,7 @@ class FormController {
     static let shared = FormController()
     
     // MARK: PROPERTIES
-    let geocoder = CLGeocoder()
-    let privateDB = CKContainer.default().privateCloudDatabase
-    var formRecords: [FormRecord] = []
-    
-    // MARK: CRUD FUNCTIONS
-    
-    func createFormRecordWith(newFormRecord: FormRecord, completion: @escaping (_ form: FormRecord?, _ error: Error?) -> Void) {
-        saveFormRecord(formRecord: newFormRecord) { form, error in
-            if let error = error {
-                print("There was an error saving your form")
-                completion(nil, error)
-            } else {
-                guard let form = form else { return completion(nil, error) }
-                completion(form, nil)
-            }
-        }
-    }
-    
-    
-    func fetchFormRecordsWith(completion: @escaping(_ forms: [FormRecord]?, _ error: Error?) -> Void ) {
-        
-        let fetchAllPredicates = NSPredicate(value: true)
-        
-        let query = CKQuery(recordType: FormRecordCloudStrings.recordTypeKey, predicate: fetchAllPredicates)
-        privateDB.perform(query, inZoneWith: nil) { records, error in
-            if let error = error { print("The error is here 1: \(error)"); return completion(nil, error) }
-            
-            
-            guard let records = records else {return completion(nil, error)}
-            print("You did the Fetching of the Forms!")
-            
-            let forms = records.compactMap({FormRecord(ckRecord: $0)})
-            
-            self.formRecords = forms
-            
-            
-            DispatchQueue.main.async {
-                for form in forms {
-                    print("name: \(form.firstName), \(form.phone)")
-                }
-
-                completion(forms, nil)
-            }
-        }
-    }
-    
-    func saveFormRecord(formRecord: FormRecord, completion: @escaping (_ form: FormRecord?, _ error: Error?) -> Void) {
-        let formRecord = CKRecord(formRecord: formRecord)
-        privateDB.save(formRecord) { (record, error) in
-            if let error = error {
-                print("Error: \(error)")
-                return completion(nil, error)
-            }
-            
-            guard let record = record,
-                  let savedForm = FormRecord(ckRecord: record) else { completion(nil, error); return }
-            print("Saved form")
-            
-            self.formRecords.insert(savedForm, at: 0)
-            
-            DispatchQueue.main.async { completion(savedForm, nil)}
-        }
-    }
+    let geocoder = CLGeocoder()    
     
     // MARK: FUNCTIONS
     func createAndCopyForm(form: Form) {
@@ -148,7 +86,7 @@ class FormController {
     func createAndCopyTrello(form: Form) {
         UIPasteboard.general.string =
         """
-        \(form.day) \(form.date) @\(form.time) \(form.firstName) & \(form.spouse) \(form.lastName) (\(form.city)) -\(form.myName)
+        \(form.day) \(form.date) @\(form.time) \(form.firstName) & \(form.spouse) \(form.lastName) (\(form.city)) -Jaymond
         """
     }
     
@@ -159,7 +97,7 @@ class FormController {
     func createText(from form: Form) -> String {
         let text =
         """
-        Hey \(form.firstName), it's \(form.myName) with Synergy.
+        Hey \(form.firstName), it's Jaymond with Synergy.
         
         Your appointment is good to go for \(form.day) \(form.date) at \(form.time)\(form.ampm.lowercased()). Thanks for your time, and if you need anything just call or text!
         
