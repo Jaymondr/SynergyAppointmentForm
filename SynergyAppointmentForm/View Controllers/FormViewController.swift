@@ -258,7 +258,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     
     func formatDate(date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE MM/dd h a"
+        formatter.dateFormat = "EEEE MM/dd h a yyyy"
         
         let formattedDate = formatter.string(from: date)
         return formattedDate
@@ -270,21 +270,24 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         var date: String
         var time: String
         var ampm: String
-        let dateTimeText = formatDate(date: dateTimePicker.date)
-        print(dateTimeText)
-        let dateTimeArray = dateTimeText.split(separator: " ")
+        var year: String
+        let dateString = dateTimePicker.date.formattedStringDate()
+        print(dateString)
+        let dateTimeArray = dateString.split(separator: " ")
         if dateTimeArray.count >= 2 {
             day = String(dateTimeArray[0])
             date = String(dateTimeArray[1])
             time = String(dateTimeArray[2])
             ampm = String(dateTimeArray[3])
+            year = String(dateTimeArray[4])
         } else {
             day = ""
             date = ""
             time = ""
             ampm = ""
+            year = ""
         }
-        let form = Form(address: addressTextfield.text ?? "", ampm: ampm, city: cityTextfield.text ?? "", comments: commentsTextview.text ?? "", date: date, day: day, email: emailTextfield.text ?? "", energyBill: energyBillTextfield.text ?? "", financeOptions: financeTextfield.text ?? "", firstName: firstNameTextfield.text ?? "", lastName: lastNameTextfield.text ?? "", numberOfWindows: numberOfWindowsTexfield.text ?? "", phone: phoneTextfield.text ?? "", rate: rateTextfield.text ?? "", reason: reasonTextview.text ?? "", retailQuote: quoteTextfield.text ?? "", spouse: spouseTextfield.text ?? "", state: stateTextfield.text ?? "", time: time, yearsOwned: yearsOwnedTextfield.text ?? "", zip: zipTextfield.text ?? "")
+        let form = Form(address: addressTextfield.text ?? "", ampm: ampm, city: cityTextfield.text ?? "", comments: commentsTextview.text ?? "", date: date, dateString: dateString, day: day, email: emailTextfield.text ?? "", energyBill: energyBillTextfield.text ?? "", financeOptions: financeTextfield.text ?? "", firstName: firstNameTextfield.text ?? "", lastName: lastNameTextfield.text ?? "", numberOfWindows: numberOfWindowsTexfield.text ?? "", phone: phoneTextfield.text ?? "", rate: rateTextfield.text ?? "", reason: reasonTextview.text ?? "", retailQuote: quoteTextfield.text ?? "", spouse: spouseTextfield.text ?? "", state: stateTextfield.text ?? "", time: time, year: year, yearsOwned: yearsOwnedTextfield.text ?? "", zip: zipTextfield.text ?? "")
         
         return form
     }

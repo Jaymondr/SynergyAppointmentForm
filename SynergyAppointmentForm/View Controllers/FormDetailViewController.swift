@@ -60,5 +60,10 @@ class FormDetailViewController: UIViewController {
         reasonTextView.text = form.reason
         rateTextField.text = form.rate
         commentsTextView.text = form.comments
+        if let date = DateFormatter.dateFromFormattedString(form.dateString) {
+            self.dateTimePicker.date = date
+        } else {
+            print("Unable to set date picker")
+        }
     }
 }

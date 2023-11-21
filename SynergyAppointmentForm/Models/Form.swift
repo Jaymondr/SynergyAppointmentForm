@@ -10,30 +10,32 @@ import CloudKit
 //
 struct FormFirebaseKey {
     static let collectionID = "Forms"
-    static let fMyName = "myName"
-    static let fFirebaseID = "firebaseID"
-    static let fDay = "day"
-    static let fTime = "time"
-    static let fDate = "date"
-    static let fFirstName = "firstName"
-    static let fLastName = "lastName"
-    static let fSpouse = "spouse"
-    static let fAddress = "address"
-    static let fZip = "zip"
-    static let fCity = "city"
-    static let fState = "state"
-    static let fPhone = "phone"
-    static let fEmail = "email"
-    static let fNumberOfWindows = "numberOfWindows"
-    static let fEnergyBill = "energyBill"
-    static let fRetailQuote = "retailQuote"
-    static let fFinanceOptions = "financeOptions"
-    static let fYearsOwned = "yearsOwned"
-    static let fReason = "reason"
-    static let fRate = "rate"
-    static let fComments = "comments"
-    static let fBody = "body"
     static let fAmpm = "ampm"
+    static let fAddress = "address"
+    static let fBody = "body"
+    static let fCity = "city"
+    static let fComments = "comments"
+    static let fDate = "date"
+    static let fDateString = "dateString"
+    static let fDay = "day"
+    static let fEmail = "email"
+    static let fEnergyBill = "energyBill"
+    static let fFirstName = "firstName"
+    static let fFinanceOptions = "financeOptions"
+    static let fFirebaseID = "firebaseID"
+    static let fLastName = "lastName"
+    static let fMyName = "myName"
+    static let fNumberOfWindows = "numberOfWindows"
+    static let fPhone = "phone"
+    static let fRate = "rate"
+    static let fReason = "reason"
+    static let fRetailQuote = "retailQuote"
+    static let fSpouse = "spouse"
+    static let fState = "state"
+    static let fTime = "time"
+    static let fYear = "year"
+    static let fYearsOwned = "yearsOwned"
+    static let fZip = "zip"
 }
 
 class Form {
@@ -43,6 +45,7 @@ class Form {
     var city: String
     var comments: String
     var date: String
+    var dateString: String
     var day: String
     var email: String
     var energyBill: String
@@ -57,16 +60,18 @@ class Form {
     var spouse: String
     var state: String
     var time: String
+    var year: String
     var yearsOwned: String
     var zip: String
     
-    init(address: String, ampm: String, city: String, comments: String, date: String, day: String, email: String, energyBill: String, financeOptions: String, firstName: String, lastName: String, numberOfWindows: String, phone: String, rate: String, reason: String, retailQuote: String, spouse: String, state: String, time: String, yearsOwned: String, zip: String) {
+    init(address: String, ampm: String, city: String, comments: String, date: String, dateString: String, day: String, email: String, energyBill: String, financeOptions: String, firstName: String, lastName: String, numberOfWindows: String, phone: String, rate: String, reason: String, retailQuote: String, spouse: String, state: String, time: String, year: String, yearsOwned: String, zip: String) {
         
         self.address = address
         self.ampm = ampm
         self.city = city
         self.comments = comments
         self.date = date
+        self.dateString = dateString
         self.day = day
         self.email = email
         self.energyBill = energyBill
@@ -81,6 +86,7 @@ class Form {
         self.spouse = spouse
         self.state = state
         self.time = time
+        self.year = year
         self.yearsOwned = yearsOwned
         self.zip = zip
 
@@ -92,6 +98,7 @@ class Form {
         let city = firebaseData[FormFirebaseKey.fCity] as? String ?? ""
         let comments = firebaseData[FormFirebaseKey.fComments] as? String ?? ""
         let date = firebaseData[FormFirebaseKey.fDate] as? String ?? ""
+        let dateString = firebaseData[FormFirebaseKey.fDateString] as? String ?? ""
         let day = firebaseData[FormFirebaseKey.fDay] as? String ?? ""
         let email = firebaseData[FormFirebaseKey.fEmail] as? String ?? ""
         let energyBill = firebaseData[FormFirebaseKey.fEnergyBill] as? String ?? ""
@@ -106,11 +113,12 @@ class Form {
         let spouse = firebaseData[FormFirebaseKey.fSpouse] as? String ?? ""
         let state = firebaseData[FormFirebaseKey.fState] as? String ?? ""
         let time = firebaseData[FormFirebaseKey.fTime] as? String ?? ""
+        let year = firebaseData[FormFirebaseKey.fYear] as? String ?? ""
         let yearsOwned = firebaseData[FormFirebaseKey.fYearsOwned] as? String ?? ""
         let zip = firebaseData[FormFirebaseKey.fZip] as? String ?? ""
 
         
-        self.init(address: address, ampm: ampm, city: city, comments: comments, date: date, day: day, email: email, energyBill: energyBill, financeOptions: financeOptions, firstName: firstName, lastName: lastName, numberOfWindows: numberOfWindows, phone: phone, rate: rate, reason: reason, retailQuote: retailQuote, spouse: spouse, state: state, time: time, yearsOwned: yearsOwned, zip: zip)
+        self.init(address: address, ampm: ampm, city: city, comments: comments, date: date, dateString: dateString, day: day, email: email, energyBill: energyBill, financeOptions: financeOptions, firstName: firstName, lastName: lastName, numberOfWindows: numberOfWindows, phone: phone, rate: rate, reason: reason, retailQuote: retailQuote, spouse: spouse, state: state, time: time, year: year, yearsOwned: yearsOwned, zip: zip)
 
 
     }
@@ -122,6 +130,7 @@ class Form {
             FormFirebaseKey.fCity: form.city,
             FormFirebaseKey.fComments: form.comments,
             FormFirebaseKey.fDate: form.date,
+            FormFirebaseKey.fDateString: form.dateString,
             FormFirebaseKey.fDay: form.day,
             FormFirebaseKey.fEmail: form.email,
             FormFirebaseKey.fEnergyBill: form.energyBill,
@@ -136,6 +145,7 @@ class Form {
             FormFirebaseKey.fSpouse: form.spouse,
             FormFirebaseKey.fState: form.state,
             FormFirebaseKey.fTime: form.time,
+            FormFirebaseKey.fYear: form.year,
             FormFirebaseKey.fYearsOwned: form.yearsOwned,
             FormFirebaseKey.fZip: form.zip
         ]

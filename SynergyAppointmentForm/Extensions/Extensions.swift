@@ -24,3 +24,19 @@ extension UIAlertController {
         }
     }
 }
+
+extension Date {
+    func formattedStringDate() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE MM/dd h a yyyy"
+        return formatter.string(from: self)
+    }
+}
+
+extension DateFormatter {
+    static func dateFromFormattedString(_ dateString: String) -> Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE MM/dd h a yyyy"
+        return formatter.date(from: dateString)
+    }
+}

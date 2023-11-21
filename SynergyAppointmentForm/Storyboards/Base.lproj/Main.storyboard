@@ -865,7 +865,7 @@
                                                         <color key="textColor" name="eden"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="X4p-ef-jzr">
+                                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="15" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="X4p-ef-jzr">
                                                         <rect key="frame" x="89.666666666666657" y="0.0" width="283.33333333333337" height="50"/>
                                                     </datePicker>
                                                 </subviews>
