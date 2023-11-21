@@ -13,8 +13,6 @@ class FormTableViewCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var firstNameLabel: UILabel!
-    @IBOutlet weak var spouseNameLabel: UILabel!
-    @IBOutlet weak var ambersandLabel: UILabel!
     @IBOutlet weak var cityStateLabel: UILabel!
     @IBOutlet weak var cellView: UIView!
     
@@ -29,22 +27,21 @@ class FormTableViewCell: UITableViewCell {
 //    }
     
     func setCellData(with form: Form) {
-        dayLabel.text = form.day
+        dayLabel.text = form.day.uppercased()
         dateLabel.text = form.date
         timeLabel.text = "\(form.time)\(form.ampm.uppercased())"
-        cityStateLabel.text = "\(form.city)(\(form.state))"
-        firstNameLabel.text = form.firstName
+        cityStateLabel.text = "\(form.city.uppercased())(\(form.state))"
         if form.spouse.isEmpty {
-            firstNameLabel.textAlignment = .center
-            spouseNameLabel.isHidden = true
-            ambersandLabel.isHidden = true
+            firstNameLabel.text = form.firstName.uppercased() + " " + form.lastName.uppercased()
         } else {
-            spouseNameLabel.text = form.spouse
+            firstNameLabel.text = form.firstName.uppercased() + " & " + form.spouse.uppercased()
         }
     }
     
     func loadView() {
         cellView.layer.cornerRadius = 10.0
+        cellView.layer.borderWidth = 2.5
+        cellView.layer.borderColor = UIColor.eden.cgColor
     }
     
 }
