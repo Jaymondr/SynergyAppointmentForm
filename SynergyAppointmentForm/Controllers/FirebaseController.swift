@@ -60,8 +60,10 @@ class FirebaseController {
         db.collection(FirebaseKeys.collectionID).document(firebaseID).updateData(data) { error in
             if let error = error {
                 completion(error)
+                print("There was an error updating the form: \(error)")
                 return
             }
+            print("Successfully updated form. ID: \(firebaseID), Name: \(form.firstName)")
             completion(nil)
         }
     }

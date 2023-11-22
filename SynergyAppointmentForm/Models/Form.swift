@@ -41,7 +41,7 @@ struct FirebaseKeys {
 
 class Form {
     
-    var firebaseID: String?
+    var firebaseID: String
     var address: String
     var ampm: String
     var city: String
@@ -66,7 +66,7 @@ class Form {
     var yearsOwned: String
     var zip: String
     
-    init(firebaseID: String = "", address: String, ampm: String, city: String, comments: String, date: String, dateString: String, day: String, email: String, energyBill: String, financeOptions: String, firstName: String, lastName: String, numberOfWindows: String, phone: String, rate: String, reason: String, retailQuote: String, spouse: String, state: String, time: String, year: String, yearsOwned: String, zip: String) {
+    init(firebaseID: String = "formError", address: String, ampm: String, city: String, comments: String, date: String, dateString: String, day: String, email: String, energyBill: String, financeOptions: String, firstName: String, lastName: String, numberOfWindows: String, phone: String, rate: String, reason: String, retailQuote: String, spouse: String, state: String, time: String, year: String, yearsOwned: String, zip: String) {
         
         self.firebaseID = firebaseID
         self.address = address

@@ -9,6 +9,7 @@ import UIKit
 
 class FormDetailViewController: UIViewController {
     
+    
     // MARK: OUTLETS
     
     @IBOutlet weak var dateTimePicker: UIDatePicker!
@@ -31,6 +32,8 @@ class FormDetailViewController: UIViewController {
     @IBOutlet weak var commentsTextView: UITextView!
     
 
+    // MARK: LIFECYCLE
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = UIColor.eden
@@ -38,17 +41,65 @@ class FormDetailViewController: UIViewController {
     }
     
     // MARK: PROPERTIES
+    
     var form: Form?
+    
     
     // MARK: FUNCTIONS
     
     @IBAction func saveButtonPressed(_ sender: Any) {
+        guard let form = createForm() else { return }
+        print("form id: \(form.firebaseID)")
+        FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
+            if let error = error {
+                UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
+                print("Error: \(error)")
+                return
+            }
+            UIAlertController.presentDismissingAlert(title: "Updated Form!", dismissAfter: 0.6)
+        }
     }
+    
     @IBAction func trelloCopyButtonPressed(_ sender: Any) {
+        guard let form = createForm() else { return }
+        FormController.shared.createAndCopyTrello(form: form)
     }
+    
     @IBAction func sendMessageButtonPressed(_ sender: Any) {
+        guard let form = createForm() else { return }
+        let text = FormController.shared.createText(from: form)
+        var title: String = "Send Message?"
+        
+        // CREATE ALERT
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { _ in
+            guard let phoneNumber = self.phoneTextField.text else { return }
+            let urlString = "sms:\(phoneNumber)&body=\(text)"
+            
+            if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                // Handle the case where the Messages app or the URL scheme is not available
+                print("Messages app is not installed or the URL scheme is not supported.")
+                title = "Unable to open messages"
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                    alert.dismiss(animated: true)
+                }
+            }
+        }
+        
+        // ADD ALERT
+        alert.addAction(yesAction)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true)
+
     }
+    
     @IBAction func copyFormButtonPressed(_ sender: Any) {
+        guard let form = createForm() else { return }
+        FormController.shared.createAndCopyForm(form: form)
+        UIAlertController.presentDismissingAlert(title: "Copied Form", dismissAfter: 0.6)
     }
     
     
@@ -76,5 +127,34 @@ class FormDetailViewController: UIViewController {
         } else {
             print("Unable to set date picker")
         }
+    }
+    
+    func createForm() -> Form? {
+        guard let form = form else { UIAlertController.presentDismissingAlert(title: "Error: No Form.", dismissAfter: 0.6); return nil }
+        // Separate date time
+        var day: String
+        var date: String
+        var time: String
+        var ampm: String
+        var year: String
+        let dateString = dateTimePicker.date.formattedStringDate()
+        print(dateString)
+        let dateTimeArray = dateString.split(separator: " ")
+        if dateTimeArray.count >= 2 {
+            day = String(dateTimeArray[0])
+            date = String(dateTimeArray[1])
+            time = String(dateTimeArray[2])
+            ampm = String(dateTimeArray[3])
+            year = String(dateTimeArray[4])
+        } else {
+            day = ""
+            date = ""
+            time = ""
+            ampm = ""
+            year = ""
+        }
+        let updatedForm = Form(firebaseID: form.firebaseID, address: addressTextField.text ?? "", ampm: ampm, city: cityTextField.text ?? "", comments: commentsTextView.text ?? "", date: date, dateString: dateString, day: day, email: emailTextField.text ?? "", energyBill: energyBillTextField.text ?? "", financeOptions: financeOptionsTextField.text ?? "", firstName: firstNameTextField.text ?? "", lastName: lastNameTextField.text ?? "", numberOfWindows: numberOfWindowsTextField.text ?? "", phone: phoneTextField.text ?? "", rate: rateTextField.text ?? "", reason: reasonTextView.text ?? "", retailQuote: quoteTextField.text ?? "", spouse: spouseTextField.text ?? "", state: stateTextField.text ?? "", time: time, year: year, yearsOwned: yearsOwnedTextField.text ?? "", zip: zipTextField.text ?? "")
+        
+        return updatedForm
     }
 }

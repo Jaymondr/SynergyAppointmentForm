@@ -83,7 +83,6 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
                     alert.dismiss(animated: true)
                 }
             }
-            
         }
         
         // ADD ALERT
@@ -253,14 +252,6 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
 
         // Allow the text change if needed
         return true
-    }
-    
-    func formatDate(date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE MM/dd h a yyyy"
-        
-        let formattedDate = formatter.string(from: date)
-        return formattedDate
     }
     
     func createForm() -> Form {
