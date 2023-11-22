@@ -191,7 +191,6 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         reasonTextview.delegate = self
         rateTextfield.delegate = self
         commentsTextview.delegate = self
-        
 
     }
     
@@ -229,8 +228,6 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
             rateTextfield.becomeFirstResponder()
         } else if textField == rateTextfield {
             commentsTextview.becomeFirstResponder()
-        } else if textField == commentsTextview {
-            textField.resignFirstResponder()
         }
         else {
             textField.resignFirstResponder()

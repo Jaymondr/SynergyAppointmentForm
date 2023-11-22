@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import CoreLocation
 class FormDetailViewController: UIViewController {
     
     
@@ -31,7 +31,12 @@ class FormDetailViewController: UIViewController {
     @IBOutlet weak var rateTextField: UITextField!
     @IBOutlet weak var commentsTextView: UITextView!
     
+    
+    // MARK: PROPERTIES
 
+    var locationManager = CLLocationManager()
+
+    
     // MARK: LIFECYCLE
     
     override func viewDidLoad() {
@@ -101,7 +106,29 @@ class FormDetailViewController: UIViewController {
         FormController.shared.createAndCopyForm(form: form)
         UIAlertController.presentDismissingAlert(title: "Copied Form", dismissAfter: 0.6)
     }
-    
+    @IBAction func locationButtonPressed(_ sender: Any) {
+        FormController.shared.getLocationData(manager: &locationManager) { address in
+            self.addressTextField.text = address?.address
+            self.zipTextField.text = address?.zip
+            self.cityTextField.text = address?.city
+            self.stateTextField.text = address?.state
+            
+        }
+    }
+    @IBAction func copyPhoneButtonPressed(_ sender: Any) {
+        let phoneNumber = phoneTextField.text ?? ""
+        FormController.shared.createAndCopy(phone: phoneNumber)
+    }
+    @IBAction func clearReasonButtonPressed(_ sender: Any) {
+        UIAlertController.presentMultipleOptionAlert(message: "Are you sure you want to clear this section?", actionOptionTitle: "Clear", cancelOptionTitle: "Cancel") {
+            self.reasonTextView.text = ""
+        }
+    }
+    @IBAction func clearCommentsButtonPressed(_ sender: Any) {
+        UIAlertController.presentMultipleOptionAlert(message: "Are you sure you want to clear this section?", actionOptionTitle: "Clear", cancelOptionTitle: "Cancel") {
+            self.commentsTextView.text = ""
+        }
+    }
     
     func setUpView(with form: Form?) {
         guard let form = form else { print("No Form!"); return }
