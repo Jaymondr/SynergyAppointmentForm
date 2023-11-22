@@ -5,7 +5,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>FORM</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Please allow location services to use address auto-fill service</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

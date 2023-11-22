@@ -29,6 +29,9 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         
     func loadForms() {
         FirebaseController.shared.getForms { forms, error in
+            if let error = error {
+                print("Error fetching forms: \(error)")
+            }
             for form in forms {
                 print("Name: \(form.firstName)")
             }

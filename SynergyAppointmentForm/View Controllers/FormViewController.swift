@@ -50,17 +50,16 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     // MARK: BUTTONS
     @IBAction func saveButtonPressed(_ sender: Any) {
         let form = createForm()
-        Form.firebaseRepresentation(form: form) { formDictionary in
-            FirebaseController.shared.saveForm(data: formDictionary) { error in
-                if let error = error {
-                    print("Error: \(error)")
-                    UIAlertController.presentDismissingAlert(title: "Failed to Save Form", dismissAfter: 1.2)
-                } else {
-                    UIAlertController.presentDismissingAlert(title: "Form Saved!", dismissAfter: 0.5)
-                }
+        FirebaseController.shared.saveForm(form: form) { error in
+            if let error = error {
+                print("Error: \(error)")
+                UIAlertController.presentDismissingAlert(title: "Failed to Save Form", dismissAfter: 1.2)
+            } else {
+                UIAlertController.presentDismissingAlert(title: "Form Saved!", dismissAfter: 0.5)
             }
         }
     }
+    
     
     @IBAction func messageButtonPressed(_ sender: Any) {
         let form = createForm()
@@ -287,7 +286,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
             ampm = ""
             year = ""
         }
-        let form = Form(address: addressTextfield.text ?? "", ampm: ampm, city: cityTextfield.text ?? "", comments: commentsTextview.text ?? "", date: date, dateString: dateString, day: day, email: emailTextfield.text ?? "", energyBill: energyBillTextfield.text ?? "", financeOptions: financeTextfield.text ?? "", firstName: firstNameTextfield.text ?? "", lastName: lastNameTextfield.text ?? "", numberOfWindows: numberOfWindowsTexfield.text ?? "", phone: phoneTextfield.text ?? "", rate: rateTextfield.text ?? "", reason: reasonTextview.text ?? "", retailQuote: quoteTextfield.text ?? "", spouse: spouseTextfield.text ?? "", state: stateTextfield.text ?? "", time: time, year: year, yearsOwned: yearsOwnedTextfield.text ?? "", zip: zipTextfield.text ?? "")
+        let form = Form(firebaseID: "", address: addressTextfield.text ?? "", ampm: ampm, city: cityTextfield.text ?? "", comments: commentsTextview.text ?? "", date: date, dateString: dateString, day: day, email: emailTextfield.text ?? "", energyBill: energyBillTextfield.text ?? "", financeOptions: financeTextfield.text ?? "", firstName: firstNameTextfield.text ?? "", lastName: lastNameTextfield.text ?? "", numberOfWindows: numberOfWindowsTexfield.text ?? "", phone: phoneTextfield.text ?? "", rate: rateTextfield.text ?? "", reason: reasonTextview.text ?? "", retailQuote: quoteTextfield.text ?? "", spouse: spouseTextfield.text ?? "", state: stateTextfield.text ?? "", time: time, year: year, yearsOwned: yearsOwnedTextfield.text ?? "", zip: zipTextfield.text ?? "")
         
         return form
     }

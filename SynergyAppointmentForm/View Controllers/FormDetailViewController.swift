@@ -41,6 +41,17 @@ class FormDetailViewController: UIViewController {
     var form: Form?
     
     // MARK: FUNCTIONS
+    
+    @IBAction func saveButtonPressed(_ sender: Any) {
+    }
+    @IBAction func trelloCopyButtonPressed(_ sender: Any) {
+    }
+    @IBAction func sendMessageButtonPressed(_ sender: Any) {
+    }
+    @IBAction func copyFormButtonPressed(_ sender: Any) {
+    }
+    
+    
     func setUpView(with form: Form?) {
         guard let form = form else { print("No Form!"); return }
         firstNameTextField?.text = form.firstName

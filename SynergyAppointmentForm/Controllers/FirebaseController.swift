@@ -17,8 +17,13 @@ class FirebaseController {
     // MARK: CRUD FUNCTIONS
     
     // CREATE
-    func saveForm(data: [String : Any], completion: @escaping (_ error: Error?) -> Void) {
-        db.collection(FormFirebaseKey.collectionID).addDocument(data: data) { error in
+    func saveForm(form: Form, completion: @escaping (_ error: Error?) -> Void) {
+        var data = Form.firebaseRepresentation(form: form)
+    
+        let documentReference = db.collection(FirebaseKeys.collectionID).document()
+        data[FirebaseKeys.firbaseID] = documentReference.documentID
+        
+        documentReference.setData(data) { error in
             if let error = error {
                 completion(error)
             } else {
@@ -30,7 +35,7 @@ class FirebaseController {
     
     // READ
     func getForms(completion: @escaping (_ forms: [Form], _ error: Error? ) -> Void) {
-        db.collection(FormFirebaseKey.collectionID).getDocuments { snapshot, error in
+        db.collection(FirebaseKeys.collectionID).getDocuments { snapshot, error in
             if let error = error {
                 completion([], error)
                 return
@@ -50,8 +55,25 @@ class FirebaseController {
     }
     
     // UPDATE
-    
+    func updateForm(firebaseID: String, form: Form, completion: @escaping (_ error: Error?) -> Void) {
+        let data = Form.firebaseRepresentation(form: form)
+        db.collection(FirebaseKeys.collectionID).document(firebaseID).updateData(data) { error in
+            if let error = error {
+                completion(error)
+                return
+            }
+            completion(nil)
+        }
+    }
     
     // DELETE
+    func deleteForm(firebaseID: String, completion: @escaping (_ error: Error?) -> Void) {
+        db.collection(FirebaseKeys.collectionID).document(firebaseID).delete { error in
+            if let error = error {
+                completion(error)
+                return
+            }
+        }
+    }
     
 }

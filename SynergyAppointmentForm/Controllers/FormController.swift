@@ -109,6 +109,7 @@ class FormController {
     // LOCATION
     func getLocationData(manager: inout CLLocationManager, completion: @escaping (Address?) -> Void) {
         manager.startUpdatingLocation()
+        defer { manager.stopUpdatingLocation(); print("Stopped updating Location") }
         manager.desiredAccuracy = kCLLocationAccuracyBest
         // FILL LOCATION INFO
         if let location = manager.location {
@@ -130,6 +131,5 @@ class FormController {
             print("No location")
             completion(nil)
         }
-        manager.stopUpdatingLocation()
     }
 }
