@@ -71,34 +71,44 @@ class FormDetailViewController: UIViewController {
     }
     
     @IBAction func sendMessageButtonPressed(_ sender: Any) {
-        guard let form = createForm() else { return }
-        let text = FormController.shared.createText(from: form)
-        var title: String = "Send Message?"
+        guard let form = createForm(),
+              let phoneNumber = self.phoneTextField.text else { return }
+        
+        var title: String = "Select Message Type"
         
         // CREATE ALERT
         let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        let yesAction = UIAlertAction(title: "Yes", style: .default) { _ in
-            guard let phoneNumber = self.phoneTextField.text else { return }
-            let urlString = "sms:\(phoneNumber)&body=\(text)"
-            
-            if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            } else {
-                // Handle the case where the Messages app or the URL scheme is not available
-                print("Messages app is not installed or the URL scheme is not supported.")
-                title = "Unable to open messages"
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                    alert.dismiss(animated: true)
-                }
-            }
+        let initialTextAction = UIAlertAction(title: "Initial Message", style: .default) { _ in
+            let text = FormController.shared.createInitialText(from: form)
+            var urlString = "sms:\(phoneNumber)&body=\(text)"
+            self.sendMessage(urlString: urlString, alert: alert)
+        }
+        let followUpTextAction = UIAlertAction(title: "Follow-Up Text", style: .default) { _ in
+            let text = FormController.shared.createFollowUpText(from: form)
+            var urlString = "sms:\(phoneNumber)&body=\(text)"
+            self.sendMessage(urlString: urlString, alert: alert)
         }
         
         // ADD ALERT
-        alert.addAction(yesAction)
+        alert.addAction(initialTextAction)
+        alert.addAction(followUpTextAction)
         alert.addAction(cancelAction)
         self.present(alert, animated: true)
 
+    }
+    
+    func sendMessage(urlString: String, alert: UIAlertController) {
+        if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            // Handle the case where the Messages app or the URL scheme is not available
+            print("Messages app is not installed or the URL scheme is not supported.")
+            title = "Unable to open messages"
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                alert.dismiss(animated: true)
+            }
+        }
     }
     
     @IBAction func copyFormButtonPressed(_ sender: Any) {

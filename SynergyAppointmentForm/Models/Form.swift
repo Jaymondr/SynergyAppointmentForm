@@ -129,7 +129,7 @@ class Form {
     
     static func firebaseRepresentation(form: Form) -> [String : Any] {
         let data = [
-            FirebaseKeys.fFirebaseID: form.firebaseID ?? "",
+            FirebaseKeys.fFirebaseID: form.firebaseID,
             FirebaseKeys.fAddress: form.address,
             FirebaseKeys.fAmpm: form.ampm.lowercased(),
             FirebaseKeys.fCity: form.city,

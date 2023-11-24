@@ -63,7 +63,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     
     @IBAction func messageButtonPressed(_ sender: Any) {
         let form = createForm()
-        let text = FormController.shared.createText(from: form)
+        let text = FormController.shared.createInitialText(from: form)
         var title: String = "Send Message?"
         
         // CREATE ALERT
@@ -94,19 +94,12 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     @IBAction func trelloButtonPressed(_ sender: Any) {
         let form = createForm()
         FormController.shared.createAndCopyTrello(form: form)
-        // CREATE ALERT
-        UIAlertController.presentDismissingAlert(title: "Trello Title Copied!", dismissAfter: 0.65)
     }
     
     @IBAction func copyButtonPressed(_ sender: Any) {
         let form = createForm()
         FormController.shared.createAndCopyForm(form: form)
-        // CREATE ALERT
-        let alert = UIAlertController(title: "Form Copied!", message: nil, preferredStyle: .alert)
-        self.present(alert, animated: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            alert.dismiss(animated: true)
-        }
+        
     }
     
     @IBAction func locationButtonPressed(_ sender: Any) {
