@@ -19,7 +19,9 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         tableView.refreshControl = refreshControl
         setTitleAttributes()
+        
     }
+    
     
     // MARK: PROPERTIES
     var forms: [Form] = []
@@ -76,6 +78,14 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
 
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            UIAlertController.presentMultipleOptionAlert(message: "Delete Form?", actionOptionTitle: "DELETE", cancelOptionTitle: "Cancel") {
+                print("Delete row at: \(indexPath.row)")
+
+            }
+        }
+    }
 
     // MARK: - Navigation
 

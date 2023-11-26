@@ -73,6 +73,7 @@ class FirebaseController {
         db.collection(FirebaseKeys.collectionID).document(firebaseID).delete { error in
             if let error = error {
                 completion(error)
+                print("Deleted form: \(firebaseID)")
                 return
             }
         }
