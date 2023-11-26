@@ -25,7 +25,8 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: PROPERTIES
     var forms: [Form] = []
-
+    var upcomingAppointmentForms: [Form] = []
+    var pastAppointmentForms: [Form] = []
     
     // MARK: FUNCTIONS
         
@@ -42,6 +43,11 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    func splitForms(forms: [Form]) {
+//        let sortedForms = forms.sorted {$0.d}
+//        forms
+    }
+    
     func setTitleAttributes() {
         if let navigationController = self.navigationController {
             self.navigationItem.title = "FORMS"
@@ -52,6 +58,15 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     // MARK: TABLEVIEW
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return section == 0 ? "UPCOMING" : "PAST"
+    }
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return forms.count
