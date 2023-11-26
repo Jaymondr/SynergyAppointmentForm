@@ -95,7 +95,6 @@ class FormDetailViewController: UIViewController {
         alert.addAction(followUpTextAction)
         alert.addAction(cancelAction)
         self.present(alert, animated: true)
-
     }
     
     func sendMessage(urlString: String, alert: UIAlertController) {

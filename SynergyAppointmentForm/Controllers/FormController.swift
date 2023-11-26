@@ -48,6 +48,7 @@ class FormController {
         
         Comments: \(form.comments)
         """
+        UIAlertController.presentDismissingAlert(title: "Form Copied!", dismissAfter: 0.5)
     }
     
     func createAndCopyTrello(form: Form) {
