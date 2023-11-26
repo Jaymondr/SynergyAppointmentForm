@@ -61,7 +61,7 @@ class FormController {
     
     func createAndCopy(phone: String) {
         UIPasteboard.general.string = phone
-        UIAlertController.presentDismissingAlert(title: "Copied Form!", dismissAfter: 0.6)
+        UIAlertController.presentDismissingAlert(title: "Phone Number Copied!", dismissAfter: 0.6)
     }
     
     func createInitialText(from form: Form) -> String {

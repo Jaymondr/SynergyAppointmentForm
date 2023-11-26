@@ -113,14 +113,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     }
     
     @IBAction func copyPhoneNumberPressed(_ sender: Any) {
-        
         FormController.shared.createAndCopy(phone: phoneTextfield.text ?? "")
-        // CREATE ALERT
-        let alert = UIAlertController(title: "Phone Number Copied!", message: nil, preferredStyle: .alert)
-        self.present(alert, animated: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            alert.dismiss(animated: true)
-        }
     }
     
     @IBAction func clearReasonButtonPressed(_ sender: Any) {
