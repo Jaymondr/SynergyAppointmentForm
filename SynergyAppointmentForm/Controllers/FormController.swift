@@ -48,39 +48,7 @@ class FormController {
         
         Comments: \(form.comments)
         """
-    }
-    
-    func createFormRecord(with form: Form) -> FormRecord {
-        let body = 
-        """
-        APT FORM
-                
-        Appointment Day: \(form.day)
-        Time: \(form.time)\(form.ampm.lowercased())
-        Date: \(form.date)
-        Name: \(form.firstName + " " + form.lastName)
-        Spouse: \(form.spouse)
-        Address: \(form.address)
-        Zip: \(form.zip)
-        City: \(form.city)
-        State: \(form.state)
-        Phone: \(form.phone)
-        Email: \(form.email)
-                
-        Number of windows: \(form.numberOfWindows)
-        Energy bill (average): \(form.energyBill)
-        Retail Quote: \(form.retailQuote)
-        Finance Options: \(form.financeOptions)
-        Years Owned: \(form.yearsOwned)
-                
-        Reason you need window replacement: \(form.reason)
-                
-        Rate 1-10: \(form.rate)
-                
-        Comments: \(form.comments)
-        """
-        let formRecord = FormRecord(firstName: form.firstName, lastName: form.lastName, day: form.day, time: form.time, date: form.date, address: form.address, phone: form.phone, body: body)
-        return formRecord
+        UIAlertController.presentDismissingAlert(title: "Form Copied!", dismissAfter: 0.5)
     }
     
     func createAndCopyTrello(form: Form) {
@@ -88,13 +56,15 @@ class FormController {
         """
         \(form.day) \(form.date) @\(form.time) \(form.firstName) & \(form.spouse) \(form.lastName) (\(form.city)) -Jaymond
         """
+        UIAlertController.presentDismissingAlert(title: "Trello Copied!", dismissAfter: 0.5)
     }
     
     func createAndCopy(phone: String) {
         UIPasteboard.general.string = phone
+        UIAlertController.presentDismissingAlert(title: "Phone Number Copied!", dismissAfter: 0.6)
     }
     
-    func createText(from form: Form) -> String {
+    func createInitialText(from form: Form) -> String {
         let text =
         """
         Hey \(form.firstName), it's Jaymond with Synergy.
@@ -106,9 +76,19 @@ class FormController {
         return text
     }
     
+    func createFollowUpText(from form: Form) -> String {
+        let text = """
+            Hey \(form.firstName),
+            Just wanted to reach out and let you know we had an opening in the schedule. I'd love to see how we can use this Marketing Home opportunity to help you with your windows.
+            - Jaymond
+            """
+        return text
+    }
+    
     // LOCATION
     func getLocationData(manager: inout CLLocationManager, completion: @escaping (Address?) -> Void) {
         manager.startUpdatingLocation()
+        defer { manager.stopUpdatingLocation(); print("Stopped updating Location") }
         manager.desiredAccuracy = kCLLocationAccuracyBest
         // FILL LOCATION INFO
         if let location = manager.location {
@@ -130,6 +110,5 @@ class FormController {
             print("No location")
             completion(nil)
         }
-        manager.stopUpdatingLocation()
     }
 }

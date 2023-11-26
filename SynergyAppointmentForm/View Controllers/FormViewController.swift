@@ -50,21 +50,20 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     // MARK: BUTTONS
     @IBAction func saveButtonPressed(_ sender: Any) {
         let form = createForm()
-        Form.firebaseRepresentation(form: form) { formDictionary in
-            FirebaseController.shared.saveForm(data: formDictionary) { error in
-                if let error = error {
-                    print("Error: \(error)")
-                    UIAlertController.presentDismissingAlert(title: "Failed to Save Form", dismissAfter: 1.2)
-                } else {
-                    UIAlertController.presentDismissingAlert(title: "Form Saved!", dismissAfter: 0.5)
-                }
+        FirebaseController.shared.saveForm(form: form) { error in
+            if let error = error {
+                print("Error: \(error)")
+                UIAlertController.presentDismissingAlert(title: "Failed to Save Form", dismissAfter: 1.2)
+            } else {
+                UIAlertController.presentDismissingAlert(title: "Form Saved!", dismissAfter: 0.5)
             }
         }
     }
     
+    
     @IBAction func messageButtonPressed(_ sender: Any) {
         let form = createForm()
-        let text = FormController.shared.createText(from: form)
+        let text = FormController.shared.createInitialText(from: form)
         var title: String = "Send Message?"
         
         // CREATE ALERT
@@ -84,7 +83,6 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
                     alert.dismiss(animated: true)
                 }
             }
-            
         }
         
         // ADD ALERT
@@ -96,19 +94,12 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     @IBAction func trelloButtonPressed(_ sender: Any) {
         let form = createForm()
         FormController.shared.createAndCopyTrello(form: form)
-        // CREATE ALERT
-        UIAlertController.presentDismissingAlert(title: "Trello Title Copied!", dismissAfter: 0.65)
     }
     
     @IBAction func copyButtonPressed(_ sender: Any) {
         let form = createForm()
         FormController.shared.createAndCopyForm(form: form)
-        // CREATE ALERT
-        let alert = UIAlertController(title: "Form Copied!", message: nil, preferredStyle: .alert)
-        self.present(alert, animated: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            alert.dismiss(animated: true)
-        }
+        
     }
     
     @IBAction func locationButtonPressed(_ sender: Any) {
@@ -122,14 +113,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     }
     
     @IBAction func copyPhoneNumberPressed(_ sender: Any) {
-        
         FormController.shared.createAndCopy(phone: phoneTextfield.text ?? "")
-        // CREATE ALERT
-        let alert = UIAlertController(title: "Phone Number Copied!", message: nil, preferredStyle: .alert)
-        self.present(alert, animated: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            alert.dismiss(animated: true)
-        }
     }
     
     @IBAction func clearReasonButtonPressed(_ sender: Any) {
@@ -193,7 +177,6 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         reasonTextview.delegate = self
         rateTextfield.delegate = self
         commentsTextview.delegate = self
-        
 
     }
     
@@ -231,8 +214,6 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
             rateTextfield.becomeFirstResponder()
         } else if textField == rateTextfield {
             commentsTextview.becomeFirstResponder()
-        } else if textField == commentsTextview {
-            textField.resignFirstResponder()
         }
         else {
             textField.resignFirstResponder()
@@ -256,35 +237,30 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         return true
     }
     
-    func formatDate(date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE MM/dd h a"
-        
-        let formattedDate = formatter.string(from: date)
-        return formattedDate
-    }
-    
     func createForm() -> Form {
         // Separate date time
         var day: String
         var date: String
         var time: String
         var ampm: String
-        let dateTimeText = formatDate(date: dateTimePicker.date)
-        print(dateTimeText)
-        let dateTimeArray = dateTimeText.split(separator: " ")
+        var year: String
+        let dateString = dateTimePicker.date.formattedStringDate()
+        print(dateString)
+        let dateTimeArray = dateString.split(separator: " ")
         if dateTimeArray.count >= 2 {
             day = String(dateTimeArray[0])
             date = String(dateTimeArray[1])
             time = String(dateTimeArray[2])
             ampm = String(dateTimeArray[3])
+            year = String(dateTimeArray[4])
         } else {
             day = ""
             date = ""
             time = ""
             ampm = ""
+            year = ""
         }
-        let form = Form(address: addressTextfield.text ?? "", ampm: ampm, city: cityTextfield.text ?? "", comments: commentsTextview.text ?? "", date: date, day: day, email: emailTextfield.text ?? "", energyBill: energyBillTextfield.text ?? "", financeOptions: financeTextfield.text ?? "", firstName: firstNameTextfield.text ?? "", lastName: lastNameTextfield.text ?? "", numberOfWindows: numberOfWindowsTexfield.text ?? "", phone: phoneTextfield.text ?? "", rate: rateTextfield.text ?? "", reason: reasonTextview.text ?? "", retailQuote: quoteTextfield.text ?? "", spouse: spouseTextfield.text ?? "", state: stateTextfield.text ?? "", time: time, yearsOwned: yearsOwnedTextfield.text ?? "", zip: zipTextfield.text ?? "")
+        let form = Form(firebaseID: "", address: addressTextfield.text ?? "", ampm: ampm, city: cityTextfield.text ?? "", comments: commentsTextview.text ?? "", date: date, dateString: dateString, day: day, email: emailTextfield.text ?? "", energyBill: energyBillTextfield.text ?? "", financeOptions: financeTextfield.text ?? "", firstName: firstNameTextfield.text ?? "", lastName: lastNameTextfield.text ?? "", numberOfWindows: numberOfWindowsTexfield.text ?? "", phone: phoneTextfield.text ?? "", rate: rateTextfield.text ?? "", reason: reasonTextview.text ?? "", retailQuote: quoteTextfield.text ?? "", spouse: spouseTextfield.text ?? "", state: stateTextfield.text ?? "", time: time, year: year, yearsOwned: yearsOwnedTextfield.text ?? "", zip: zipTextfield.text ?? "")
         
         return form
     }
