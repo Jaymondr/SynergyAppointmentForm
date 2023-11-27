@@ -238,29 +238,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     }
     
     func createForm() -> Form {
-        // Separate date time
-        var day: String
-        var date: String
-        var time: String
-        var ampm: String
-        var year: String
-        let dateString = dateTimePicker.date.formattedStringDate()
-        print(dateString)
-        let dateTimeArray = dateString.split(separator: " ")
-        if dateTimeArray.count >= 2 {
-            day = String(dateTimeArray[0])
-            date = String(dateTimeArray[1])
-            time = String(dateTimeArray[2])
-            ampm = String(dateTimeArray[3])
-            year = String(dateTimeArray[4])
-        } else {
-            day = ""
-            date = ""
-            time = ""
-            ampm = ""
-            year = ""
-        }
-        let form = Form(firebaseID: "", address: addressTextfield.text ?? "", ampm: ampm, city: cityTextfield.text ?? "", comments: commentsTextview.text ?? "", date: date, dateString: dateString, day: day, email: emailTextfield.text ?? "", energyBill: energyBillTextfield.text ?? "", financeOptions: financeTextfield.text ?? "", firstName: firstNameTextfield.text ?? "", lastName: lastNameTextfield.text ?? "", numberOfWindows: numberOfWindowsTexfield.text ?? "", phone: phoneTextfield.text ?? "", rate: rateTextfield.text ?? "", reason: reasonTextview.text ?? "", retailQuote: quoteTextfield.text ?? "", spouse: spouseTextfield.text ?? "", state: stateTextfield.text ?? "", time: time, year: year, yearsOwned: yearsOwnedTextfield.text ?? "", zip: zipTextfield.text ?? "")
+        let form = Form(firebaseID: "", address: addressTextfield.text ?? "", city: cityTextfield.text ?? "", comments: commentsTextview.text ?? "", date: dateTimePicker.date, email: emailTextfield.text ?? "", energyBill: energyBillTextfield.text ?? "", financeOptions: financeTextfield.text ?? "", firstName: firstNameTextfield.text ?? "", lastName: lastNameTextfield.text ?? "", numberOfWindows: numberOfWindowsTexfield.text ?? "", phone: phoneTextfield.text ?? "", rate: rateTextfield.text ?? "", reason: reasonTextview.text ?? "", retailQuote: quoteTextfield.text ?? "", spouse: spouseTextfield.text ?? "", state: stateTextfield.text ?? "", yearsOwned: yearsOwnedTextfield.text ?? "", zip: zipTextfield.text ?? "")
         
         return form
     }
