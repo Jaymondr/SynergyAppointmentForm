@@ -15,7 +15,7 @@ class FormTableViewCell: UITableViewCell {
     @IBOutlet weak var firstNameLabel: UILabel!
     @IBOutlet weak var cityStateLabel: UILabel!
     @IBOutlet weak var cellView: UIView!
-    @IBOutlet weak var resultView: UIView!
+    @IBOutlet weak var outcomeView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,13 +32,30 @@ class FormTableViewCell: UITableViewCell {
         } else {
             firstNameLabel.text = form.firstName.uppercased() + " & " + form.spouse.uppercased()
         }
+        // Set background view for outcome
+        setOutcomeView(form: form)
     }
     
     func loadView() {
         cellView.layer.cornerRadius = 10
         cellView.layer.borderWidth = 2.5
         cellView.layer.borderColor = UIColor.eden.cgColor
-        resultView.layer.cornerRadius = 10
+        outcomeView.layer.cornerRadius = 10
+        outcomeView.backgroundColor = .white
+
+    }
+    
+    func setOutcomeView(form: Form) {
+        switch form.outcome {
+        case .pending:
+            outcomeView.backgroundColor = .white
+        case .cancelled:
+            outcomeView.backgroundColor = .red
+        case .rescheduled:
+            outcomeView.backgroundColor = .purple
+        case .sold:
+            outcomeView.backgroundColor = .green
+        }
     }
     
 }

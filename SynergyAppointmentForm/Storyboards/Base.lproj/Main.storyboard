@@ -128,7 +128,7 @@
                                             <outlet property="dateLabel" destination="3i5-Ma-mg9" id="omM-EL-f4j"/>
                                             <outlet property="dayLabel" destination="XdU-SK-72q" id="IZh-3X-xkX"/>
                                             <outlet property="firstNameLabel" destination="WvX-J8-lhM" id="V1e-hE-qX7"/>
-                                            <outlet property="resultView" destination="RkH-TM-ToA" id="h3r-fc-ikD"/>
+                                            <outlet property="outcomeView" destination="RkH-TM-ToA" id="Z22-fb-yiA"/>
                                             <outlet property="timeLabel" destination="KvD-Sv-yli" id="EMs-i1-wm5"/>
                                             <segue destination="mzI-Pq-KQL" kind="show" identifier="toFormDetail" id="WqX-tD-Frz"/>
                                         </connections>

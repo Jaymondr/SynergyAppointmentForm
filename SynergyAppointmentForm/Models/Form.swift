@@ -23,6 +23,7 @@ class Form: FirebaseModel {
     var firstName: String
     var lastName: String
     var numberOfWindows: String
+    var outcome: Outcome
     var phone: String
     var rate: String
     var reason: String
@@ -32,7 +33,7 @@ class Form: FirebaseModel {
     var yearsOwned: String
     var zip: String
     
-    init(firebaseID: String, address: String, city: String, comments: String, date: Date, email: String, energyBill: String, financeOptions: String, firstName: String, lastName: String, numberOfWindows: String, phone: String, rate: String, reason: String, retailQuote: String, spouse: String, state: String, yearsOwned: String, zip: String) {
+    init(firebaseID: String, address: String, city: String, comments: String, date: Date, email: String, energyBill: String, financeOptions: String, firstName: String, lastName: String, numberOfWindows: String, outcome: Outcome = .pending, phone: String, rate: String, reason: String, retailQuote: String, spouse: String, state: String, yearsOwned: String, zip: String) {
         
         self.firebaseID = firebaseID
         self.address = address
@@ -45,6 +46,7 @@ class Form: FirebaseModel {
         self.firstName = firstName
         self.lastName = lastName
         self.numberOfWindows = numberOfWindows
+        self.outcome = outcome
         self.phone = phone
         self.rate = rate
         self.reason = reason
@@ -67,6 +69,7 @@ class Form: FirebaseModel {
               let firstName = firebaseData[Form.CodingKeys.firstName.rawValue] as? String,
               let lastName = firebaseData[Form.CodingKeys.lastName.rawValue] as? String,
               let numberOfWindows = firebaseData[Form.CodingKeys.numberOfWindows.rawValue] as? String,
+              let outcomeString = firebaseData[Form.CodingKeys.outcome.rawValue] as? String,
               let phone = firebaseData[Form.CodingKeys.phone.rawValue] as? String,
               let rate = firebaseData[Form.CodingKeys.rate.rawValue] as? String,
               let reason = firebaseData[Form.CodingKeys.reason.rawValue] as? String,
@@ -77,6 +80,7 @@ class Form: FirebaseModel {
               let zip = firebaseData[Form.CodingKeys.zip.rawValue] as? String
 
         else { return nil }
+        let outcome = Outcome.fromString(outcomeString)
         
         self.firebaseID = firebaseID
         self.firstName = firstName
@@ -89,6 +93,7 @@ class Form: FirebaseModel {
         self.email = email
         self.energyBill = energyBill
         self.retailQuote = retailQuote
+        self.outcome = outcome
         self.phone = phone
         self.reason = reason
         self.comments = comments
@@ -111,6 +116,7 @@ class Form: FirebaseModel {
             Form.CodingKeys.firstName.rawValue         : firstName,
             Form.CodingKeys.lastName.rawValue          : lastName,
             Form.CodingKeys.numberOfWindows.rawValue   : numberOfWindows,
+            Form.CodingKeys.outcome.rawValue           : outcome.rawValue,
             Form.CodingKeys.phone.rawValue             : phone,
             Form.CodingKeys.rate.rawValue              : rate,
             Form.CodingKeys.reason.rawValue            : reason,
@@ -141,6 +147,7 @@ class Form: FirebaseModel {
         case lastName = "lastName"
         case myName = "myName"
         case numberOfWindows = "numberOfWindows"
+        case outcome = "outcome"
         case phone = "phone"
         case rate = "rate"
         case reason = "reason"
