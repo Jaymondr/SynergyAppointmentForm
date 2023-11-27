@@ -15,16 +15,12 @@ class FormTableViewCell: UITableViewCell {
     @IBOutlet weak var firstNameLabel: UILabel!
     @IBOutlet weak var cityStateLabel: UILabel!
     @IBOutlet weak var cellView: UIView!
+    @IBOutlet weak var resultView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         loadView()
     }
-
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//        // Configure the view for the selected state
-//    }
     
     func setCellData(with form: Form) {
         dayLabel.text = form.date.formattedDay()
@@ -39,9 +35,10 @@ class FormTableViewCell: UITableViewCell {
     }
     
     func loadView() {
-        cellView.layer.cornerRadius = 10.0
+        cellView.layer.cornerRadius = 10
         cellView.layer.borderWidth = 2.5
         cellView.layer.borderColor = UIColor.eden.cgColor
+        resultView.layer.cornerRadius = 10
     }
     
 }
