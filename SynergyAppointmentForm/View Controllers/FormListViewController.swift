@@ -18,6 +18,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         loadForms()
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         tableView.refreshControl = refreshControl
+        tableView.separatorStyle = .none
         setTitleAttributes()
         
     }
@@ -115,7 +116,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
+        return 170
     }
     
     @objc private func refreshData(_ sender: Any) {

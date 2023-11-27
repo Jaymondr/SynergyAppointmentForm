@@ -44,7 +44,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zRl-iJ-MDQ">
-                                                    <rect key="frame" x="20" y="11" width="353" height="116"/>
+                                                    <rect key="frame" x="20" y="4" width="353" height="130"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wednesday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XdU-SK-72q">
                                                             <rect key="frame" x="13.000000000000007" y="7.9999999999999982" width="110.66666666666669" height="25.333333333333329"/>
@@ -53,7 +53,7 @@
                                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="qMR-si-PNh"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="21"/>
-                                                            <color key="textColor" name="eden"/>
+                                                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7pm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KvD-Sv-yli">
@@ -63,7 +63,7 @@
                                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="xWc-gm-L42"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="21"/>
-                                                            <color key="textColor" name="eden"/>
+                                                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="FOp-d2-PfR">
@@ -72,7 +72,7 @@
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JAYMOND &amp; TAYLOR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="16" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WvX-J8-lhM">
                                                                     <rect key="frame" x="0.0" y="0.0" width="333" height="34.666666666666664"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="29"/>
-                                                                    <color key="textColor" name="eden"/>
+                                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
@@ -84,7 +84,7 @@
                                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="FvV-jx-vuR"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="21"/>
-                                                            <color key="textColor" name="eden"/>
+                                                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Draper(UT)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bkQ-QU-oGZ">
@@ -94,12 +94,13 @@
                                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="aWE-sQ-5Mt"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                            <color key="textColor" name="eden"/>
+                                                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="height" constant="130" id="0St-EE-DHl"/>
                                                         <constraint firstItem="3i5-Ma-mg9" firstAttribute="leading" secondItem="XdU-SK-72q" secondAttribute="trailing" constant="8" id="5Cc-7p-zuf"/>
                                                         <constraint firstItem="3i5-Ma-mg9" firstAttribute="centerY" secondItem="XdU-SK-72q" secondAttribute="centerY" id="DMu-v4-iRT"/>
                                                         <constraint firstItem="XdU-SK-72q" firstAttribute="leading" secondItem="zRl-iJ-MDQ" secondAttribute="leadingMargin" constant="5" id="JAW-6R-wX2"/>
@@ -116,9 +117,8 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="zRl-iJ-MDQ" firstAttribute="leading" secondItem="Amh-71-OWP" secondAttribute="leadingMargin" id="NIe-yb-YGG"/>
-                                                <constraint firstItem="zRl-iJ-MDQ" firstAttribute="top" secondItem="Amh-71-OWP" secondAttribute="topMargin" id="UCB-yY-nNO"/>
+                                                <constraint firstItem="zRl-iJ-MDQ" firstAttribute="centerY" secondItem="Amh-71-OWP" secondAttribute="centerY" id="Sl6-36-df2"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="zRl-iJ-MDQ" secondAttribute="trailing" id="aPn-eF-RRF"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="zRl-iJ-MDQ" secondAttribute="bottom" id="eOF-4O-ite"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
