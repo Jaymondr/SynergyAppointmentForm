@@ -74,19 +74,19 @@ class FormDetailViewController: UIViewController {
         guard let form = createForm(),
               let phoneNumber = self.phoneTextField.text else { return }
         
-        var title: String = "Select Message Type"
+        let title: String = "Select Message Type"
         
         // CREATE ALERT
         let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         let initialTextAction = UIAlertAction(title: "Initial Message", style: .default) { _ in
             let text = FormController.shared.createInitialText(from: form)
-            var urlString = "sms:\(phoneNumber)&body=\(text)"
+            let urlString = "sms:\(phoneNumber)&body=\(text)"
             self.sendMessage(urlString: urlString, alert: alert)
         }
         let followUpTextAction = UIAlertAction(title: "Follow-Up Text", style: .default) { _ in
             let text = FormController.shared.createFollowUpText(from: form)
-            var urlString = "sms:\(phoneNumber)&body=\(text)"
+            let urlString = "sms:\(phoneNumber)&body=\(text)"
             self.sendMessage(urlString: urlString, alert: alert)
         }
         
@@ -158,38 +158,12 @@ class FormDetailViewController: UIViewController {
         reasonTextView.text = form.reason
         rateTextField.text = form.rate
         commentsTextView.text = form.comments
-        if let date = DateFormatter.dateFromFormattedString(form.dateString) {
-            self.dateTimePicker.date = date
-        } else {
-            print("Unable to set date picker")
-        }
+        dateTimePicker.date = form.date
     }
     
     func createForm() -> Form? {
         guard let form = form else { UIAlertController.presentDismissingAlert(title: "Error: No Form.", dismissAfter: 0.6); return nil }
-        // Separate date time
-        var day: String
-        var date: String
-        var time: String
-        var ampm: String
-        var year: String
-        let dateString = dateTimePicker.date.formattedStringDate()
-        print(dateString)
-        let dateTimeArray = dateString.split(separator: " ")
-        if dateTimeArray.count >= 2 {
-            day = String(dateTimeArray[0])
-            date = String(dateTimeArray[1])
-            time = String(dateTimeArray[2])
-            ampm = String(dateTimeArray[3])
-            year = String(dateTimeArray[4])
-        } else {
-            day = ""
-            date = ""
-            time = ""
-            ampm = ""
-            year = ""
-        }
-        let updatedForm = Form(firebaseID: form.firebaseID, address: addressTextField.text ?? "", ampm: ampm, city: cityTextField.text ?? "", comments: commentsTextView.text ?? "", date: date, dateString: dateString, day: day, email: emailTextField.text ?? "", energyBill: energyBillTextField.text ?? "", financeOptions: financeOptionsTextField.text ?? "", firstName: firstNameTextField.text ?? "", lastName: lastNameTextField.text ?? "", numberOfWindows: numberOfWindowsTextField.text ?? "", phone: phoneTextField.text ?? "", rate: rateTextField.text ?? "", reason: reasonTextView.text ?? "", retailQuote: quoteTextField.text ?? "", spouse: spouseTextField.text ?? "", state: stateTextField.text ?? "", time: time, year: year, yearsOwned: yearsOwnedTextField.text ?? "", zip: zipTextField.text ?? "")
+        let updatedForm = Form(firebaseID: form.firebaseID, address: addressTextField.text ?? "", city: cityTextField.text ?? "", comments: commentsTextView.text ?? "", date: dateTimePicker.date, email: emailTextField.text ?? "", energyBill: energyBillTextField.text ?? "", financeOptions: financeOptionsTextField.text ?? "", firstName: firstNameTextField.text ?? "", lastName: lastNameTextField.text ?? "", numberOfWindows: numberOfWindowsTextField.text ?? "", phone: phoneTextField.text ?? "", rate: rateTextField.text ?? "", reason: reasonTextView.text ?? "", retailQuote: quoteTextField.text ?? "", spouse: spouseTextField.text ?? "", state: stateTextField.text ?? "", yearsOwned: yearsOwnedTextField.text ?? "", zip: zipTextField.text ?? "")
         
         return updatedForm
     }

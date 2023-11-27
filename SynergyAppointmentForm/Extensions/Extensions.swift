@@ -59,6 +59,31 @@ extension Date {
         formatter.dateFormat = "EEEE MM/dd h a yyyy"
         return formatter.string(from: self)
     }
+    
+    func formattedDay() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE"
+        return formatter.string(from: self)
+    }
+    
+    func formattedDayMonth() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd"
+        return formatter.string(from: self)
+    }
+    
+    func formattedTime() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h"
+        return formatter.string(from: self)
+    }
+    
+    func formattedAmpm() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "a"
+        return formatter.string(from: self)
+    }
+
 }
 
 extension DateFormatter {
