@@ -48,7 +48,9 @@ class FormDetailViewController: UIViewController {
     // MARK: PROPERTIES
     
     var form: Form?
-    
+    var tag: Outcome? {
+        return form?.outcome
+    }
     
     // MARK: FUNCTIONS
     @IBAction func tagButtonPressed(_ sender: Any) {
@@ -57,6 +59,7 @@ class FormDetailViewController: UIViewController {
         
         let pendingAction = UIAlertAction(title: "Pending", style: .default) { action in
             self.form?.outcome = .pending
+            
             self.setUpView(with: self.form)
             FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
                 if let error = error {
@@ -289,7 +292,7 @@ class FormDetailViewController: UIViewController {
     
     func createForm() -> Form? {
         guard let form = form else { UIAlertController.presentDismissingAlert(title: "Error: No Form.", dismissAfter: 0.6); return nil }
-        let updatedForm = Form(firebaseID: form.firebaseID, address: addressTextField.text ?? "", city: cityTextField.text ?? "", comments: commentsTextView.text ?? "", date: dateTimePicker.date, email: emailTextField.text ?? "", energyBill: energyBillTextField.text ?? "", financeOptions: financeOptionsTextField.text ?? "", firstName: firstNameTextField.text ?? "", lastName: lastNameTextField.text ?? "", numberOfWindows: numberOfWindowsTextField.text ?? "", phone: phoneTextField.text ?? "", rate: rateTextField.text ?? "", reason: reasonTextView.text ?? "", retailQuote: quoteTextField.text ?? "", spouse: spouseTextField.text ?? "", state: stateTextField.text ?? "", yearsOwned: yearsOwnedTextField.text ?? "", zip: zipTextField.text ?? "")
+        let updatedForm = Form(firebaseID: form.firebaseID, address: addressTextField.text ?? "", city: cityTextField.text ?? "", comments: commentsTextView.text ?? "", date: dateTimePicker.date, email: emailTextField.text ?? "", energyBill: energyBillTextField.text ?? "", financeOptions: financeOptionsTextField.text ?? "", firstName: firstNameTextField.text ?? "", lastName: lastNameTextField.text ?? "", numberOfWindows: numberOfWindowsTextField.text ?? "", outcome: tag ?? .pending, phone: phoneTextField.text ?? "", rate: rateTextField.text ?? "", reason: reasonTextView.text ?? "", retailQuote: quoteTextField.text ?? "", spouse: spouseTextField.text ?? "", state: stateTextField.text ?? "", yearsOwned: yearsOwnedTextField.text ?? "", zip: zipTextField.text ?? "")
         
         return updatedForm
     }
