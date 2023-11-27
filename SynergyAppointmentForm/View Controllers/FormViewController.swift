@@ -44,7 +44,6 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         setTextFieldsDelegate()
         navigationController?.navigationBar.tintColor = UIColor.eden
 
-
     }
     
     // MARK: BUTTONS
@@ -155,8 +154,8 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         // BACKGROUND
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = view.bounds
-        gradientLayer.colors = [UIColor.white.cgColor, UIColor.lightGray.cgColor, UIColor.eden.cgColor] // Gradient colors
-        gradientLayer.locations = [-0.05, 0.65, 3.0] // Gradient locations (start and end)
+        gradientLayer.colors = [UIColor.white.cgColor, UIColor.white.cgColor, UIColor.eden.cgColor] // Gradient colors
+        gradientLayer.locations = [-0.05, 0.4, 3.0] // Gradient locations (start and end)
         view.layer.insertSublayer(gradientLayer, at: 0)
     }
     

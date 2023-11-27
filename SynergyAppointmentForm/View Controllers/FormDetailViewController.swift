@@ -159,6 +159,46 @@ class FormDetailViewController: UIViewController {
         rateTextField.text = form.rate
         commentsTextView.text = form.comments
         dateTimePicker.date = form.date
+        
+        // BACKGROUND
+        
+        var color1: CGColor
+        var color2: CGColor
+        var color3: CGColor
+        
+        switch form.outcome {
+        case .pending:
+            color1 = UIColor.white.cgColor
+            color2 = UIColor.lightGray.cgColor
+            color3 = UIColor.eden.cgColor
+            
+        case .cancelled:
+            color1 = UIColor.white.cgColor
+            color2 = UIColor.white.cgColor
+            color3 = UIColor.outcomeRed.cgColor
+            
+        case .rescheduled:
+            color1 = UIColor.white.cgColor
+            color2 = UIColor.white.cgColor
+            color3 = UIColor.outcomePurple.cgColor
+
+        case .ran:
+            color1 = UIColor.white.cgColor
+            color2 = UIColor.white.cgColor
+            color3 = UIColor.outcomeBlue.cgColor
+
+        case .sold:
+            color1 = UIColor.white.cgColor
+            color2 = UIColor.white.cgColor
+            color3 = UIColor.outcomeGreen.cgColor
+
+        }
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [color1, color2, color3] // Gradient colors
+        gradientLayer.locations = [0.1, 0.5, 2.0] // Gradient locations (start and end)
+        view.layer.insertSublayer(gradientLayer, at: 0)
     }
     
     func createForm() -> Form? {
