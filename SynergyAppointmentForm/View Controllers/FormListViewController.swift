@@ -25,7 +25,14 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: PROPERTIES
     var forms: [Form] = []
-
+    var upcomingAppointmentForms: [Form] = []
+    var pastAppointmentForms: [Form] = []
+    var sortedAppointmentForms: [Form] = []
+    
+    // SECTIONS
+    let upcoming = 0
+    let past = 1
+    
     
     // MARK: FUNCTIONS
         
@@ -38,8 +45,25 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                 print("Name: \(form.firstName)")
             }
             self.forms = forms
+            self.splitForms(forms: forms)
             self.tableView.reloadData()
         }
+    }
+    
+    func splitForms(forms: [Form]) {
+        upcomingAppointmentForms.removeAll()
+        pastAppointmentForms.removeAll()
+        
+        sortedAppointmentForms = forms.sorted {$0.date < $1.date}
+        for form in sortedAppointmentForms {
+            if form.date > Date() {
+                upcomingAppointmentForms.append(form)
+            } else {
+                pastAppointmentForms.append(form)
+            }
+        }
+        // SORT PAST FORMS NEWEST TO OLDEST
+        pastAppointmentForms.sort { $0.date > $1.date}
     }
     
     func setTitleAttributes() {
@@ -53,18 +77,37 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: TABLEVIEW
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return section == upcoming ? "UPCOMING" : "PAST"
+    }
+
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return forms.count
+        return section == upcoming ? upcomingAppointmentForms.count : pastAppointmentForms.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "formCell", for: indexPath) as? FormTableViewCell else { return UITableViewCell() }
         
+        if indexPath.section == upcoming {
+            // UPCOMING
+            let form = upcomingAppointmentForms[indexPath.row]
+            cell.setCellData(with: form)
+           
+            return cell
+
+        } else {
+            // Past
+            let form = pastAppointmentForms[indexPath.row]
+            cell.setCellData(with: form)
+           
+            return cell
+        }
         
-        let form = forms[indexPath.row]
-        cell.setCellData(with: form)
-       
-        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -94,8 +137,12 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         if segue.identifier == "toFormDetail",
            let indexPath = tableView.indexPathForSelectedRow,
            let destinationVC = segue.destination as? FormDetailViewController {
-            
-            let selectedForm = forms[indexPath.row]
+            var selectedForm: Form
+            if indexPath.section == upcoming {
+                selectedForm = upcomingAppointmentForms[indexPath.row]
+            } else {
+                selectedForm = pastAppointmentForms[indexPath.row]
+            }
             
             destinationVC.form = selectedForm
         }
