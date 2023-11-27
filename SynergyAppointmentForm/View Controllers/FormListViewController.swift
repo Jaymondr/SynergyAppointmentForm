@@ -122,10 +122,31 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            UIAlertController.presentMultipleOptionAlert(message: "Delete Form?", actionOptionTitle: "DELETE", cancelOptionTitle: "Cancel") {
-                print("Delete row at: \(indexPath.row)")
-
+        if indexPath.section == upcoming {
+            // UPCOMING
+            let form = self.upcomingAppointmentForms[indexPath.row]
+            UIAlertController.presentDismissingAlert(title: "Upcoming Appointments CANNOT Be Deleted", dismissAfter: 1.2)
+            
+        } else {
+            // PAST
+            let form = self.pastAppointmentForms[indexPath.row]
+            UIAlertController.presentMultipleOptionAlert(message: "Are you sure you want to delete \(form.firstName) \(form.lastName)'s past appointment form?", actionOptionTitle: "DELETE", cancelOptionTitle: "CANCEL") {
+                FirebaseController.shared.saveDeletedForm(form: form) { error in
+                    if let error = error {
+                        print("Error Saving Form: \(error)")
+                        UIAlertController.presentDismissingAlert(title: "Error Deleting Form: \(form.firstName + " " + form.lastName)", dismissAfter: 1.2)
+                        return
+                    }
+                    FirebaseController.shared.deleteForm(firebaseID: form.firebaseID) { error in
+                        if let error = error {
+                            print("Error Deleting Form: \(error)")
+                            UIAlertController.presentDismissingAlert(title: "Error Deleting Form: \(form.firstName + " " + form.lastName)", dismissAfter: 1.2)
+                            return
+                        }
+                    }
+                    self.pastAppointmentForms.remove(at: indexPath.row)
+                    self.tableView.reloadData()
+                }
             }
         }
     }
