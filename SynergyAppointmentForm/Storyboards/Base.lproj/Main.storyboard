@@ -747,23 +747,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="xfl-qK-Lh9">
-                                <rect key="frame" x="125.66666666666669" y="138.33333333333334" width="142" height="34"/>
+                                <rect key="frame" x="143.66666666666666" y="138.33333333333334" width="106" height="34"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TBu-Aa-7Bb">
-                                        <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="TBu-Aa-7Bb" secondAttribute="height" multiplier="1:1" id="9ZQ-i4-dOW"/>
-                                        </constraints>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" image="icloud.and.arrow.up.fill" catalog="system">
-                                            <color key="baseForegroundColor" name="eden"/>
-                                        </buttonConfiguration>
-                                        <connections>
-                                            <action selector="saveButtonPressed:" destination="mzI-Pq-KQL" eventType="touchUpInside" id="9U8-Q6-VpT"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zZU-zE-gEC">
-                                        <rect key="frame" x="35.999999999999986" y="0.0" width="34" height="34"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="zZU-zE-gEC" secondAttribute="height" multiplier="1:1" id="AnK-3t-Pbl"/>
                                         </constraints>
@@ -776,7 +763,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8eL-dB-mBt">
-                                        <rect key="frame" x="71.999999999999986" y="0.0" width="34" height="34"/>
+                                        <rect key="frame" x="36" y="0.0" width="34" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="8eL-dB-mBt" secondAttribute="height" multiplier="1:1" id="JP0-1L-hHC"/>
                                         </constraints>
@@ -790,7 +777,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wT8-PV-41k">
-                                        <rect key="frame" x="107.99999999999999" y="0.0" width="34.000000000000014" height="34"/>
+                                        <rect key="frame" x="72" y="0.0" width="34" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="wT8-PV-41k" secondAttribute="height" multiplier="1:1" id="9gf-7e-rWu"/>
                                         </constraints>
@@ -824,7 +811,21 @@
                             <constraint firstItem="bUT-f1-drS" firstAttribute="leading" secondItem="Myy-u9-RXG" secondAttribute="leading" id="sUC-uz-f39"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="8Id-yA-iaf"/>
+                    <navigationItem key="navigationItem" id="8Id-yA-iaf">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="RFy-hk-iHF">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="TBu-Aa-7Bb">
+                                <rect key="frame" x="322.33333333333331" y="5" width="54.666666666666686" height="34.333333333333336"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="SAVE">
+                                    <color key="baseForegroundColor" name="eden"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="saveButtonPressed:" destination="mzI-Pq-KQL" eventType="touchUpInside" id="9U8-Q6-VpT"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <size key="freeformSize" width="393" height="2000"/>
                     <connections>
                         <outlet property="addressTextField" destination="W4H-HC-dP7" id="DVk-aj-Iyq"/>
@@ -1429,23 +1430,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="GG2-2I-gQR">
-                                <rect key="frame" x="125.66666666666669" y="138.33333333333334" width="142" height="34"/>
+                                <rect key="frame" x="143.66666666666666" y="138.33333333333334" width="106" height="34"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7pA-Kl-Dmt">
-                                        <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="7pA-Kl-Dmt" secondAttribute="height" multiplier="1:1" id="mSV-pw-Yq4"/>
-                                        </constraints>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" image="icloud.and.arrow.up.fill" catalog="system">
-                                            <color key="baseForegroundColor" name="eden"/>
-                                        </buttonConfiguration>
-                                        <connections>
-                                            <action selector="saveButtonPressed:" destination="ncR-vK-5yf" eventType="touchUpInside" id="lUi-b9-8Ql"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oeb-Z6-YjI">
-                                        <rect key="frame" x="35.999999999999986" y="0.0" width="34" height="34"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="oeb-Z6-YjI" secondAttribute="height" multiplier="1:1" id="seu-3G-Lb4"/>
                                         </constraints>
@@ -1458,7 +1446,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Vk-e7-3Bi">
-                                        <rect key="frame" x="71.999999999999986" y="0.0" width="34" height="34"/>
+                                        <rect key="frame" x="36" y="0.0" width="34" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="1Vk-e7-3Bi" secondAttribute="height" multiplier="1:1" id="kwX-j8-9pn"/>
                                         </constraints>
@@ -1472,7 +1460,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fz8-nB-nQS">
-                                        <rect key="frame" x="107.99999999999999" y="0.0" width="34.000000000000014" height="34"/>
+                                        <rect key="frame" x="72" y="0.0" width="34" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Fz8-nB-nQS" secondAttribute="height" multiplier="1:1" id="8WE-aS-DFo"/>
                                         </constraints>
@@ -1506,7 +1494,21 @@
                             <constraint firstItem="lLQ-EI-XKs" firstAttribute="top" secondItem="GG2-2I-gQR" secondAttribute="bottom" constant="5" id="zWD-Ft-dEH"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="CUq-zS-JA6"/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="CUq-zS-JA6">
+                        <barButtonItem key="rightBarButtonItem" title="SAVE" style="plain" id="XaP-uQ-7wI">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="7pA-Kl-Dmt">
+                                <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="SAVE">
+                                    <color key="baseForegroundColor" name="eden"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="saveButtonPressed:" destination="ncR-vK-5yf" eventType="touchUpInside" id="lUi-b9-8Ql"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="addressTextfield" destination="Nq9-se-clN" id="rUH-ZB-uXg"/>
                         <outlet property="cityTextfield" destination="FPV-Ih-DIi" id="dAD-io-Hfe"/>
@@ -1558,7 +1560,6 @@
         <image name="Image" width="23.666666030883789" height="23.666666030883789"/>
         <image name="clear" catalog="system" width="128" height="114"/>
         <image name="doc.on.clipboard" catalog="system" width="116" height="128"/>
-        <image name="icloud.and.arrow.up.fill" catalog="system" width="128" height="108"/>
         <image name="location.fill.viewfinder" catalog="system" width="128" height="115"/>
         <image name="message.fill" catalog="system" width="128" height="114"/>
         <namedColor name="eden">
