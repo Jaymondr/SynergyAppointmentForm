@@ -24,9 +24,9 @@ class FormController {
         """
         APT FORM
         
-        Appointment Day: \(form.day)
-        Time: \(form.time)\(form.ampm.lowercased())
-        Date: \(form.date)
+        Appointment Day: \(form.date.formattedDay())
+        Time: \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())
+        Date: \(form.date.formattedDayMonth())
         Name: \(form.firstName + " " + form.lastName)
         Spouse: \(form.spouse)
         Address: \(form.address)
@@ -54,7 +54,7 @@ class FormController {
     func createAndCopyTrello(form: Form) {
         UIPasteboard.general.string =
         """
-        \(form.day) \(form.date) @\(form.time) \(form.firstName) & \(form.spouse) \(form.lastName) (\(form.city)) -Jaymond
+        \(form.date.formattedDay()) \(form.date.formattedDayMonth()) @\(form.date.formattedTime()) \(form.firstName) & \(form.spouse) \(form.lastName) (\(form.city)) -Jaymond
         """
         UIAlertController.presentDismissingAlert(title: "Trello Copied!", dismissAfter: 0.5)
     }
@@ -69,7 +69,7 @@ class FormController {
         """
         Hey \(form.firstName), it's Jaymond with Synergy.
         
-        Your appointment is good to go for \(form.day) \(form.date) at \(form.time)\(form.ampm.lowercased()). Thanks for your time, and if you need anything just call or text!
+        Your appointment is good to go for \(form.date.formattedDay()) \(form.date.formattedDayMonth()) at \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased()). Thanks for your time, and if you need anything just call or text!
         
         - Jaymond
         """

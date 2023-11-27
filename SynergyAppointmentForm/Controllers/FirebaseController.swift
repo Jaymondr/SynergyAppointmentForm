@@ -18,10 +18,9 @@ class FirebaseController {
     
     // CREATE
     func saveForm(form: Form, completion: @escaping (_ error: Error?) -> Void) {
-        var data = Form.firebaseRepresentation(form: form)
-    
-        let documentReference = db.collection(FirebaseKeys.collectionID).document()
-        data[FirebaseKeys.firbaseID] = documentReference.documentID
+        let documentReference = db.collection(Form.CodingKeys.collectionID.rawValue).document()
+        var data = form.firebaseRepresentation
+        data[Form.CodingKeys.firbaseID.rawValue] = documentReference.documentID
         
         documentReference.setData(data) { error in
             if let error = error {
@@ -35,8 +34,9 @@ class FirebaseController {
     
     // READ
     func getForms(completion: @escaping (_ forms: [Form], _ error: Error? ) -> Void) {
-        db.collection(FirebaseKeys.collectionID).getDocuments { snapshot, error in
+        db.collection(Form.CodingKeys.collectionID.rawValue).getDocuments { snapshot, error in
             if let error = error {
+                print("There was an error getting forms: \(error)")
                 completion([], error)
                 return
             }
@@ -47,7 +47,11 @@ class FirebaseController {
             var forms: [Form] = []
             for document in documents {
                 let data = document.data()
-                let form = Form(firebaseID: document.documentID, firebaseData: data)
+                guard let form = Form(firebaseData: data, firebaseID: document.documentID) else {
+                    print("Error creating form from firebaseData")
+                    completion([], nil)
+                    return
+                }
                 forms.append(form)
             }
             completion(forms, nil)
@@ -56,8 +60,8 @@ class FirebaseController {
     
     // UPDATE
     func updateForm(firebaseID: String, form: Form, completion: @escaping (_ error: Error?) -> Void) {
-        let data = Form.firebaseRepresentation(form: form)
-        db.collection(FirebaseKeys.collectionID).document(firebaseID).updateData(data) { error in
+        let data = form.firebaseRepresentation
+        db.collection(Form.CodingKeys.collectionID.rawValue).document(firebaseID).updateData(data) { error in
             if let error = error {
                 completion(error)
                 print("There was an error updating the form: \(error)")
@@ -70,7 +74,7 @@ class FirebaseController {
     
     // DELETE
     func deleteForm(firebaseID: String, completion: @escaping (_ error: Error?) -> Void) {
-        db.collection(FirebaseKeys.collectionID).document(firebaseID).delete { error in
+        db.collection(Form.CodingKeys.collectionID.rawValue).document(firebaseID).delete { error in
             if let error = error {
                 completion(error)
                 return
