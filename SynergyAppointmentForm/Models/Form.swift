@@ -9,32 +9,6 @@ import Foundation
 import CloudKit
 import Firebase
 import FirebaseFirestore
-//
-struct FirebaseKeys {
-    static let collectionID = "Forms"
-    static let firbaseID = "firebaseID"
-    static let fAddress = "address"
-    static let fBody = "body"
-    static let fCity = "city"
-    static let fComments = "comments"
-    static let fDate = "date"
-    static let fEmail = "email"
-    static let fEnergyBill = "energyBill"
-    static let fFirstName = "firstName"
-    static let fFinanceOptions = "financeOptions"
-    static let fFirebaseID = "firebaseID"
-    static let fLastName = "lastName"
-    static let fMyName = "myName"
-    static let fNumberOfWindows = "numberOfWindows"
-    static let fPhone = "phone"
-    static let fRate = "rate"
-    static let fReason = "reason"
-    static let fRetailQuote = "retailQuote"
-    static let fSpouse = "spouse"
-    static let fState = "state"
-    static let fYearsOwned = "yearsOwned"
-    static let fZip = "zip"
-}
 
 class Form: FirebaseModel {
     static var collectionKey: String = "Forms"
@@ -58,7 +32,7 @@ class Form: FirebaseModel {
     var yearsOwned: String
     var zip: String
     
-    init(firebaseID: String = "formError", address: String, city: String, comments: String, date: Date, email: String, energyBill: String, financeOptions: String, firstName: String, lastName: String, numberOfWindows: String, phone: String, rate: String, reason: String, retailQuote: String, spouse: String, state: String, yearsOwned: String, zip: String) {
+    init(firebaseID: String, address: String, city: String, comments: String, date: Date, email: String, energyBill: String, financeOptions: String, firstName: String, lastName: String, numberOfWindows: String, phone: String, rate: String, reason: String, retailQuote: String, spouse: String, state: String, yearsOwned: String, zip: String) {
         
         self.firebaseID = firebaseID
         self.address = address
@@ -83,24 +57,25 @@ class Form: FirebaseModel {
     }
     
     required init?(firebaseData: [String : Any], firebaseID: String) {
-        guard let firstName = firebaseData[Form.fFirstName] as? String,
-              let lastName = firebaseData[Form.fLastName] as? String,
-              let spouse = firebaseData[Form.fSpouse] as? String,
-              let city = firebaseData[Form.fCity] as? String,
-              let state = firebaseData[Form.fState] as? String,
-              let address = firebaseData[Form.fAddress] as? String,
-              let email = firebaseData[Form.fEmail] as? String,
-              let energyBill = firebaseData[Form.fEnergyBill] as? String,
-              let retailQuote = firebaseData[Form.fRetailQuote] as? String,
-              let phone = firebaseData[Form.fPhone] as? String,
-              let comments = firebaseData[Form.fComments] as? String,
-              let financeOptions = firebaseData[Form.fFinanceOptions] as? String,
-              let numberOfWindows = firebaseData[Form.fNumberOfWindows] as? String,
-              let yearsOwned = firebaseData[Form.fYearsOwned] as? String,
-              let zip = firebaseData[Form.fZip] as? String,
-              let reason = firebaseData[Form.fReason] as? String,
-              let rate = firebaseData[Form.fRate] as? String,
-              let date = (firebaseData[Form.fDate] as? Timestamp)?.dateValue()
+        guard let address = firebaseData[Form.CodingKeys.address.rawValue] as? String,
+              let city = firebaseData[Form.CodingKeys.city.rawValue] as? String,
+              let comments = firebaseData[Form.CodingKeys.comments.rawValue] as? String,
+              let date = (firebaseData[Form.CodingKeys.date.rawValue] as? Timestamp)?.dateValue(),
+              let email = firebaseData[Form.CodingKeys.email.rawValue] as? String,
+              let energyBill = firebaseData[Form.CodingKeys.energyBill.rawValue] as? String,
+              let financeOptions = firebaseData[Form.CodingKeys.financeOptions.rawValue] as? String,
+              let firstName = firebaseData[Form.CodingKeys.firstName.rawValue] as? String,
+              let lastName = firebaseData[Form.CodingKeys.lastName.rawValue] as? String,
+              let numberOfWindows = firebaseData[Form.CodingKeys.numberOfWindows.rawValue] as? String,
+              let phone = firebaseData[Form.CodingKeys.phone.rawValue] as? String,
+              let rate = firebaseData[Form.CodingKeys.rate.rawValue] as? String,
+              let reason = firebaseData[Form.CodingKeys.reason.rawValue] as? String,
+              let retailQuote = firebaseData[Form.CodingKeys.retailQuote.rawValue] as? String,
+              let spouse = firebaseData[Form.CodingKeys.spouse.rawValue] as? String,
+              let state = firebaseData[Form.CodingKeys.state.rawValue] as? String,
+              let yearsOwned = firebaseData[Form.CodingKeys.yearsOwned.rawValue] as? String,
+              let zip = firebaseData[Form.CodingKeys.zip.rawValue] as? String
+
         else { return nil }
         
         self.firebaseID = firebaseID
@@ -124,115 +99,54 @@ class Form: FirebaseModel {
         self.rate = rate
     }
     
-//    convenience init(firebaseID: String, firebaseData: [String : Any]) {
-//        let firebaseID = firebaseData[FirebaseKeys.fFirebaseID] as? String ?? ""
-//        let address = firebaseData[FirebaseKeys.fAddress] as? String ?? ""
-//        let ampm = firebaseData[FirebaseKeys.fAmpm] as? String ?? ""
-//        let city = firebaseData[FirebaseKeys.fCity] as? String ?? ""
-//        let comments = firebaseData[FirebaseKeys.fComments] as? String ?? ""
-//        let date = firebaseData[FirebaseKeys.fDate] as? Date ?? nil
-//        let dateString = firebaseData[FirebaseKeys.fDateString] as? String ?? ""
-//        let day = firebaseData[FirebaseKeys.fDay] as? String ?? ""
-//        let email = firebaseData[FirebaseKeys.fEmail] as? String ?? ""
-//        let energyBill = firebaseData[FirebaseKeys.fEnergyBill] as? String ?? ""
-//        let financeOptions = firebaseData[FirebaseKeys.fFinanceOptions] as? String ?? ""
-//        let firstName = firebaseData[FirebaseKeys.fFirstName] as? String ?? ""
-//        let lastName = firebaseData[FirebaseKeys.fLastName] as? String ?? ""
-//        let numberOfWindows = firebaseData[FirebaseKeys.fNumberOfWindows] as? String ?? ""
-//        let phone = firebaseData[FirebaseKeys.fPhone] as? String ?? ""
-//        let rate = firebaseData[FirebaseKeys.fRate] as? String ?? ""
-//        let reason = firebaseData[FirebaseKeys.fReason] as? String ?? ""
-//        let retailQuote = firebaseData[FirebaseKeys.fRetailQuote] as? String ?? ""
-//        let spouse = firebaseData[FirebaseKeys.fSpouse] as? String ?? ""
-//        let state = firebaseData[FirebaseKeys.fState] as? String ?? ""
-//        let time = firebaseData[FirebaseKeys.fTime] as? String ?? ""
-//        let year = firebaseData[FirebaseKeys.fYear] as? String ?? ""
-//        let yearsOwned = firebaseData[FirebaseKeys.fYearsOwned] as? String ?? ""
-//        let zip = firebaseData[FirebaseKeys.fZip] as? String ?? ""
-//
-//        
-//        self.init(firebaseID: firebaseID, address: address, ampm: ampm, city: city, comments: comments, date: date, dateString: dateString, day: day, email: email, energyBill: energyBill, financeOptions: financeOptions, firstName: firstName, lastName: lastName, numberOfWindows: numberOfWindows, phone: phone, rate: rate, reason: reason, retailQuote: retailQuote, spouse: spouse, state: state, time: time, year: year, yearsOwned: yearsOwned, zip: zip)
-//
-//
-//    }
-    
-//    static func firebaseRepresentation(form: Form) -> [String : Any] {
-//        let data = [
-//            FirebaseKeys.fFirebaseID: form.firebaseID,
-//            FirebaseKeys.fAddress: form.address,
-//            FirebaseKeys.fAmpm: form.ampm.lowercased(),
-//            FirebaseKeys.fCity: form.city,
-//            FirebaseKeys.fComments: form.comments,
-//            FirebaseKeys.fDate: form.date,
-//            FirebaseKeys.fDateString: form.dateString,
-//            FirebaseKeys.fDay: form.day,
-//            FirebaseKeys.fEmail: form.email,
-//            FirebaseKeys.fEnergyBill: form.energyBill,
-//            FirebaseKeys.fFinanceOptions: form.financeOptions,
-//            FirebaseKeys.fFirstName: form.firstName,
-//            FirebaseKeys.fLastName: form.lastName,
-//            FirebaseKeys.fNumberOfWindows: form.numberOfWindows,
-//            FirebaseKeys.fPhone: form.phone,
-//            FirebaseKeys.fRate: form.rate,
-//            FirebaseKeys.fReason: form.reason,
-//            FirebaseKeys.fRetailQuote: form.retailQuote,
-//            FirebaseKeys.fSpouse: form.spouse,
-//            FirebaseKeys.fState: form.state,
-//            FirebaseKeys.fTime: form.time,
-//            FirebaseKeys.fYear: form.year,
-//            FirebaseKeys.fYearsOwned: form.yearsOwned,
-//            FirebaseKeys.fZip: form.zip
-//        ]
-//        return data
-//    }
-    
     var firebaseRepresentation: [String : FirestoreType] {
         var firebaseRepresentation: [String : FirestoreType] = [
-            Form.fFirstName          : firstName,
-            Form.fLastName           : lastName,
-            Form.fSpouse             : spouse,
-            Form.fCity               : city,
-            Form.fDate               : Timestamp(date: date),
-            Form.fState              : state,
-            Form.fAddress            : address,
-            Form.fEmail              : email,
-            Form.fEnergyBill         : energyBill,
-            Form.fRetailQuote        : retailQuote,
-            Form.fPhone              : phone,
-            Form.fComments           : comments,
-            Form.fFinanceOptions     : financeOptions,
-            Form.fNumberOfWindows    : numberOfWindows,
-            Form.fYearsOwned         : yearsOwned,
-            Form.fZip                : zip,
-            Form.fReason             : reason
+            Form.CodingKeys.address.rawValue           : address,
+            Form.CodingKeys.city.rawValue              : city,
+            Form.CodingKeys.comments.rawValue          : comments,
+            Form.CodingKeys.date.rawValue              : Timestamp(date: date),
+            Form.CodingKeys.email.rawValue             : email,
+            Form.CodingKeys.energyBill.rawValue        : energyBill,
+            Form.CodingKeys.financeOptions.rawValue    : financeOptions,
+            Form.CodingKeys.firstName.rawValue         : firstName,
+            Form.CodingKeys.lastName.rawValue          : lastName,
+            Form.CodingKeys.numberOfWindows.rawValue   : numberOfWindows,
+            Form.CodingKeys.phone.rawValue             : phone,
+            Form.CodingKeys.rate.rawValue              : rate,
+            Form.CodingKeys.reason.rawValue            : reason,
+            Form.CodingKeys.retailQuote.rawValue       : retailQuote,
+            Form.CodingKeys.spouse.rawValue            : spouse,
+            Form.CodingKeys.state.rawValue             : state,
+            Form.CodingKeys.yearsOwned.rawValue        : yearsOwned,
+            Form.CodingKeys.zip.rawValue               : zip
         ]
         
         return firebaseRepresentation
     }
     
-    // MARK: STRING CONSTANTS
-    static let collectionID = "Forms"
-    static let firbaseID = "firebaseID"
-    static let fAmpm = "ampm"
-    static let fAddress = "address"
-    static let fBody = "body"
-    static let fCity = "city"
-    static let fComments = "comments"
-    static let fDate = "date"
-    static let fEmail = "email"
-    static let fEnergyBill = "energyBill"
-    static let fFirstName = "firstName"
-    static let fFinanceOptions = "financeOptions"
-    static let fFirebaseID = "firebaseID"
-    static let fLastName = "lastName"
-    static let fMyName = "myName"
-    static let fNumberOfWindows = "numberOfWindows"
-    static let fPhone = "phone"
-    static let fRate = "rate"
-    static let fReason = "reason"
-    static let fRetailQuote = "retailQuote"
-    static let fSpouse = "spouse"
-    static let fState = "state"
-    static let fYearsOwned = "yearsOwned"
-    static let fZip = "zip"
+    enum CodingKeys: String, CodingKey {
+        case collectionID = "Forms"
+        case firbaseID = "firebaseID"
+        case ampm = "ampm"
+        case address = "address"
+        case body = "body"
+        case city = "city"
+        case comments = "comments"
+        case date = "date"
+        case email = "email"
+        case energyBill = "energyBill"
+        case firstName = "firstName"
+        case financeOptions = "financeOptions"
+        case lastName = "lastName"
+        case myName = "myName"
+        case numberOfWindows = "numberOfWindows"
+        case phone = "phone"
+        case rate = "rate"
+        case reason = "reason"
+        case retailQuote = "retailQuote"
+        case spouse = "spouse"
+        case state = "state"
+        case yearsOwned = "yearsOwned"
+        case zip = "zip"
+    }
 }
