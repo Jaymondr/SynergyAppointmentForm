@@ -51,6 +51,92 @@ class FormDetailViewController: UIViewController {
     
     
     // MARK: FUNCTIONS
+    @IBAction func tagButtonPressed(_ sender: Any) {
+        guard let form = form else { return }
+        let alert = UIAlertController(title: "Add Outcome Tag", message: "Select Tag", preferredStyle: .alert)
+        
+        let pendingAction = UIAlertAction(title: "Pending", style: .default) { action in
+            self.form?.outcome = .pending
+            self.setUpView(with: self.form)
+            FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
+                if let error = error {
+                    UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
+                    print("Error: \(error)")
+                    return
+                }
+                UIAlertController.presentDismissingAlert(title: "Updated Outcome Tag!", dismissAfter: 0.6)
+            }
+        }
+
+        let soldAction = UIAlertAction(title: "SOLD", style: .default) { action in
+            self.form?.outcome = .sold
+            self.setUpView(with: self.form)
+            FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
+                if let error = error {
+                    UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
+                    print("Error: \(error)")
+                    return
+                }
+                UIAlertController.presentDismissingAlert(title: "Updated Outcome Tag!", dismissAfter: 0.6)
+            }
+        }
+        
+        let rescheduleAction = UIAlertAction(title: "RESCHEDULED", style: .default) { action in
+            self.form?.outcome = .rescheduled
+            self.setUpView(with: self.form)
+            FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
+                if let error = error {
+                    UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
+                    print("Error: \(error)")
+                    return
+                }
+                UIAlertController.presentDismissingAlert(title: "Updated Outcome Tag!", dismissAfter: 0.6)
+            }
+        }
+        
+        let cancelledAction = UIAlertAction(title: "CANCELLED", style: .default) { action in
+            self.form?.outcome = .cancelled
+            self.setUpView(with: self.form)
+            FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
+                if let error = error {
+                    UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
+                    print("Error: \(error)")
+                    return
+                }
+                UIAlertController.presentDismissingAlert(title: "Updated Outcome Tag!", dismissAfter: 0.6)
+            }
+        }
+        
+        let ranAction = UIAlertAction(title: "RAN", style: .default) { action in
+            self.form?.outcome = .ran
+            self.setUpView(with: self.form)
+            FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
+                if let error = error {
+                    UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
+                    print("Error: \(error)")
+                    return
+                }
+                UIAlertController.presentDismissingAlert(title: "Updated Outcome Tag!", dismissAfter: 0.6)
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "CANCEL", style: .cancel)
+        
+        soldAction.setValue(UIColor.outcomeGreen, forKey: "titleTextColor")
+        ranAction.setValue(UIColor.outcomeBlue, forKey: "titleTextColor")
+        pendingAction.setValue(UIColor.eden, forKey: "titleTextColor")
+        cancelledAction.setValue(UIColor.outcomeRed, forKey: "titleTextColor")
+        rescheduleAction.setValue(UIColor.outcomePurple, forKey: "titleTextColor")
+        
+        alert.addAction(soldAction)
+        alert.addAction(ranAction)
+        alert.addAction(cancelledAction)
+        alert.addAction(rescheduleAction)
+        alert.addAction(pendingAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true)
+    }
     
     @IBAction func saveButtonPressed(_ sender: Any) {
         guard let form = createForm() else { return }
