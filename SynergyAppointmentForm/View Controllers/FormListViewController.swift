@@ -22,6 +22,10 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        loadForms()
+    }
+    
     
     // MARK: PROPERTIES
     var forms: [Form] = []
