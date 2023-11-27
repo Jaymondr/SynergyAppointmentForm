@@ -32,6 +32,21 @@ class FirebaseController {
         }
     }
     
+    func saveDeletedForm(form: Form, completion: @escaping (_ error: Error?) -> Void) {
+        let documentReference = db.collection(Form.CodingKeys.deletedCollectionID.rawValue).document()
+        var data = form.firebaseRepresentation
+        data[Form.CodingKeys.firbaseID.rawValue] = documentReference.documentID
+        
+        documentReference.setData(data) { error in
+            if let error = error {
+                completion(error)
+            } else {
+                print("No Errors saving deleted document")
+                completion(nil)
+            }
+        }
+    }
+
     // READ
     func getForms(completion: @escaping (_ forms: [Form], _ error: Error? ) -> Void) {
         db.collection(Form.CodingKeys.collectionID.rawValue).getDocuments { snapshot, error in
