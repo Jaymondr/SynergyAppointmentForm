@@ -15,7 +15,6 @@ class FormTableViewCell: UITableViewCell {
     @IBOutlet weak var firstNameLabel: UILabel!
     @IBOutlet weak var cityStateLabel: UILabel!
     @IBOutlet weak var cellView: UIView!
-    @IBOutlet weak var outcomeView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -39,23 +38,26 @@ class FormTableViewCell: UITableViewCell {
     func loadView() {
         cellView.layer.cornerRadius = 10
         cellView.layer.borderWidth = 2.5
-        cellView.layer.borderColor = UIColor.eden.cgColor
-        outcomeView.layer.cornerRadius = 10
-        outcomeView.backgroundColor = .white
-
+        cellView.backgroundColor = .white
     }
     
     func setOutcomeView(form: Form) {
         switch form.outcome {
         case .pending:
-            outcomeView.backgroundColor = .white
+            cellView.layer.borderColor = UIColor.eden.cgColor
+            cellView.layer.applySketchShadow(color: .eden, alpha: 0.9, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
         case .cancelled:
-            outcomeView.backgroundColor = .red
+            cellView.layer.borderColor = UIColor.outcomeRed.cgColor
+            cellView.layer.applySketchShadow(color: .outcomeRed, alpha: 0.9, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
         case .rescheduled:
-            outcomeView.backgroundColor = .purple
+            cellView.layer.borderColor = UIColor.outcomePurple.cgColor
+            cellView.layer.applySketchShadow(color: .outcomePurple, alpha: 0.9, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
+        case .ran:
+            cellView.layer.borderColor = UIColor.outcomeBlue.cgColor
+            cellView.layer.applySketchShadow(color: .outcomeBlue, alpha: 0.9, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
         case .sold:
-            outcomeView.backgroundColor = .green
+            cellView.layer.borderColor = UIColor.outcomeGreen.cgColor
+            cellView.layer.applySketchShadow(color: .outcomeGreen, alpha: 0.9, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
         }
     }
-    
 }

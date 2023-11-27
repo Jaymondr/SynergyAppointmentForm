@@ -7,6 +7,23 @@
 
 import UIKit
 
+// CALAYER
+extension CALayer {
+    func applySketchShadow(color: UIColor, alpha: CGFloat, x: CGFloat, y: CGFloat, blur: CGFloat, spread: CGFloat) {
+        shadowColor = color.cgColor
+        shadowOpacity = Float(alpha)
+        shadowOffset = CGSize(width: x, height: y)
+        shadowRadius = blur / 2.0
+        if spread == 0 {
+            shadowPath = nil
+        } else {
+            let dx = -spread
+            let rect = bounds.insetBy(dx: dx, dy: dx)
+            shadowPath = UIBezierPath(rect: rect).cgPath
+        }
+    }
+}
+
 // FORM
 extension Form: Equatable {
     static func == (lhs: Form, rhs: Form) -> Bool {

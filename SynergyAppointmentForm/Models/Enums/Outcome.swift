@@ -11,6 +11,7 @@ enum Outcome: String {
     case pending = "pending"
     case cancelled = "cancelled"
     case rescheduled = "rescheduled"
+    case ran = "ran"
     case sold = "sold"
     
     static func fromString(_ stringValue: String) -> Outcome {
@@ -23,6 +24,9 @@ enum Outcome: String {
                 
             case "rescheduled":
                 return .rescheduled
+                
+            case "ran":
+                return .ran
                 
             case "sold":
                 return .sold
