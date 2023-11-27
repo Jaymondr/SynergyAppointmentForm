@@ -31,6 +31,7 @@ class FormTableViewCell: UITableViewCell {
         } else {
             firstNameLabel.text = form.firstName.uppercased() + " & " + form.spouse.uppercased()
         }
+        
         // Set background view for outcome
         setOutcomeView(form: form)
     }

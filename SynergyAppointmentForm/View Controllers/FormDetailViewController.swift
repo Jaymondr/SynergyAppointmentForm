@@ -7,8 +7,13 @@
 
 import UIKit
 import CoreLocation
+
+
+protocol FormDetailViewDelegate: AnyObject {
+    func didUpdate(form: Form)
+}
+
 class FormDetailViewController: UIViewController {
-    
     
     // MARK: OUTLETS
     
@@ -35,7 +40,7 @@ class FormDetailViewController: UIViewController {
     // MARK: PROPERTIES
 
     var locationManager = CLLocationManager()
-
+    weak var delegate: FormDetailViewDelegate?
     
     // MARK: LIFECYCLE
     
@@ -67,6 +72,7 @@ class FormDetailViewController: UIViewController {
                     print("Error: \(error)")
                     return
                 }
+                self.delegate?.didUpdate(form: form)
                 UIAlertController.presentDismissingAlert(title: "Updated Outcome Tag!", dismissAfter: 0.6)
             }
         }
@@ -80,6 +86,7 @@ class FormDetailViewController: UIViewController {
                     print("Error: \(error)")
                     return
                 }
+                self.delegate?.didUpdate(form: form)
                 UIAlertController.presentDismissingAlert(title: "Updated Outcome Tag!", dismissAfter: 0.6)
             }
         }
@@ -93,6 +100,7 @@ class FormDetailViewController: UIViewController {
                     print("Error: \(error)")
                     return
                 }
+                self.delegate?.didUpdate(form: form)
                 UIAlertController.presentDismissingAlert(title: "Updated Outcome Tag!", dismissAfter: 0.6)
             }
         }
@@ -106,6 +114,7 @@ class FormDetailViewController: UIViewController {
                     print("Error: \(error)")
                     return
                 }
+                self.delegate?.didUpdate(form: form)
                 UIAlertController.presentDismissingAlert(title: "Updated Outcome Tag!", dismissAfter: 0.6)
             }
         }
@@ -119,6 +128,7 @@ class FormDetailViewController: UIViewController {
                     print("Error: \(error)")
                     return
                 }
+                self.delegate?.didUpdate(form: form)
                 UIAlertController.presentDismissingAlert(title: "Updated Outcome Tag!", dismissAfter: 0.6)
             }
         }
@@ -150,6 +160,8 @@ class FormDetailViewController: UIViewController {
                 print("Error: \(error)")
                 return
             }
+            self.delegate?.didUpdate(form: form)
+            print("Form Name: \(form.firstName)")
             UIAlertController.presentDismissingAlert(title: "Updated Form!", dismissAfter: 0.6)
         }
     }
@@ -249,8 +261,8 @@ class FormDetailViewController: UIViewController {
         commentsTextView.text = form.comments
         dateTimePicker.date = form.date
         
-        // BACKGROUND
         
+        // BACKGROUND
         var color1: CGColor
         var color2: CGColor
         var color3: CGColor

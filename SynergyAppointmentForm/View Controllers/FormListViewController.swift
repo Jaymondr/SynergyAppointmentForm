@@ -23,7 +23,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        loadForms()
+//        loadForms()
     }
     
     
@@ -156,8 +156,6 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toFormDetail",
            let indexPath = tableView.indexPathForSelectedRow,
@@ -170,6 +168,21 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             }
             
             destinationVC.form = selectedForm
+            destinationVC.delegate = self
+        }
+    }
+}
+
+extension FormListViewController: FormDetailViewDelegate {
+    func didUpdate(form: Form) {
+        if let index = forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {
+            forms[index] = form
+            print("Form names after: \(forms[index].firstName) \(form.firstName)")
+            for form in forms {
+                print("names: \(form.firstName)")
+            }
+            splitForms(forms: forms)
+            tableView.reloadData()
         }
     }
 }
