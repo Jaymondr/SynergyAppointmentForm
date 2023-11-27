@@ -27,9 +27,9 @@ class FormTableViewCell: UITableViewCell {
 //    }
     
     func setCellData(with form: Form) {
-        dayLabel.text = form.day.uppercased()
-        dateLabel.text = form.date
-        timeLabel.text = "\(form.time)\(form.ampm.uppercased())"
+        dayLabel.text = form.date.formattedDay()
+        dateLabel.text = form.date.formattedDayMonth()
+        timeLabel.text = "\(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())"
         cityStateLabel.text = "\(form.city.uppercased())(\(form.state))"
         if form.spouse.isEmpty {
             firstNameLabel.text = form.firstName.uppercased() + " " + form.lastName.uppercased()

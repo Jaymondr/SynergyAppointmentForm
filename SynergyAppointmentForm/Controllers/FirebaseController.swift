@@ -18,9 +18,8 @@ class FirebaseController {
     
     // CREATE
     func saveForm(form: Form, completion: @escaping (_ error: Error?) -> Void) {
-        var data = Form.firebaseRepresentation(form: form)
-    
         let documentReference = db.collection(FirebaseKeys.collectionID).document()
+        var data = form.firebaseRepresentation
         data[FirebaseKeys.firbaseID] = documentReference.documentID
         
         documentReference.setData(data) { error in
@@ -37,6 +36,7 @@ class FirebaseController {
     func getForms(completion: @escaping (_ forms: [Form], _ error: Error? ) -> Void) {
         db.collection(FirebaseKeys.collectionID).getDocuments { snapshot, error in
             if let error = error {
+                print("There was an error getting forms: \(error)")
                 completion([], error)
                 return
             }
@@ -47,7 +47,11 @@ class FirebaseController {
             var forms: [Form] = []
             for document in documents {
                 let data = document.data()
-                let form = Form(firebaseID: document.documentID, firebaseData: data)
+                guard let form = Form(firebaseData: data, firebaseID: document.documentID) else {
+                    print("Error creating form from firebaseData")
+                    completion([], nil)
+                    return
+                }
                 forms.append(form)
             }
             completion(forms, nil)
@@ -56,7 +60,7 @@ class FirebaseController {
     
     // UPDATE
     func updateForm(firebaseID: String, form: Form, completion: @escaping (_ error: Error?) -> Void) {
-        let data = Form.firebaseRepresentation(form: form)
+        let data = form.firebaseRepresentation
         db.collection(FirebaseKeys.collectionID).document(firebaseID).updateData(data) { error in
             if let error = error {
                 completion(error)

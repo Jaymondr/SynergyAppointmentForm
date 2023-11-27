@@ -167,29 +167,7 @@ class FormDetailViewController: UIViewController {
     
     func createForm() -> Form? {
         guard let form = form else { UIAlertController.presentDismissingAlert(title: "Error: No Form.", dismissAfter: 0.6); return nil }
-        // Separate date time
-        var day: String
-        var date: String
-        var time: String
-        var ampm: String
-        var year: String
-        let dateString = dateTimePicker.date.formattedStringDate()
-        print(dateString)
-        let dateTimeArray = dateString.split(separator: " ")
-        if dateTimeArray.count >= 2 {
-            day = String(dateTimeArray[0])
-            date = String(dateTimeArray[1])
-            time = String(dateTimeArray[2])
-            ampm = String(dateTimeArray[3])
-            year = String(dateTimeArray[4])
-        } else {
-            day = ""
-            date = ""
-            time = ""
-            ampm = ""
-            year = ""
-        }
-        let updatedForm = Form(firebaseID: form.firebaseID, address: addressTextField.text ?? "", ampm: ampm, city: cityTextField.text ?? "", comments: commentsTextView.text ?? "", date: date, dateString: dateString, day: day, email: emailTextField.text ?? "", energyBill: energyBillTextField.text ?? "", financeOptions: financeOptionsTextField.text ?? "", firstName: firstNameTextField.text ?? "", lastName: lastNameTextField.text ?? "", numberOfWindows: numberOfWindowsTextField.text ?? "", phone: phoneTextField.text ?? "", rate: rateTextField.text ?? "", reason: reasonTextView.text ?? "", retailQuote: quoteTextField.text ?? "", spouse: spouseTextField.text ?? "", state: stateTextField.text ?? "", time: time, year: year, yearsOwned: yearsOwnedTextField.text ?? "", zip: zipTextField.text ?? "")
+        let updatedForm = Form(firebaseID: form.firebaseID, address: addressTextField.text ?? "", ampm: dateTimePicker.date.formattedAmpm(), city: cityTextField.text ?? "", comments: commentsTextView.text ?? "", date: dateTimePicker.date, dateString: dateTimePicker.date.formattedStringDate(), day: dateTimePicker.date.formattedDay(), email: emailTextField.text ?? "", energyBill: energyBillTextField.text ?? "", financeOptions: financeOptionsTextField.text ?? "", firstName: firstNameTextField.text ?? "", lastName: lastNameTextField.text ?? "", numberOfWindows: numberOfWindowsTextField.text ?? "", phone: phoneTextField.text ?? "", rate: rateTextField.text ?? "", reason: reasonTextView.text ?? "", retailQuote: quoteTextField.text ?? "", spouse: spouseTextField.text ?? "", state: stateTextField.text ?? "", time: dateTi, year: year, yearsOwned: yearsOwnedTextField.text ?? "", zip: zipTextField.text ?? "")
         
         return updatedForm
     }
