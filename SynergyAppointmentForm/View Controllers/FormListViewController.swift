@@ -122,11 +122,18 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            UIAlertController.presentMultipleOptionAlert(message: "Delete Form?", actionOptionTitle: "DELETE", cancelOptionTitle: "Cancel") {
+        if indexPath.section == upcoming {
+            if editingStyle == .delete {
                 print("Delete row at: \(indexPath.row)")
-
+                let form = self.upcomingAppointmentForms[indexPath.row]
+                print("Delete form: \(form.firstName)")
+                
             }
+        } else {
+            // PAST
+            print("Delete row at: \(indexPath.row)")
+            let form = self.pastAppointmentForms[indexPath.row]
+            print("Delete form: \(form.firstName)")
         }
     }
 
