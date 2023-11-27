@@ -8,6 +8,7 @@
 import Foundation
 import CloudKit
 import Firebase
+import FirebaseFirestore
 //
 struct FirebaseKeys {
     static let collectionID = "Forms"
@@ -86,7 +87,6 @@ class Form: FirebaseModel {
               let lastName = firebaseData[Form.fLastName] as? String,
               let spouse = firebaseData[Form.fSpouse] as? String,
               let city = firebaseData[Form.fCity] as? String,
-              let date = (firebaseData[Form.fDate] as? Timestamp)?.dateValue(),
               let state = firebaseData[Form.fState] as? String,
               let address = firebaseData[Form.fAddress] as? String,
               let email = firebaseData[Form.fEmail] as? String,
@@ -99,7 +99,8 @@ class Form: FirebaseModel {
               let yearsOwned = firebaseData[Form.fYearsOwned] as? String,
               let zip = firebaseData[Form.fZip] as? String,
               let reason = firebaseData[Form.fReason] as? String,
-              let rate = firebaseData[Form.fRate] as? String
+              let rate = firebaseData[Form.fRate] as? String,
+              let date = (firebaseData[Form.fDate] as? Timestamp)?.dateValue()
         else { return nil }
         
         self.firebaseID = firebaseID
@@ -187,24 +188,23 @@ class Form: FirebaseModel {
     
     var firebaseRepresentation: [String : FirestoreType] {
         var firebaseRepresentation: [String : FirestoreType] = [
-            Form.fFirstName: firstName,
-            Form.fFirstName: firstName,
-            Form.fLastName: lastName,
-            Form.fSpouse: spouse,
-            Form.fCity: city,
-            Form.fDate: Timestamp(date: date),
-            Form.fState: state,
-            Form.fAddress: address,
-            Form.fEmail: email,
-            Form.fEnergyBill: energyBill,
-            Form.fRetailQuote: retailQuote,
-            Form.fPhone: phone,
-            Form.fComments: comments,
-            Form.fFinanceOptions: financeOptions,
-            Form.fNumberOfWindows: numberOfWindows,
-            Form.fYearsOwned: yearsOwned,
-            Form.fZip: zip,
-            Form.fReason: reason
+            Form.fFirstName          : firstName,
+            Form.fLastName           : lastName,
+            Form.fSpouse             : spouse,
+            Form.fCity               : city,
+            Form.fDate               : Timestamp(date: date),
+            Form.fState              : state,
+            Form.fAddress            : address,
+            Form.fEmail              : email,
+            Form.fEnergyBill         : energyBill,
+            Form.fRetailQuote        : retailQuote,
+            Form.fPhone              : phone,
+            Form.fComments           : comments,
+            Form.fFinanceOptions     : financeOptions,
+            Form.fNumberOfWindows    : numberOfWindows,
+            Form.fYearsOwned         : yearsOwned,
+            Form.fZip                : zip,
+            Form.fReason             : reason
         ]
         
         return firebaseRepresentation
@@ -219,8 +219,6 @@ class Form: FirebaseModel {
     static let fCity = "city"
     static let fComments = "comments"
     static let fDate = "date"
-    static let fDateString = "dateString"
-    static let fDay = "day"
     static let fEmail = "email"
     static let fEnergyBill = "energyBill"
     static let fFirstName = "firstName"
@@ -235,8 +233,6 @@ class Form: FirebaseModel {
     static let fRetailQuote = "retailQuote"
     static let fSpouse = "spouse"
     static let fState = "state"
-    static let fTime = "time"
-    static let fYear = "year"
     static let fYearsOwned = "yearsOwned"
     static let fZip = "zip"
 }
