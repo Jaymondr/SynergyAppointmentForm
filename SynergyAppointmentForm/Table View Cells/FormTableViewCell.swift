@@ -37,8 +37,8 @@ class FormTableViewCell: UITableViewCell {
     }
     
     func loadView() {
-        cellView.layer.cornerRadius = 10
-        cellView.layer.borderWidth = 2.5
+        cellView.layer.cornerRadius = 8
+        cellView.layer.borderWidth = 0.5
         cellView.backgroundColor = .white
     }
     

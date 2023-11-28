@@ -129,7 +129,6 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if indexPath.section == upcoming {
             // UPCOMING
-            let form = self.upcomingAppointmentForms[indexPath.row]
             UIAlertController.presentDismissingAlert(title: "Upcoming Appointments CANNOT Be Deleted", dismissAfter: 1.2)
             
         } else {
