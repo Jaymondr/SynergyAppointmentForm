@@ -15,6 +15,7 @@ class FormTableViewCell: UITableViewCell {
     @IBOutlet weak var firstNameLabel: UILabel!
     @IBOutlet weak var cityStateLabel: UILabel!
     @IBOutlet weak var cellView: UIView!
+    @IBOutlet weak var dropShadowView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -38,27 +39,33 @@ class FormTableViewCell: UITableViewCell {
     
     func loadView() {
         cellView.layer.cornerRadius = 8
+        dropShadowView.layer.cornerRadius = 8
         cellView.layer.borderWidth = 0.5
-        cellView.backgroundColor = .white
     }
     
     func setOutcomeView(form: Form) {
+        let alpha: Double = 0.07
         switch form.outcome {
         case .pending:
             cellView.layer.borderColor = UIColor.eden.cgColor
-            cellView.layer.applySketchShadow(color: .eden, alpha: 0.9, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
+            cellView.backgroundColor = UIColor.eden.withAlphaComponent(alpha)
+            dropShadowView.layer.applySketchShadow(color: .eden, alpha: 0.9, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
         case .cancelled:
             cellView.layer.borderColor = UIColor.outcomeRed.cgColor
-            cellView.layer.applySketchShadow(color: .outcomeRed, alpha: 0.9, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
+            cellView.backgroundColor = UIColor.outcomeRed.withAlphaComponent(alpha)
+            dropShadowView.layer.applySketchShadow(color: .outcomeRed, alpha: 0.9, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
         case .rescheduled:
             cellView.layer.borderColor = UIColor.outcomePurple.cgColor
-            cellView.layer.applySketchShadow(color: .outcomePurple, alpha: 0.9, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
+            cellView.backgroundColor = UIColor.outcomePurple.withAlphaComponent(alpha)
+            dropShadowView.layer.applySketchShadow(color: .outcomePurple, alpha: 0.9, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
         case .ran:
             cellView.layer.borderColor = UIColor.outcomeBlue.cgColor
-            cellView.layer.applySketchShadow(color: .outcomeBlue, alpha: 0.9, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
+            cellView.backgroundColor = UIColor.outcomeBlue.withAlphaComponent(alpha)
+            dropShadowView.layer.applySketchShadow(color: .outcomeBlue, alpha: 0.9, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
         case .sold:
             cellView.layer.borderColor = UIColor.outcomeGreen.cgColor
-            cellView.layer.applySketchShadow(color: .outcomeGreen, alpha: 0.9, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
+            cellView.backgroundColor = UIColor.outcomeGreen.withAlphaComponent(alpha)
+            dropShadowView.layer.applySketchShadow(color: .outcomeGreen, alpha: 0.9, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
         }
     }
 }

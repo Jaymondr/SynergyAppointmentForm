@@ -43,6 +43,10 @@
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="138"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b2W-Mu-8eG">
+                                                    <rect key="frame" x="20" y="4" width="353" height="130"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zRl-iJ-MDQ">
                                                     <rect key="frame" x="20" y="4" width="353" height="130"/>
                                                     <subviews>
@@ -116,9 +120,15 @@
                                                 </view>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="b2W-Mu-8eG" firstAttribute="centerX" secondItem="zRl-iJ-MDQ" secondAttribute="centerX" id="7hQ-nw-BYe"/>
+                                                <constraint firstItem="zRl-iJ-MDQ" firstAttribute="bottom" secondItem="b2W-Mu-8eG" secondAttribute="bottom" id="GpL-r5-kqv"/>
+                                                <constraint firstItem="zRl-iJ-MDQ" firstAttribute="trailing" secondItem="b2W-Mu-8eG" secondAttribute="trailing" id="LbI-fg-oKF"/>
                                                 <constraint firstItem="zRl-iJ-MDQ" firstAttribute="leading" secondItem="Amh-71-OWP" secondAttribute="leadingMargin" id="NIe-yb-YGG"/>
+                                                <constraint firstItem="b2W-Mu-8eG" firstAttribute="leading" secondItem="zRl-iJ-MDQ" secondAttribute="leading" id="Paz-aZ-cxX"/>
                                                 <constraint firstItem="zRl-iJ-MDQ" firstAttribute="centerY" secondItem="Amh-71-OWP" secondAttribute="centerY" id="Sl6-36-df2"/>
+                                                <constraint firstItem="b2W-Mu-8eG" firstAttribute="top" secondItem="zRl-iJ-MDQ" secondAttribute="top" id="Wnr-Sv-1s4"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="zRl-iJ-MDQ" secondAttribute="trailing" id="aPn-eF-RRF"/>
+                                                <constraint firstItem="b2W-Mu-8eG" firstAttribute="centerY" secondItem="zRl-iJ-MDQ" secondAttribute="centerY" id="jZl-6e-woR"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -126,6 +136,7 @@
                                             <outlet property="cityStateLabel" destination="bkQ-QU-oGZ" id="wt5-rY-dP2"/>
                                             <outlet property="dateLabel" destination="3i5-Ma-mg9" id="omM-EL-f4j"/>
                                             <outlet property="dayLabel" destination="XdU-SK-72q" id="IZh-3X-xkX"/>
+                                            <outlet property="dropShadowView" destination="b2W-Mu-8eG" id="t9i-Eb-BPN"/>
                                             <outlet property="firstNameLabel" destination="WvX-J8-lhM" id="V1e-hE-qX7"/>
                                             <outlet property="timeLabel" destination="KvD-Sv-yli" id="EMs-i1-wm5"/>
                                             <segue destination="mzI-Pq-KQL" kind="show" identifier="toFormDetail" id="WqX-tD-Frz"/>
@@ -155,7 +166,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="hQa-Ar-Ogm">
                             <color key="tintColor" red="0.14672747789999999" green="0.30052079100000001" blue="0.33174077190000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <connections>
-                                <segue destination="ncR-vK-5yf" kind="show" identifier="toCreateForm" id="rU6-U8-7l6"/>
+                                <segue destination="ncR-vK-5yf" kind="show" id="rU6-U8-7l6"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
