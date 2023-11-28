@@ -35,6 +35,7 @@ class FormDetailViewController: UIViewController {
     @IBOutlet weak var reasonTextView: UITextView!
     @IBOutlet weak var rateTextField: UITextField!
     @IBOutlet weak var commentsTextView: UITextView!
+    @IBOutlet weak var blurView: UIView!
     
     
     // MARK: PROPERTIES
@@ -48,6 +49,11 @@ class FormDetailViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = UIColor.eden
         setUpView(with: form)
+        let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+        blurEffectView.frame = blurView.bounds
+
+        blurView.addSubview(blurEffectView)
+
     }
     
     // MARK: PROPERTIES
@@ -271,7 +277,7 @@ class FormDetailViewController: UIViewController {
         switch form.outcome {
         case .pending:
             color1 = UIColor.white.cgColor
-            color2 = UIColor.lightGray.cgColor
+            color2 = UIColor.white.cgColor
             color3 = UIColor.eden.cgColor
             
         case .cancelled:
@@ -299,7 +305,7 @@ class FormDetailViewController: UIViewController {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = view.bounds
         gradientLayer.colors = [color1, color2, color3]
-        gradientLayer.locations = [0.1, 0.2, 4.0]
+        gradientLayer.locations = [0.1, 0.2, 3.0]
         view.layer.insertSublayer(gradientLayer, at: 0)
     }
     

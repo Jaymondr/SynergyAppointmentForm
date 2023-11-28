@@ -116,7 +116,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 170
+        return 150
     }
     
     @objc private func refreshData(_ sender: Any) {
@@ -193,7 +193,9 @@ extension FormListViewController: FormDetailViewDelegate {
 extension FormListViewController: FormViewDelegate {
     func didAddNewForm(_ form: Form) {
         if !forms.contains(where: { $0.firebaseID == form.firebaseID }) {
+            print(forms.count)
             forms.append(form)
+            print(forms.count)
             splitForms(forms: forms)
             tableView.reloadData()
         }
