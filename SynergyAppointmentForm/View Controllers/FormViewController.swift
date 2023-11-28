@@ -8,6 +8,12 @@
 import UIKit
 import CoreLocation
 
+
+protocol FormViewDelegate: AnyObject {
+    func didAddNewForm(_ form: Form)
+    func didUpdateNew(_ form: Form)
+}
+
 class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDelegate, UITextViewDelegate {
     // MARK: OUTLETS
     @IBOutlet weak var dateTimePicker: UIDatePicker!
@@ -33,6 +39,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     @IBOutlet weak var saveButton: UIButton!
     
     var locationManager = CLLocationManager()
+    weak var delegate: FormViewDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,14 +53,38 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
 
     }
     
+    
+    // MARK: PROPERTIES
+    var firebaseID: String = ""
+
+    
     // MARK: BUTTONS
     @IBAction func saveButtonPressed(_ sender: Any) {
         let form = createForm()
-        FirebaseController.shared.saveForm(form: form) { error in
-            if let error = error {
-                print("Error: \(error)")
-                UIAlertController.presentDismissingAlert(title: "Failed to Save Form", dismissAfter: 1.2)
-            } else {
+        if form.firebaseID.isNotEmpty {
+            // UPDATE FORM
+            FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
+                if let error = error {
+                    print("there was an error: \(error)")
+                    UIAlertController.presentDismissingAlert(title: "Failed to Save Form", dismissAfter: 1.2)
+                    return
+                }
+                self.delegate?.didUpdateNew(form)
+                UIAlertController.presentDismissingAlert(title: "Updated Form!", dismissAfter: 0.5)
+            }
+            
+        } else {
+            // CREATE FORM IN FIREBASE
+            FirebaseController.shared.saveForm(form: form) { form, error in
+                if let error = error {
+                    print("Error: \(error)")
+                    UIAlertController.presentDismissingAlert(title: "Failed to Save Form", dismissAfter: 1.2)
+                    return
+                }
+                
+                guard let form = form else { print("No Form!"); return }
+                self.firebaseID = form.firebaseID
+                self.delegate?.didAddNewForm(form)
                 UIAlertController.presentDismissingAlert(title: "Form Saved!", dismissAfter: 0.5)
             }
         }
@@ -237,7 +268,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     }
     
     func createForm() -> Form {
-        let form = Form(firebaseID: "", address: addressTextfield.text ?? "", city: cityTextfield.text ?? "", comments: commentsTextview.text ?? "", date: dateTimePicker.date, email: emailTextfield.text ?? "", energyBill: energyBillTextfield.text ?? "", financeOptions: financeTextfield.text ?? "", firstName: firstNameTextfield.text ?? "", lastName: lastNameTextfield.text ?? "", numberOfWindows: numberOfWindowsTexfield.text ?? "", phone: phoneTextfield.text ?? "", rate: rateTextfield.text ?? "", reason: reasonTextview.text ?? "", retailQuote: quoteTextfield.text ?? "", spouse: spouseTextfield.text ?? "", state: stateTextfield.text ?? "", yearsOwned: yearsOwnedTextfield.text ?? "", zip: zipTextfield.text ?? "")
+        let form = Form(firebaseID: self.firebaseID, address: addressTextfield.text ?? "", city: cityTextfield.text ?? "", comments: commentsTextview.text ?? "", date: dateTimePicker.date, email: emailTextfield.text ?? "", energyBill: energyBillTextfield.text ?? "", financeOptions: financeTextfield.text ?? "", firstName: firstNameTextfield.text ?? "", lastName: lastNameTextfield.text ?? "", numberOfWindows: numberOfWindowsTexfield.text ?? "", phone: phoneTextfield.text ?? "", rate: rateTextfield.text ?? "", reason: reasonTextview.text ?? "", retailQuote: quoteTextfield.text ?? "", spouse: spouseTextfield.text ?? "", state: stateTextfield.text ?? "", yearsOwned: yearsOwnedTextfield.text ?? "", zip: zipTextfield.text ?? "")
         
         return form
     }

@@ -133,7 +133,7 @@ class Form: FirebaseModel {
     enum CodingKeys: String, CodingKey {
         case collectionID = "Forms"
         case deletedCollectionID = "DeletedForms"
-        case firbaseID = "firebaseID"
+        case firebaseID = "firebaseID"
         case ampm = "ampm"
         case address = "address"
         case body = "body"

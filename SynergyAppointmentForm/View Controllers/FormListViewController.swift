@@ -170,6 +170,11 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             destinationVC.form = selectedForm
             destinationVC.delegate = self
         }
+        
+        if segue.identifier == "toCreateForm",
+           let destinationVC = segue.destination as? FormViewController {
+            destinationVC.delegate = self
+        }
     }
 }
 
@@ -177,10 +182,25 @@ extension FormListViewController: FormDetailViewDelegate {
     func didUpdate(form: Form) {
         if let index = forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {
             forms[index] = form
-            print("Form names after: \(forms[index].firstName) \(form.firstName)")
-            for form in forms {
-                print("names: \(form.firstName)")
-            }
+            splitForms(forms: forms)
+            tableView.reloadData()
+        }
+    }
+}
+
+extension FormListViewController: FormViewDelegate {
+    func didAddNewForm(_ form: Form) {
+        if !forms.contains(where: { $0.firebaseID == form.firebaseID }) {
+            forms.append(form)
+            splitForms(forms: forms)
+            tableView.reloadData()
+        }
+    }
+    
+    func didUpdateNew(_ form: Form) {
+        if !forms.contains(where: { $0.firebaseID == form.firebaseID }),
+           let index = forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {
+            forms[index] = form
             splitForms(forms: forms)
             tableView.reloadData()
         }

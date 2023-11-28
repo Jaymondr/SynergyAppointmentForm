@@ -7,6 +7,14 @@
 
 import UIKit
 
+// STRING
+extension String {
+    var isNotEmpty: Bool {
+        return !self.isEmpty
+    }
+}
+
+
 // CALAYER
 extension CALayer {
     func applySketchShadow(color: UIColor, alpha: CGFloat, x: CGFloat, y: CGFloat, blur: CGFloat, spread: CGFloat) {
