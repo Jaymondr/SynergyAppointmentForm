@@ -51,7 +51,6 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             }
             self.forms = forms
             self.splitForms(forms: forms)
-            self.tableView.reloadData()
         }
     }
     
@@ -69,6 +68,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         }
         // SORT PAST FORMS NEWEST TO OLDEST
         pastAppointmentForms.sort { $0.date > $1.date}
+        self.tableView.reloadData()
     }
     
     func setTitleAttributes() {
@@ -135,7 +135,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             // PAST
             let form = self.pastAppointmentForms[indexPath.row]
             UIAlertController.presentMultipleOptionAlert(message: "Are you sure you want to delete \(form.firstName) \(form.lastName)'s past appointment form?", actionOptionTitle: "DELETE", cancelOptionTitle: "CANCEL") {
-                FirebaseController.shared.saveDeletedForm(form: form) { error in
+                FirebaseController.shared.saveDeletedForm(form: form) { [self] error in
                     if let error = error {
                         print("Error Saving Form: \(error)")
                         UIAlertController.presentDismissingAlert(title: "Error Deleting Form: \(form.firstName + " " + form.lastName)", dismissAfter: 1.2)
@@ -148,8 +148,10 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                             return
                         }
                     }
-                    self.pastAppointmentForms.remove(at: indexPath.row)
-                    self.tableView.reloadData()
+                    if let index = forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {
+                        forms.remove(at: index)
+                    }
+                    self.splitForms(forms: forms)
                 }
             }
         }

@@ -60,7 +60,7 @@ class FormDetailViewController: UIViewController {
     // MARK: FUNCTIONS
     @IBAction func tagButtonPressed(_ sender: Any) {
         guard let form = form else { return }
-        let alert = UIAlertController(title: "Add Outcome Tag", message: "Select Tag", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Add Label", message: "Select Label", preferredStyle: .alert)
         
         let pendingAction = UIAlertAction(title: "Pending", style: .default) { action in
             self.form?.outcome = .pending
@@ -73,7 +73,7 @@ class FormDetailViewController: UIViewController {
                     return
                 }
                 self.delegate?.didUpdate(form: form)
-                UIAlertController.presentDismissingAlert(title: "Updated Outcome Tag!", dismissAfter: 0.6)
+                UIAlertController.presentDismissingAlert(title: "Label Updated!", dismissAfter: 0.6)
             }
         }
 
@@ -87,7 +87,7 @@ class FormDetailViewController: UIViewController {
                     return
                 }
                 self.delegate?.didUpdate(form: form)
-                UIAlertController.presentDismissingAlert(title: "Updated Outcome Tag!", dismissAfter: 0.6)
+                UIAlertController.presentDismissingAlert(title: "Label Updated!", dismissAfter: 0.6)
             }
         }
         
@@ -101,7 +101,7 @@ class FormDetailViewController: UIViewController {
                     return
                 }
                 self.delegate?.didUpdate(form: form)
-                UIAlertController.presentDismissingAlert(title: "Updated Outcome Tag!", dismissAfter: 0.6)
+                UIAlertController.presentDismissingAlert(title: "Label Updated!", dismissAfter: 0.6)
             }
         }
         
@@ -115,7 +115,7 @@ class FormDetailViewController: UIViewController {
                     return
                 }
                 self.delegate?.didUpdate(form: form)
-                UIAlertController.presentDismissingAlert(title: "Updated Outcome Tag!", dismissAfter: 0.6)
+                UIAlertController.presentDismissingAlert(title: "Label Updated!", dismissAfter: 0.6)
             }
         }
         
@@ -129,7 +129,7 @@ class FormDetailViewController: UIViewController {
                     return
                 }
                 self.delegate?.didUpdate(form: form)
-                UIAlertController.presentDismissingAlert(title: "Updated Outcome Tag!", dismissAfter: 0.6)
+                UIAlertController.presentDismissingAlert(title: "Label Updated!", dismissAfter: 0.6)
             }
         }
         
@@ -185,6 +185,7 @@ class FormDetailViewController: UIViewController {
             let urlString = "sms:\(phoneNumber)&body=\(text)"
             self.sendMessage(urlString: urlString, alert: alert)
         }
+        
         let followUpTextAction = UIAlertAction(title: "Follow-Up Text", style: .default) { _ in
             let text = FormController.shared.createFollowUpText(from: form)
             let urlString = "sms:\(phoneNumber)&body=\(text)"

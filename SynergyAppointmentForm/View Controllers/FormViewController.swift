@@ -70,7 +70,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
                     return
                 }
                 self.delegate?.didUpdateNew(form)
-                UIAlertController.presentDismissingAlert(title: "Updated Form!", dismissAfter: 0.5)
+                UIAlertController.presentDismissingAlert(title: "Form Updated!", dismissAfter: 0.5)
             }
             
         } else {
