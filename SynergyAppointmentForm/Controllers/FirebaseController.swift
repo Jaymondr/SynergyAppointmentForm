@@ -17,17 +17,18 @@ class FirebaseController {
     // MARK: CRUD FUNCTIONS
     
     // CREATE
-    func saveForm(form: Form, completion: @escaping (_ error: Error?) -> Void) {
+    func saveForm(form: Form, completion: @escaping (_ form: Form?, _ error: Error?) -> Void) {
         let documentReference = db.collection(Form.CodingKeys.collectionID.rawValue).document()
         var data = form.firebaseRepresentation
-        data[Form.CodingKeys.firbaseID.rawValue] = documentReference.documentID
+        data[Form.CodingKeys.firebaseID.rawValue] = documentReference.documentID
         
         documentReference.setData(data) { error in
             if let error = error {
-                completion(error)
+                completion(nil, error)
             } else {
                 print("No Errors saving document")
-                completion(nil)
+                let newForm = Form(firebaseData: data, firebaseID: documentReference.documentID)
+                completion(newForm, nil)
             }
         }
     }
@@ -35,7 +36,7 @@ class FirebaseController {
     func saveDeletedForm(form: Form, completion: @escaping (_ error: Error?) -> Void) {
         let documentReference = db.collection(Form.CodingKeys.deletedCollectionID.rawValue).document()
         var data = form.firebaseRepresentation
-        data[Form.CodingKeys.firbaseID.rawValue] = documentReference.documentID
+        data[Form.CodingKeys.firebaseID.rawValue] = documentReference.documentID
         
         documentReference.setData(data) { error in
             if let error = error {

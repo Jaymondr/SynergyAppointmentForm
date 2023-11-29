@@ -49,6 +49,7 @@
 		67DAFE932B073028003D6B5B /* FormError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DAFE922B073028003D6B5B /* FormError.swift */; };
 		67DAFEA12B08109A003D6B5B /* FormRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DAFEA02B08109A003D6B5B /* FormRecord.swift */; };
 		67E4A6692B054BCF00024F06 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E4A6682B054BCF00024F06 /* Address.swift */; };
+		67EAEF202B14D148006E4995 /* Outcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EAEF1F2B14D148006E4995 /* Outcome.swift */; };
 		67EBEE2B2B0BC629009FD021 /* FormTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EBEE2A2B0BC629009FD021 /* FormTableViewCell.swift */; };
 		67EBEE302B0BC768009FD021 /* FormListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EBEE2F2B0BC768009FD021 /* FormListViewController.swift */; };
 		67EBEE322B0C0353009FD021 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 67EBEE312B0C0353009FD021 /* GoogleService-Info.plist */; };
@@ -79,6 +80,7 @@
 		67DAFE952B073FBB003D6B5B /* SynergyAppointmentForm.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SynergyAppointmentForm.entitlements; sourceTree = "<group>"; };
 		67DAFEA02B08109A003D6B5B /* FormRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormRecord.swift; sourceTree = "<group>"; };
 		67E4A6682B054BCF00024F06 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		67EAEF1F2B14D148006E4995 /* Outcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Outcome.swift; sourceTree = "<group>"; };
 		67EBEE2A2B0BC629009FD021 /* FormTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTableViewCell.swift; sourceTree = "<group>"; };
 		67EBEE2F2B0BC768009FD021 /* FormListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormListViewController.swift; sourceTree = "<group>"; };
 		67EBEE312B0C0353009FD021 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				67DAFEA02B08109A003D6B5B /* FormRecord.swift */,
 				67BB4F122B141A6000067D90 /* FirestoreType.swift */,
 				67BB4F142B141B3300067D90 /* FirebaseModel.swift */,
+				67EAEF212B14D14E006E4995 /* Enums */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -226,6 +229,14 @@
 				67DAFE922B073028003D6B5B /* FormError.swift */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		67EAEF212B14D14E006E4995 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				67EAEF1F2B14D148006E4995 /* Outcome.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 		67EBEE2C2B0BC632009FD021 /* Table View Cells */ = {
@@ -349,6 +360,7 @@
 				67BB4F132B141A6000067D90 /* FirestoreType.swift in Sources */,
 				67E4A6692B054BCF00024F06 /* Address.swift in Sources */,
 				67EBEE2B2B0BC629009FD021 /* FormTableViewCell.swift in Sources */,
+				67EAEF202B14D148006E4995 /* Outcome.swift in Sources */,
 				674603A22B03D8F700756102 /* AppDelegate.swift in Sources */,
 				674603A42B03D8F700756102 /* SceneDelegate.swift in Sources */,
 				674603B92B03DB0400756102 /* Form.swift in Sources */,

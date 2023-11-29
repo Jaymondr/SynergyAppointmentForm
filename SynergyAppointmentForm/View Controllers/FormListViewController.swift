@@ -18,8 +18,13 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         loadForms()
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         tableView.refreshControl = refreshControl
+        tableView.separatorStyle = .none
         setTitleAttributes()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+//        loadForms()
     }
     
     
@@ -46,7 +51,6 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             }
             self.forms = forms
             self.splitForms(forms: forms)
-            self.tableView.reloadData()
         }
     }
     
@@ -64,6 +68,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         }
         // SORT PAST FORMS NEWEST TO OLDEST
         pastAppointmentForms.sort { $0.date > $1.date}
+        self.tableView.reloadData()
     }
     
     func setTitleAttributes() {
@@ -124,14 +129,13 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if indexPath.section == upcoming {
             // UPCOMING
-            let form = self.upcomingAppointmentForms[indexPath.row]
             UIAlertController.presentDismissingAlert(title: "Upcoming Appointments CANNOT Be Deleted", dismissAfter: 1.2)
             
         } else {
             // PAST
             let form = self.pastAppointmentForms[indexPath.row]
             UIAlertController.presentMultipleOptionAlert(message: "Are you sure you want to delete \(form.firstName) \(form.lastName)'s past appointment form?", actionOptionTitle: "DELETE", cancelOptionTitle: "CANCEL") {
-                FirebaseController.shared.saveDeletedForm(form: form) { error in
+                FirebaseController.shared.saveDeletedForm(form: form) { [self] error in
                     if let error = error {
                         print("Error Saving Form: \(error)")
                         UIAlertController.presentDismissingAlert(title: "Error Deleting Form: \(form.firstName + " " + form.lastName)", dismissAfter: 1.2)
@@ -144,16 +148,16 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                             return
                         }
                     }
-                    self.pastAppointmentForms.remove(at: indexPath.row)
-                    self.tableView.reloadData()
+                    if let index = forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {
+                        forms.remove(at: index)
+                    }
+                    self.splitForms(forms: forms)
                 }
             }
         }
     }
 
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toFormDetail",
            let indexPath = tableView.indexPathForSelectedRow,
@@ -166,6 +170,43 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             }
             
             destinationVC.form = selectedForm
+            destinationVC.delegate = self
+        }
+        
+        if segue.identifier == "toCreateForm",
+           let destinationVC = segue.destination as? FormViewController {
+            destinationVC.delegate = self
+        }
+    }
+}
+
+extension FormListViewController: FormDetailViewDelegate {
+    func didUpdate(form: Form) {
+        if let index = forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {
+            forms[index] = form
+            splitForms(forms: forms)
+            tableView.reloadData()
+        }
+    }
+}
+
+extension FormListViewController: FormViewDelegate {
+    func didAddNewForm(_ form: Form) {
+        if !forms.contains(where: { $0.firebaseID == form.firebaseID }) {
+            print(forms.count)
+            forms.append(form)
+            print(forms.count)
+            splitForms(forms: forms)
+            tableView.reloadData()
+        }
+    }
+    
+    func didUpdateNew(_ form: Form) {
+        if !forms.contains(where: { $0.firebaseID == form.firebaseID }),
+           let index = forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {
+            forms[index] = form
+            splitForms(forms: forms)
+            tableView.reloadData()
         }
     }
 }

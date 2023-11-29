@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "edenTrello.png",
+      "filename" : "trelloWhite.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "edenTrello 1.png",
+      "filename" : "trelloWhite 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "edenTrello 2.png",
+      "filename" : "trelloWhite 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
