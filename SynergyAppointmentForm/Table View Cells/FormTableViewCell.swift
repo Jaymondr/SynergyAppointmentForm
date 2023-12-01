@@ -50,7 +50,7 @@ class FormTableViewCell: UITableViewCell {
     func loadView() {
         cellView.layer.cornerRadius = 8
         dropShadowView.layer.cornerRadius = 8
-        cellView.layer.borderWidth = 0.5
+        cellView.layer.borderWidth = 1.0
     }
     
     private func setOutcomeView(form: Form) {
