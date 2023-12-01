@@ -54,7 +54,7 @@ class FormTableViewCell: UITableViewCell {
     }
     
     private func setOutcomeView(form: Form) {
-        let alpha: Double = 0.2
+        let alpha: Double = 0.4
         switch form.outcome {
         case .pending:
             cellView.layer.borderColor = UIColor.eden.cgColor

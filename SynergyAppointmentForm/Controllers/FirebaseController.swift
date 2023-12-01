@@ -26,9 +26,25 @@ class FirebaseController {
             if let error = error {
                 completion(nil, error)
             } else {
-                print("No Errors saving document")
+                print("No Errors saving form")
                 let newForm = Form(firebaseData: data, firebaseID: documentReference.documentID)
                 completion(newForm, nil)
+            }
+        }
+    }
+    
+    func createUser(user: User, completion: @escaping (_ user: User?, _ error: Error?) -> Void) {
+        let docRef = db.collection(User.collectionKey).document()
+        var data = user.firebaseRepresentation
+        data[User.CodingKeys.firebaseID.rawValue] = docRef.documentID
+        
+        docRef.setData(data) { error in
+            if let error = error {
+                completion(nil, error)
+            } else {
+                print("No Errors creating User")
+                let newUser = User(firebaseData: data, firebaseID: docRef.documentID)
+                completion(newUser, nil)
             }
         }
     }

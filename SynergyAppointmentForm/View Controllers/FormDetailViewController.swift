@@ -158,34 +158,18 @@ class FormDetailViewController: UIViewController {
     }
     
     @IBAction func saveButtonPressed(_ sender: Any) {
-        
-        var user = User(email: "gmail.com", firstName: "Jaymond", lastName: "Richardson")
-        FirebaseController.shared.createUser(user: user) { user, error in
+        guard let form = createForm() else { return }
+        print("form id: \(form.firebaseID)")
+        FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
             if let error = error {
-                print("There was an error: \(error)")
+                UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
+                print("Error: \(error)")
                 return
             }
-            
-            if let user = user {
-                print("New user: \(user.firebaseID)")
-                UIAlertController.presentDismissingAlert(title: "New User \(user.firstName) created!", dismissAfter: 0.7)
-            }
+            self.delegate?.didUpdate(form: form)
+            print("Form Name: \(form.firstName)")
+            UIAlertController.presentDismissingAlert(title: "Updated Form!", dismissAfter: 0.6)
         }
-        
-        
-        
-//        guard let form = createForm() else { return }
-//        print("form id: \(form.firebaseID)")
-//        FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
-//            if let error = error {
-//                UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
-//                print("Error: \(error)")
-//                return
-//            }
-//            self.delegate?.didUpdate(form: form)
-//            print("Form Name: \(form.firstName)")
-//            UIAlertController.presentDismissingAlert(title: "Updated Form!", dismissAfter: 0.6)
-//        }
     }
     
     @IBAction func trelloCopyButtonPressed(_ sender: Any) {

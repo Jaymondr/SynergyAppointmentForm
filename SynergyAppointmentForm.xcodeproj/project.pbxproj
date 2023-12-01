@@ -199,12 +199,12 @@
 			isa = PBXGroup;
 			children = (
 				674603B82B03DB0400756102 /* Form.swift */,
+				678FD77D2B1A3A3100FB515D /* User.swift */,
 				67E4A6682B054BCF00024F06 /* Address.swift */,
 				67DAFEA02B08109A003D6B5B /* FormRecord.swift */,
 				67BB4F122B141A6000067D90 /* FirestoreType.swift */,
 				67BB4F142B141B3300067D90 /* FirebaseModel.swift */,
 				67EAEF212B14D14E006E4995 /* Enums */,
-				678FD77D2B1A3A3100FB515D /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
