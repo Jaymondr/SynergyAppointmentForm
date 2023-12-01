@@ -52,10 +52,16 @@ class FormController {
     }
     
     func createAndCopyTrello(form: Form) {
-        UIPasteboard.general.string =
+        let trelloString = form.spouse.isNotEmpty ?
         """
         \(form.date.formattedDay()) \(form.date.formattedDayMonth()) @\(form.date.formattedTime()) \(form.firstName) & \(form.spouse) \(form.lastName) (\(form.city)) -Jaymond
         """
+        :
+        """
+        \(form.date.formattedDay()) \(form.date.formattedDayMonth()) @\(form.date.formattedTime()) \(form.firstName) \(form.lastName) (\(form.city)) -Jaymond
+        """
+        UIPasteboard.general.string = trelloString
+
         UIAlertController.presentDismissingAlert(title: "Trello Copied!", dismissAfter: 0.5)
     }
     
