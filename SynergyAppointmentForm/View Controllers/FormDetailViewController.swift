@@ -36,6 +36,7 @@ class FormDetailViewController: UIViewController {
     @IBOutlet weak var rateTextField: UITextField!
     @IBOutlet weak var commentsTextView: UITextView!
     @IBOutlet weak var blurView: UIView!
+    @IBOutlet weak var labelButton: UIButton!
     
     
     // MARK: PROPERTIES
@@ -302,6 +303,10 @@ class FormDetailViewController: UIViewController {
 
         }
         
+        // Label Button
+        labelButton.configuration?.baseForegroundColor = UIColor(cgColor: color3)
+        
+        // Background
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = view.bounds
         gradientLayer.colors = [color1, color2, color3]

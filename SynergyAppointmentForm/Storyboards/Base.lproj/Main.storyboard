@@ -801,7 +801,7 @@
                                             <constraint firstAttribute="width" secondItem="zZU-zE-gEC" secondAttribute="height" multiplier="1:1" id="AnK-3t-Pbl"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" image="Image">
+                                        <buttonConfiguration key="configuration" style="plain" image="blueTrello">
                                             <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
                                         </buttonConfiguration>
                                         <connections>
@@ -816,8 +816,8 @@
                                         </constraints>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain">
-                                            <imageReference key="image" image="message.fill" catalog="system" symbolScale="large"/>
-                                            <color key="baseForegroundColor" name="eden"/>
+                                            <imageReference key="image" image="ellipsis.message.fill" catalog="system" symbolScale="large"/>
+                                            <color key="baseForegroundColor" red="0.32549019607843138" green="0.84313725490196079" blue="0.41176470588235292" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </buttonConfiguration>
                                         <connections>
                                             <action selector="sendMessageButtonPressed:" destination="mzI-Pq-KQL" eventType="touchUpInside" id="g7T-wk-NF6"/>
@@ -888,6 +888,7 @@
                         <outlet property="energyBillTextField" destination="9uu-sJ-fOJ" id="r5N-I9-nrQ"/>
                         <outlet property="financeOptionsTextField" destination="MyG-fj-sSM" id="Srb-s4-Zys"/>
                         <outlet property="firstNameTextField" destination="gcG-Er-mtO" id="FZb-nK-RED"/>
+                        <outlet property="labelButton" destination="mPl-HM-7Pl" id="Shb-YH-2rG"/>
                         <outlet property="lastNameTextField" destination="B6u-ox-gua" id="kmV-Yr-Wbg"/>
                         <outlet property="numberOfWindowsTextField" destination="Prb-yK-aEB" id="YNC-3P-19W"/>
                         <outlet property="phoneTextField" destination="GdM-Sc-2B5" id="cfn-mf-hgT"/>
@@ -1610,8 +1611,10 @@
     </scenes>
     <resources>
         <image name="Image" width="23.666666030883789" height="23.666666030883789"/>
+        <image name="blueTrello" width="23.333333969116211" height="23.333333969116211"/>
         <image name="clear" catalog="system" width="128" height="114"/>
         <image name="doc.on.clipboard" catalog="system" width="116" height="128"/>
+        <image name="ellipsis.message.fill" catalog="system" width="128" height="114"/>
         <image name="location.fill.viewfinder" catalog="system" width="128" height="115"/>
         <image name="message.fill" catalog="system" width="128" height="114"/>
         <image name="tag.fill" catalog="system" width="128" height="118"/>
