@@ -102,6 +102,8 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             // UPCOMING
             let form = upcomingAppointmentForms[indexPath.row]
             cell.setCellData(with: form)
+            cell.delegate = self
+            cell.form = form
            
             return cell
 
@@ -109,7 +111,8 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             // Past
             let form = pastAppointmentForms[indexPath.row]
             cell.setCellData(with: form)
-           
+            cell.delegate = self
+            cell.form = form
             return cell
         }
         

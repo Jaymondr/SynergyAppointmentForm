@@ -101,6 +101,20 @@
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B09-jb-nlt">
+                                                            <rect key="frame" x="321" y="96" width="24" height="24"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="24" id="age-IF-teT"/>
+                                                                <constraint firstAttribute="width" secondItem="B09-jb-nlt" secondAttribute="height" multiplier="1:1" id="zTz-hU-awt"/>
+                                                            </constraints>
+                                                            <state key="normal" title="Button"/>
+                                                            <buttonConfiguration key="configuration" style="plain" image="list.clipboard" catalog="system" title="">
+                                                                <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </buttonConfiguration>
+                                                            <connections>
+                                                                <action selector="notesButtonPressed:" destination="4nh-tc-2PR" eventType="touchUpInside" id="2h1-37-AQM"/>
+                                                            </connections>
+                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
@@ -110,12 +124,14 @@
                                                         <constraint firstItem="XdU-SK-72q" firstAttribute="leading" secondItem="zRl-iJ-MDQ" secondAttribute="leadingMargin" constant="5" id="JAW-6R-wX2"/>
                                                         <constraint firstItem="KvD-Sv-yli" firstAttribute="centerY" secondItem="3i5-Ma-mg9" secondAttribute="centerY" id="Sl3-ct-2tk"/>
                                                         <constraint firstItem="bkQ-QU-oGZ" firstAttribute="top" secondItem="FOp-d2-PfR" secondAttribute="bottom" constant="8" id="Wbk-8V-5jE"/>
+                                                        <constraint firstAttribute="bottom" secondItem="B09-jb-nlt" secondAttribute="bottom" constant="10" id="i7J-Xd-hJE"/>
                                                         <constraint firstItem="bkQ-QU-oGZ" firstAttribute="centerX" secondItem="FOp-d2-PfR" secondAttribute="centerX" id="ixm-4T-ypg"/>
                                                         <constraint firstItem="FOp-d2-PfR" firstAttribute="leading" secondItem="zRl-iJ-MDQ" secondAttribute="leading" constant="10" id="ktG-ZR-5dy"/>
                                                         <constraint firstAttribute="trailing" secondItem="KvD-Sv-yli" secondAttribute="trailing" constant="8" id="pxb-8B-BYS"/>
                                                         <constraint firstAttribute="trailing" secondItem="FOp-d2-PfR" secondAttribute="trailing" constant="10" id="sFb-le-RHh"/>
                                                         <constraint firstItem="FOp-d2-PfR" firstAttribute="top" secondItem="KvD-Sv-yli" secondAttribute="bottom" constant="8" id="swk-p9-zDV"/>
                                                         <constraint firstItem="XdU-SK-72q" firstAttribute="top" secondItem="zRl-iJ-MDQ" secondAttribute="topMargin" id="tqY-a6-LTY"/>
+                                                        <constraint firstAttribute="trailing" secondItem="B09-jb-nlt" secondAttribute="trailing" constant="8" id="ypU-Oh-A9N"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -1615,6 +1631,7 @@
         <image name="clear" catalog="system" width="128" height="114"/>
         <image name="doc.on.clipboard" catalog="system" width="116" height="128"/>
         <image name="ellipsis.message.fill" catalog="system" width="128" height="114"/>
+        <image name="list.clipboard" catalog="system" width="98" height="128"/>
         <image name="location.fill.viewfinder" catalog="system" width="128" height="115"/>
         <image name="message.fill" catalog="system" width="128" height="114"/>
         <image name="tag.fill" catalog="system" width="128" height="118"/>

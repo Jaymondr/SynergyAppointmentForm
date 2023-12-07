@@ -7,13 +7,8 @@
 
 import UIKit
 
-protocol NotesViewDelegate: AnyObject {
-    func showNotesView(form: Form)
-}
 
 class NotesView: UIView {
-
-    weak var notesDelegate: NotesViewDelegate?
     
     // Constants for initial width and height
     private let initialWidth: CGFloat = 200.0
