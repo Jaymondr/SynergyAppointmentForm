@@ -11,15 +11,17 @@ import UIKit
 class NotesView: UIView {
     
     // Constants for initial width and height
-    private let initialWidth: CGFloat = 200.0
+    private let initialWidth: CGFloat = 300.0
     private let initialHeight: CGFloat = 150.0
 
+    var form: Form?
+    
     // UITextView to be added to the view
     private lazy var textView: UITextView = {
         let textView = UITextView()
         textView.isScrollEnabled = true
         textView.isEditable = true
-        textView.text = "Your initial text goes here."
+        textView.text = form?.notes ?? "Empty"
         textView.backgroundColor = UIColor.lightGray
         return textView
     }()
@@ -38,7 +40,15 @@ class NotesView: UIView {
     // Function to set up the view and its components
     private func setupView() {
         // Set initial width and height
-        self.frame = CGRect(x: 0, y: 0, width: initialWidth, height: initialHeight)
+        let screenSize = UIScreen.main.bounds.size
+
+        // Calculate the center coordinates
+        let centerX = screenSize.width / 2
+        let centerY = screenSize.height / 4
+
+        // Set initial width and height
+        let frame = CGRect(x: centerX - initialWidth / 2, y: centerY - initialHeight / 2, width: initialWidth, height: initialHeight)
+        self.frame = frame
 
         // Add UITextView to the view
         addSubview(textView)
@@ -55,6 +65,9 @@ class NotesView: UIView {
         self.layer.cornerRadius = 10.0
         self.layer.borderWidth = 1.0
         self.layer.borderColor = UIColor.black.cgColor
+        
+        textView.backgroundColor = .clear
+        textView.layer.cornerRadius = 10.0
     }
 
     // Function to update the width and height of the view

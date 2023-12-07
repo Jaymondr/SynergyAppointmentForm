@@ -219,8 +219,14 @@ extension FormListViewController: FormViewDelegate {
 
 extension FormListViewController: NotesViewDelegate {
     func showNotesView(form: Form) {
+        // Remove existing notes views
+        for subview in self.view.subviews {
+                    if subview is NotesView {
+                        subview.removeFromSuperview()
+                    }
+                }
         let notesView = NotesView()
-        
+        notesView.form = form
         self.view.addSubview(notesView)
     }
 }
