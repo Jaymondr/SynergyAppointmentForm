@@ -180,6 +180,9 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
 }
 
+
+// MARK: - EXTENSIONS
+
 extension FormListViewController: FormDetailViewDelegate {
     func didUpdate(form: Form) {
         if let index = forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {
@@ -208,5 +211,13 @@ extension FormListViewController: FormViewDelegate {
             splitForms(forms: forms)
             tableView.reloadData()
         }
+    }
+}
+
+extension FormListViewController: NotesViewDelegate {
+    func showNotesView(form: Form) {
+        let notesView = NotesView()
+        
+        self.view.addSubview(notesView)
     }
 }
