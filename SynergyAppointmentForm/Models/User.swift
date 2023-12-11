@@ -52,10 +52,10 @@ class User: FirebaseModel {
         case lastName = "lastName"
         
         // CHANGE FOR NEW USER
-        case userID = "jaymondR"
-        case userFirstName = "Jaymond"
-        case userLastName = "Richardson"
-        case userEmail = "jrichardson@synergywindow.com"
+        case userID = "scottP"
+        case userFirstName = "Scott"
+        case userLastName = "Pilgram"
+        case userEmail = "spilgram@synergywindow.com"
     }
 }
 
