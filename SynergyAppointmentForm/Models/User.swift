@@ -52,10 +52,10 @@ class User: FirebaseModel {
         case lastName = "lastName"
         
         // CHANGE FOR NEW USER
-        case userID = "scottP"
-        case userFirstName = "Scott"
-        case userLastName = "Pilgram"
-        case userEmail = "spilgram@synergywindow.com"
+        case userID = "jaymondR" // i.e jaymondR
+        case userFirstName = "Jaymond" // This is how name appears in text and trello
+        case userLastName = "Richardson" // unused currently
+        case userEmail = "jrichardson@synergywindow.com" // unused currently
     }
 }
 
