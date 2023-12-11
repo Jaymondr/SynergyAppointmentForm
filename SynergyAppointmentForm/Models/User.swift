@@ -14,7 +14,7 @@ class User: FirebaseModel {
     var firstName: String
     var lastName: String
     
-    init(email: String, firebaseID: String = "", firstName: String, lastName: String) {
+    init(email: String, firebaseID: String, firstName: String, lastName: String) {
         self.email = email
         self.firebaseID = firebaseID
         self.firstName = firstName
@@ -22,7 +22,7 @@ class User: FirebaseModel {
     }
     
     var firebaseRepresentation: [String : FirestoreType] {
-        var firebaseRepresentation: [String : FirestoreType] = [
+        let firebaseRepresentation: [String : FirestoreType] = [
             User.CodingKeys.email.rawValue          : email,
             User.CodingKeys.firebaseID.rawValue              : firebaseID,
             User.CodingKeys.firstName.rawValue               : firstName,
@@ -50,6 +50,12 @@ class User: FirebaseModel {
         case firebaseID = "firebaseID"
         case firstName = "firstName"
         case lastName = "lastName"
+        
+        // CHANGE FOR NEW USER
+        case userID = "jaymondR"
+        case userFirstName = "Jaymond"
+        case userLastName = "Richardson"
+        case userEmail = "jrichardson@synergywindow.com"
     }
 }
 

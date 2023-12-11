@@ -65,8 +65,10 @@ class FirebaseController {
     }
 
     // READ
-    func getForms(completion: @escaping (_ forms: [Form], _ error: Error? ) -> Void) {
-        db.collection(Form.CodingKeys.collectionID.rawValue).getDocuments { snapshot, error in
+    func getForms(for userID: String, completion: @escaping (_ forms: [Form], _ error: Error? ) -> Void) {
+        db.collection(Form.CodingKeys.collectionID.rawValue)
+            .whereField(Form.CodingKeys.userID.rawValue, isEqualTo: userID)
+            .getDocuments { snapshot, error in
             if let error = error {
                 print("There was an error getting forms: \(error)")
                 completion([], error)
