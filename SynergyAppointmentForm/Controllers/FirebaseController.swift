@@ -33,10 +33,14 @@ class FirebaseController {
         }
     }
     
-    func createUser(user: User, completion: @escaping (_ user: User?, _ error: Error?) -> Void) {
+    func createUser(firstName: String, lastName: String, email: String, completion: @escaping (_ user: User?, _ error: Error?) -> Void) {
         let docRef = db.collection(User.collectionKey).document()
-        var data = user.firebaseRepresentation
-        data[User.CodingKeys.firebaseID.rawValue] = docRef.documentID
+        var data: [String: Any] = [
+            User.CodingKeys.firstName.rawValue  : firstName,
+            User.CodingKeys.lastName.rawValue   : lastName,
+            User.CodingKeys.email.rawValue      : email,
+            User.CodingKeys.firebaseID.rawValue : docRef.documentID
+        ]
         
         docRef.setData(data) { error in
             if let error = error {

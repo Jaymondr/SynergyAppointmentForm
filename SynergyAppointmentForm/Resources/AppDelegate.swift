@@ -12,10 +12,19 @@ import FirebaseFirestore
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    var gcmSenderID: String?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
+        // Here we are extracting out the GCM SENDER ID from the Google PList file.
+        if let path = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist") {
+            let dictRoot = NSDictionary(contentsOfFile: path)
+            if let dict = dictRoot {
+                if let gcmSenderID = dict["GCM_SENDER_ID"] as? String {
+                    self.gcmSenderID = gcmSenderID
+                }
+            }
+        }
         return true
     }
 
