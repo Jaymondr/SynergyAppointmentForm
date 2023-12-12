@@ -7,7 +7,7 @@
 
 import UIKit
 import CoreLocation
-
+import MessageUI
 
 protocol FormViewDelegate: AnyObject {
     func didAddNewForm(_ form: Form)
@@ -93,32 +93,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     
     @IBAction func messageButtonPressed(_ sender: Any) {
         let form = createForm()
-        let text = FormController.shared.createInitialText(from: form)
-        var title: String = "Send Message?"
-        
-        // CREATE ALERT
-        let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        let yesAction = UIAlertAction(title: "Yes", style: .default) { _ in
-            guard let phoneNumber = self.phoneTextfield.text else { return }
-            let urlString = "sms:\(phoneNumber)&body=\(text)"
-            
-            if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            } else {
-                // Handle the case where the Messages app or the URL scheme is not available
-                print("Messages app is not installed or the URL scheme is not supported.")
-                title = "Unable to open messages"
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                    alert.dismiss(animated: true)
-                }
-            }
-        }
-        
-        // ADD ALERT
-        alert.addAction(yesAction)
-        alert.addAction(cancelAction)
-        self.present(alert, animated: true)
+        FormController.shared.prepareToSendMessage(form: form, phoneNumber: phoneTextfield.text, viewController: self)
     }
     
     @IBAction func trelloButtonPressed(_ sender: Any) {
@@ -290,5 +265,12 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         default:
             break
         }
+    }
+}
+
+// MARK: - EXTENSIONS
+extension FormViewController: MFMessageComposeViewControllerDelegate {
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        controller.dismiss(animated: true, completion: nil)
     }
 }
