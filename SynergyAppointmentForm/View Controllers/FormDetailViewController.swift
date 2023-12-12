@@ -7,7 +7,7 @@
 
 import UIKit
 import CoreLocation
-
+import MessageUI
 
 protocol FormDetailViewDelegate: AnyObject {
     func didUpdate(form: Form)
@@ -36,6 +36,7 @@ class FormDetailViewController: UIViewController {
     @IBOutlet weak var rateTextField: UITextField!
     @IBOutlet weak var commentsTextView: UITextView!
     @IBOutlet weak var blurView: UIView!
+    @IBOutlet weak var labelButton: UIButton!
     
     
     // MARK: PROPERTIES
@@ -178,44 +179,8 @@ class FormDetailViewController: UIViewController {
     }
     
     @IBAction func sendMessageButtonPressed(_ sender: Any) {
-        guard let form = createForm(),
-              let phoneNumber = self.phoneTextField.text else { return }
-        
-        let title: String = "Select Message Type"
-        
-        // CREATE ALERT
-        let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        let initialTextAction = UIAlertAction(title: "Initial Message", style: .default) { _ in
-            let text = FormController.shared.createInitialText(from: form)
-            let urlString = "sms:\(phoneNumber)&body=\(text)"
-            self.sendMessage(urlString: urlString, alert: alert)
-        }
-        
-        let followUpTextAction = UIAlertAction(title: "Follow-Up Text", style: .default) { _ in
-            let text = FormController.shared.createFollowUpText(from: form)
-            let urlString = "sms:\(phoneNumber)&body=\(text)"
-            self.sendMessage(urlString: urlString, alert: alert)
-        }
-        
-        // ADD ALERT
-        alert.addAction(initialTextAction)
-        alert.addAction(followUpTextAction)
-        alert.addAction(cancelAction)
-        self.present(alert, animated: true)
-    }
-    
-    func sendMessage(urlString: String, alert: UIAlertController) {
-        if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        } else {
-            // Handle the case where the Messages app or the URL scheme is not available
-            print("Messages app is not installed or the URL scheme is not supported.")
-            title = "Unable to open messages"
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                alert.dismiss(animated: true)
-            }
-        }
+        guard let form = createForm() else { return }
+        FormController.shared.prepareToSendMessage(form: form, phoneNumber: phoneTextField.text, viewController: self)
     }
     
     @IBAction func copyFormButtonPressed(_ sender: Any) {
@@ -223,6 +188,7 @@ class FormDetailViewController: UIViewController {
         FormController.shared.createAndCopyForm(form: form)
         UIAlertController.presentDismissingAlert(title: "Copied Form", dismissAfter: 0.6)
     }
+    
     @IBAction func locationButtonPressed(_ sender: Any) {
         FormController.shared.getLocationData(manager: &locationManager) { address in
             self.addressTextField.text = address?.address
@@ -232,6 +198,7 @@ class FormDetailViewController: UIViewController {
             
         }
     }
+    
     @IBAction func copyPhoneButtonPressed(_ sender: Any) {
         let phoneNumber = phoneTextField.text ?? ""
         FormController.shared.createAndCopy(phone: phoneNumber)
@@ -241,6 +208,7 @@ class FormDetailViewController: UIViewController {
             self.reasonTextView.text = ""
         }
     }
+    
     @IBAction func clearCommentsButtonPressed(_ sender: Any) {
         UIAlertController.presentMultipleOptionAlert(message: "Are you sure you want to clear this section?", actionOptionTitle: "Clear", cancelOptionTitle: "Cancel") {
             self.commentsTextView.text = ""
@@ -302,6 +270,10 @@ class FormDetailViewController: UIViewController {
 
         }
         
+        // Label Button
+        labelButton.configuration?.baseForegroundColor = UIColor(cgColor: color3)
+        
+        // Background
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = view.bounds
         gradientLayer.colors = [color1, color2, color3]
@@ -314,5 +286,13 @@ class FormDetailViewController: UIViewController {
         let updatedForm = Form(firebaseID: form.firebaseID, address: addressTextField.text ?? "", city: cityTextField.text ?? "", comments: commentsTextView.text ?? "", date: dateTimePicker.date, email: emailTextField.text ?? "", energyBill: energyBillTextField.text ?? "", financeOptions: financeOptionsTextField.text ?? "", firstName: firstNameTextField.text ?? "", lastName: lastNameTextField.text ?? "", numberOfWindows: numberOfWindowsTextField.text ?? "", outcome: tag ?? .pending, phone: phoneTextField.text ?? "", rate: rateTextField.text ?? "", reason: reasonTextView.text ?? "", retailQuote: quoteTextField.text ?? "", spouse: spouseTextField.text ?? "", state: stateTextField.text ?? "", yearsOwned: yearsOwnedTextField.text ?? "", zip: zipTextField.text ?? "")
         
         return updatedForm
+    }
+}
+
+
+// MARK: - EXTENSIONS
+extension FormDetailViewController: MFMessageComposeViewControllerDelegate {
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        controller.dismiss(animated: true, completion: nil)
     }
 }

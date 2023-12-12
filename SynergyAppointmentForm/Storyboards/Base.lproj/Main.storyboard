@@ -101,6 +101,20 @@
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B09-jb-nlt">
+                                                            <rect key="frame" x="321" y="96" width="24" height="24"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="24" id="age-IF-teT"/>
+                                                                <constraint firstAttribute="width" secondItem="B09-jb-nlt" secondAttribute="height" multiplier="1:1" id="zTz-hU-awt"/>
+                                                            </constraints>
+                                                            <state key="normal" title="Button"/>
+                                                            <buttonConfiguration key="configuration" style="plain" image="list.clipboard" catalog="system" title="">
+                                                                <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </buttonConfiguration>
+                                                            <connections>
+                                                                <action selector="notesButtonPressed:" destination="4nh-tc-2PR" eventType="touchUpInside" id="2h1-37-AQM"/>
+                                                            </connections>
+                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
@@ -110,12 +124,14 @@
                                                         <constraint firstItem="XdU-SK-72q" firstAttribute="leading" secondItem="zRl-iJ-MDQ" secondAttribute="leadingMargin" constant="5" id="JAW-6R-wX2"/>
                                                         <constraint firstItem="KvD-Sv-yli" firstAttribute="centerY" secondItem="3i5-Ma-mg9" secondAttribute="centerY" id="Sl3-ct-2tk"/>
                                                         <constraint firstItem="bkQ-QU-oGZ" firstAttribute="top" secondItem="FOp-d2-PfR" secondAttribute="bottom" constant="8" id="Wbk-8V-5jE"/>
+                                                        <constraint firstAttribute="bottom" secondItem="B09-jb-nlt" secondAttribute="bottom" constant="10" id="i7J-Xd-hJE"/>
                                                         <constraint firstItem="bkQ-QU-oGZ" firstAttribute="centerX" secondItem="FOp-d2-PfR" secondAttribute="centerX" id="ixm-4T-ypg"/>
                                                         <constraint firstItem="FOp-d2-PfR" firstAttribute="leading" secondItem="zRl-iJ-MDQ" secondAttribute="leading" constant="10" id="ktG-ZR-5dy"/>
                                                         <constraint firstAttribute="trailing" secondItem="KvD-Sv-yli" secondAttribute="trailing" constant="8" id="pxb-8B-BYS"/>
                                                         <constraint firstAttribute="trailing" secondItem="FOp-d2-PfR" secondAttribute="trailing" constant="10" id="sFb-le-RHh"/>
                                                         <constraint firstItem="FOp-d2-PfR" firstAttribute="top" secondItem="KvD-Sv-yli" secondAttribute="bottom" constant="8" id="swk-p9-zDV"/>
                                                         <constraint firstItem="XdU-SK-72q" firstAttribute="top" secondItem="zRl-iJ-MDQ" secondAttribute="topMargin" id="tqY-a6-LTY"/>
+                                                        <constraint firstAttribute="trailing" secondItem="B09-jb-nlt" secondAttribute="trailing" constant="8" id="ypU-Oh-A9N"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -801,7 +817,7 @@
                                             <constraint firstAttribute="width" secondItem="zZU-zE-gEC" secondAttribute="height" multiplier="1:1" id="AnK-3t-Pbl"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" image="Image">
+                                        <buttonConfiguration key="configuration" style="plain" image="blueTrello">
                                             <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
                                         </buttonConfiguration>
                                         <connections>
@@ -816,8 +832,8 @@
                                         </constraints>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain">
-                                            <imageReference key="image" image="message.fill" catalog="system" symbolScale="large"/>
-                                            <color key="baseForegroundColor" name="eden"/>
+                                            <imageReference key="image" image="ellipsis.message.fill" catalog="system" symbolScale="large"/>
+                                            <color key="baseForegroundColor" red="0.32549019607843138" green="0.84313725490196079" blue="0.41176470588235292" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </buttonConfiguration>
                                         <connections>
                                             <action selector="sendMessageButtonPressed:" destination="mzI-Pq-KQL" eventType="touchUpInside" id="g7T-wk-NF6"/>
@@ -888,6 +904,7 @@
                         <outlet property="energyBillTextField" destination="9uu-sJ-fOJ" id="r5N-I9-nrQ"/>
                         <outlet property="financeOptionsTextField" destination="MyG-fj-sSM" id="Srb-s4-Zys"/>
                         <outlet property="firstNameTextField" destination="gcG-Er-mtO" id="FZb-nK-RED"/>
+                        <outlet property="labelButton" destination="mPl-HM-7Pl" id="Shb-YH-2rG"/>
                         <outlet property="lastNameTextField" destination="B6u-ox-gua" id="kmV-Yr-Wbg"/>
                         <outlet property="numberOfWindowsTextField" destination="Prb-yK-aEB" id="YNC-3P-19W"/>
                         <outlet property="phoneTextField" destination="GdM-Sc-2B5" id="cfn-mf-hgT"/>
@@ -902,7 +919,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uvv-HJ-5Iz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1977.8625954198471" y="62.676056338028175"/>
+            <point key="canvasLocation" x="2185" y="-20"/>
         </scene>
         <!--Form View Controller-->
         <scene sceneID="yqO-lF-YeP">
@@ -1548,7 +1565,7 @@
                     </view>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="CUq-zS-JA6">
                         <barButtonItem key="rightBarButtonItem" title="SAVE" style="plain" id="XaP-uQ-7wI">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="7pA-Kl-Dmt">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="7pA-Kl-Dmt">
                                 <rect key="frame" x="311.66666666666669" y="5" width="65.333333333333314" height="34.333333333333336"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
@@ -1587,7 +1604,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gAn-5j-mir" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2619" y="-1268"/>
+            <point key="canvasLocation" x="2184" y="-1094"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sft-NI-bf2">
@@ -1610,8 +1627,11 @@
     </scenes>
     <resources>
         <image name="Image" width="23.666666030883789" height="23.666666030883789"/>
+        <image name="blueTrello" width="23.333333969116211" height="23.333333969116211"/>
         <image name="clear" catalog="system" width="128" height="114"/>
         <image name="doc.on.clipboard" catalog="system" width="116" height="128"/>
+        <image name="ellipsis.message.fill" catalog="system" width="128" height="114"/>
+        <image name="list.clipboard" catalog="system" width="98" height="128"/>
         <image name="location.fill.viewfinder" catalog="system" width="128" height="115"/>
         <image name="message.fill" catalog="system" width="128" height="114"/>
         <image name="tag.fill" catalog="system" width="128" height="118"/>

@@ -22,6 +22,7 @@ class Form: FirebaseModel {
     var financeOptions: String
     var firstName: String
     var lastName: String
+    var notes: String?
     var numberOfWindows: String
     var outcome: Outcome
     var phone: String
@@ -30,10 +31,11 @@ class Form: FirebaseModel {
     var retailQuote: String
     var spouse: String
     var state: String
+    var userID: String
     var yearsOwned: String
     var zip: String
     
-    init(firebaseID: String, address: String, city: String, comments: String, date: Date, email: String, energyBill: String, financeOptions: String, firstName: String, lastName: String, numberOfWindows: String, outcome: Outcome = .pending, phone: String, rate: String, reason: String, retailQuote: String, spouse: String, state: String, yearsOwned: String, zip: String) {
+    init(firebaseID: String, address: String, city: String, comments: String, date: Date, email: String, energyBill: String, financeOptions: String, firstName: String, lastName: String, notes: String = "", numberOfWindows: String, outcome: Outcome = .pending, phone: String, rate: String, reason: String, retailQuote: String, spouse: String, state: String, userID: String = User.CodingKeys.userID.rawValue, yearsOwned: String, zip: String) {
         
         self.firebaseID = firebaseID
         self.address = address
@@ -45,6 +47,7 @@ class Form: FirebaseModel {
         self.financeOptions = financeOptions
         self.firstName = firstName
         self.lastName = lastName
+        self.notes = notes
         self.numberOfWindows = numberOfWindows
         self.outcome = outcome
         self.phone = phone
@@ -53,6 +56,7 @@ class Form: FirebaseModel {
         self.retailQuote = retailQuote
         self.spouse = spouse
         self.state = state
+        self.userID = userID
         self.yearsOwned = yearsOwned
         self.zip = zip
 
@@ -76,10 +80,13 @@ class Form: FirebaseModel {
               let retailQuote = firebaseData[Form.CodingKeys.retailQuote.rawValue] as? String,
               let spouse = firebaseData[Form.CodingKeys.spouse.rawValue] as? String,
               let state = firebaseData[Form.CodingKeys.state.rawValue] as? String,
+              let userID = firebaseData[Form.CodingKeys.userID.rawValue] as? String,
               let yearsOwned = firebaseData[Form.CodingKeys.yearsOwned.rawValue] as? String,
               let zip = firebaseData[Form.CodingKeys.zip.rawValue] as? String
 
         else { return nil }
+        
+        let notes = firebaseData[Form.CodingKeys.notes.rawValue] as? String
         let outcome = Outcome.fromString(outcomeString)
         
         self.firebaseID = firebaseID
@@ -98,14 +105,16 @@ class Form: FirebaseModel {
         self.reason = reason
         self.comments = comments
         self.financeOptions = financeOptions
+        self.notes = notes
         self.numberOfWindows = numberOfWindows
         self.yearsOwned = yearsOwned
+        self.userID = userID
         self.zip = zip
         self.rate = rate
     }
     
     var firebaseRepresentation: [String : FirestoreType] {
-        var firebaseRepresentation: [String : FirestoreType] = [
+        let firebaseRepresentation: [String : FirestoreType] = [
             Form.CodingKeys.address.rawValue           : address,
             Form.CodingKeys.city.rawValue              : city,
             Form.CodingKeys.comments.rawValue          : comments,
@@ -115,6 +124,7 @@ class Form: FirebaseModel {
             Form.CodingKeys.financeOptions.rawValue    : financeOptions,
             Form.CodingKeys.firstName.rawValue         : firstName,
             Form.CodingKeys.lastName.rawValue          : lastName,
+            Form.CodingKeys.notes.rawValue             : notes ?? NSNull(),
             Form.CodingKeys.numberOfWindows.rawValue   : numberOfWindows,
             Form.CodingKeys.outcome.rawValue           : outcome.rawValue,
             Form.CodingKeys.phone.rawValue             : phone,
@@ -123,6 +133,7 @@ class Form: FirebaseModel {
             Form.CodingKeys.retailQuote.rawValue       : retailQuote,
             Form.CodingKeys.spouse.rawValue            : spouse,
             Form.CodingKeys.state.rawValue             : state,
+            Form.CodingKeys.userID.rawValue            : userID,
             Form.CodingKeys.yearsOwned.rawValue        : yearsOwned,
             Form.CodingKeys.zip.rawValue               : zip
         ]
@@ -145,7 +156,7 @@ class Form: FirebaseModel {
         case firstName = "firstName"
         case financeOptions = "financeOptions"
         case lastName = "lastName"
-        case myName = "myName"
+        case notes = "notes"
         case numberOfWindows = "numberOfWindows"
         case outcome = "outcome"
         case phone = "phone"
@@ -154,6 +165,7 @@ class Form: FirebaseModel {
         case retailQuote = "retailQuote"
         case spouse = "spouse"
         case state = "state"
+        case userID = "userID"
         case yearsOwned = "yearsOwned"
         case zip = "zip"
     }

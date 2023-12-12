@@ -42,7 +42,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: FUNCTIONS
         
     func loadForms() {
-        FirebaseController.shared.getForms { forms, error in
+        FirebaseController.shared.getForms(for: User.CodingKeys.userID.rawValue) { forms, error in
             if let error = error {
                 print("Error fetching forms: \(error)")
             }
@@ -102,6 +102,8 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             // UPCOMING
             let form = upcomingAppointmentForms[indexPath.row]
             cell.setCellData(with: form)
+            cell.delegate = self
+            cell.form = form
            
             return cell
 
@@ -109,7 +111,8 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             // Past
             let form = pastAppointmentForms[indexPath.row]
             cell.setCellData(with: form)
-           
+            cell.delegate = self
+            cell.form = form
             return cell
         }
         
@@ -180,6 +183,9 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
 }
 
+
+// MARK: - EXTENSIONS
+
 extension FormListViewController: FormDetailViewDelegate {
     func didUpdate(form: Form) {
         if let index = forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {
@@ -208,5 +214,19 @@ extension FormListViewController: FormViewDelegate {
             splitForms(forms: forms)
             tableView.reloadData()
         }
+    }
+}
+
+extension FormListViewController: NotesViewDelegate {
+    func showNotesView(form: Form) {
+        // Remove existing notes views
+        for subview in self.view.subviews {
+                    if subview is NotesView {
+                        subview.removeFromSuperview()
+                    }
+                }
+        let notesView = NotesView()
+        notesView.form = form
+        self.view.addSubview(notesView)
     }
 }

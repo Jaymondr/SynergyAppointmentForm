@@ -8,6 +8,7 @@
 import UIKit
 import CoreLocation
 import CloudKit
+import MessageUI
 
 class FormController {
     
@@ -19,7 +20,6 @@ class FormController {
     
     // MARK: FUNCTIONS
     func createAndCopyForm(form: Form) {
-
         UIPasteboard.general.string =
         """
         APT FORM
@@ -52,10 +52,16 @@ class FormController {
     }
     
     func createAndCopyTrello(form: Form) {
-        UIPasteboard.general.string =
+        let trelloString = form.spouse.isNotEmpty ?
         """
-        \(form.date.formattedDay()) \(form.date.formattedDayMonth()) @\(form.date.formattedTime()) \(form.firstName) & \(form.spouse) \(form.lastName) (\(form.city)) -Jaymond
+        \(form.date.formattedDay()) \(form.date.formattedDayMonth()) @\(form.date.formattedTime()) \(form.firstName) & \(form.spouse) \(form.lastName) (\(form.city)) -\(User.CodingKeys.userFirstName.rawValue)
         """
+        :
+        """
+        \(form.date.formattedDay()) \(form.date.formattedDayMonth()) @\(form.date.formattedTime()) \(form.firstName) \(form.lastName) (\(form.city)) -\(User.CodingKeys.userFirstName.rawValue)
+        """
+        UIPasteboard.general.string = trelloString
+
         UIAlertController.presentDismissingAlert(title: "Trello Copied!", dismissAfter: 0.5)
     }
     
@@ -67,22 +73,72 @@ class FormController {
     func createInitialText(from form: Form) -> String {
         let text =
         """
-        Hey \(form.firstName), it's Jaymond with Synergy.
+        Hey \(form.firstName), it's \(User.CodingKeys.userFirstName.rawValue) with Synergy.
         
         Your appointment is good to go for \(form.date.formattedDay()) \(form.date.formattedDayMonth()) at \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased()). Thanks for your time, and if you need anything just call or text!
         
-        - Jaymond
+        - \(User.CodingKeys.userFirstName.rawValue)
         """
         return text
+        
+        /*
+         OPTION 2
+        let text =
+        """
+        Hello \(form.firstName)! Thank you for taking the time to talk with me today. Your appointment is set for \(form.date.formattedDay()) @\(form.date.formattedTime() + form.date.formattedAmpm()). If we find our 2 marketing homes before your appointment, I will notify you. Please let me know if you have any questions!
+        
+        \(User.CodingKeys.userFirstName.rawValue + " " + User.CodingKeys.userLastName.rawValue),
+        Synergy Windows
+        """
+        return text
+         */
     }
     
     func createFollowUpText(from form: Form) -> String {
         let text = """
             Hey \(form.firstName),
             Just wanted to reach out and let you know we had an opening in the schedule. I'd love to see how we can use this Marketing Home opportunity to help you with your windows.
-            - Jaymond
+            - \(User.CodingKeys.userFirstName.rawValue)
             """
         return text
+    }
+        
+    func prepareToSendMessage(form: Form, phoneNumber: String?, viewController: UIViewController) {
+        // CREATE ALERT
+        let title: String = "Select Message Type"
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let initialTextAction = UIAlertAction(title: "Initial Message", style: .default) { _ in
+            let text = FormController.shared.createInitialText(from: form)
+            self.sendMessage(body: text, recipient: phoneNumber, alert: alert, viewController: viewController)
+        }
+
+        let followUpTextAction = UIAlertAction(title: "Follow-Up Text", style: .default) { _ in
+            let text = FormController.shared.createFollowUpText(from: form)
+            self.sendMessage(body: text, recipient: phoneNumber, alert: alert, viewController: viewController)
+        }
+        
+        // ADD ALERT
+        alert.addAction(initialTextAction)
+        alert.addAction(followUpTextAction)
+        alert.addAction(cancelAction)
+        viewController.present(alert, animated: true)
+    }
+
+    func sendMessage(body: String, recipient: String?, alert: UIAlertController, viewController: UIViewController) {
+        if MFMessageComposeViewController.canSendText() {
+            let messageComposeViewController = MFMessageComposeViewController()
+            messageComposeViewController.body = body
+            messageComposeViewController.recipients = [recipient ?? ""]
+            messageComposeViewController.messageComposeDelegate = viewController as? MFMessageComposeViewControllerDelegate
+            viewController.present(messageComposeViewController, animated: true, completion: nil)
+        } else {
+            print("Messages cannot be sent from this device.")
+            viewController.title = "Unable to send messages"
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                alert.dismiss(animated: true)
+            }
+        }
     }
     
     // LOCATION
