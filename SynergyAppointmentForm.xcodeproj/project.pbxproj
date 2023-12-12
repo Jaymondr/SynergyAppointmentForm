@@ -46,6 +46,7 @@
 		67A582F52B0D0AA500D4B5DA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A582F42B0D0AA500D4B5DA /* Extensions.swift */; };
 		67A582F82B0D23F300D4B5DA /* FormDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A582F72B0D23F300D4B5DA /* FormDetailViewController.swift */; };
 		67A5C0922B2243B500D16249 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A5C0912B2243B500D16249 /* NotesView.swift */; };
+		67A5C0952B28CC3800D16249 /* signUpScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67A5C0942B28CC3800D16249 /* signUpScreen.storyboard */; };
 		67BB4F132B141A6000067D90 /* FirestoreType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BB4F122B141A6000067D90 /* FirestoreType.swift */; };
 		67BB4F152B141B3300067D90 /* FirebaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BB4F142B141B3300067D90 /* FirebaseModel.swift */; };
 		67DAFE932B073028003D6B5B /* FormError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DAFE922B073028003D6B5B /* FormError.swift */; };
@@ -77,6 +78,7 @@
 		67A582F42B0D0AA500D4B5DA /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		67A582F72B0D23F300D4B5DA /* FormDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDetailViewController.swift; sourceTree = "<group>"; };
 		67A5C0912B2243B500D16249 /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
+		67A5C0942B28CC3800D16249 /* signUpScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = signUpScreen.storyboard; sourceTree = "<group>"; };
 		67BB4F122B141A6000067D90 /* FirestoreType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreType.swift; sourceTree = "<group>"; };
 		67BB4F142B141B3300067D90 /* FirebaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseModel.swift; sourceTree = "<group>"; };
 		67DAFE922B073028003D6B5B /* FormError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormError.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 			children = (
 				674603A72B03D8F700756102 /* Main.storyboard */,
 				674603AC2B03D8FA00756102 /* LaunchScreen.storyboard */,
+				67A5C0942B28CC3800D16249 /* signUpScreen.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 			files = (
 				674603AE2B03D8FA00756102 /* LaunchScreen.storyboard in Resources */,
 				67EBEE322B0C0353009FD021 /* GoogleService-Info.plist in Resources */,
+				67A5C0952B28CC3800D16249 /* signUpScreen.storyboard in Resources */,
 				674603AB2B03D8FA00756102 /* Assets.xcassets in Resources */,
 				674603A92B03D8F700756102 /* Main.storyboard in Resources */,
 			);
