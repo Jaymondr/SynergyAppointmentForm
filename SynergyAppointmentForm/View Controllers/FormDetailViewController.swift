@@ -140,20 +140,30 @@ class FormDetailViewController: UIViewController {
             }
         }
         
+        let ranIncompleteAction = UIAlertAction(title: "RAN-INCOMPLETE", style: .default) { action in
+            self.form?.outcome = .ranIncomplete
+            self.setUpView(with: self.form)
+            FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
+                if let error = error {
+                    UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
+                    print("Error: \(error)")
+                    return
+                }
+                self.delegate?.didUpdate(form: form)
+                UIAlertController.presentDismissingAlert(title: "Label Updated!", dismissAfter: 0.6)
+            }
+        }
+        
         let cancelAction = UIAlertAction(title: "CANCEL", style: .cancel)
         
         soldAction.setValue(UIColor.outcomeGreen, forKey: "titleTextColor")
         ranAction.setValue(UIColor.outcomeBlue, forKey: "titleTextColor")
+        ranIncompleteAction.setValue(UIColor.outcomeRed, forKey: "titleTextColor")
         pendingAction.setValue(UIColor.eden, forKey: "titleTextColor")
         cancelledAction.setValue(UIColor.outcomeRed, forKey: "titleTextColor")
         rescheduleAction.setValue(UIColor.outcomePurple, forKey: "titleTextColor")
         
-        alert.addAction(soldAction)
-        alert.addAction(ranAction)
-        alert.addAction(cancelledAction)
-        alert.addAction(rescheduleAction)
-        alert.addAction(pendingAction)
-        alert.addAction(cancelAction)
+        alert.addActions([soldAction, ranAction, ranIncompleteAction, cancelledAction, rescheduleAction, pendingAction, cancelAction])
         
         self.present(alert, animated: true)
     }
@@ -262,6 +272,11 @@ class FormDetailViewController: UIViewController {
             color1 = UIColor.white.cgColor
             color2 = UIColor.white.cgColor
             color3 = UIColor.outcomeBlue.cgColor
+            
+        case .ranIncomplete:
+            color1 = UIColor.white.cgColor
+            color2 = UIColor.white.cgColor
+            color3 = UIColor.outcomeRed.cgColor
 
         case .sold:
             color1 = UIColor.white.cgColor

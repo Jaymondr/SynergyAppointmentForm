@@ -14,7 +14,6 @@ extension String {
     }
 }
 
-
 // CALAYER
 extension CALayer {
     func applySketchShadow(color: UIColor, alpha: CGFloat, x: CGFloat, y: CGFloat, blur: CGFloat, spread: CGFloat) {
@@ -74,7 +73,12 @@ extension UIAlertController {
             topViewController.present(alert, animated: true)
         }
     }
-
+    
+    func addActions(_ actions: [UIAlertAction]) {
+        for action in actions {
+            addAction(action)
+        }
+    }
 }
 
 // DATE
