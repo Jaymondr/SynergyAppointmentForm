@@ -155,6 +155,7 @@
 		674603A02B03D8F700756102 /* SynergyAppointmentForm */ = {
 			isa = PBXGroup;
 			children = (
+				674603A12B03D8F700756102 /* AppDelegate.swift */,
 				67DAFE952B073FBB003D6B5B /* SynergyAppointmentForm.entitlements */,
 				674603BA2B03DB0B00756102 /* Models */,
 				674603BD2B03DE1300756102 /* Controllers */,
@@ -172,7 +173,6 @@
 		674603B52B03D99600756102 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				674603A12B03D8F700756102 /* AppDelegate.swift */,
 				674603A32B03D8F700756102 /* SceneDelegate.swift */,
 				674603AF2B03D8FA00756102 /* Info.plist */,
 				67EBEE312B0C0353009FD021 /* GoogleService-Info.plist */,
@@ -573,6 +573,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-ObjC";
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.JWR.SynergyAppointmentForm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -602,6 +604,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-ObjC";
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.JWR.SynergyAppointmentForm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

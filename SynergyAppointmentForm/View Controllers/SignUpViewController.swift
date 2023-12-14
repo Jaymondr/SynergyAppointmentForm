@@ -26,6 +26,13 @@ class SignUpViewController: UIViewController {
     
     // MARK: - PROPERTIES
     var user: User?
+    var isValid: Bool {
+        guard let email = emailTextField.text else { return false }
+        let isEmail = email.contains("@synergywindow")
+        let firstNameNotEmpty = firstNameTextField.text != ""
+        let lastNameNotEmpty = lastNameTextField.text != ""
+        return isEmail && firstNameNotEmpty && lastNameNotEmpty
+    }
     
     // MARK: - ACTIONS
     @IBAction func createButtonPressed(_ sender: Any) {
@@ -39,22 +46,20 @@ class SignUpViewController: UIViewController {
     }
     
     func createUser() {
-        guard let firstName = firstNameTextField.text,
-              let lastName = lastNameTextField.text,
-              let email = emailTextField.text else {
-            UIAlertController.presentDismissingAlert(title: "Please Enter All Information", dismissAfter: 0.7)
-            return
-        }
-        FirebaseController.shared.createUser(firstName: firstName, lastName: lastName, email: email) { user, error in
-            if let error = error {
-                UIAlertController.presentDismissingAlert(title: "Error Creating User", dismissAfter: 0.5)
-                print("Error creating user: \(error)")
-                return
+        if isValid {
+            FirebaseController.shared.createUser(firstName: firstNameTextField.text ?? "", lastName: lastNameTextField.text ?? "", email: emailTextField.text ?? "") { user, error in
+                if let error = error {
+                    UIAlertController.presentDismissingAlert(title: "Error Creating User", dismissAfter: 0.5)
+                    print("Error creating user: \(error)")
+                    return
+                }
+                
+                guard let user = user else { print("No User!"); return }
+                self.user = user
             }
-            
-            guard let user = user else { print("No User!"); return }
-            self.user = user
         }
+        
+        UserDefaults.standard.dictionary(forKey: User.kUser)
     }
     
     /*
