@@ -25,6 +25,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         }
+        
+        // CHECK LOGIN STATUS
+        let initialViewController: UIViewController?
+        
+        let accountType = AccountController.accountType
+        if accountType == .partial || accountType == .user || accountType == .expert {
+            initialViewController = UIStoryboard(name: "Navigation").instantiateInitialViewController()
+        } else {
+            let welcomeTestGroup = SplitTestingController.getGroupWelcomeScreen()
+            
+            switch welcomeTestGroup {
+            case .actionVideoV1:
+                initialViewController = UIStoryboard(name: "Welcome").instantiateInitialViewController()
+            case .welcomePagesV1:
+                initialViewController = UIStoryboard(name: "WelcomeScreens").instantiateInitialViewController()
+            }
+        }
+
+        
+        
         return true
     }
 
