@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseAuth
 
 class SignUpViewController: UIViewController {
     
@@ -14,6 +17,7 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
     
 
     // MARK: - LIFECYCLE
@@ -25,13 +29,32 @@ class SignUpViewController: UIViewController {
     }
     
     // MARK: - PROPERTIES
-    var user: User?
-    var isValid: Bool {
-        guard let email = emailTextField.text else { return false }
-        let isEmail = email.contains("@synergywindow")
-        let firstNameNotEmpty = firstNameTextField.text != ""
-        let lastNameNotEmpty = lastNameTextField.text != ""
-        return isEmail && firstNameNotEmpty && lastNameNotEmpty
+    var user: UserAccount?
+    var isValid: Validity {
+        guard let email = emailTextField.text,
+              let password = passwordTextField.text,
+              let firstName = firstNameTextField.text,
+              let lastName = lastNameTextField.text
+        else { return .invalid }
+        
+        let validEmail = email.contains("@synergywindow")
+        let validFirstName = firstName != ""
+        let validLastName = lastName != ""
+        let validPassword = password.count > 5 && password.range(of: "[A-Z]", options: .regularExpression) != nil && password.range(of: "[a-z]", options: .regularExpression) != nil
+        
+        if validEmail && validFirstName && validLastName && validPassword {
+            return .valid
+        } else if !validFirstName {
+            return .invalidFirstName
+        } else if !validLastName {
+            return .invalidLastName
+        } else if !validEmail {
+            return .invalidEmail
+        } else if !validPassword {
+            return .invalidPassword
+        } else {
+            return .invalid
+        }
     }
     
     // MARK: - ACTIONS
@@ -46,20 +69,55 @@ class SignUpViewController: UIViewController {
     }
     
     func createUser() {
-        if isValid {
-            FirebaseController.shared.createUser(firstName: firstNameTextField.text ?? "", lastName: lastNameTextField.text ?? "", email: emailTextField.text ?? "") { user, error in
+        switch isValid {
+        case .valid:
+            // CREATE AUTHENTICATED USER.
+            Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!) { authResult, error in
                 if let error = error {
-                    UIAlertController.presentDismissingAlert(title: "Error Creating User", dismissAfter: 0.5)
-                    print("Error creating user: \(error)")
+                    print("Error: \(error.localizedDescription)")
+                    UIAlertController.presentDismissingAlert(title: "Error: \(error)", dismissAfter: 2.0)
                     return
                 }
+                guard let authResult = authResult else { print("No auth result"); return }
+                print("Auth uID: \(authResult.user.uid), Result: \(authResult.description)")
                 
-                guard let user = user else { print("No User!"); return }
-                self.user = user
+                // CREATE USER LOCALLY
+                let user = UserAccount(firebaseID: authResult.user.uid, firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, email: self.emailTextField.text!)
+                
+                // SAVE USER INFORMATION TO USER DEFAULTS
+                let userDefaultsData = user.toUserDefaultsDictionary()
+                UserDefaults.standard.set(userDefaultsData, forKey: UserAccount.kUser)
+                
+                // CREATE USER ACCOUNT IN FIREBASE USING UID FROM AUTHENTICATION FOR FIREBASE ID
+                FirebaseController.shared.createUser(from: user) { user, error in
+                    if let error = error {
+                        UIAlertController.presentDismissingAlert(title: "Error Creating User", dismissAfter: 0.5)
+                        print("Error creating user: \(error.localizedDescription)")
+                        return
+                    }
+                    
+                    guard let user = user else { print("No User!"); return }
+                    self.user = user
+                }
             }
+            
+
+        case .invalidPassword:
+            UIAlertController.presentDismissingAlert(title: "Invalid Password", dismissAfter: 0.5)
+            
+        case .invalidEmail:
+            UIAlertController.presentDismissingAlert(title: "Invalid Email", dismissAfter: 0.5)
+
+        case .invalidFirstName:
+            UIAlertController.presentDismissingAlert(title: "Invalid First Name", dismissAfter: 0.5)
+
+        case .invalidLastName:
+            UIAlertController.presentDismissingAlert(title: "Invalid Last Name", dismissAfter: 0.5)
+
+        case .invalid:
+            UIAlertController.presentDismissingAlert(title: "Unable to create account. Contact support @jrichardson@synergywindow.com", dismissAfter: 0.5)
+
         }
-        
-        UserDefaults.standard.dictionary(forKey: User.kUser)
     }
     
     /*
@@ -71,5 +129,18 @@ class SignUpViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
 
+}
+enum StoryboardReference: String {
+    case signUpScreen = "SignUpScreen"
+}
+
+enum Validity: CaseIterable {
+    case valid
+    case invalidPassword
+    case invalidEmail
+    case invalidFirstName
+    case invalidLastName
+    case invalid
 }

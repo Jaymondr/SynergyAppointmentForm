@@ -15,6 +15,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
 
     override func viewDidLoad() {
         super.viewDidLoad()
+//        UserDefaults.standard.removeObject(forKey: UserAccount.kUser)
         loadForms()
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         tableView.refreshControl = refreshControl
@@ -42,7 +43,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: FUNCTIONS
         
     func loadForms() {
-        FirebaseController.shared.getForms(for: User.CodingKeys.userID.rawValue) { forms, error in
+        FirebaseController.shared.getForms(for: UserAccount.CodingKeys.userID.rawValue) { forms, error in
             if let error = error {
                 print("Error fetching forms: \(error)")
             }

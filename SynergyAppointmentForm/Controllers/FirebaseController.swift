@@ -33,13 +33,28 @@ class FirebaseController {
         }
     }
     
-    func createUser(firstName: String, lastName: String, email: String, completion: @escaping (_ user: User?, _ error: Error?) -> Void) {
-        let docRef = db.collection(User.collectionKey).document()
+    func createUser(from user: UserAccount, completion: @escaping (_ user: UserAccount?, _ error: Error?) -> Void) {
+        let docRef = db.collection(UserAccount.collectionKey).document(user.firebaseID)
+        var data = user.firebaseRepresentation
+        
+        docRef.setData(data) { error in
+            if let error = error {
+                completion(nil, error)
+            } else {
+                print("No Errors creating User")
+                let newUser = UserAccount(firebaseData: data, firebaseID: user.firebaseID)
+                completion(newUser, nil)
+            }
+        }
+    }
+    
+    func createUser(firstName: String, lastName: String, email: String, completion: @escaping (_ user: UserAccount?, _ error: Error?) -> Void) {
+        let docRef = db.collection(UserAccount.collectionKey).document()
         var data: [String: Any] = [
-            User.CodingKeys.firstName.rawValue  : firstName,
-            User.CodingKeys.lastName.rawValue   : lastName,
-            User.CodingKeys.email.rawValue      : email,
-            User.CodingKeys.firebaseID.rawValue : docRef.documentID
+            UserAccount.CodingKeys.firstName.rawValue  : firstName,
+            UserAccount.CodingKeys.lastName.rawValue   : lastName,
+            UserAccount.CodingKeys.email.rawValue      : email,
+            UserAccount.CodingKeys.firebaseID.rawValue : docRef.documentID
         ]
         
         docRef.setData(data) { error in
@@ -47,7 +62,7 @@ class FirebaseController {
                 completion(nil, error)
             } else {
                 print("No Errors creating User")
-                let newUser = User(firebaseData: data, firebaseID: docRef.documentID)
+                let newUser = UserAccount(firebaseData: data, firebaseID: docRef.documentID)
                 completion(newUser, nil)
             }
         }

@@ -11,7 +11,8 @@ import FirebaseFirestore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
+    var window: UIWindow?
     var gcmSenderID: String?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -24,26 +25,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     self.gcmSenderID = gcmSenderID
                 }
             }
-        }
+        }        
         
-        // CHECK LOGIN STATUS
-        let initialViewController: UIViewController?
-//        
-//        let accountType = AccountController.accountType
-//        if accountType == .partial || accountType == .user || accountType == .expert {
-//            initialViewController = UIStoryboard(name: "Navigation").instantiateInitialViewController()
+        
+//        let currentUser = User.currentUser
+//        if currentUser != nil {
+//            initialViewController = UIStoryboard(name: "Main").instantiateInitialViewController()
+//            print("Main storyboard")
+//            print("Current user: \(currentUser?.uID ?? "nil")")
 //        } else {
-//            let welcomeTestGroup = SplitTestingController.getGroupWelcomeScreen()
+//            let storyboard = UIStoryboard(name: "navigationController")
+//            initialViewController = storyboard.instantiateViewController(withIdentifier: "SignUpScreen") as UIViewController
 //            
-//            switch welcomeTestGroup {
-//            case .actionVideoV1:
-//                initialViewController = UIStoryboard(name: "Welcome").instantiateInitialViewController()
-//            case .welcomePagesV1:
-//                initialViewController = UIStoryboard(name: "WelcomeScreens").instantiateInitialViewController()
-//            }
 //        }
-
-        
+//        window?.rootViewController = initialViewController
+//        window?.makeKeyAndVisible()
         
         return true
     }

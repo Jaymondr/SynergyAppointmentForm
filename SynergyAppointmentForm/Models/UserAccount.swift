@@ -8,14 +8,14 @@
 import Foundation
 import Firebase
 
-class User {
-    static var currentUser: User? {
+class UserAccount {
+    static var currentUser: UserAccount? {
         get {
-            guard let uid = Auth.auth().currentUser?.uid, let userDictionary = UserDefaults.standard.dictionary(forKey: kUser), let dictionaryID = userDictionary[User.CodingKeys.firebaseID.rawValue] as? String, uid == dictionaryID else {
+            guard let uid = Auth.auth().currentUser?.uid, let userDictionary = UserDefaults.standard.dictionary(forKey: kUser), let dictionaryID = userDictionary[UserAccount.CodingKeys.firebaseID.rawValue] as? String, uid == dictionaryID else {
                 print("No User in User defaults")
                 return nil
             }
-            return User(userDefaultsDict: userDictionary, firebaseID: uid)
+            return UserAccount(userDefaultsDict: userDictionary, firebaseID: uid)
         }
         
         set {
@@ -26,14 +26,18 @@ class User {
             }
         }
     }
-   
+    
     var uID: String {
         return firebaseID
     }
     
+    static var signUp: Bool {
+        return true
+    }
+    
     static let collectionKey = "Users"
     static let kUser = "User"
-
+    
     var firebaseID: String
     var firstName: String
     var lastName: String
@@ -48,10 +52,10 @@ class User {
     
     var firebaseRepresentation: [String : FirestoreType] {
         let firebaseRepresentation: [String : FirestoreType] = [
-            User.CodingKeys.firebaseID.rawValue              : firebaseID,
-            User.CodingKeys.firstName.rawValue               : firstName,
-            User.CodingKeys.lastName.rawValue                : lastName,
-            User.CodingKeys.email.rawValue                   : email,
+            UserAccount.CodingKeys.firebaseID.rawValue              : firebaseID,
+            UserAccount.CodingKeys.firstName.rawValue               : firstName,
+            UserAccount.CodingKeys.lastName.rawValue                : lastName,
+            UserAccount.CodingKeys.email.rawValue                   : email,
         ]
         
         return firebaseRepresentation
@@ -61,7 +65,7 @@ class User {
         guard let firstName = firebaseData[Form.CodingKeys.firstName.rawValue] as? String,
               let lastName = firebaseData[Form.CodingKeys.lastName.rawValue] as? String,
               let email = firebaseData[Form.CodingKeys.email.rawValue] as? String
-
+                
         else { return nil }
         
         self.firebaseID = firebaseID
@@ -71,9 +75,9 @@ class User {
     }
     
     init?(userDefaultsDict: [String: Any], firebaseID: String) {
-        guard let firstName = userDefaultsDict[User.CodingKeys.firstName.rawValue] as? String,
-              let lastName = userDefaultsDict[User.CodingKeys.lastName.rawValue] as? String,
-              let email = userDefaultsDict[User.CodingKeys.email.rawValue] as? String
+        guard let firstName = userDefaultsDict[UserAccount.CodingKeys.firstName.rawValue] as? String,
+              let lastName = userDefaultsDict[UserAccount.CodingKeys.lastName.rawValue] as? String,
+              let email = userDefaultsDict[UserAccount.CodingKeys.email.rawValue] as? String
         else { return nil }
         
         self.firebaseID = firebaseID
@@ -84,10 +88,10 @@ class User {
     
     func toUserDefaultsDictionary() -> [String: Any] {
         let userDefaultsDictionary: [String : Any] = [
-            User.CodingKeys.firebaseID.rawValue:              uID,
-            User.CodingKeys.firstName.rawValue:               firstName,
-            User.CodingKeys.lastName.rawValue:                lastName,
-            User.CodingKeys.email.rawValue:                   email,
+            UserAccount.CodingKeys.firebaseID.rawValue:              uID,
+            UserAccount.CodingKeys.firstName.rawValue:               firstName,
+            UserAccount.CodingKeys.lastName.rawValue:                lastName,
+            UserAccount.CodingKeys.email.rawValue:                   email,
         ]
         
         return userDefaultsDictionary

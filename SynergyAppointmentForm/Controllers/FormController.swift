@@ -54,11 +54,11 @@ class FormController {
     func createAndCopyTrello(form: Form) {
         let trelloString = form.spouse.isNotEmpty ?
         """
-        \(form.date.formattedDay()) \(form.date.formattedDayMonth()) @\(form.date.formattedTime()) \(form.firstName) & \(form.spouse) \(form.lastName) (\(form.city)) -\(User.CodingKeys.userFirstName.rawValue)
+        \(form.date.formattedDay()) \(form.date.formattedDayMonth()) @\(form.date.formattedTime()) \(form.firstName) & \(form.spouse) \(form.lastName) (\(form.city)) -\(UserAccount.CodingKeys.userFirstName.rawValue)
         """
         :
         """
-        \(form.date.formattedDay()) \(form.date.formattedDayMonth()) @\(form.date.formattedTime()) \(form.firstName) \(form.lastName) (\(form.city)) -\(User.CodingKeys.userFirstName.rawValue)
+        \(form.date.formattedDay()) \(form.date.formattedDayMonth()) @\(form.date.formattedTime()) \(form.firstName) \(form.lastName) (\(form.city)) -\(UserAccount.CodingKeys.userFirstName.rawValue)
         """
         UIPasteboard.general.string = trelloString
 
@@ -73,11 +73,11 @@ class FormController {
     func createInitialText(from form: Form) -> String {
         let text =
         """
-        Hey \(form.firstName), it's \(User.CodingKeys.userFirstName.rawValue) with Synergy.
+        Hey \(form.firstName), it's \(UserAccount.CodingKeys.userFirstName.rawValue) with Synergy.
         
         Your appointment is good to go for \(form.date.formattedDay()) \(form.date.formattedDayMonth()) at \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased()). Thanks for your time, and if you need anything just call or text!
         
-        - \(User.CodingKeys.userFirstName.rawValue)
+        - \(UserAccount.CodingKeys.userFirstName.rawValue)
         """
         return text
         
@@ -98,7 +98,7 @@ class FormController {
         let text = """
             Hey \(form.firstName),
             Just wanted to reach out and let you know we had an opening in the schedule. I'd love to see how we can use this Marketing Home opportunity to help you with your windows.
-            - \(User.CodingKeys.userFirstName.rawValue)
+            - \(UserAccount.CodingKeys.userFirstName.rawValue)
             """
         return text
     }

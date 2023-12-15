@@ -42,7 +42,7 @@
 		674603B92B03DB0400756102 /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674603B82B03DB0400756102 /* Form.swift */; };
 		674603BC2B03DE0E00756102 /* FormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674603BB2B03DE0E00756102 /* FormController.swift */; };
 		674603C12B03E51000756102 /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674603C02B03E51000756102 /* FormViewController.swift */; };
-		678FD77E2B1A3A3100FB515D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678FD77D2B1A3A3100FB515D /* User.swift */; };
+		678FD77E2B1A3A3100FB515D /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678FD77D2B1A3A3100FB515D /* UserAccount.swift */; };
 		67A582F52B0D0AA500D4B5DA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A582F42B0D0AA500D4B5DA /* Extensions.swift */; };
 		67A582F82B0D23F300D4B5DA /* FormDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A582F72B0D23F300D4B5DA /* FormDetailViewController.swift */; };
 		67A5C0922B2243B500D16249 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A5C0912B2243B500D16249 /* NotesView.swift */; };
@@ -75,7 +75,7 @@
 		674603B82B03DB0400756102 /* Form.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Form.swift; sourceTree = "<group>"; };
 		674603BB2B03DE0E00756102 /* FormController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormController.swift; sourceTree = "<group>"; };
 		674603C02B03E51000756102 /* FormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
-		678FD77D2B1A3A3100FB515D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		678FD77D2B1A3A3100FB515D /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
 		67A582F42B0D0AA500D4B5DA /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		67A582F72B0D23F300D4B5DA /* FormDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDetailViewController.swift; sourceTree = "<group>"; };
 		67A5C0912B2243B500D16249 /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
@@ -156,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				674603A12B03D8F700756102 /* AppDelegate.swift */,
+				674603A32B03D8F700756102 /* SceneDelegate.swift */,
 				67DAFE952B073FBB003D6B5B /* SynergyAppointmentForm.entitlements */,
 				674603BA2B03DB0B00756102 /* Models */,
 				674603BD2B03DE1300756102 /* Controllers */,
@@ -173,7 +174,6 @@
 		674603B52B03D99600756102 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				674603A32B03D8F700756102 /* SceneDelegate.swift */,
 				674603AF2B03D8FA00756102 /* Info.plist */,
 				67EBEE312B0C0353009FD021 /* GoogleService-Info.plist */,
 				674603AA2B03D8FA00756102 /* Assets.xcassets */,
@@ -206,7 +206,7 @@
 			children = (
 				67E4A6682B054BCF00024F06 /* Address.swift */,
 				674603B82B03DB0400756102 /* Form.swift */,
-				678FD77D2B1A3A3100FB515D /* User.swift */,
+				678FD77D2B1A3A3100FB515D /* UserAccount.swift */,
 				67BB4F122B141A6000067D90 /* FirestoreType.swift */,
 				67BB4F142B141B3300067D90 /* FirebaseModel.swift */,
 				67EAEF212B14D14E006E4995 /* Enums */,
@@ -398,7 +398,7 @@
 				674603A22B03D8F700756102 /* AppDelegate.swift in Sources */,
 				67A5C09B2B28D09D00D16249 /* SignUpViewController.swift in Sources */,
 				674603A42B03D8F700756102 /* SceneDelegate.swift in Sources */,
-				678FD77E2B1A3A3100FB515D /* User.swift in Sources */,
+				678FD77E2B1A3A3100FB515D /* UserAccount.swift in Sources */,
 				67A5C0922B2243B500D16249 /* NotesView.swift in Sources */,
 				674603B92B03DB0400756102 /* Form.swift in Sources */,
 				67DAFE932B073028003D6B5B /* FormError.swift in Sources */,
@@ -563,6 +563,8 @@
 				DEVELOPMENT_TEAM = FD53M4BR3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SynergyAppointmentForm/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FORM;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow location services to use address auto-fill service";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -594,6 +596,8 @@
 				DEVELOPMENT_TEAM = FD53M4BR3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SynergyAppointmentForm/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FORM;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow location services to use address auto-fill service";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
