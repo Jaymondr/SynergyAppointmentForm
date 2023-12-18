@@ -105,7 +105,7 @@ class UserAccount {
         case lastName = "lastName"
         
         // CHANGE FOR NEW USER
-        case userID = "Vm90FuQrNidtkSxsfJs4cVJgDR93" // i.e jaymondR
+        case userID = "jaymondR" // i.e jaymondR
         case userFirstName = "Jaymond" // This is how name appears in text and trello
         case userLastName = "Richardson" // unused currently
         case userEmail = "jrichardson@synergywindow.com" // unused currently
