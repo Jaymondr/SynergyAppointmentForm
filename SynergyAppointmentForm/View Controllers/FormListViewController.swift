@@ -22,12 +22,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.separatorStyle = .none
         setTitleAttributes()
         
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-//        loadForms()
-    }
-    
+    }    
     
     // MARK: PROPERTIES
     var forms: [Form] = []
@@ -43,7 +38,8 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: FUNCTIONS
         
     func loadForms() {
-        FirebaseController.shared.getForms(for: UserAccount.CodingKeys.userID.rawValue) { forms, error in
+        guard let user = UserAccount.currentUser else { return }
+        FirebaseController.shared.getForms(for: user.firebaseID) { forms, error in
             if let error = error {
                 print("Error fetching forms: \(error)")
             }

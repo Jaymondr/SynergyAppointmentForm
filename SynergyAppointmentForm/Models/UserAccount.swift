@@ -12,7 +12,7 @@ class UserAccount {
     static var currentUser: UserAccount? {
         get {
             guard let uid = Auth.auth().currentUser?.uid, let userDictionary = UserDefaults.standard.dictionary(forKey: kUser), let dictionaryID = userDictionary[UserAccount.CodingKeys.firebaseID.rawValue] as? String, uid == dictionaryID else {
-                print("No User in User defaults")
+                print("No User. Present account screen.")
                 return nil
             }
             return UserAccount(userDefaultsDict: userDictionary, firebaseID: uid)
@@ -105,7 +105,7 @@ class UserAccount {
         case lastName = "lastName"
         
         // CHANGE FOR NEW USER
-        case userID = "jaymondR" // i.e jaymondR
+        case userID = "Vm90FuQrNidtkSxsfJs4cVJgDR93" // i.e jaymondR
         case userFirstName = "Jaymond" // This is how name appears in text and trello
         case userLastName = "Richardson" // unused currently
         case userEmail = "jrichardson@synergywindow.com" // unused currently

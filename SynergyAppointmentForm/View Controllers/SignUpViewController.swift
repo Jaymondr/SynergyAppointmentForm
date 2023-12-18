@@ -30,6 +30,7 @@ class SignUpViewController: UIViewController {
     
     // MARK: - PROPERTIES
     var user: UserAccount?
+    
     var isValid: Validity {
         guard let email = emailTextField.text,
               let password = passwordTextField.text,
@@ -59,13 +60,29 @@ class SignUpViewController: UIViewController {
     
     // MARK: - ACTIONS
     @IBAction func createButtonPressed(_ sender: Any) {
-        createUser()
+        showMainStoryboard()
+//        createUser()
     }
     
     // MARK: - FUNCTIONS
     
     func setUpView() {
         createButton.layer.cornerRadius = 10
+    }
+    
+    private func showMainStoryboard() {
+        print("User firebase ID: \(user?.firebaseID ?? "nil")")
+        // Assuming you're inside the SignUpViewController
+        // Dismiss the SignUpViewController
+        self.dismiss(animated: true) {
+            // Instantiate the FormListViewController
+            let formListViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FormListViewController") as! FormListViewController
+
+            // Present the navigation controller
+            // Assuming your current view controller is embedded in a navigation controller
+            self.navigationController?.pushViewController(formListViewController, animated: true)
+
+        }
     }
     
     func createUser() {
@@ -98,6 +115,7 @@ class SignUpViewController: UIViewController {
                     
                     guard let user = user else { print("No User!"); return }
                     self.user = user
+                    self.showMainStoryboard()
                 }
             }
             

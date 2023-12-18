@@ -71,9 +71,10 @@ class FormController {
     }
     
     func createInitialText(from form: Form) -> String {
+        guard let user = UserAccount.currentUser else { return "Error: No User" }
         let text =
         """
-        Hey \(form.firstName), it's \(UserAccount.CodingKeys.userFirstName.rawValue) with Synergy.
+        Hey \(form.firstName), it's \(user.firstName) with Synergy.
         
         Your appointment is good to go for \(form.date.formattedDay()) \(form.date.formattedDayMonth()) at \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased()). Thanks for your time, and if you need anything just call or text!
         

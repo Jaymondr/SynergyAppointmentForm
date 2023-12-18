@@ -27,8 +27,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let initialViewController: UIViewController
         
         if UserAccount.currentUser == nil {
-            let signUpStoryboard = UIStoryboard(name: "SignUpScreen", bundle: nil)
-            initialViewController = signUpStoryboard.instantiateViewController(withIdentifier: "SignUpScreen")
+            // SHOW SIGN UP
+            let signUpStoryboard = UIStoryboard(name: StoryboardReference.signUpScreen.rawValue, bundle: nil)
+            initialViewController = signUpStoryboard.instantiateViewController(withIdentifier: StoryboardReference.signUpScreen.rawValue)
+
         } else {
             let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
             initialViewController = mainStoryboard.instantiateInitialViewController()!
