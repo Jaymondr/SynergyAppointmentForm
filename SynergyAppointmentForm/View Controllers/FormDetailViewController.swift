@@ -38,7 +38,11 @@ class FormDetailViewController: UIViewController {
     @IBOutlet weak var blurView: UIView!
     @IBOutlet weak var labelButton: UIButton!
     
+    @IBOutlet weak var saveButton: UIButton!
     
+    @IBOutlet weak var activityIndicator:
+    
+    UIActivityIndicatorView!
     // MARK: PROPERTIES
 
     var locationManager = CLLocationManager()
@@ -169,18 +173,32 @@ class FormDetailViewController: UIViewController {
     }
     
     @IBAction func saveButtonPressed(_ sender: Any) {
-        guard let form = createForm() else { return }
+        saveButton.isEnabled = false
+        activityIndicator.startAnimating()
+        
+        guard let form = createForm() else {
+            saveButton.isEnabled = true
+            return
+        }
+        
         print("form id: \(form.firebaseID)")
         FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
+            DispatchQueue.main.async {
+                self.activityIndicator.stopAnimating()
+                self.saveButton.isEnabled = true
+            }
+            
             if let error = error {
                 UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
                 print("Error: \(error)")
                 return
             }
+            
             self.delegate?.didUpdate(form: form)
             print("Form Name: \(form.firstName)")
             UIAlertController.presentDismissingAlert(title: "Updated Form!", dismissAfter: 0.6)
         }
+        
     }
     
     @IBAction func trelloCopyButtonPressed(_ sender: Any) {
