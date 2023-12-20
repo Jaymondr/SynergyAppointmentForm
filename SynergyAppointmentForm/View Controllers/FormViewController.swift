@@ -38,6 +38,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     @IBOutlet weak var trelloButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var locationManager = CLLocationManager()
     weak var delegate: FormViewDelegate?
     
@@ -50,7 +51,6 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         setupView()
         setTextFieldsDelegate()
         navigationController?.navigationBar.tintColor = UIColor.eden
-
     }
     
     
@@ -61,34 +61,59 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     // MARK: BUTTONS
     @IBAction func saveButtonPressed(_ sender: Any) {
         let form = createForm()
+        let saveQueue = DispatchQueue(label: "com.example.saveQueue", qos: .background)
+
+        saveButton.isEnabled = false
+        activityIndicator.startAnimating()
+        
         if form.firebaseID.isNotEmpty {
             // UPDATE FORM
-            FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
-                if let error = error {
-                    print("there was an error: \(error)")
-                    UIAlertController.presentDismissingAlert(title: "Failed to Save Form", dismissAfter: 1.2)
-                    return
+            saveQueue.async {
+                FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
+                    DispatchQueue.main.async {
+                        self.saveButton.isEnabled = true
+                        self.activityIndicator.stopAnimating()
+                    }
+                    if let error = error {
+                        print("there was an error: \(error)")
+                        DispatchQueue.main.async {
+                            UIAlertController.presentDismissingAlert(title: "Failed to Save Form", dismissAfter: 1.2)
+                        }
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        self.delegate?.didUpdateNew(form)
+                        UIAlertController.presentDismissingAlert(title: "Form Updated!", dismissAfter: 0.5)
+                    }
                 }
-                self.delegate?.didUpdateNew(form)
-                UIAlertController.presentDismissingAlert(title: "Form Updated!", dismissAfter: 0.5)
             }
-            
         } else {
             // CREATE FORM IN FIREBASE
-            FirebaseController.shared.saveForm(form: form) { form, error in
-                if let error = error {
-                    print("Error: \(error)")
-                    UIAlertController.presentDismissingAlert(title: "Failed to Save Form", dismissAfter: 1.2)
-                    return
+            saveQueue.async {
+                FirebaseController.shared.saveForm(form: form) { savedForm, error in
+                    DispatchQueue.main.async {
+                        self.saveButton.isEnabled = true
+                        self.activityIndicator.stopAnimating()                    }
+                    if let error = error {
+                        print("Error: \(error)")
+                        DispatchQueue.main.async {
+                            UIAlertController.presentDismissingAlert(title: "Failed to Save Form", dismissAfter: 1.2)
+                        }
+                        return
+                    }
+                    
+                    guard let savedForm = savedForm else { print("No Form!"); return }
+                    self.firebaseID = savedForm.firebaseID
+                    DispatchQueue.main.async {
+                        self.delegate?.didAddNewForm(savedForm)
+                        UIAlertController.presentDismissingAlert(title: "Form Saved!", dismissAfter: 0.5)
+                    }
                 }
-                
-                guard let form = form else { print("No Form!"); return }
-                self.firebaseID = form.firebaseID
-                self.delegate?.didAddNewForm(form)
-                UIAlertController.presentDismissingAlert(title: "Form Saved!", dismissAfter: 0.5)
             }
         }
     }
+
+
     
     
     @IBAction func messageButtonPressed(_ sender: Any) {
