@@ -38,8 +38,8 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: FUNCTIONS
         
     func loadForms() {
-        guard let user = UserAccount.currentUser else { return }
-        FirebaseController.shared.getForms(for: user.firebaseID) { forms, error in
+//        guard let user = UserAccount.currentUser else { return }
+        FirebaseController.shared.getForms(for: UserAccount.CodingKeys.userID.rawValue) { forms, error in
             if let error = error {
                 print("Error fetching forms: \(error)")
             }

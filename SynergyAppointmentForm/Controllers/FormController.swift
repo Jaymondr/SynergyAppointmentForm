@@ -71,10 +71,10 @@ class FormController {
     }
     
     func createInitialText(from form: Form) -> String {
-        guard let user = UserAccount.currentUser else { return "Error: No User" }
+//        guard let user = UserAccount.currentUser else { return "Error: No User" }
         let text =
         """
-        Hey \(form.firstName), it's \(user.firstName) with Synergy.
+        Hey \(form.firstName), it's \(UserAccount.CodingKeys.userFirstName.rawValue) with Synergy.
         
         Your appointment is good to go for \(form.date.formattedDay()) \(form.date.formattedDayMonth()) at \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased()). Thanks for your time, and if you need anything just call or text!
         
@@ -82,17 +82,17 @@ class FormController {
         """
         return text
         
-        /*
-         OPTION 2
-        let text =
-        """
-        Hello \(form.firstName)! Thank you for taking the time to talk with me today. Your appointment is set for \(form.date.formattedDay()) @\(form.date.formattedTime() + form.date.formattedAmpm()). If we find our 2 marketing homes before your appointment, I will notify you. Please let me know if you have any questions!
         
-        \(User.CodingKeys.userFirstName.rawValue + " " + User.CodingKeys.userLastName.rawValue),
-        Synergy Windows
-        """
-        return text
-         */
+//         OPTION 2
+//        let text =
+//        """
+//        Hello \(form.firstName)! Thank you for taking the time to talk with me today. Your appointment is set for \(form.date.formattedDay()) @\(form.date.formattedTime() + form.date.formattedAmpm()). If we find our 2 marketing homes before your appointment, I will notify you. Please let me know if you have any questions!
+//        
+//        \(UserAccount.CodingKeys.userFirstName.rawValue + " " + UserAccount.CodingKeys.userLastName.rawValue),
+//        Synergy Windows
+//        """
+//        return text
+         
     }
     
     func createFollowUpText(from form: Form) -> String {
