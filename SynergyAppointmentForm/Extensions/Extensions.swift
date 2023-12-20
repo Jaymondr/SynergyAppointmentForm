@@ -14,7 +14,6 @@ extension String {
     }
 }
 
-
 // CALAYER
 extension CALayer {
     func applySketchShadow(color: UIColor, alpha: CGFloat, x: CGFloat, y: CGFloat, blur: CGFloat, spread: CGFloat) {
@@ -74,8 +73,28 @@ extension UIAlertController {
             topViewController.present(alert, animated: true)
         }
     }
-
+    
+    func addActions(_ actions: [UIAlertAction]) {
+        for action in actions {
+            addAction(action)
+        }
+    }
 }
+
+public extension UIStoryboard {
+    
+    /**
+     Creates and returns a storyboard object for the specified storyboard resource file in the main bundle of the current application.
+     
+     - parameter name: The name of the storyboard resource file without the filename extension.
+     
+     - returns: A storyboard object for the specified file. If no storyboard resource file matching name exists, an exception is thrown.
+     */
+    convenience init(name: String) {
+        self.init(name: name, bundle: nil)
+    }
+}
+
 
 // DATE
 extension Date {

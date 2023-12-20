@@ -15,18 +15,14 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
 
     override func viewDidLoad() {
         super.viewDidLoad()
+//        UserDefaults.standard.removeObject(forKey: UserAccount.kUser)
         loadForms()
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         tableView.refreshControl = refreshControl
         tableView.separatorStyle = .none
         setTitleAttributes()
         
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-//        loadForms()
-    }
-    
+    }    
     
     // MARK: PROPERTIES
     var forms: [Form] = []
@@ -42,7 +38,8 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: FUNCTIONS
         
     func loadForms() {
-        FirebaseController.shared.getForms(for: User.CodingKeys.userID.rawValue) { forms, error in
+//        guard let user = UserAccount.currentUser else { return }
+        FirebaseController.shared.getForms(for: UserAccount.CodingKeys.userID.rawValue) { forms, error in
             if let error = error {
                 print("Error fetching forms: \(error)")
             }

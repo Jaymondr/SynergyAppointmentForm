@@ -54,11 +54,11 @@ class FormController {
     func createAndCopyTrello(form: Form) {
         let trelloString = form.spouse.isNotEmpty ?
         """
-        \(form.date.formattedDay()) \(form.date.formattedDayMonth()) @\(form.date.formattedTime()) \(form.firstName) & \(form.spouse) \(form.lastName) (\(form.city)) -\(User.CodingKeys.userFirstName.rawValue)
+        \(form.date.formattedDay()) \(form.date.formattedDayMonth()) @\(form.date.formattedTime()) \(form.firstName) & \(form.spouse) \(form.lastName) (\(form.city)) -\(UserAccount.CodingKeys.userFirstName.rawValue)
         """
         :
         """
-        \(form.date.formattedDay()) \(form.date.formattedDayMonth()) @\(form.date.formattedTime()) \(form.firstName) \(form.lastName) (\(form.city)) -\(User.CodingKeys.userFirstName.rawValue)
+        \(form.date.formattedDay()) \(form.date.formattedDayMonth()) @\(form.date.formattedTime()) \(form.firstName) \(form.lastName) (\(form.city)) -\(UserAccount.CodingKeys.userFirstName.rawValue)
         """
         UIPasteboard.general.string = trelloString
 
@@ -71,34 +71,35 @@ class FormController {
     }
     
     func createInitialText(from form: Form) -> String {
+//        guard let user = UserAccount.currentUser else { return "Error: No User" }
         let text =
         """
-        Hey \(form.firstName), it's \(User.CodingKeys.userFirstName.rawValue) with Synergy.
+        Hey \(form.firstName), it's \(UserAccount.CodingKeys.userFirstName.rawValue) with Synergy.
         
         Your appointment is good to go for \(form.date.formattedDay()) \(form.date.formattedDayMonth()) at \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased()). Thanks for your time, and if you need anything just call or text!
         
-        - \(User.CodingKeys.userFirstName.rawValue)
+        - \(UserAccount.CodingKeys.userFirstName.rawValue)
         """
         return text
         
-        /*
-         OPTION 2
-        let text =
-        """
-        Hello \(form.firstName)! Thank you for taking the time to talk with me today. Your appointment is set for \(form.date.formattedDay()) @\(form.date.formattedTime() + form.date.formattedAmpm()). If we find our 2 marketing homes before your appointment, I will notify you. Please let me know if you have any questions!
         
-        \(User.CodingKeys.userFirstName.rawValue + " " + User.CodingKeys.userLastName.rawValue),
-        Synergy Windows
-        """
-        return text
-         */
+//         OPTION 2
+//        let text =
+//        """
+//        Hello \(form.firstName)! Thank you for taking the time to talk with me today. Your appointment is set for \(form.date.formattedDay()) @\(form.date.formattedTime() + form.date.formattedAmpm()). If we find our 2 marketing homes before your appointment, I will notify you. Please let me know if you have any questions!
+//        
+//        \(UserAccount.CodingKeys.userFirstName.rawValue + " " + UserAccount.CodingKeys.userLastName.rawValue),
+//        Synergy Windows
+//        """
+//        return text
+         
     }
     
     func createFollowUpText(from form: Form) -> String {
         let text = """
             Hey \(form.firstName),
             Just wanted to reach out and let you know we had an opening in the schedule. I'd love to see how we can use this Marketing Home opportunity to help you with your windows.
-            - \(User.CodingKeys.userFirstName.rawValue)
+            - \(UserAccount.CodingKeys.userFirstName.rawValue)
             """
         return text
     }

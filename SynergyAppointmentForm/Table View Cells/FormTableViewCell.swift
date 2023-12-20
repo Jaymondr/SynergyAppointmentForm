@@ -7,13 +7,7 @@
 
 import UIKit
 
-protocol NotesViewDelegate: AnyObject {
-    func showNotesView(form: Form)
-}
-
 class FormTableViewCell: UITableViewCell {
-    
-    weak var delegate: NotesViewDelegate?
     
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
@@ -23,8 +17,6 @@ class FormTableViewCell: UITableViewCell {
     @IBOutlet weak var cellView: UIView!
     @IBOutlet weak var dropShadowView: UIView!
     
-    
-    // MARK: - LIFECYCLE
     override func awakeFromNib() {
         super.awakeFromNib()
         loadView()
@@ -34,21 +26,7 @@ class FormTableViewCell: UITableViewCell {
         super.prepareForReuse()
         resetCell()
     }
-    
-    
-    // MARK: - PROPERTIES
-    var form: Form?
 
-    
-    // MARK: - ACTIONS
-    @IBAction func notesButtonPressed(_ sender: Any) {
-        print("Notes Button Pressed")
-        guard let form = form else { return }
-        delegate?.showNotesView(form: form)
-    }
-    
-    
-    // MARK: - FUNCTIONS
     private func resetCell() {
         dropShadowView.layer.applySketchShadow(color: .clear, alpha: 0.0, x: 0.0, y: 0.0, blur: 0.0, spread: 0.0)
     }
@@ -72,11 +50,11 @@ class FormTableViewCell: UITableViewCell {
     func loadView() {
         cellView.layer.cornerRadius = 8
         dropShadowView.layer.cornerRadius = 8
-        cellView.layer.borderWidth = 1.5
+        cellView.layer.borderWidth = 0.5
     }
     
     private func setOutcomeView(form: Form) {
-        let alpha: Double = 0.4
+        let alpha: Double = 0.2
         switch form.outcome {
         case .pending:
             cellView.layer.borderColor = UIColor.eden.cgColor
@@ -94,9 +72,6 @@ class FormTableViewCell: UITableViewCell {
             cellView.layer.borderColor = UIColor.outcomeBlue.cgColor
             cellView.backgroundColor = UIColor.outcomeBlue.withAlphaComponent(alpha)
 //            dropShadowView.layer.applySketchShadow(color: .outcomeBlue, alpha: 0.6, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
-        case .ranIncomplete:
-            cellView.layer.borderColor = UIColor.outcomeBlue.cgColor
-            cellView.backgroundColor = UIColor.outcomeRed.withAlphaComponent(alpha)
         case .sold:
             cellView.layer.borderColor = UIColor.outcomeGreen.cgColor
             cellView.backgroundColor = UIColor.outcomeGreen.withAlphaComponent(alpha)
