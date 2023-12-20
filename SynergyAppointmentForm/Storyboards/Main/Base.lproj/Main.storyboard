@@ -832,7 +832,7 @@
                                         </constraints>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain">
-                                            <imageReference key="image" image="text.bubble" catalog="system" symbolScale="large"/>
+                                            <imageReference key="image" image="text.bubble.fill" catalog="system" symbolScale="large"/>
                                             <color key="baseForegroundColor" red="0.32549019607843138" green="0.84313725490196079" blue="0.41176470588235292" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </buttonConfiguration>
                                         <connections>
@@ -1630,6 +1630,7 @@
         <image name="location.fill.viewfinder" catalog="system" width="128" height="115"/>
         <image name="tag.fill" catalog="system" width="128" height="118"/>
         <image name="text.bubble" catalog="system" width="128" height="110"/>
+        <image name="text.bubble.fill" catalog="system" width="128" height="110"/>
         <image name="trelloSmall" width="23.333333969116211" height="23.666666030883789"/>
         <image name="trelloSmallEden" width="23.333333969116211" height="24"/>
         <namedColor name="eden">
