@@ -838,7 +838,7 @@
                                             <constraint firstAttribute="width" secondItem="wT8-PV-41k" secondAttribute="height" multiplier="1:1" id="9gf-7e-rWu"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" image="doc.on.clipboard" catalog="system">
+                                        <buttonConfiguration key="configuration" style="plain" image="doc.fill" catalog="system">
                                             <color key="baseForegroundColor" name="eden"/>
                                         </buttonConfiguration>
                                         <connections>
@@ -1632,6 +1632,7 @@
     <resources>
         <image name="clear" catalog="system" width="128" height="114"/>
         <image name="doc" catalog="system" width="115" height="128"/>
+        <image name="doc.fill" catalog="system" width="115" height="128"/>
         <image name="doc.on.clipboard" catalog="system" width="116" height="128"/>
         <image name="list.clipboard" catalog="system" width="98" height="128"/>
         <image name="location.fill.viewfinder" catalog="system" width="128" height="115"/>
