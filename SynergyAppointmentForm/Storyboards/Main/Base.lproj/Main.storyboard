@@ -422,7 +422,7 @@
                                                         </constraints>
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="plain" image="doc.on.clipboard" catalog="system">
-                                                            <color key="baseForegroundColor" red="0.078431372550000003" green="0.30588235289999999" blue="0.33725490200000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="baseForegroundColor" name="eden"/>
                                                         </buttonConfiguration>
                                                         <connections>
                                                             <action selector="copyPhoneButtonPressed:" destination="mzI-Pq-KQL" eventType="touchUpInside" id="JeJ-ie-11m"/>
@@ -1144,7 +1144,7 @@
                                                         </constraints>
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="plain" image="doc.on.clipboard" catalog="system">
-                                                            <color key="baseForegroundColor" red="0.078431372550000003" green="0.30588235289999999" blue="0.33725490200000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="baseForegroundColor" name="eden"/>
                                                         </buttonConfiguration>
                                                         <connections>
                                                             <action selector="copyPhoneNumberPressed:" destination="ncR-vK-5yf" eventType="touchUpInside" id="TAC-79-Fre"/>

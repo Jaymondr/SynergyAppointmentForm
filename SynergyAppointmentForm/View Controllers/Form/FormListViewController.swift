@@ -17,9 +17,9 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidLoad()
 //        UserDefaults.standard.removeObject(forKey: UserAccount.kUser)
         // Check if the user is not logged in
-        if UserAccount.currentUser == nil {
-            presentLoginChoiceVC()
-        }
+//        if UserAccount.currentUser == nil {
+//            presentLoginChoiceVC()
+//        }
 
         loadForms()
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)

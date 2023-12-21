@@ -54,11 +54,15 @@ class FormDetailViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = UIColor.eden
         setUpView(with: form)
-        let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
-        blurEffectView.frame = blurView.bounds
+        if traitCollection.userInterfaceStyle == .dark {
+            blurView.backgroundColor = .black
+            dateTimePicker.tintColor = .lightText
+        } else {
+            let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+            blurEffectView.frame = blurView.bounds
 
-        blurView.addSubview(blurEffectView)
-
+            blurView.addSubview(blurEffectView)
+        }
     }
     
     // MARK: PROPERTIES
@@ -274,52 +278,47 @@ class FormDetailViewController: UIViewController {
         
         
         // BACKGROUND
-        var color1: CGColor
-        var color2: CGColor
-        var color3: CGColor
+        var labelColor: CGColor
         
         switch form.outcome {
         case .pending:
-            color1 = UIColor.white.cgColor
-            color2 = UIColor.white.cgColor
-            color3 = UIColor.eden.cgColor
+            labelColor = UIColor.eden.cgColor
             
         case .cancelled:
-            color1 = UIColor.white.cgColor
-            color2 = UIColor.white.cgColor
-            color3 = UIColor.outcomeRed.cgColor
+            labelColor = UIColor.outcomeRed.cgColor
             
         case .rescheduled:
-            color1 = UIColor.white.cgColor
-            color2 = UIColor.white.cgColor
-            color3 = UIColor.outcomePurple.cgColor
-
+            labelColor = UIColor.outcomePurple.cgColor
+            
         case .ran:
-            color1 = UIColor.white.cgColor
-            color2 = UIColor.white.cgColor
-            color3 = UIColor.outcomeBlue.cgColor
+            labelColor = UIColor.outcomeBlue.cgColor
             
         case .ranIncomplete:
-            color1 = UIColor.white.cgColor
-            color2 = UIColor.white.cgColor
-            color3 = UIColor.outcomeRed.cgColor
-
+            labelColor = UIColor.outcomeRed.cgColor
+            
         case .sold:
-            color1 = UIColor.white.cgColor
-            color2 = UIColor.white.cgColor
-            color3 = UIColor.outcomeGreen.cgColor
-
+            labelColor = UIColor.outcomeGreen.cgColor
         }
         
         // Label Button
-        labelButton.configuration?.baseForegroundColor = UIColor(cgColor: color3)
+        labelButton.configuration?.baseForegroundColor = UIColor(cgColor: labelColor)
         
-        // Background
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = view.bounds
-        gradientLayer.colors = [color1, color2, color3]
-        gradientLayer.locations = [0.1, 0.2, 3.0]
-        view.layer.insertSublayer(gradientLayer, at: 0)
+        if traitCollection.userInterfaceStyle == .dark {
+            // BACKGROUND
+            let gradientLayer = CAGradientLayer()
+            gradientLayer.frame = view.bounds
+            gradientLayer.colors = [UIColor.black.cgColor, UIColor.black.cgColor, labelColor] // Gradient colors
+            gradientLayer.locations = [-0.05, 0.4, 2.0] // Gradient locations (start and end)
+            view.layer.insertSublayer(gradientLayer, at: 0)
+            
+        } else {
+            // BACKGROUND
+            let gradientLayer = CAGradientLayer()
+            gradientLayer.frame = view.bounds
+            gradientLayer.colors = [UIColor.white.cgColor, UIColor.white.cgColor, labelColor] // Gradient colors
+            gradientLayer.locations = [-0.05, 0.4, 3.0] // Gradient locations (start and end)
+            view.layer.insertSublayer(gradientLayer, at: 0)
+        }
     }
     
     func createForm() -> Form? {

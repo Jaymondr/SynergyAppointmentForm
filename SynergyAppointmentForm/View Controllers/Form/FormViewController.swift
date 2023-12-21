@@ -51,6 +51,8 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         setupView()
         setTextFieldsDelegate()
         navigationController?.navigationBar.tintColor = UIColor.eden
+        NotificationCenter.default.addObserver(self, selector: #selector(traitCollectionDidChange(_:)), name: NSNotification.Name("traitCollectionDidChangeNotification"), object: nil)
+
     }
     
     
@@ -186,21 +188,36 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         
     }
     
-    
+    deinit {
+        // Remove the observer when the view controller is deallocated
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    @objc override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupView()
+    }
+
     // MARK: FUNCTIONS
     func setupView() {
         reasonTextview.layer.cornerRadius = 5.0
         commentsTextview.layer.cornerRadius = 5.0
         
-        // TEXTFIELDS
-        
-        
-        // BACKGROUND
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = view.bounds
-        gradientLayer.colors = [UIColor.white.cgColor, UIColor.white.cgColor, UIColor.eden.cgColor] // Gradient colors
-        gradientLayer.locations = [-0.05, 0.4, 3.0] // Gradient locations (start and end)
-        view.layer.insertSublayer(gradientLayer, at: 0)
+        if traitCollection.userInterfaceStyle == .dark {
+            // BACKGROUND
+            let gradientLayer = CAGradientLayer()
+            gradientLayer.frame = view.bounds
+            gradientLayer.colors = [UIColor.black.cgColor, UIColor.black.cgColor, UIColor.eden.cgColor] // Gradient colors
+            gradientLayer.locations = [-0.05, 0.4, 2.0] // Gradient locations (start and end)
+            view.layer.insertSublayer(gradientLayer, at: 0)
+            
+        } else {
+            // BACKGROUND
+            let gradientLayer = CAGradientLayer()
+            gradientLayer.frame = view.bounds
+            gradientLayer.colors = [UIColor.white.cgColor, UIColor.white.cgColor, UIColor.eden.cgColor] // Gradient colors
+            gradientLayer.locations = [-0.05, 0.4, 3.0] // Gradient locations (start and end)
+            view.layer.insertSublayer(gradientLayer, at: 0)
+        }
     }
     
     func setTextFieldsDelegate() {
