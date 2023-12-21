@@ -48,7 +48,7 @@ class FormController {
         
         Comments: \(form.comments)
         """
-        UIAlertController.presentDismissingAlert(title: "Form Copied!", dismissAfter: 0.5)
+        UIAlertController.presentDismissingAlert(title: "Form Copied!", dismissAfter: 0.3)
     }
     
     func createAndCopyTrello(form: Form) {
@@ -62,12 +62,12 @@ class FormController {
         """
         UIPasteboard.general.string = trelloString
 
-        UIAlertController.presentDismissingAlert(title: "Trello Copied!", dismissAfter: 0.5)
+        UIAlertController.presentDismissingAlert(title: "Trello Copied!", dismissAfter: 0.3)
     }
     
     func createAndCopy(phone: String) {
         UIPasteboard.general.string = phone
-        UIAlertController.presentDismissingAlert(title: "Phone Number Copied!", dismissAfter: 0.6)
+        UIAlertController.presentDismissingAlert(title: "Phone Number Copied!", dismissAfter: 0.3)
     }
     
     func createInitialText(from form: Form) -> String {

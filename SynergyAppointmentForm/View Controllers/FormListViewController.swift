@@ -33,7 +33,11 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     // SECTIONS
     let upcoming = 0
     let past = 1
-    
+
+    // MARK: - BUTTONS
+    @IBAction func addFormButtonPressed(_ sender: Any) {
+        self.vibrateForButtonPress(.medium)
+    }
     
     // MARK: FUNCTIONS
         
@@ -92,6 +96,10 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         return section == upcoming ? upcomingAppointmentForms.count : pastAppointmentForms.count
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.vibrateForButtonPress(.medium)
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "formCell", for: indexPath) as? FormTableViewCell else { return UITableViewCell() }
         
@@ -138,12 +146,14 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                 FirebaseController.shared.saveDeletedForm(form: form) { [self] error in
                     if let error = error {
                         print("Error Saving Form: \(error)")
+                        self.vibrateForError()
                         UIAlertController.presentDismissingAlert(title: "Error Deleting Form: \(form.firstName + " " + form.lastName)", dismissAfter: 1.2)
                         return
                     }
                     FirebaseController.shared.deleteForm(firebaseID: form.firebaseID) { error in
                         if let error = error {
                             print("Error Deleting Form: \(error)")
+                            self.vibrateForError()
                             UIAlertController.presentDismissingAlert(title: "Error Deleting Form: \(form.firstName + " " + form.lastName)", dismissAfter: 1.2)
                             return
                         }

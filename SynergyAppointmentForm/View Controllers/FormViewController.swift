@@ -60,6 +60,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     
     // MARK: BUTTONS
     @IBAction func saveButtonPressed(_ sender: Any) {
+        self.vibrateForButtonPress(.medium)
         let form = createForm()
         let saveQueue = DispatchQueue(label: "com.example.saveQueue", qos: .background)
 
@@ -78,12 +79,14 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
                         print("there was an error: \(error)")
                         DispatchQueue.main.async {
                             UIAlertController.presentDismissingAlert(title: "Failed to Save Form", dismissAfter: 1.2)
+                            self.vibrateForError()
                         }
                         return
                     }
                     DispatchQueue.main.async {
                         self.delegate?.didUpdateNew(form)
                         UIAlertController.presentDismissingAlert(title: "Form Updated!", dismissAfter: 0.5)
+                        self.vibrate()
                     }
                 }
             }
@@ -93,11 +96,13 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
                 FirebaseController.shared.saveForm(form: form) { savedForm, error in
                     DispatchQueue.main.async {
                         self.saveButton.isEnabled = true
-                        self.activityIndicator.stopAnimating()                    }
+                        self.activityIndicator.stopAnimating()
+                    }
                     if let error = error {
                         print("Error: \(error)")
                         DispatchQueue.main.async {
                             UIAlertController.presentDismissingAlert(title: "Failed to Save Form", dismissAfter: 1.2)
+                            self.vibrateForError()
                         }
                         return
                     }
@@ -107,6 +112,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
                     DispatchQueue.main.async {
                         self.delegate?.didAddNewForm(savedForm)
                         UIAlertController.presentDismissingAlert(title: "Form Saved!", dismissAfter: 0.5)
+                        self.vibrate()
                     }
                 }
             }
@@ -123,16 +129,19 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     
     @IBAction func trelloButtonPressed(_ sender: Any) {
         let form = createForm()
+        self.vibrateForButtonPress(.heavy)
         FormController.shared.createAndCopyTrello(form: form)
     }
     
     @IBAction func copyButtonPressed(_ sender: Any) {
         let form = createForm()
+        self.vibrateForButtonPress(.heavy)
         FormController.shared.createAndCopyForm(form: form)
         
     }
     
     @IBAction func locationButtonPressed(_ sender: Any) {
+        self.vibrateForButtonPress(.heavy)
         FormController.shared.getLocationData(manager: &locationManager) { address in
             self.addressTextfield.text = address?.address
             self.zipTextfield.text = address?.zip
@@ -143,10 +152,12 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     }
     
     @IBAction func copyPhoneNumberPressed(_ sender: Any) {
+        self.vibrateForButtonPress(.heavy)
         FormController.shared.createAndCopy(phone: phoneTextfield.text ?? "")
     }
     
     @IBAction func clearReasonButtonPressed(_ sender: Any) {
+        self.vibrateForButtonPress(.heavy)
         let alert = UIAlertController(title: nil, message: "Are you sure you want to clear this section?", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Clear", style: .default) {_ in
             self.reasonTextview.text = ""
@@ -161,6 +172,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     }
     
     @IBAction func clearCommentsButtonPressed(_ sender: Any) {
+        self.vibrateForButtonPress(.heavy)
         let alert = UIAlertController(title: nil, message: "Are you sure you want to clear this section?", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Clear", style: .default) {_ in
             self.commentsTextview.text = ""
@@ -173,6 +185,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         self.present(alert, animated: true)
         
     }
+    
     
     // MARK: FUNCTIONS
     func setupView() {

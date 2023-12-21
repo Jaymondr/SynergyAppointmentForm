@@ -6,15 +6,49 @@
 //
 
 import UIKit
+import AudioToolbox
 
-// STRING
+
+
+// MARK: - UIVIEWCONTROLLER
+extension UIViewController {
+    func vibrateForSuccess() {
+        let generator = UINotificationFeedbackGenerator()
+        generator.prepare()
+        generator.notificationOccurred(.success)
+    }
+    
+    func vibrateForError() {
+        let generator = UINotificationFeedbackGenerator()
+        generator.prepare()
+        generator.notificationOccurred(.error)
+
+    }
+    
+    func vibrateForButtonPress(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {
+        let generator = UIImpactFeedbackGenerator(style: style)
+        generator.prepare()
+        generator.impactOccurred()
+    }
+
+    
+    func vibrate() {
+        AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+    }
+}
+
+
+
+
+// MARK: - STRING
 extension String {
     var isNotEmpty: Bool {
         return !self.isEmpty
     }
 }
 
-// CALAYER
+
+// MARK: - CALAYER
 extension CALayer {
     func applySketchShadow(color: UIColor, alpha: CGFloat, x: CGFloat, y: CGFloat, blur: CGFloat, spread: CGFloat) {
         shadowColor = color.cgColor
@@ -31,14 +65,16 @@ extension CALayer {
     }
 }
 
-// FORM
+
+// MARK: - FORM
 extension Form: Equatable {
     static func == (lhs: Form, rhs: Form) -> Bool {
         return lhs.firebaseID == rhs.firebaseID
     }
 }
 
-// UIALERT
+
+// MARK: - UIALERTCONTROLLER
 extension UIAlertController {
     static func presentDismissingAlert(title: String, dismissAfter: Double) {
         let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
@@ -81,6 +117,8 @@ extension UIAlertController {
     }
 }
 
+
+// MARK: - STORYBOARD
 public extension UIStoryboard {
     
     /**
@@ -96,7 +134,7 @@ public extension UIStoryboard {
 }
 
 
-// DATE
+// MARK: - DATE
 extension Date {
     func formattedStringDate() -> String {
         let formatter = DateFormatter()

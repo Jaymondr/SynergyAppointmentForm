@@ -173,6 +173,7 @@ class FormDetailViewController: UIViewController {
     }
     
     @IBAction func saveButtonPressed(_ sender: Any) {
+        self.vibrateForButtonPress(.medium)
         saveButton.isEnabled = false
         activityIndicator.startAnimating()
         
@@ -190,6 +191,7 @@ class FormDetailViewController: UIViewController {
             
             if let error = error {
                 UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
+                self.vibrateForError()
                 print("Error: \(error)")
                 return
             }
@@ -197,12 +199,14 @@ class FormDetailViewController: UIViewController {
             self.delegate?.didUpdate(form: form)
             print("Form Name: \(form.firstName)")
             UIAlertController.presentDismissingAlert(title: "Updated Form!", dismissAfter: 0.6)
+            self.vibrate()
         }
         
     }
     
     @IBAction func trelloCopyButtonPressed(_ sender: Any) {
         guard let form = createForm() else { return }
+        self.vibrateForButtonPress(.heavy)
         FormController.shared.createAndCopyTrello(form: form)
     }
     
@@ -213,11 +217,12 @@ class FormDetailViewController: UIViewController {
     
     @IBAction func copyFormButtonPressed(_ sender: Any) {
         guard let form = createForm() else { return }
+        self.vibrateForButtonPress(.heavy)
         FormController.shared.createAndCopyForm(form: form)
-        UIAlertController.presentDismissingAlert(title: "Copied Form", dismissAfter: 0.6)
     }
     
     @IBAction func locationButtonPressed(_ sender: Any) {
+        self.vibrateForButtonPress(.heavy)
         FormController.shared.getLocationData(manager: &locationManager) { address in
             self.addressTextField.text = address?.address
             self.zipTextField.text = address?.zip
@@ -229,15 +234,18 @@ class FormDetailViewController: UIViewController {
     
     @IBAction func copyPhoneButtonPressed(_ sender: Any) {
         let phoneNumber = phoneTextField.text ?? ""
+        self.vibrateForButtonPress(.heavy)
         FormController.shared.createAndCopy(phone: phoneNumber)
     }
     @IBAction func clearReasonButtonPressed(_ sender: Any) {
+        self.vibrateForButtonPress(.heavy)
         UIAlertController.presentMultipleOptionAlert(message: "Are you sure you want to clear this section?", actionOptionTitle: "Clear", cancelOptionTitle: "Cancel") {
             self.reasonTextView.text = ""
         }
     }
     
     @IBAction func clearCommentsButtonPressed(_ sender: Any) {
+        self.vibrateForButtonPress(.heavy)
         UIAlertController.presentMultipleOptionAlert(message: "Are you sure you want to clear this section?", actionOptionTitle: "Clear", cancelOptionTitle: "Cancel") {
             self.commentsTextView.text = ""
         }
