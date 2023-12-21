@@ -23,7 +23,7 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t34-J6-MHm">
                                         <rect key="frame" x="0.0" y="0.0" width="361" height="34"/>
-                                        <color key="backgroundColor" name="outcomeGreen"/>
+                                        <color key="backgroundColor" name="outcomeBlue"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="34" id="FHB-dJ-QDg"/>
                                         </constraints>
@@ -132,34 +132,15 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ngl-jM-hJp">
-                                <rect key="frame" x="16" y="144" width="200" height="90"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello," lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UMF-O3-9lk">
-                                        <rect key="frame" x="0.0" y="0.0" width="200" height="45"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="200" id="MDQ-DL-n3r"/>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="WiS-iZ-28g"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="36"/>
-                                        <color key="textColor" name="outcomeBlue"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign in!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8xk-0i-16N">
-                                        <rect key="frame" x="0.0" y="45" width="200" height="45"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="T6b-2F-LdS"/>
-                                            <constraint firstAttribute="width" constant="200" id="pBd-q2-rbd"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="36"/>
-                                        <color key="textColor" name="outcomeBlue"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign in" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8xk-0i-16N">
+                                <rect key="frame" x="141.33333333333334" y="324.33333333333331" width="110.33333333333334" height="40.333333333333314"/>
+                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="36"/>
+                                <color key="textColor" name="outcomeBlue"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k6S-bi-v6w">
                                 <rect key="frame" x="16" y="512.66666666666663" width="361" height="34"/>
-                                <color key="backgroundColor" name="outcomeGreen"/>
+                                <color key="backgroundColor" name="outcomeBlue"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="HAH-je-DdN"/>
                                 </constraints>
@@ -177,16 +158,17 @@
                         <constraints>
                             <constraint firstItem="XjQ-HO-KVN" firstAttribute="centerY" secondItem="gJa-OC-rwo" secondAttribute="centerY" id="6Jy-Eq-dWS"/>
                             <constraint firstItem="gJa-OC-rwo" firstAttribute="trailing" secondItem="XjQ-HO-KVN" secondAttribute="trailing" constant="16" id="NDv-Uq-HfO"/>
-                            <constraint firstItem="ngl-jM-hJp" firstAttribute="leading" secondItem="gJa-OC-rwo" secondAttribute="leading" constant="16" id="OWb-Yi-e2f"/>
+                            <constraint firstItem="8xk-0i-16N" firstAttribute="centerX" secondItem="gJa-OC-rwo" secondAttribute="centerX" id="PbI-qN-6aw"/>
                             <constraint firstItem="gJa-OC-rwo" firstAttribute="trailing" secondItem="k6S-bi-v6w" secondAttribute="trailing" constant="16" id="RHd-gu-7jk"/>
                             <constraint firstItem="k6S-bi-v6w" firstAttribute="leading" secondItem="gJa-OC-rwo" secondAttribute="leading" constant="16" id="gp8-tr-nOH"/>
+                            <constraint firstItem="XjQ-HO-KVN" firstAttribute="top" secondItem="8xk-0i-16N" secondAttribute="bottom" constant="35" id="soN-Cy-ms9"/>
                             <constraint firstItem="XjQ-HO-KVN" firstAttribute="leading" secondItem="gJa-OC-rwo" secondAttribute="leading" constant="16" id="tv2-QS-Ovb"/>
                             <constraint firstItem="k6S-bi-v6w" firstAttribute="top" secondItem="XjQ-HO-KVN" secondAttribute="bottom" constant="35" id="wxk-3E-844"/>
-                            <constraint firstItem="ngl-jM-hJp" firstAttribute="top" secondItem="gJa-OC-rwo" secondAttribute="top" constant="85" id="zuF-b8-MLr"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="emailTextField" destination="Okt-su-PUL" id="DhO-8M-sfN"/>
+                        <outlet property="loginButton" destination="k6S-bi-v6w" id="Kj5-FR-eL9"/>
                         <outlet property="passwordTextField" destination="cd3-9e-BPt" id="gTi-wH-b4l"/>
                     </connections>
                 </viewController>

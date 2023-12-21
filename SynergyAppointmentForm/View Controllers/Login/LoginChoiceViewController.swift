@@ -19,7 +19,7 @@ class LoginChoiceViewController: UIViewController {
         super.viewDidLoad()
 
         navigationItem.hidesBackButton = true
-
+        setupView()
 
     }
     
@@ -38,6 +38,10 @@ class LoginChoiceViewController: UIViewController {
         navigationController?.pushViewController(signUpVC, animated: true)
     }
     
+    func setupView() {
+        loginButton.layer.cornerRadius = 8
+        signUpButton.layer.cornerRadius = 8
+    }
     
     /*
     // MARK: - Navigation

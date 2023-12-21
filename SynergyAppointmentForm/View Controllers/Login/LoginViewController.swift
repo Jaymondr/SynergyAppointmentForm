@@ -12,18 +12,23 @@ class LoginViewController: UIViewController {
     // MARK: - OUTLETS
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var loginButton: UIButton!
     
     
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        setupView()
     }
     
     // MARK: - BUTTONS
     @IBAction func loginButtonPressed(_ sender: Any) {
     print("Login button pressed")
+    }
+    
+    // MARK: - FUNCTIONS
+    func setupView() {
+        loginButton.layer.cornerRadius = 8
     }
     
     /*

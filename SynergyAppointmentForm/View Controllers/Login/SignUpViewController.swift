@@ -68,7 +68,7 @@ class SignUpViewController: UIViewController {
     // MARK: - FUNCTIONS
     
     func setUpView() {
-        signInButton.layer.cornerRadius = 10
+        signInButton.layer.cornerRadius = 8
     }
     
     private func showMainStoryboard() {
