@@ -18,8 +18,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
 //        UserDefaults.standard.removeObject(forKey: UserAccount.kUser)
         // Check if the user is not logged in
         if UserAccount.currentUser == nil {
-            // Present sign-in view controller
-            presentSignUpVC()
+            presentLoginChoiceVC()
         }
 
         loadForms()
@@ -62,12 +61,12 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     // Function to present the sign-in view controller
-    func presentSignUpVC() {
+    func presentLoginChoiceVC() {
         // Replace "SignUpStoryboard" with the name of your storyboard file
         let storyboard = UIStoryboard(name: "SignUpScreen", bundle: nil)
         
-        guard let signUpVC = storyboard.instantiateViewController(withIdentifier: "SignUpViewController") as? SignUpViewController else { return }
-        navigationController?.pushViewController(signUpVC, animated: true)
+        guard let loginChoiceVC = storyboard.instantiateViewController(withIdentifier: "LoginChoiceViewController") as? LoginChoiceViewController else { return }
+        navigationController?.pushViewController(loginChoiceVC, animated: true)
     }
     
     // Separates the forms into upcoming and past for table view section

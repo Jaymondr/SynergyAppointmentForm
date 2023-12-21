@@ -8,14 +8,37 @@
 import UIKit
 
 class LoginChoiceViewController: UIViewController {
-
+    // MARK: - OUTLETS
+    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var signUpButton: UIButton!
+    
+    
+    
+    // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+
+
+
     }
     
+    
+    // MARK: - BUTTONS
+    @IBAction func loginButtonPressed(_ sender: Any) {
+        guard let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController else { return }
 
+        navigationController?.pushViewController(loginVC, animated: true)
+
+    }
+    
+    @IBAction func signUpButtonPressed(_ sender: Any) {
+        guard let signUpVC = storyboard?.instantiateViewController(withIdentifier: "SignUpViewController") as? SignUpViewController else { return }
+
+        navigationController?.pushViewController(signUpVC, animated: true)
+    }
+    
+    
     /*
     // MARK: - Navigation
 

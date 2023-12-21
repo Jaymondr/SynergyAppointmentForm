@@ -13,7 +13,7 @@
         <!--Login Choice View Controller-->
         <scene sceneID="qwY-ww-wD8">
             <objects>
-                <viewController id="xSL-oR-gtz" customClass="LoginChoiceViewController" customModule="SynergyAppointmentForm" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginChoiceViewController" id="xSL-oR-gtz" customClass="LoginChoiceViewController" customModule="SynergyAppointmentForm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KvX-Ov-Pv3">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -32,7 +32,7 @@
                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
                                         <connections>
-                                            <segue destination="o9p-ZD-aG9" kind="showDetail" id="HEM-y8-ozA"/>
+                                            <action selector="loginButtonPressed:" destination="xSL-oR-gtz" eventType="touchUpInside" id="G6n-07-h84"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yMK-44-CmV">
@@ -46,7 +46,7 @@
                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
                                         <connections>
-                                            <segue destination="Y6W-OH-hqX" kind="showDetail" id="5Fz-Um-sny"/>
+                                            <action selector="signUpButtonPressed:" destination="xSL-oR-gtz" eventType="touchUpInside" id="OfP-bg-F8U"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -57,7 +57,7 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="GI0-ye-6wN"/>
                                     <constraint firstAttribute="width" constant="200" id="N38-kV-JW3"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="36"/>
+                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="36"/>
                                 <color key="textColor" name="outcomeBlue"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -72,6 +72,10 @@
                             <constraint firstItem="u3o-Xm-urz" firstAttribute="leading" secondItem="zvp-eA-Ngo" secondAttribute="leading" constant="16" id="ppm-DP-fiw"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="loginButton" destination="t34-J6-MHm" id="Mex-l9-YV9"/>
+                        <outlet property="signUpButton" destination="yMK-44-CmV" id="UjU-rt-gaJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5dK-ln-IEY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -80,13 +84,13 @@
         <!--Login View Controller-->
         <scene sceneID="Zgn-aA-Fa1">
             <objects>
-                <viewController id="o9p-ZD-aG9" customClass="LoginViewController" customModule="SynergyAppointmentForm" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="o9p-ZD-aG9" customClass="LoginViewController" customModule="SynergyAppointmentForm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OOi-Us-O7f">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="XjQ-HO-KVN">
-                                <rect key="frame" x="16" y="382" width="361" height="78"/>
+                                <rect key="frame" x="16" y="399.66666666666669" width="361" height="78"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="qRt-UJ-S2E">
                                         <rect key="frame" x="0.0" y="0.0" width="361" height="35"/>
@@ -128,8 +132,8 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ngl-jM-hJp">
-                                <rect key="frame" x="16" y="90" width="200" height="90"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ngl-jM-hJp">
+                                <rect key="frame" x="16" y="144" width="200" height="90"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello," lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UMF-O3-9lk">
                                         <rect key="frame" x="0.0" y="0.0" width="200" height="45"/>
@@ -137,7 +141,7 @@
                                             <constraint firstAttribute="width" constant="200" id="MDQ-DL-n3r"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="WiS-iZ-28g"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="36"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="36"/>
                                         <color key="textColor" name="outcomeBlue"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -147,14 +151,14 @@
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="T6b-2F-LdS"/>
                                             <constraint firstAttribute="width" constant="200" id="pBd-q2-rbd"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="36"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="36"/>
                                         <color key="textColor" name="outcomeBlue"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k6S-bi-v6w">
-                                <rect key="frame" x="16" y="495" width="361" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k6S-bi-v6w">
+                                <rect key="frame" x="16" y="512.66666666666663" width="361" height="34"/>
                                 <color key="backgroundColor" name="outcomeGreen"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="HAH-je-DdN"/>
@@ -173,8 +177,12 @@
                         <constraints>
                             <constraint firstItem="XjQ-HO-KVN" firstAttribute="centerY" secondItem="gJa-OC-rwo" secondAttribute="centerY" id="6Jy-Eq-dWS"/>
                             <constraint firstItem="gJa-OC-rwo" firstAttribute="trailing" secondItem="XjQ-HO-KVN" secondAttribute="trailing" constant="16" id="NDv-Uq-HfO"/>
+                            <constraint firstItem="ngl-jM-hJp" firstAttribute="leading" secondItem="gJa-OC-rwo" secondAttribute="leading" constant="16" id="OWb-Yi-e2f"/>
+                            <constraint firstItem="gJa-OC-rwo" firstAttribute="trailing" secondItem="k6S-bi-v6w" secondAttribute="trailing" constant="16" id="RHd-gu-7jk"/>
+                            <constraint firstItem="k6S-bi-v6w" firstAttribute="leading" secondItem="gJa-OC-rwo" secondAttribute="leading" constant="16" id="gp8-tr-nOH"/>
                             <constraint firstItem="XjQ-HO-KVN" firstAttribute="leading" secondItem="gJa-OC-rwo" secondAttribute="leading" constant="16" id="tv2-QS-Ovb"/>
                             <constraint firstItem="k6S-bi-v6w" firstAttribute="top" secondItem="XjQ-HO-KVN" secondAttribute="bottom" constant="35" id="wxk-3E-844"/>
+                            <constraint firstItem="ngl-jM-hJp" firstAttribute="top" secondItem="gJa-OC-rwo" secondAttribute="top" constant="85" id="zuF-b8-MLr"/>
                         </constraints>
                     </view>
                     <connections>
@@ -191,11 +199,11 @@
             <objects>
                 <viewController storyboardIdentifier="SignUpViewController" title="SignUpViewController" id="Y6W-OH-hqX" customClass="SignUpViewController" customModule="SynergyAppointmentForm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="2MR-IE-qR2">
-                                <rect key="frame" x="16" y="351" width="361" height="140"/>
+                                <rect key="frame" x="16" y="368.66666666666669" width="361" height="140"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="2CV-Di-J2X">
                                         <rect key="frame" x="0.0" y="0.0" width="361" height="35"/>
@@ -276,14 +284,14 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="smI-eX-6ox">
-                                <rect key="frame" x="16" y="185" width="150" height="80.666666666666686"/>
+                                <rect key="frame" x="16" y="159" width="150" height="80.666666666666686"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="STt-N0-s1C">
                                         <rect key="frame" x="0.0" y="0.0" width="150" height="40.333333333333336"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="ZmB-mc-BYe"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="36"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="36"/>
                                         <color key="textColor" name="outcomeBlue"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -293,32 +301,37 @@
                                             <constraint firstAttribute="width" constant="150" id="GJO-kk-ZTQ"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="fUG-P3-kaK"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="36"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="36"/>
                                         <color key="textColor" name="outcomeBlue"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cHA-Cp-iUt">
-                                <rect key="frame" x="16" y="526" width="361" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cHA-Cp-iUt">
+                                <rect key="frame" x="16" y="543.66666666666663" width="361" height="34"/>
                                 <color key="backgroundColor" name="outcomeGreen"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="rLb-Tk-l60"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Sign in">
+                                <buttonConfiguration key="configuration" style="plain" title="Sign up">
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="signUpButtonPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="vcE-cw-hJr"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="cHA-Cp-iUt" secondAttribute="trailing" constant="16" id="6xo-6i-uAS"/>
                             <constraint firstItem="cHA-Cp-iUt" firstAttribute="top" secondItem="2MR-IE-qR2" secondAttribute="bottom" constant="35" id="KZW-et-IXW"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="2MR-IE-qR2" secondAttribute="trailing" constant="16" id="VEJ-f9-zo8"/>
                             <constraint firstItem="smI-eX-6ox" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="W8i-WK-mdA"/>
-                            <constraint firstItem="smI-eX-6ox" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="185" id="b6b-0Y-a2v"/>
+                            <constraint firstItem="smI-eX-6ox" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="100" id="b6b-0Y-a2v"/>
                             <constraint firstItem="2MR-IE-qR2" firstAttribute="centerY" secondItem="vDu-zF-Fre" secondAttribute="centerY" id="dAn-2O-m3Q"/>
+                            <constraint firstItem="cHA-Cp-iUt" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="jcG-UK-SNT"/>
                             <constraint firstItem="2MR-IE-qR2" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="pl5-BL-Ui3"/>
                         </constraints>
                     </view>

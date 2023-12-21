@@ -295,9 +295,9 @@
 		67FEDB832B34B2BE005D4421 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				67A5C09A2B28D09D00D16249 /* SignUpViewController.swift */,
-				67FEDB842B34B2D3005D4421 /* LoginViewController.swift */,
 				67FEDB872B34B2FB005D4421 /* LoginChoiceViewController.swift */,
+				67FEDB842B34B2D3005D4421 /* LoginViewController.swift */,
+				67A5C09A2B28D09D00D16249 /* SignUpViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";

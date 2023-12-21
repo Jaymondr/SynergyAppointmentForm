@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="BvH-az-xey">
-                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
+                                <rect key="frame" x="0.0" y="103" width="393" height="749"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="formCell" rowHeight="138" id="4nh-tc-2PR" customClass="FormTableViewCell" customModule="SynergyAppointmentForm" customModuleProvider="target">
@@ -157,7 +157,7 @@
                         <constraints>
                             <constraint firstItem="BvH-az-xey" firstAttribute="top" secondItem="VdL-M5-w9d" secondAttribute="top" id="8fg-bJ-zR6"/>
                             <constraint firstItem="BvH-az-xey" firstAttribute="leading" secondItem="VdL-M5-w9d" secondAttribute="leading" id="J1l-v4-syd"/>
-                            <constraint firstItem="VdL-M5-w9d" firstAttribute="bottom" secondItem="BvH-az-xey" secondAttribute="bottom" id="h2z-w1-1UL"/>
+                            <constraint firstAttribute="bottom" secondItem="BvH-az-xey" secondAttribute="bottom" id="h2z-w1-1UL"/>
                             <constraint firstItem="VdL-M5-w9d" firstAttribute="trailing" secondItem="BvH-az-xey" secondAttribute="trailing" id="p7P-8L-tt6"/>
                         </constraints>
                     </view>
@@ -1635,7 +1635,7 @@
         <image name="doc" catalog="system" width="115" height="128"/>
         <image name="doc.fill" catalog="system" width="115" height="128"/>
         <image name="doc.on.clipboard" catalog="system" width="116" height="128"/>
-        <image name="list.clipboard" catalog="system" width="98" height="128"/>
+        <image name="list.clipboard" catalog="system" width="32" height="32"/>
         <image name="location.fill.viewfinder" catalog="system" width="128" height="115"/>
         <image name="tag.fill" catalog="system" width="128" height="118"/>
         <image name="text.bubble" catalog="system" width="128" height="110"/>
@@ -1649,7 +1649,7 @@
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="opaqueSeparatorColor">
-            <color red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

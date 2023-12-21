@@ -23,6 +23,7 @@ class LoginViewController: UIViewController {
     
     // MARK: - BUTTONS
     @IBAction func loginButtonPressed(_ sender: Any) {
+    print("Login button pressed")
     }
     
     /*

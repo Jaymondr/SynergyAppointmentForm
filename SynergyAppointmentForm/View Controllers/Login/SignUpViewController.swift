@@ -60,7 +60,7 @@ class SignUpViewController: UIViewController {
     }
     
     // MARK: - ACTIONS
-    @IBAction func createButtonPressed(_ sender: Any) {
+    @IBAction func signUpButtonPressed(_ sender: Any) {
         showMainStoryboard()
 //        createUser()
     }
@@ -68,7 +68,7 @@ class SignUpViewController: UIViewController {
     // MARK: - FUNCTIONS
     
     func setUpView() {
-        createButton.layer.cornerRadius = 10
+        signInButton.layer.cornerRadius = 10
     }
     
     private func showMainStoryboard() {
