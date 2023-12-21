@@ -16,6 +16,12 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
 //        UserDefaults.standard.removeObject(forKey: UserAccount.kUser)
+        // Check if the user is not logged in
+        if UserAccount.currentUser == nil {
+            // Present sign-in view controller
+            presentSignUpVC()
+        }
+
         loadForms()
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         tableView.refreshControl = refreshControl
@@ -40,7 +46,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     // MARK: FUNCTIONS
-        
+    // Loads forms for the current user
     func loadForms() {
 //        guard let user = UserAccount.currentUser else { return }
         FirebaseController.shared.getForms(for: UserAccount.CodingKeys.userID.rawValue) { forms, error in
@@ -55,6 +61,16 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    // Function to present the sign-in view controller
+    func presentSignUpVC() {
+        // Replace "SignUpStoryboard" with the name of your storyboard file
+        let storyboard = UIStoryboard(name: "SignUpScreen", bundle: nil)
+        
+        guard let signUpVC = storyboard.instantiateViewController(withIdentifier: "SignUpViewController") as? SignUpViewController else { return }
+        navigationController?.pushViewController(signUpVC, animated: true)
+    }
+    
+    // Separates the forms into upcoming and past for table view section
     func splitForms(forms: [Form]) {
         upcomingAppointmentForms.removeAll()
         pastAppointmentForms.removeAll()
@@ -72,6 +88,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         self.tableView.reloadData()
     }
     
+    // Sets title for Form list
     func setTitleAttributes() {
         if let navigationController = self.navigationController {
             self.navigationItem.title = "FORMS"
@@ -81,7 +98,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     
-    // MARK: TABLEVIEW
+    // MARK: TABLEVIEW FUNCTIONS
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -167,6 +184,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
 
+    
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toFormDetail",
@@ -192,7 +210,6 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
 
 
 // MARK: - EXTENSIONS
-
 extension FormListViewController: FormDetailViewDelegate {
     func didUpdate(form: Form) {
         if let index = forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {

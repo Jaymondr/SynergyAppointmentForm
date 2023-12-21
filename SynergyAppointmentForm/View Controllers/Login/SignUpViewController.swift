@@ -13,7 +13,7 @@ import FirebaseAuth
 class SignUpViewController: UIViewController {
     
     // MARK: - OUTLETS
-    @IBOutlet weak var createButton: UIButton!
+    @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
@@ -43,7 +43,8 @@ class SignUpViewController: UIViewController {
         let validLastName = lastName != ""
         let validPassword = password.count > 5 && password.range(of: "[A-Z]", options: .regularExpression) != nil && password.range(of: "[a-z]", options: .regularExpression) != nil
         
-        if validEmail && validFirstName && validLastName && validPassword {
+//        if validEmail && validFirstName && validLastName && validPassword {
+        if validFirstName {
             return .valid
         } else if !validFirstName {
             return .invalidFirstName
@@ -72,17 +73,8 @@ class SignUpViewController: UIViewController {
     
     private func showMainStoryboard() {
         print("User firebase ID: \(user?.firebaseID ?? "nil")")
-        // Assuming you're inside the SignUpViewController
-        // Dismiss the SignUpViewController
-        self.dismiss(animated: true) {
-            // Instantiate the FormListViewController
-            let formListViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FormListViewController") as! FormListViewController
-
-            // Present the navigation controller
-            // Assuming your current view controller is embedded in a navigation controller
-            self.navigationController?.pushViewController(formListViewController, animated: true)
-
-        }
+//        dismiss(animated: true, completion: nil)
+        navigationController?.popToRootViewController(animated: true)
     }
     
     func createUser() {
@@ -115,7 +107,7 @@ class SignUpViewController: UIViewController {
                     
                     guard let user = user else { print("No User!"); return }
                     self.user = user
-                    self.showMainStoryboard()
+
                 }
             }
             
