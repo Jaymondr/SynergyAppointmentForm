@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "aflogo.png",
+      "filename" : "aficon.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "aflogo 1.png",
+      "filename" : "aficon 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "aflogo 2.png",
+      "filename" : "aficon 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
 
@@ -23,7 +24,24 @@ class LoginViewController: UIViewController {
     
     // MARK: - BUTTONS
     @IBAction func loginButtonPressed(_ sender: Any) {
-    print("Login button pressed")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
+            self.navigationController?.popToRootViewController(animated: false)
+        }
+
+//        guard let email = emailTextField.text,
+//              let password = passwordTextField.text else { return }
+//        Auth.auth().signIn(withEmail: email, password: password) { result, error in
+//            if let error = error {
+//                print("There was an error: \(error)")
+//                UIAlertController.presentDismissingAlert(title: "Error: \(error)", dismissAfter: 1.0)
+//            }
+//            if let result = result {
+//                UIAlertController.presentDismissingAlert(title: "\("Welcome back \(result.user.displayName ?? "Welcome back")")", dismissAfter: 1.2)
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
+//                    self.navigationController?.popToRootViewController(animated: false)
+//                }
+//            }
+//        }
     }
     
     // MARK: - FUNCTIONS

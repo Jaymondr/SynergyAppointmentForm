@@ -15,12 +15,10 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        UserDefaults.standard.removeObject(forKey: UserAccount.kUser)
-        // Check if the user is not logged in
-//        if UserAccount.currentUser == nil {
-//            presentLoginChoiceVC()
-//        }
-
+//         Check for user
+        if UserAccount.currentUser == nil {
+            presentLoginChoiceVC()
+        }
         loadForms()
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         tableView.refreshControl = refreshControl
@@ -47,8 +45,8 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: FUNCTIONS
     // Loads forms for the current user
     func loadForms() {
-//        guard let user = UserAccount.currentUser else { return }
-        FirebaseController.shared.getForms(for: UserAccount.CodingKeys.userID.rawValue) { forms, error in
+        guard let user = UserAccount.currentUser else { return }
+        FirebaseController.shared.getForms(for: user.firebaseID) { forms, error in
             if let error = error {
                 print("Error fetching forms: \(error)")
             }

@@ -62,6 +62,7 @@
 		67EBEE3B2B0C0463009FD021 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 67EBEE3A2B0C0463009FD021 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		67EBEE3D2B0C0463009FD021 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 67EBEE3C2B0C0463009FD021 /* FirebaseAppCheck */; };
 		67EBEE3F2B0C051C009FD021 /* FirebaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EBEE3E2B0C051C009FD021 /* FirebaseController.swift */; };
+		67ECD72E2B3789CF0045E893 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67ECD72D2B3789CF0045E893 /* ProfileViewController.swift */; };
 		67FEDB852B34B2D3005D4421 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67FEDB842B34B2D3005D4421 /* LoginViewController.swift */; };
 		67FEDB882B34B2FB005D4421 /* LoginChoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67FEDB872B34B2FB005D4421 /* LoginChoiceViewController.swift */; };
 /* End PBXBuildFile section */
@@ -93,6 +94,7 @@
 		67EBEE2F2B0BC768009FD021 /* FormListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormListViewController.swift; sourceTree = "<group>"; };
 		67EBEE312B0C0353009FD021 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		67EBEE3E2B0C051C009FD021 /* FirebaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseController.swift; sourceTree = "<group>"; };
+		67ECD72D2B3789CF0045E893 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		67FEDB842B34B2D3005D4421 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		67FEDB872B34B2FB005D4421 /* LoginChoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginChoiceViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -190,6 +192,7 @@
 			children = (
 				67FEDB822B34B2AC005D4421 /* Form */,
 				67FEDB832B34B2BE005D4421 /* Login */,
+				67ECD72F2B3789D30045E893 /* Profile */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -280,6 +283,14 @@
 				67EBEE2A2B0BC629009FD021 /* FormTableViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		67ECD72F2B3789D30045E893 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				67ECD72D2B3789CF0045E893 /* ProfileViewController.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		67FEDB822B34B2AC005D4421 /* Form */ = {
@@ -430,6 +441,7 @@
 				67BB4F152B141B3300067D90 /* FirebaseModel.swift in Sources */,
 				674603C12B03E51000756102 /* FormViewController.swift in Sources */,
 				67EBEE3F2B0C051C009FD021 /* FirebaseController.swift in Sources */,
+				67ECD72E2B3789CF0045E893 /* ProfileViewController.swift in Sources */,
 				674603BC2B03DE0E00756102 /* FormController.swift in Sources */,
 				67A582F82B0D23F300D4B5DA /* FormDetailViewController.swift in Sources */,
 			);

@@ -17,19 +17,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="aficon" highlightedImage="aficon" translatesAutoresizingMaskIntoConstraints="NO" id="vd8-sJ-pBM">
-                                <rect key="frame" x="71.666666666666686" y="263.66666666666669" width="250" height="250.00000000000006"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="proIcon" translatesAutoresizingMaskIntoConstraints="NO" id="qIn-2Z-Vqy">
+                                <rect key="frame" x="71.666666666666686" y="225.66666666666663" width="250" height="250"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="250" id="LmI-xg-seL"/>
-                                    <constraint firstAttribute="width" constant="250" id="l7E-f1-VRy"/>
+                                    <constraint firstAttribute="width" secondItem="qIn-2Z-Vqy" secondAttribute="height" multiplier="1:1" id="7iM-WY-0Ba"/>
+                                    <constraint firstAttribute="width" constant="250" id="thA-nx-73Z"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="vd8-sJ-pBM" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="-50" id="Zp2-rQ-B2l"/>
-                            <constraint firstItem="vd8-sJ-pBM" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="r0V-6b-cCO"/>
+                            <constraint firstItem="qIn-2Z-Vqy" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="B5U-qg-H6e"/>
+                            <constraint firstItem="qIn-2Z-Vqy" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" multiplier="0.8" id="yeB-oP-xmh"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -39,7 +39,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="aficon" width="341.33334350585938" height="341.33334350585938"/>
+        <image name="proIcon" width="341.33334350585938" height="341.33334350585938"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

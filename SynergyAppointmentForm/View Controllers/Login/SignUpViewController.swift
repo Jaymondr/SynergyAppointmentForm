@@ -73,8 +73,7 @@ class SignUpViewController: UIViewController {
     
     private func showMainStoryboard() {
         print("User firebase ID: \(user?.firebaseID ?? "nil")")
-//        dismiss(animated: true, completion: nil)
-        navigationController?.popToRootViewController(animated: true)
+        navigationController?.popToRootViewController(animated: false)
     }
     
     func createUser() {
