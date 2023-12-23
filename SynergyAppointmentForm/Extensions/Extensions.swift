@@ -91,6 +91,21 @@ extension UIAlertController {
         }
     }
     
+    static func presentOkAlert(message: String, actionOptionTitle: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: actionOptionTitle, style: .cancel)
+        
+        alert.addAction(okAction)
+        
+        if let topWindowScene = UIApplication.shared.connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .first(where: { $0.activationState == .foregroundActive }),
+            let topViewController = topWindowScene.windows.first?.rootViewController {
+            
+            topViewController.present(alert, animated: true)
+        }
+    }
+    
     static func presentMultipleOptionAlert(message: String, actionOptionTitle: String, cancelOptionTitle: String, completion: @escaping () -> Void) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: actionOptionTitle, style: .default) { action in

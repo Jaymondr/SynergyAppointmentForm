@@ -8,14 +8,27 @@
 import Foundation
 import FirebaseFirestore
 
+
+// MARK: - TODO
+/*
+ NOTES: Is the uid different than firebaseID
+ 
+ 1. Set the userID to the currentaccount userID
+ 2. Fix login bug
+ 3. Clean up profile page
+ 4. Double check login functionality on ipad
+ 5. Add notes view
+ 
+ */
+
+
 class FirebaseController {
     static let shared = FirebaseController()
 
     let db = Firestore.firestore()
     
-    
-    // MARK: CRUD FUNCTIONS
-    
+    // MARK: FORMS
+    // CRUD FUNCTIONS
     // CREATE
     func saveForm(form: Form, completion: @escaping (_ form: Form?, _ error: Error?) -> Void) {
         let documentReference = db.collection(Form.CodingKeys.collectionID.rawValue).document()
@@ -29,41 +42,6 @@ class FirebaseController {
                 print("No Errors saving form")
                 let newForm = Form(firebaseData: data, firebaseID: documentReference.documentID)
                 completion(newForm, nil)
-            }
-        }
-    }
-    
-    func createUser(from user: UserAccount, completion: @escaping (_ user: UserAccount?, _ error: Error?) -> Void) {
-        let docRef = db.collection(UserAccount.collectionKey).document(user.firebaseID)
-        var data = user.firebaseRepresentation
-        
-        docRef.setData(data) { error in
-            if let error = error {
-                completion(nil, error)
-            } else {
-                print("No Errors creating User")
-                let newUser = UserAccount(firebaseData: data, firebaseID: user.firebaseID)
-                completion(newUser, nil)
-            }
-        }
-    }
-    
-    func createUser(firstName: String, lastName: String, email: String, completion: @escaping (_ user: UserAccount?, _ error: Error?) -> Void) {
-        let docRef = db.collection(UserAccount.collectionKey).document()
-        var data: [String: Any] = [
-            UserAccount.CodingKeys.firstName.rawValue  : firstName,
-            UserAccount.CodingKeys.lastName.rawValue   : lastName,
-            UserAccount.CodingKeys.email.rawValue      : email,
-            UserAccount.CodingKeys.firebaseID.rawValue : docRef.documentID
-        ]
-        
-        docRef.setData(data) { error in
-            if let error = error {
-                completion(nil, error)
-            } else {
-                print("No Errors creating User")
-                let newUser = UserAccount(firebaseData: data, firebaseID: docRef.documentID)
-                completion(newUser, nil)
             }
         }
     }
@@ -136,4 +114,62 @@ class FirebaseController {
         }
     }
     
+    
+    // MARK: - USER
+    func createUser(from user: UserAccount, completion: @escaping (_ user: UserAccount?, _ error: Error?) -> Void) {
+        let docRef = db.collection(UserAccount.collectionKey).document(user.firebaseID)
+        var data = user.firebaseRepresentation
+        
+        docRef.setData(data) { error in
+            if let error = error {
+                completion(nil, error)
+            } else {
+                print("No Errors creating User")
+                let newUser = UserAccount(firebaseData: data, firebaseID: user.firebaseID)
+                completion(newUser, nil)
+            }
+        }
+    }
+    
+    func createUser(firstName: String, lastName: String, email: String, completion: @escaping (_ user: UserAccount?, _ error: Error?) -> Void) {
+        let docRef = db.collection(UserAccount.collectionKey).document()
+        var data: [String: Any] = [
+            UserAccount.CodingKeys.firstName.rawValue  : firstName,
+            UserAccount.CodingKeys.lastName.rawValue   : lastName,
+            UserAccount.CodingKeys.email.rawValue      : email,
+            UserAccount.CodingKeys.firebaseID.rawValue : docRef.documentID
+        ]
+        
+        docRef.setData(data) { error in
+            if let error = error {
+                completion(nil, error)
+            } else {
+                print("No Errors creating User")
+                let newUser = UserAccount(firebaseData: data, firebaseID: docRef.documentID)
+                completion(newUser, nil)
+            }
+        }
+    }
+    
+    func getUser(with firebaseID: String, completion: @escaping (_ user: UserAccount?, _ error: Error? ) -> Void) {
+        db.collection(UserAccount.collectionKey)
+            .whereField(UserAccount.CodingKeys.firebaseID.rawValue, isEqualTo: firebaseID)
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    print("There was an error getting forms: \(error)")
+                    completion(nil, error)
+                    return
+                }
+                guard let documents = snapshot?.documents else {
+                    completion(nil, nil)
+                    return
+                }
+                let userDoc = documents.first
+                if let data = userDoc?.data() {
+                    let user = UserAccount(firebaseData: data, firebaseID: firebaseID)
+                } else {
+                    print("No Doc data"); completion(nil, nil)
+                }
+            }
+    }
 }

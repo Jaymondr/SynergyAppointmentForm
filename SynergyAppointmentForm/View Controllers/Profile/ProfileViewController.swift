@@ -11,10 +11,12 @@ import FirebaseAuth
 class ProfileViewController: UIViewController {
     
     // MARK: - OUTLETS
+    @IBOutlet weak var nameStackView: UIStackView!
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var logOutButton: UIButton!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var nameLabel: UILabel!
     
     
     // MARK: - LIFECYCLE
@@ -23,8 +25,12 @@ class ProfileViewController: UIViewController {
         
         navigationController?.navigationBar.tintColor = .eden
         logOutButton.isHidden = UserAccount.currentUser == nil
+        signInButton.isHidden = UserAccount.currentUser != nil
         emailTextField.isHidden = UserAccount.currentUser != nil
         passwordTextField.isHidden = UserAccount.currentUser != nil
+        nameStackView.isHidden = UserAccount.currentUser == nil
+        nameLabel.text = UserAccount.currentUser?.firstName ?? ""
+        
     }
     
     
@@ -35,11 +41,13 @@ class ProfileViewController: UIViewController {
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
             if let error = error {
                 print("There was an error: \(error)")
-                UIAlertController.presentDismissingAlert(title: "Error: \(error)", dismissAfter: 2.0)
+                UIAlertController.presentOkAlert(message: "Error: \(error)", actionOptionTitle: "Ok")
             } else {
                 print("User signed in")
                 self.emailTextField.isHidden = true
                 self.passwordTextField.isHidden = true
+                self.logOutButton.isHidden = false
+                self.nameStackView.isHidden = false
             }
         }
     }
@@ -52,7 +60,10 @@ class ProfileViewController: UIViewController {
                 UserDefaults.standard.removeObject(forKey: UserAccount.kUser)
                 UserAccount.currentUser = nil
                 self.logOutButton.isHidden = true
-
+                self.emailTextField.isHidden = false
+                self.passwordTextField.isHidden = false
+                self.signInButton.isHidden = false
+                self.nameStackView.isHidden = true
                 print("Signed out user")
                 
             } catch let signOutError as NSError {

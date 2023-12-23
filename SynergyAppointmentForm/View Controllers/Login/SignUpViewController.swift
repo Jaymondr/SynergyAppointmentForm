@@ -61,8 +61,7 @@ class SignUpViewController: UIViewController {
     
     // MARK: - ACTIONS
     @IBAction func signUpButtonPressed(_ sender: Any) {
-        showMainStoryboard()
-//        createUser()
+        createUser()
     }
     
     // MARK: - FUNCTIONS
@@ -70,12 +69,7 @@ class SignUpViewController: UIViewController {
     func setUpView() {
         signInButton.layer.cornerRadius = 8
     }
-    
-    private func showMainStoryboard() {
-        print("User firebase ID: \(user?.firebaseID ?? "nil")")
-        navigationController?.popToRootViewController(animated: false)
-    }
-    
+        
     func createUser() {
         switch isValid {
         case .valid:
@@ -105,8 +99,7 @@ class SignUpViewController: UIViewController {
                     }
                     
                     guard let user = user else { print("No User!"); return }
-                    self.user = user
-
+                    self.navigationController?.popToRootViewController(animated: false)
                 }
             }
             

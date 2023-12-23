@@ -13,12 +13,16 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     
     let refreshControl = UIRefreshControl()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-//         Check for user
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //         Check for user
         if UserAccount.currentUser == nil {
             presentLoginChoiceVC()
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         loadForms()
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         tableView.refreshControl = refreshControl
@@ -64,7 +68,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         let storyboard = UIStoryboard(name: "SignUpScreen", bundle: nil)
         
         guard let loginChoiceVC = storyboard.instantiateViewController(withIdentifier: "LoginChoiceViewController") as? LoginChoiceViewController else { return }
-        navigationController?.pushViewController(loginChoiceVC, animated: true)
+        navigationController?.pushViewController(loginChoiceVC, animated: false)
     }
     
     // Separates the forms into upcoming and past for table view section
