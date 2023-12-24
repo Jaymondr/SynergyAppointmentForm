@@ -58,66 +58,73 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     
     // MARK: PROPERTIES
     var firebaseID: String = ""
+    var user: UserAccount? {
+        UserAccount.currentUser
+    }
 
     
     // MARK: BUTTONS
     @IBAction func saveButtonPressed(_ sender: Any) {
+        guard let user = UserAccount.currentUser else { return }
         self.vibrateForButtonPress(.medium)
-        let form = createForm()
-        let saveQueue = DispatchQueue(label: "com.example.saveQueue", qos: .background)
-
-        saveButton.isEnabled = false
-        activityIndicator.startAnimating()
-        
-        if form.firebaseID.isNotEmpty {
-            // UPDATE FORM
-            saveQueue.async {
-                FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
-                    DispatchQueue.main.async {
-                        self.saveButton.isEnabled = true
-                        self.activityIndicator.stopAnimating()
-                    }
-                    if let error = error {
-                        print("there was an error: \(error)")
+        if let form = createForm() {
+            let saveQueue = DispatchQueue(label: "com.example.saveQueue", qos: .background)
+            
+            saveButton.isEnabled = false
+            activityIndicator.startAnimating()
+            
+            if form.firebaseID.isNotEmpty {
+                // UPDATE FORM
+                saveQueue.async {
+                    FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
                         DispatchQueue.main.async {
-                            UIAlertController.presentDismissingAlert(title: "Failed to Save Form", dismissAfter: 1.2)
-                            self.vibrateForError()
+                            self.saveButton.isEnabled = true
+                            self.activityIndicator.stopAnimating()
                         }
-                        return
+                        if let error = error {
+                            print("there was an error: \(error)")
+                            DispatchQueue.main.async {
+                                UIAlertController.presentDismissingAlert(title: "Failed to Save Form", dismissAfter: 1.2)
+                                self.vibrateForError()
+                            }
+                            return
+                        }
+                        DispatchQueue.main.async {
+                            self.delegate?.didUpdateNew(form)
+                            UIAlertController.presentDismissingAlert(title: "Form Updated!", dismissAfter: 0.5)
+                            self.vibrate()
+                        }
                     }
-                    DispatchQueue.main.async {
-                        self.delegate?.didUpdateNew(form)
-                        UIAlertController.presentDismissingAlert(title: "Form Updated!", dismissAfter: 0.5)
-                        self.vibrate()
+                }
+            } else {
+                // CREATE FORM IN FIREBASE
+                saveQueue.async {
+                    FirebaseController.shared.saveForm(form: form) { savedForm, error in
+                        DispatchQueue.main.async {
+                            self.saveButton.isEnabled = true
+                            self.activityIndicator.stopAnimating()
+                        }
+                        if let error = error {
+                            print("Error: \(error)")
+                            DispatchQueue.main.async {
+                                UIAlertController.presentDismissingAlert(title: "Failed to Save Form", dismissAfter: 1.2)
+                                self.vibrateForError()
+                            }
+                            return
+                        }
+                        
+                        guard let savedForm = savedForm else { print("No Form!"); return }
+                        self.firebaseID = savedForm.firebaseID
+                        DispatchQueue.main.async {
+                            self.delegate?.didAddNewForm(savedForm)
+                            UIAlertController.presentDismissingAlert(title: "Form Saved!", dismissAfter: 0.5)
+                            self.vibrate()
+                        }
                     }
                 }
             }
         } else {
-            // CREATE FORM IN FIREBASE
-            saveQueue.async {
-                FirebaseController.shared.saveForm(form: form) { savedForm, error in
-                    DispatchQueue.main.async {
-                        self.saveButton.isEnabled = true
-                        self.activityIndicator.stopAnimating()
-                    }
-                    if let error = error {
-                        print("Error: \(error)")
-                        DispatchQueue.main.async {
-                            UIAlertController.presentDismissingAlert(title: "Failed to Save Form", dismissAfter: 1.2)
-                            self.vibrateForError()
-                        }
-                        return
-                    }
-                    
-                    guard let savedForm = savedForm else { print("No Form!"); return }
-                    self.firebaseID = savedForm.firebaseID
-                    DispatchQueue.main.async {
-                        self.delegate?.didAddNewForm(savedForm)
-                        UIAlertController.presentDismissingAlert(title: "Form Saved!", dismissAfter: 0.5)
-                        self.vibrate()
-                    }
-                }
-            }
+            UIAlertController.presentDismissingAlert(title: "Unable to create form...", dismissAfter: 1.0)
         }
     }
 
@@ -125,21 +132,29 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     
     
     @IBAction func messageButtonPressed(_ sender: Any) {
-        let form = createForm()
-        FormController.shared.prepareToSendMessage(form: form, phoneNumber: phoneTextfield.text, viewController: self)
+        if let form = createForm() {
+            FormController.shared.prepareToSendMessage(form: form, phoneNumber: phoneTextfield.text, viewController: self)
+        } else {
+            UIAlertController.presentDismissingAlert(title: "Unable to create form...", dismissAfter: 1.0)
+        }
     }
     
     @IBAction func trelloButtonPressed(_ sender: Any) {
-        let form = createForm()
         self.vibrateForButtonPress(.heavy)
+        if let form = createForm() {
         FormController.shared.createAndCopyTrello(form: form)
+        } else {
+            UIAlertController.presentDismissingAlert(title: "Unable to create form...", dismissAfter: 1.0)
+        }
     }
     
     @IBAction func copyButtonPressed(_ sender: Any) {
-        let form = createForm()
         self.vibrateForButtonPress(.heavy)
+        if let form = createForm() {
         FormController.shared.createAndCopyForm(form: form)
-        
+        } else {
+            UIAlertController.presentDismissingAlert(title: "Unable to create form...", dismissAfter: 1.0)
+        }
     }
     
     @IBAction func locationButtonPressed(_ sender: Any) {
@@ -297,8 +312,9 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         return true
     }
     
-    func createForm() -> Form {
-        let form = Form(firebaseID: self.firebaseID, address: addressTextfield.text ?? "", city: cityTextfield.text ?? "", comments: commentsTextview.text ?? "", date: dateTimePicker.date, email: emailTextfield.text ?? "", energyBill: energyBillTextfield.text ?? "", financeOptions: financeTextfield.text ?? "", firstName: firstNameTextfield.text ?? "", lastName: lastNameTextfield.text ?? "", numberOfWindows: numberOfWindowsTexfield.text ?? "", phone: phoneTextfield.text ?? "", rate: rateTextfield.text ?? "", reason: reasonTextview.text ?? "", retailQuote: quoteTextfield.text ?? "", spouse: spouseTextfield.text ?? "", state: stateTextfield.text ?? "", yearsOwned: yearsOwnedTextfield.text ?? "", zip: zipTextfield.text ?? "")
+    func createForm() -> Form? {
+        guard let user = user else { return nil }
+        let form = Form(firebaseID: self.firebaseID, address: addressTextfield.text ?? "", city: cityTextfield.text ?? "", comments: commentsTextview.text ?? "", date: dateTimePicker.date, email: emailTextfield.text ?? "", energyBill: energyBillTextfield.text ?? "", financeOptions: financeTextfield.text ?? "", firstName: firstNameTextfield.text ?? "", lastName: lastNameTextfield.text ?? "", numberOfWindows: numberOfWindowsTexfield.text ?? "", phone: phoneTextfield.text ?? "", rate: rateTextfield.text ?? "", reason: reasonTextview.text ?? "", retailQuote: quoteTextfield.text ?? "", spouse: spouseTextfield.text ?? "", state: stateTextfield.text ?? "", userID: user.firebaseID, yearsOwned: yearsOwnedTextfield.text ?? "", zip: zipTextfield.text ?? "")
         
         return form
     }

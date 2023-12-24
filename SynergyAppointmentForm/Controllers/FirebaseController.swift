@@ -11,13 +11,18 @@ import FirebaseFirestore
 
 // MARK: - TODO
 /*
- NOTES: Is the uid different than firebaseID
+ NOTES: 
+ Is the uid different than firebaseID?
+ 
  
  1. Set the userID to the currentaccount userID
  2. Fix login bug
  3. Clean up profile page
  4. Double check login functionality on ipad
  5. Add notes view
+ 6. Add search functionality
+ 7. Add text message curration
+ 8.
  
  */
 
@@ -28,7 +33,6 @@ class FirebaseController {
     let db = Firestore.firestore()
     
     // MARK: FORMS
-    // CRUD FUNCTIONS
     // CREATE
     func saveForm(form: Form, completion: @escaping (_ form: Form?, _ error: Error?) -> Void) {
         let documentReference = db.collection(Form.CodingKeys.collectionID.rawValue).document()
