@@ -15,7 +15,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //         Check for user
+        // Check for user
         if UserAccount.currentUser == nil {
             presentLoginChoiceVC()
         }

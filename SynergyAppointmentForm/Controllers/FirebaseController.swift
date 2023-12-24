@@ -22,7 +22,9 @@ import FirebaseFirestore
  5. Add notes view
  6. Add search functionality
  7. Add text message curration
- 8.
+ 8. Remove forms from previously logged in user
+ 9. Add sales to profileVC
+ 10. Add created date to user and form
  
  */
 
