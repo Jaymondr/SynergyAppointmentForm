@@ -323,7 +323,9 @@ class FormDetailViewController: UIViewController {
     
     func createForm() -> Form? {
         guard let form = form else { UIAlertController.presentDismissingAlert(title: "Error: No Form.", dismissAfter: 0.6); return nil }
-        let updatedForm = Form(firebaseID: form.firebaseID, address: addressTextField.text ?? "", city: cityTextField.text ?? "", comments: commentsTextView.text ?? "", date: dateTimePicker.date, email: emailTextField.text ?? "", energyBill: energyBillTextField.text ?? "", financeOptions: financeOptionsTextField.text ?? "", firstName: firstNameTextField.text ?? "", lastName: lastNameTextField.text ?? "", numberOfWindows: numberOfWindowsTextField.text ?? "", outcome: tag ?? .pending, phone: phoneTextField.text ?? "", rate: rateTextField.text ?? "", reason: reasonTextView.text ?? "", retailQuote: quoteTextField.text ?? "", spouse: spouseTextField.text ?? "", state: stateTextField.text ?? "", yearsOwned: yearsOwnedTextField.text ?? "", zip: zipTextField.text ?? "")
+        guard let user = UserAccount.currentUser else { UIAlertController.presentDismissingAlert(title: "Error: No User.", dismissAfter: 0.6); return nil }
+
+        let updatedForm = Form(firebaseID: form.firebaseID, address: addressTextField.text ?? "", city: cityTextField.text ?? "", comments: commentsTextView.text ?? "", date: dateTimePicker.date, email: emailTextField.text ?? "", energyBill: energyBillTextField.text ?? "", financeOptions: financeOptionsTextField.text ?? "", firstName: firstNameTextField.text ?? "", lastName: lastNameTextField.text ?? "", numberOfWindows: numberOfWindowsTextField.text ?? "", outcome: tag ?? .pending, phone: phoneTextField.text ?? "", rate: rateTextField.text ?? "", reason: reasonTextView.text ?? "", retailQuote: quoteTextField.text ?? "", spouse: spouseTextField.text ?? "", state: stateTextField.text ?? "", userID: user.firebaseID, yearsOwned: yearsOwnedTextField.text ?? "", zip: zipTextField.text ?? "")
         
         return updatedForm
     }
