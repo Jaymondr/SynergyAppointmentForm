@@ -13,9 +13,16 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     
     let refreshControl = UIRefreshControl()
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Check for user
+        if UserAccount.currentUser == nil {
+            presentLoginChoiceVC()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        UserDefaults.standard.removeObject(forKey: UserAccount.kUser)
         loadForms()
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         tableView.refreshControl = refreshControl
@@ -33,13 +40,17 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     // SECTIONS
     let upcoming = 0
     let past = 1
-    
+
+    // MARK: - BUTTONS
+    @IBAction func addFormButtonPressed(_ sender: Any) {
+        self.vibrateForButtonPress(.medium)
+    }
     
     // MARK: FUNCTIONS
-        
+    // Loads forms for the current user
     func loadForms() {
-//        guard let user = UserAccount.currentUser else { return }
-        FirebaseController.shared.getForms(for: UserAccount.CodingKeys.userID.rawValue) { forms, error in
+        guard let user = UserAccount.currentUser else { return }
+        FirebaseController.shared.getForms(for: user.firebaseID) { forms, error in
             if let error = error {
                 print("Error fetching forms: \(error)")
             }
@@ -51,6 +62,16 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    // Function to present the sign-in view controller
+    func presentLoginChoiceVC() {
+        // Replace "SignUpStoryboard" with the name of your storyboard file
+        let storyboard = UIStoryboard(name: "SignUpScreen", bundle: nil)
+        
+        guard let loginChoiceVC = storyboard.instantiateViewController(withIdentifier: "LoginChoiceViewController") as? LoginChoiceViewController else { return }
+        navigationController?.pushViewController(loginChoiceVC, animated: false)
+    }
+    
+    // Separates the forms into upcoming and past for table view section
     func splitForms(forms: [Form]) {
         upcomingAppointmentForms.removeAll()
         pastAppointmentForms.removeAll()
@@ -68,6 +89,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         self.tableView.reloadData()
     }
     
+    // Sets title for Form list
     func setTitleAttributes() {
         if let navigationController = self.navigationController {
             self.navigationItem.title = "FORMS"
@@ -77,7 +99,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     
-    // MARK: TABLEVIEW
+    // MARK: TABLEVIEW FUNCTIONS
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -90,6 +112,10 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return section == upcoming ? upcomingAppointmentForms.count : pastAppointmentForms.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.vibrateForButtonPress(.medium)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -138,12 +164,14 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                 FirebaseController.shared.saveDeletedForm(form: form) { [self] error in
                     if let error = error {
                         print("Error Saving Form: \(error)")
+                        self.vibrateForError()
                         UIAlertController.presentDismissingAlert(title: "Error Deleting Form: \(form.firstName + " " + form.lastName)", dismissAfter: 1.2)
                         return
                     }
                     FirebaseController.shared.deleteForm(firebaseID: form.firebaseID) { error in
                         if let error = error {
                             print("Error Deleting Form: \(error)")
+                            self.vibrateForError()
                             UIAlertController.presentDismissingAlert(title: "Error Deleting Form: \(form.firstName + " " + form.lastName)", dismissAfter: 1.2)
                             return
                         }
@@ -157,6 +185,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
 
+    
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toFormDetail",
@@ -182,7 +211,6 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
 
 
 // MARK: - EXTENSIONS
-
 extension FormListViewController: FormDetailViewDelegate {
     func didUpdate(form: Form) {
         if let index = forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {

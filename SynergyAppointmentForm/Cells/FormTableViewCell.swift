@@ -51,6 +51,17 @@ class FormTableViewCell: UITableViewCell {
     // MARK: - FUNCTIONS
     private func resetCell() {
         dropShadowView.layer.applySketchShadow(color: .clear, alpha: 0.0, x: 0.0, y: 0.0, blur: 0.0, spread: 0.0)
+        if traitCollection.userInterfaceStyle == .dark {
+            firstNameLabel.textColor = .lightText
+            timeLabel.textColor = .lightText
+            dateLabel.textColor = .lightText
+            dayLabel.textColor = .lightText
+        } else {
+            firstNameLabel.textColor = .black
+            timeLabel.textColor = .black
+            dateLabel.textColor = .black
+            dayLabel.textColor = .black
+        }
     }
 
     
@@ -72,7 +83,18 @@ class FormTableViewCell: UITableViewCell {
     func loadView() {
         cellView.layer.cornerRadius = 8
         dropShadowView.layer.cornerRadius = 8
-        cellView.layer.borderWidth = 1.5
+        cellView.layer.borderWidth = 2.0
+        if traitCollection.userInterfaceStyle == .dark {
+            firstNameLabel.textColor = .lightText
+            timeLabel.textColor = .lightText
+            dateLabel.textColor = .lightText
+            dayLabel.textColor = .lightText
+        } else {
+            firstNameLabel.textColor = .black
+            timeLabel.textColor = .black
+            dateLabel.textColor = .black
+            dayLabel.textColor = .black
+        }
     }
     
     private func setOutcomeView(form: Form) {

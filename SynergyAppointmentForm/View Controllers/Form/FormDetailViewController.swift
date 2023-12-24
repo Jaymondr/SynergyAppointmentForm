@@ -54,11 +54,15 @@ class FormDetailViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = UIColor.eden
         setUpView(with: form)
-        let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
-        blurEffectView.frame = blurView.bounds
+        if traitCollection.userInterfaceStyle == .dark {
+            blurView.backgroundColor = .black
+            dateTimePicker.tintColor = .lightText
+        } else {
+            let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+            blurEffectView.frame = blurView.bounds
 
-        blurView.addSubview(blurEffectView)
-
+            blurView.addSubview(blurEffectView)
+        }
     }
     
     // MARK: PROPERTIES
@@ -173,6 +177,7 @@ class FormDetailViewController: UIViewController {
     }
     
     @IBAction func saveButtonPressed(_ sender: Any) {
+        self.vibrateForButtonPress(.medium)
         saveButton.isEnabled = false
         activityIndicator.startAnimating()
         
@@ -190,6 +195,7 @@ class FormDetailViewController: UIViewController {
             
             if let error = error {
                 UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
+                self.vibrateForError()
                 print("Error: \(error)")
                 return
             }
@@ -197,12 +203,14 @@ class FormDetailViewController: UIViewController {
             self.delegate?.didUpdate(form: form)
             print("Form Name: \(form.firstName)")
             UIAlertController.presentDismissingAlert(title: "Updated Form!", dismissAfter: 0.6)
+            self.vibrate()
         }
         
     }
     
     @IBAction func trelloCopyButtonPressed(_ sender: Any) {
         guard let form = createForm() else { return }
+        self.vibrateForButtonPress(.heavy)
         FormController.shared.createAndCopyTrello(form: form)
     }
     
@@ -213,11 +221,12 @@ class FormDetailViewController: UIViewController {
     
     @IBAction func copyFormButtonPressed(_ sender: Any) {
         guard let form = createForm() else { return }
+        self.vibrateForButtonPress(.heavy)
         FormController.shared.createAndCopyForm(form: form)
-        UIAlertController.presentDismissingAlert(title: "Copied Form", dismissAfter: 0.6)
     }
     
     @IBAction func locationButtonPressed(_ sender: Any) {
+        self.vibrateForButtonPress(.heavy)
         FormController.shared.getLocationData(manager: &locationManager) { address in
             self.addressTextField.text = address?.address
             self.zipTextField.text = address?.zip
@@ -229,15 +238,18 @@ class FormDetailViewController: UIViewController {
     
     @IBAction func copyPhoneButtonPressed(_ sender: Any) {
         let phoneNumber = phoneTextField.text ?? ""
+        self.vibrateForButtonPress(.heavy)
         FormController.shared.createAndCopy(phone: phoneNumber)
     }
     @IBAction func clearReasonButtonPressed(_ sender: Any) {
+        self.vibrateForButtonPress(.heavy)
         UIAlertController.presentMultipleOptionAlert(message: "Are you sure you want to clear this section?", actionOptionTitle: "Clear", cancelOptionTitle: "Cancel") {
             self.reasonTextView.text = ""
         }
     }
     
     @IBAction func clearCommentsButtonPressed(_ sender: Any) {
+        self.vibrateForButtonPress(.heavy)
         UIAlertController.presentMultipleOptionAlert(message: "Are you sure you want to clear this section?", actionOptionTitle: "Clear", cancelOptionTitle: "Cancel") {
             self.commentsTextView.text = ""
         }
@@ -266,57 +278,54 @@ class FormDetailViewController: UIViewController {
         
         
         // BACKGROUND
-        var color1: CGColor
-        var color2: CGColor
-        var color3: CGColor
+        var labelColor: CGColor
         
         switch form.outcome {
         case .pending:
-            color1 = UIColor.white.cgColor
-            color2 = UIColor.white.cgColor
-            color3 = UIColor.eden.cgColor
+            labelColor = UIColor.eden.cgColor
             
         case .cancelled:
-            color1 = UIColor.white.cgColor
-            color2 = UIColor.white.cgColor
-            color3 = UIColor.outcomeRed.cgColor
+            labelColor = UIColor.outcomeRed.cgColor
             
         case .rescheduled:
-            color1 = UIColor.white.cgColor
-            color2 = UIColor.white.cgColor
-            color3 = UIColor.outcomePurple.cgColor
-
+            labelColor = UIColor.outcomePurple.cgColor
+            
         case .ran:
-            color1 = UIColor.white.cgColor
-            color2 = UIColor.white.cgColor
-            color3 = UIColor.outcomeBlue.cgColor
+            labelColor = UIColor.outcomeBlue.cgColor
             
         case .ranIncomplete:
-            color1 = UIColor.white.cgColor
-            color2 = UIColor.white.cgColor
-            color3 = UIColor.outcomeRed.cgColor
-
+            labelColor = UIColor.outcomeRed.cgColor
+            
         case .sold:
-            color1 = UIColor.white.cgColor
-            color2 = UIColor.white.cgColor
-            color3 = UIColor.outcomeGreen.cgColor
-
+            labelColor = UIColor.outcomeGreen.cgColor
         }
         
         // Label Button
-        labelButton.configuration?.baseForegroundColor = UIColor(cgColor: color3)
+        labelButton.configuration?.baseForegroundColor = UIColor(cgColor: labelColor)
         
-        // Background
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = view.bounds
-        gradientLayer.colors = [color1, color2, color3]
-        gradientLayer.locations = [0.1, 0.2, 3.0]
-        view.layer.insertSublayer(gradientLayer, at: 0)
+        if traitCollection.userInterfaceStyle == .dark {
+            // BACKGROUND
+            let gradientLayer = CAGradientLayer()
+            gradientLayer.frame = view.bounds
+            gradientLayer.colors = [UIColor.black.cgColor, UIColor.black.cgColor, labelColor] // Gradient colors
+            gradientLayer.locations = [-0.05, 0.4, 2.0] // Gradient locations (start and end)
+            view.layer.insertSublayer(gradientLayer, at: 0)
+            
+        } else {
+            // BACKGROUND
+            let gradientLayer = CAGradientLayer()
+            gradientLayer.frame = view.bounds
+            gradientLayer.colors = [UIColor.white.cgColor, UIColor.white.cgColor, labelColor] // Gradient colors
+            gradientLayer.locations = [-0.05, 0.4, 3.0] // Gradient locations (start and end)
+            view.layer.insertSublayer(gradientLayer, at: 0)
+        }
     }
     
     func createForm() -> Form? {
         guard let form = form else { UIAlertController.presentDismissingAlert(title: "Error: No Form.", dismissAfter: 0.6); return nil }
-        let updatedForm = Form(firebaseID: form.firebaseID, address: addressTextField.text ?? "", city: cityTextField.text ?? "", comments: commentsTextView.text ?? "", date: dateTimePicker.date, email: emailTextField.text ?? "", energyBill: energyBillTextField.text ?? "", financeOptions: financeOptionsTextField.text ?? "", firstName: firstNameTextField.text ?? "", lastName: lastNameTextField.text ?? "", numberOfWindows: numberOfWindowsTextField.text ?? "", outcome: tag ?? .pending, phone: phoneTextField.text ?? "", rate: rateTextField.text ?? "", reason: reasonTextView.text ?? "", retailQuote: quoteTextField.text ?? "", spouse: spouseTextField.text ?? "", state: stateTextField.text ?? "", yearsOwned: yearsOwnedTextField.text ?? "", zip: zipTextField.text ?? "")
+        guard let user = UserAccount.currentUser else { UIAlertController.presentDismissingAlert(title: "Error: No User.", dismissAfter: 0.6); return nil }
+
+        let updatedForm = Form(firebaseID: form.firebaseID, address: addressTextField.text ?? "", city: cityTextField.text ?? "", comments: commentsTextView.text ?? "", date: dateTimePicker.date, email: emailTextField.text ?? "", energyBill: energyBillTextField.text ?? "", financeOptions: financeOptionsTextField.text ?? "", firstName: firstNameTextField.text ?? "", lastName: lastNameTextField.text ?? "", numberOfWindows: numberOfWindowsTextField.text ?? "", outcome: tag ?? .pending, phone: phoneTextField.text ?? "", rate: rateTextField.text ?? "", reason: reasonTextView.text ?? "", retailQuote: quoteTextField.text ?? "", spouse: spouseTextField.text ?? "", state: stateTextField.text ?? "", userID: user.firebaseID, yearsOwned: yearsOwnedTextField.text ?? "", zip: zipTextField.text ?? "")
         
         return updatedForm
     }

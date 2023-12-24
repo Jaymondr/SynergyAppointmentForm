@@ -48,37 +48,39 @@ class FormController {
         
         Comments: \(form.comments)
         """
-        UIAlertController.presentDismissingAlert(title: "Form Copied!", dismissAfter: 0.5)
+        UIAlertController.presentDismissingAlert(title: "Form Copied!", dismissAfter: 0.3)
     }
     
     func createAndCopyTrello(form: Form) {
+        guard let user = UserAccount.currentUser else { return }
         let trelloString = form.spouse.isNotEmpty ?
         """
-        \(form.date.formattedDay()) \(form.date.formattedDayMonth()) @\(form.date.formattedTime()) \(form.firstName) & \(form.spouse) \(form.lastName) (\(form.city)) -\(UserAccount.CodingKeys.userFirstName.rawValue)
+        \(form.date.formattedDay()) \(form.date.formattedDayMonth()) @\(form.date.formattedTime()) \(form.firstName) & \(form.spouse) \(form.lastName) (\(form.city)) -\(user.firstName)
         """
         :
         """
-        \(form.date.formattedDay()) \(form.date.formattedDayMonth()) @\(form.date.formattedTime()) \(form.firstName) \(form.lastName) (\(form.city)) -\(UserAccount.CodingKeys.userFirstName.rawValue)
+        \(form.date.formattedDay()) \(form.date.formattedDayMonth()) @\(form.date.formattedTime()) \(form.firstName) \(form.lastName) (\(form.city)) -\(user.firstName)
         """
         UIPasteboard.general.string = trelloString
 
-        UIAlertController.presentDismissingAlert(title: "Trello Copied!", dismissAfter: 0.5)
+        UIAlertController.presentDismissingAlert(title: "Trello Copied!", dismissAfter: 0.3)
     }
     
     func createAndCopy(phone: String) {
         UIPasteboard.general.string = phone
-        UIAlertController.presentDismissingAlert(title: "Phone Number Copied!", dismissAfter: 0.6)
+        UIAlertController.presentDismissingAlert(title: "Phone Number Copied!", dismissAfter: 0.3)
     }
     
     func createInitialText(from form: Form) -> String {
-//        guard let user = UserAccount.currentUser else { return "Error: No User" }
+        guard let user = UserAccount.currentUser else { return "No User" }
+        
         let text =
         """
-        Hey \(form.firstName), it's \(UserAccount.CodingKeys.userFirstName.rawValue) with Synergy.
+        Hey \(form.firstName), it's \(user.firstName) with Synergy.
         
         Your appointment is good to go for \(form.date.formattedDay()) \(form.date.formattedDayMonth()) at \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased()). Thanks for your time, and if you need anything just call or text!
         
-        - \(UserAccount.CodingKeys.userFirstName.rawValue)
+        - \(user.firstName)
         """
         return text
         
@@ -88,7 +90,7 @@ class FormController {
 //        """
 //        Hello \(form.firstName)! Thank you for taking the time to talk with me today. Your appointment is set for \(form.date.formattedDay()) @\(form.date.formattedTime() + form.date.formattedAmpm()). If we find our 2 marketing homes before your appointment, I will notify you. Please let me know if you have any questions!
 //        
-//        \(UserAccount.CodingKeys.userFirstName.rawValue + " " + UserAccount.CodingKeys.userLastName.rawValue),
+//        \(user.firstName + " " + user.lastName),
 //        Synergy Windows
 //        """
 //        return text
@@ -96,10 +98,11 @@ class FormController {
     }
     
     func createFollowUpText(from form: Form) -> String {
+        guard let user = UserAccount.currentUser else { return "No User"}
         let text = """
             Hey \(form.firstName),
             Just wanted to reach out and let you know we had an opening in the schedule. I'd love to see how we can use this Marketing Home opportunity to help you with your windows.
-            - \(UserAccount.CodingKeys.userFirstName.rawValue)
+            - \(user.firstName)
             """
         return text
     }
