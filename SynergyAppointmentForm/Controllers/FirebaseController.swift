@@ -156,24 +156,44 @@ class FirebaseController {
     }
     
     func getUser(with firebaseID: String, completion: @escaping (_ user: UserAccount?, _ error: Error? ) -> Void) {
-        db.collection(UserAccount.collectionKey)
-            .whereField(UserAccount.CodingKeys.firebaseID.rawValue, isEqualTo: firebaseID)
-            .getDocuments { snapshot, error in
+        let docRef = db.collection(UserAccount.collectionKey).document(firebaseID)
+        docRef.getDocument(completion: { document, error in
                 if let error = error {
                     print("There was an error getting forms: \(error)")
                     completion(nil, error)
                     return
                 }
-                guard let documents = snapshot?.documents else {
-                    completion(nil, nil)
-                    return
-                }
-                let userDoc = documents.first
-                if let data = userDoc?.data() {
-                    let user = UserAccount(firebaseData: data, firebaseID: firebaseID)
-                } else {
-                    print("No Doc data"); completion(nil, nil)
-                }
+            if let document = document, document.exists,
+               let data = document.data() {
+                let user = UserAccount(firebaseData: data, firebaseID: firebaseID)
+                completion(user, nil)
+            } else {
+                print("No document data.")
+                completion(nil, nil)
             }
+        })
     }
+
+    
+//    func getUser(with firebaseID: String, completion: @escaping (_ user: UserAccount?, _ error: Error? ) -> Void) {
+//        db.collection(UserAccount.collectionKey)
+//            .whereField(UserAccount.CodingKeys.firebaseID.rawValue, isEqualTo: firebaseID)
+//            .getDocuments { snapshot, error in
+//                if let error = error {
+//                    print("There was an error getting forms: \(error)")
+//                    completion(nil, error)
+//                    return
+//                }
+//                guard let documents = snapshot?.documents else {
+//                    completion(nil, nil)
+//                    return
+//                }
+//                let userDoc = documents.first
+//                if let data = userDoc?.data() {
+//                    let user = UserAccount(firebaseData: data, firebaseID: firebaseID)
+//                } else {
+//                    print("No Doc data"); completion(nil, nil)
+//                }
+//            }
+//    }
 }

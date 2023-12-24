@@ -97,9 +97,7 @@ class SignUpViewController: UIViewController {
                         print("Error creating user: \(error.localizedDescription)")
                         return
                     }
-                    
-                    guard let user = user else { print("No User!"); return }
-                    self.navigationController?.popToRootViewController(animated: false)
+                self.navigationController?.popToRootViewController(animated: false)
                 }
             }
             

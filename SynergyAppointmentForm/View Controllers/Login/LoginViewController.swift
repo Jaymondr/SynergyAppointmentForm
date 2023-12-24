@@ -33,6 +33,7 @@ class LoginViewController: UIViewController {
             }
             if let result = result {
                 // Fetch user
+                print("UID: \(result.user.uid)")
                 FirebaseController.shared.getUser(with: result.user.uid) { user, error in
                     if let error = error {
                         print("Error getting user info from firebas: \(error). Error ")
