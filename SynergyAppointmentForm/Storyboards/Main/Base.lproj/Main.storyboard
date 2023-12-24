@@ -933,11 +933,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.crop.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="xDL-Ty-0XD">
-                                <rect key="frame" x="121.66666666666669" y="154" width="150" height="148.66666666666669"/>
+                                <rect key="frame" x="16" y="154" width="100" height="98.666666666666686"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" name="eden"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="hDL-uK-Ghg"/>
+                                    <constraint firstAttribute="width" constant="100" id="hDL-uK-Ghg"/>
                                     <constraint firstAttribute="width" secondItem="xDL-Ty-0XD" secondAttribute="height" multiplier="1:1" id="plC-Et-8gZ"/>
                                 </constraints>
                             </imageView>
@@ -979,24 +979,30 @@
                                     <action selector="signInButtonPressed:" destination="65z-N3-3XZ" eventType="touchUpInside" id="N7n-ib-IPO"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KR2-Uv-wdW">
-                                <rect key="frame" x="71.666666666666686" y="334" width="250" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="250" id="h8l-VA-xWg"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fZd-mw-gWY">
-                                <rect key="frame" x="71.666666666666686" y="376" width="250" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="250" id="fHb-tk-cPu"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="fpW-iP-GSg">
+                                <rect key="frame" x="124" y="164" width="250" height="78"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KR2-Uv-wdW">
+                                        <rect key="frame" x="0.0" y="0.0" width="250" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="250" id="h8l-VA-xWg"/>
+                                            <constraint firstAttribute="height" constant="34" id="vJS-wL-nnG"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fZd-mw-gWY">
+                                        <rect key="frame" x="0.0" y="44" width="250" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="250" id="fHb-tk-cPu"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J0W-BJ-Q9E">
-                                <rect key="frame" x="146.66666666666666" y="334" width="100" height="34"/>
+                                <rect key="frame" x="127" y="164" width="100" height="34"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yNF-Rn-Ld1">
                                         <rect key="frame" x="0.0" y="3" width="34" height="28"/>
@@ -1015,6 +1021,7 @@
                                     </label>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="GG5-QE-j9W"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="hol-PY-fgO"/>
                                 </constraints>
                             </stackView>
@@ -1023,19 +1030,17 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="H5l-Pl-NpC" firstAttribute="centerX" secondItem="f8n-jS-Ofy" secondAttribute="centerX" id="5u7-VI-Tte"/>
+                            <constraint firstItem="fpW-iP-GSg" firstAttribute="centerY" secondItem="xDL-Ty-0XD" secondAttribute="centerY" id="6tH-3t-CNP"/>
                             <constraint firstItem="H5l-Pl-NpC" firstAttribute="centerY" secondItem="f8n-jS-Ofy" secondAttribute="centerY" id="83Z-SS-s2Q"/>
-                            <constraint firstItem="fZd-mw-gWY" firstAttribute="top" secondItem="KR2-Uv-wdW" secondAttribute="bottom" constant="8" id="9ZS-jJ-8i5"/>
-                            <constraint firstItem="KR2-Uv-wdW" firstAttribute="top" secondItem="xDL-Ty-0XD" secondAttribute="bottom" constant="31" id="HOZ-Rk-2Ii"/>
+                            <constraint firstItem="J0W-BJ-Q9E" firstAttribute="leading" secondItem="xDL-Ty-0XD" secondAttribute="trailing" constant="11" id="8D5-9w-6gT"/>
                             <constraint firstItem="xDL-Ty-0XD" firstAttribute="top" secondItem="f8n-jS-Ofy" secondAttribute="top" constant="50" id="IfB-EL-sUN"/>
                             <constraint firstItem="pBb-Jr-2V9" firstAttribute="centerX" secondItem="H5l-Pl-NpC" secondAttribute="centerX" id="LaE-pK-z4s"/>
+                            <constraint firstItem="J0W-BJ-Q9E" firstAttribute="centerY" secondItem="KR2-Uv-wdW" secondAttribute="centerY" id="QSi-bW-ezR"/>
                             <constraint firstItem="pBb-Jr-2V9" firstAttribute="width" secondItem="H5l-Pl-NpC" secondAttribute="width" id="QwX-gn-tEw"/>
-                            <constraint firstItem="KR2-Uv-wdW" firstAttribute="centerX" secondItem="xDL-Ty-0XD" secondAttribute="centerX" id="ZEF-lI-iTS"/>
-                            <constraint firstItem="xDL-Ty-0XD" firstAttribute="centerX" secondItem="f8n-jS-Ofy" secondAttribute="centerX" id="kLg-Pm-2iv"/>
-                            <constraint firstItem="J0W-BJ-Q9E" firstAttribute="centerY" secondItem="KR2-Uv-wdW" secondAttribute="centerY" id="riI-EE-mmP"/>
+                            <constraint firstItem="fpW-iP-GSg" firstAttribute="leading" secondItem="xDL-Ty-0XD" secondAttribute="trailing" constant="8" id="TvF-5o-ANX"/>
+                            <constraint firstItem="xDL-Ty-0XD" firstAttribute="leading" secondItem="f8n-jS-Ofy" secondAttribute="leading" constant="16" id="cDC-YO-s5r"/>
                             <constraint firstItem="pBb-Jr-2V9" firstAttribute="height" secondItem="H5l-Pl-NpC" secondAttribute="height" id="u88-sH-mWn"/>
                             <constraint firstItem="pBb-Jr-2V9" firstAttribute="centerY" secondItem="H5l-Pl-NpC" secondAttribute="centerY" id="wfe-iL-2iu"/>
-                            <constraint firstItem="J0W-BJ-Q9E" firstAttribute="centerX" secondItem="KR2-Uv-wdW" secondAttribute="centerX" id="xGw-gS-7NA"/>
-                            <constraint firstItem="fZd-mw-gWY" firstAttribute="centerX" secondItem="xDL-Ty-0XD" secondAttribute="centerX" id="xtZ-s9-tuQ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="naw-jl-VWL"/>
