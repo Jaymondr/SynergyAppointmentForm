@@ -42,12 +42,27 @@ class ProfileViewController: UIViewController {
             if let error = error {
                 print("There was an error: \(error)")
                 UIAlertController.presentOkAlert(message: "Error: \(error)", actionOptionTitle: "Ok")
-            } else {
-                print("User signed in")
-                self.emailTextField.isHidden = true
-                self.passwordTextField.isHidden = true
-                self.logOutButton.isHidden = false
-                self.nameStackView.isHidden = false
+            }
+            if let result = result {
+                // Fetch user
+                print("UID: \(result.user.uid)")
+                FirebaseController.shared.getUser(with: result.user.uid) { user, error in
+                    if let error = error {
+                        print("Error getting user info from firebas: \(error). Error ")
+                    return
+                    }
+                    guard  let user = user else { print("No User"); return }
+                        // SAVE USER INFORMATION TO USER DEFAULTS
+                        let userDefaultsData = user.toUserDefaultsDictionary()
+                        UserDefaults.standard.set(userDefaultsData, forKey: UserAccount.kUser)
+                    
+                    UIAlertController.presentDismissingAlert(title: "\(user.firstName) signed in.", dismissAfter: 1.2)
+                    self.emailTextField.isHidden = true
+                    self.passwordTextField.isHidden = true
+                    self.logOutButton.isHidden = false
+                    self.nameStackView.isHidden = false
+                    self.nameLabel.text = user.firstName
+                }
             }
         }
     }
