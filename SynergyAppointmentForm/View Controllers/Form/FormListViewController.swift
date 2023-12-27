@@ -206,6 +206,11 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
            let destinationVC = segue.destination as? FormViewController {
             destinationVC.delegate = self
         }
+        
+        if segue.identifier == "toProfileVC",
+           let destinationVC = segue.destination as? ProfileViewController {
+            destinationVC.forms = self.forms
+        }
     }
 }
 

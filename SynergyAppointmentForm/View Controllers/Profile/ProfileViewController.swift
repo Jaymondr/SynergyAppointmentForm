@@ -17,6 +17,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var salesLabel: UILabel!
     
     
     // MARK: - LIFECYCLE
@@ -29,10 +30,11 @@ class ProfileViewController: UIViewController {
         emailTextField.isHidden = UserAccount.currentUser != nil
         passwordTextField.isHidden = UserAccount.currentUser != nil
         nameStackView.isHidden = UserAccount.currentUser == nil
-        nameLabel.text = UserAccount.currentUser?.firstName ?? ""
+        setupView()
         
     }
     
+    var forms: [Form] = []
     
     // MARK: - BUTTONS
     @IBAction func signInButtonPressed(_ sender: Any) {
@@ -84,6 +86,20 @@ class ProfileViewController: UIViewController {
             } catch let signOutError as NSError {
                 UIAlertController.presentDismissingAlert(title: signOutError.localizedDescription, dismissAfter: 2.0)
             }
+        }
+    }
+    
+    // MARK: - FUNCTIONS
+    func setupView() {
+        var sales = forms.filter( { $0.outcome == .sold } )
+        salesLabel.text = "Sales: \(sales.count)"
+        
+        var firstName = UserAccount.currentUser?.firstName ?? ""
+        var lastName = UserAccount.currentUser?.lastName ?? ""
+        if let lastNameFirstLetter = lastName.first {
+            nameLabel.text = "\(firstName) \(lastNameFirstLetter)"
+        } else {
+            nameLabel.text = firstName + lastName
         }
     }
     
