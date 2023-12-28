@@ -66,9 +66,16 @@ class FormController {
         UIAlertController.presentDismissingAlert(title: "Trello Copied!", dismissAfter: 0.3)
     }
     
-    func createAndCopy(phone: String) {
-        UIPasteboard.general.string = phone
+    func copy(phone: String?) {
+        UIPasteboard.general.string = phone ?? ""
         UIAlertController.presentDismissingAlert(title: "Phone Number Copied!", dismissAfter: 0.3)
+    }
+    
+    func copy(email: String?) {
+        guard let user = UserAccount.currentUser else { return }
+        var emailString = email != "" ? email : user.email
+        UIPasteboard.general.string = emailString
+        UIAlertController.presentDismissingAlert(title: "Email Copied!", dismissAfter: 0.3)
     }
     
     func createInitialText(from form: Form) -> String {

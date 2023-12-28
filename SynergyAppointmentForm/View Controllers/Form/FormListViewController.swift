@@ -21,6 +21,15 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        for subview in self.view.subviews {
+            if subview is NotesView {
+                subview.removeFromSuperview()
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadForms()

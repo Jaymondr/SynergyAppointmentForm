@@ -239,7 +239,7 @@ class FormDetailViewController: UIViewController {
     @IBAction func copyPhoneButtonPressed(_ sender: Any) {
         let phoneNumber = phoneTextField.text ?? ""
         self.vibrateForButtonPress(.heavy)
-        FormController.shared.createAndCopy(phone: phoneNumber)
+        FormController.shared.copy(phone: phoneNumber)
     }
     @IBAction func clearReasonButtonPressed(_ sender: Any) {
         self.vibrateForButtonPress(.heavy)

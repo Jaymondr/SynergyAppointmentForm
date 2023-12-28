@@ -88,7 +88,7 @@
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B09-jb-nlt">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B09-jb-nlt">
                                                             <rect key="frame" x="321" y="96" width="24" height="24"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="24" id="age-IF-teT"/>
@@ -141,6 +141,7 @@
                                             <outlet property="dayLabel" destination="XdU-SK-72q" id="IZh-3X-xkX"/>
                                             <outlet property="dropShadowView" destination="b2W-Mu-8eG" id="t9i-Eb-BPN"/>
                                             <outlet property="firstNameLabel" destination="WvX-J8-lhM" id="V1e-hE-qX7"/>
+                                            <outlet property="showNotesButton" destination="B09-jb-nlt" id="V2V-1Q-tHz"/>
                                             <outlet property="timeLabel" destination="KvD-Sv-yli" id="EMs-i1-wm5"/>
                                             <segue destination="mzI-Pq-KQL" kind="show" identifier="toFormDetail" id="WqX-tD-Frz"/>
                                         </connections>
@@ -428,7 +429,7 @@
                                                             <constraint firstAttribute="width" secondItem="W2j-xH-bdk" secondAttribute="height" multiplier="1:1" id="qLe-qD-IS3"/>
                                                         </constraints>
                                                         <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="plain" image="doc.on.clipboard" catalog="system">
+                                                        <buttonConfiguration key="configuration" style="plain" image="doc.fill" catalog="system">
                                                             <color key="baseForegroundColor" name="eden"/>
                                                         </buttonConfiguration>
                                                         <connections>
@@ -1203,7 +1204,7 @@
                                                             <constraint firstAttribute="width" secondItem="2ab-Zc-Xie" secondAttribute="height" multiplier="1:1" id="4w0-4p-Bpn"/>
                                                         </constraints>
                                                         <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="plain" image="location.fill.viewfinder" catalog="system">
+                                                        <buttonConfiguration key="configuration" style="plain" image="location.viewfinder" catalog="system">
                                                             <color key="baseForegroundColor" name="eden"/>
                                                         </buttonConfiguration>
                                                         <connections>
@@ -1308,7 +1309,7 @@
                                                             <constraint firstAttribute="width" secondItem="DEK-Tc-V51" secondAttribute="height" multiplier="1:1" id="XhF-iK-hQw"/>
                                                         </constraints>
                                                         <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="plain" image="doc.on.clipboard" catalog="system">
+                                                        <buttonConfiguration key="configuration" style="plain" image="doc" catalog="system">
                                                             <color key="baseForegroundColor" name="eden"/>
                                                         </buttonConfiguration>
                                                         <connections>
@@ -1333,11 +1334,24 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="@synergywindow.com" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="dSo-9I-5dP">
-                                                        <rect key="frame" x="95" y="0.0" width="278" height="40"/>
+                                                        <rect key="frame" x="95" y="0.0" width="238" height="40"/>
                                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" textContentType="email"/>
                                                     </textField>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HTe-ZR-WnN">
+                                                        <rect key="frame" x="333" y="0.0" width="40" height="40"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" secondItem="HTe-ZR-WnN" secondAttribute="height" multiplier="1:1" id="dnG-IY-MS1"/>
+                                                        </constraints>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain" image="envelope" catalog="system">
+                                                            <color key="baseForegroundColor" name="eden"/>
+                                                        </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="copyEmailButtonPressed:" destination="ncR-vK-5yf" eventType="touchUpInside" id="6z1-8q-4Ks"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="cll-BW-D3y"/>
@@ -1799,10 +1813,11 @@
         <image name="clear" catalog="system" width="128" height="114"/>
         <image name="doc" catalog="system" width="115" height="128"/>
         <image name="doc.fill" catalog="system" width="115" height="128"/>
-        <image name="doc.on.clipboard" catalog="system" width="116" height="128"/>
+        <image name="envelope" catalog="system" width="128" height="85"/>
         <image name="flame" catalog="system" width="106" height="128"/>
         <image name="list.clipboard" catalog="system" width="98" height="128"/>
         <image name="location.fill.viewfinder" catalog="system" width="128" height="115"/>
+        <image name="location.viewfinder" catalog="system" width="128" height="115"/>
         <image name="person" catalog="system" width="128" height="121"/>
         <image name="person.crop.circle" catalog="system" width="128" height="123"/>
         <image name="tag.fill" catalog="system" width="128" height="118"/>

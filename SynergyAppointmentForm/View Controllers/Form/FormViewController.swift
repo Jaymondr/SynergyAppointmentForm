@@ -130,7 +130,6 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
 
 
     
-    
     @IBAction func messageButtonPressed(_ sender: Any) {
         if let form = createForm() {
             FormController.shared.prepareToSendMessage(form: form, phoneNumber: phoneTextfield.text, viewController: self)
@@ -170,7 +169,11 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     
     @IBAction func copyPhoneNumberPressed(_ sender: Any) {
         self.vibrateForButtonPress(.heavy)
-        FormController.shared.createAndCopy(phone: phoneTextfield.text ?? "")
+        FormController.shared.copy(phone: phoneTextfield.text)
+    }
+    
+    @IBAction func copyEmailButtonPressed(_ sender: Any) {
+        FormController.shared.copy(email: emailTextfield.text)
     }
     
     @IBAction func clearReasonButtonPressed(_ sender: Any) {
