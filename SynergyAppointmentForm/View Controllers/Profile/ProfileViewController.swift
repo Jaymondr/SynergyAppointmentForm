@@ -8,10 +8,15 @@
 import UIKit
 import FirebaseAuth
 
+protocol VisibleToggleable {
+    var isVisible: Bool { get set }
+}
+
 class ProfileViewController: UIViewController {
     
     // MARK: - OUTLETS
     @IBOutlet weak var nameStackView: UIStackView!
+    @IBOutlet weak var salesStackView: UIStackView!
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var logOutButton: UIButton!
     @IBOutlet weak var emailTextField: UITextField!
@@ -23,18 +28,20 @@ class ProfileViewController: UIViewController {
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+        // manageCurrentUserState decides what to show if user is signed in/out
+        configureViewForState()
         
-        navigationController?.navigationBar.tintColor = .eden
-        logOutButton.isHidden = UserAccount.currentUser == nil
-        signInButton.isHidden = UserAccount.currentUser != nil
-        emailTextField.isHidden = UserAccount.currentUser != nil
-        passwordTextField.isHidden = UserAccount.currentUser != nil
-        nameStackView.isHidden = UserAccount.currentUser == nil
+        // Loads view data and style
         setupView()
         
     }
     
-    var forms: [Form] = []
+    var forms: [Form] = [] {
+        didSet {
+            sales = forms.filter( { $0.outcome == .sold } ).count
+        }
+    }
+    var sales: Int = 0
     
     // MARK: - BUTTONS
     @IBAction func signInButtonPressed(_ sender: Any) {
@@ -59,11 +66,8 @@ class ProfileViewController: UIViewController {
                         UserDefaults.standard.set(userDefaultsData, forKey: UserAccount.kUser)
                     
                     UIAlertController.presentDismissingAlert(title: "\(user.firstName) signed in.", dismissAfter: 1.2)
-                    self.emailTextField.isHidden = true
-                    self.passwordTextField.isHidden = true
-                    self.logOutButton.isHidden = false
-                    self.nameStackView.isHidden = false
-                    self.nameLabel.text = user.firstName
+                    self.configureViewForState()
+                    self.setupView()
                 }
             }
         }
@@ -76,11 +80,7 @@ class ProfileViewController: UIViewController {
                 try Auth.auth().signOut()
                 UserDefaults.standard.removeObject(forKey: UserAccount.kUser)
                 UserAccount.currentUser = nil
-                self.logOutButton.isHidden = true
-                self.emailTextField.isHidden = false
-                self.passwordTextField.isHidden = false
-                self.signInButton.isHidden = false
-                self.nameStackView.isHidden = true
+                self.configureViewForState()
                 print("Signed out user")
                 
             } catch let signOutError as NSError {
@@ -90,16 +90,41 @@ class ProfileViewController: UIViewController {
     }
     
     // MARK: - FUNCTIONS
-    func setupView() {
-        var sales = forms.filter( { $0.outcome == .sold } )
-        salesLabel.text = "Sales: \(sales.count)"
-        
+    private func setupView() {
+        navigationController?.navigationBar.tintColor = .eden
+
+        salesLabel.text = "Sales: \(sales)"
         var firstName = UserAccount.currentUser?.firstName ?? ""
         var lastName = UserAccount.currentUser?.lastName ?? ""
         if let lastNameFirstLetter = lastName.first {
             nameLabel.text = "\(firstName) \(lastNameFirstLetter)"
         } else {
             nameLabel.text = firstName + lastName
+        }
+    }
+    
+    private func configureViewForState() {
+        if UserAccount.currentUser == nil {
+            // NOT SIGNED IN
+            hide([logOutButton, nameStackView, salesStackView])
+            show([signInButton, emailTextField, passwordTextField])
+            
+        } else {
+            // SIGNED IN
+            show([logOutButton, nameStackView, salesStackView])
+            hide([signInButton, emailTextField, passwordTextField])
+        }
+    }
+    
+    private func show(_ views: [VisibleToggleable]) {
+        for var view in views {
+            view.isVisible = true
+        }
+    }
+    
+    private func hide(_ views: [VisibleToggleable]) {
+        for var view in views {
+            view.isVisible = false
         }
     }
     

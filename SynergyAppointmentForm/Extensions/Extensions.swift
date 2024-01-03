@@ -9,6 +9,17 @@ import UIKit
 import AudioToolbox
 
 
+// MARK: - UIVIEW
+extension UIView: VisibleToggleable {
+    var isVisible: Bool {
+        get {
+            return !isHidden
+        }
+        set {
+            isHidden = !newValue
+        }
+    }
+}
 
 // MARK: - UIVIEWCONTROLLER
 extension UIViewController {
