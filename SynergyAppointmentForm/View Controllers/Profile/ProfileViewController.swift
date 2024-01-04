@@ -17,12 +17,14 @@ class ProfileViewController: UIViewController {
     // MARK: - OUTLETS
     @IBOutlet weak var nameStackView: UIStackView!
     @IBOutlet weak var salesStackView: UIStackView!
+    @IBOutlet weak var emailStackView: UIStackView!
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var logOutButton: UIButton!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var salesLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
     
     
     // MARK: - LIFECYCLE
@@ -94,6 +96,7 @@ class ProfileViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .eden
 
         salesLabel.text = "Sales: \(sales)"
+        emailLabel.text = UserAccount.currentUser?.email ?? ""
         var firstName = UserAccount.currentUser?.firstName ?? ""
         var lastName = UserAccount.currentUser?.lastName ?? ""
         if let lastNameFirstLetter = lastName.first {
@@ -106,12 +109,12 @@ class ProfileViewController: UIViewController {
     private func configureViewForState() {
         if UserAccount.currentUser == nil {
             // NOT SIGNED IN
-            hide([logOutButton, nameStackView, salesStackView])
+            hide([logOutButton, nameStackView, salesStackView, emailStackView])
             show([signInButton, emailTextField, passwordTextField])
             
         } else {
             // SIGNED IN
-            show([logOutButton, nameStackView, salesStackView])
+            show([logOutButton, nameStackView, salesStackView, emailStackView])
             hide([signInButton, emailTextField, passwordTextField])
         }
     }

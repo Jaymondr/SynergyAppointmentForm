@@ -30,6 +30,7 @@ class SignUpViewController: UIViewController {
     
     // MARK: - PROPERTIES
     var user: UserAccount?
+    var approvedEmails: [String]?
     
     var isValid: Validity {
         guard let email = emailTextField.text,
@@ -38,19 +39,21 @@ class SignUpViewController: UIViewController {
               let lastName = lastNameTextField.text
         else { return .invalid }
         
-        let validEmail = email.contains("@synergywindow")
+        let approvedEmails = approvedEmails ?? ["synergywindow", "gmail", "energyone"]
+        let validEmailDomain = approvedEmails.contains { domain in
+                return email.hasSuffix("@\(domain)")
+            }
         let validFirstName = firstName != ""
         let validLastName = lastName != ""
         let validPassword = password.count > 5 && password.range(of: "[A-Z]", options: .regularExpression) != nil && password.range(of: "[a-z]", options: .regularExpression) != nil
         
-//        if validEmail && validFirstName && validLastName && validPassword {
-        if validFirstName {
+        if validEmailDomain && validFirstName && validLastName && validPassword {
             return .valid
         } else if !validFirstName {
             return .invalidFirstName
         } else if !validLastName {
             return .invalidLastName
-        } else if !validEmail {
+        } else if !validEmailDomain {
             return .invalidEmail
         } else if !validPassword {
             return .invalidPassword
@@ -68,6 +71,11 @@ class SignUpViewController: UIViewController {
     
     func setUpView() {
         signInButton.layer.cornerRadius = 8
+        
+        // Get Approved Emails
+        FirebaseController.shared.getApprovedEmails { approvedEmails in
+            self.approvedEmails = approvedEmails
+        }
     }
         
     func createUser() {
@@ -76,7 +84,7 @@ class SignUpViewController: UIViewController {
             // CREATE AUTHENTICATED USER.
             Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!) { authResult, error in
                 if let error = error {
-                    print("Error: \(error.localizedDescription)")
+                    print("Authentication error: \(error.localizedDescription)")
                     UIAlertController.presentDismissingAlert(title: "Error: \(error)", dismissAfter: 2.0)
                     return
                 }
@@ -98,12 +106,13 @@ class SignUpViewController: UIViewController {
                         return
                     }
                 self.navigationController?.popToRootViewController(animated: false)
+                    return
                 }
             }
             
 
         case .invalidPassword:
-            UIAlertController.presentDismissingAlert(title: "Invalid Password", dismissAfter: 0.5)
+            UIAlertController.presentOkAlert(message: "Invalid Password. \nMust be at least 5 character with upper and lowercase letters", actionOptionTitle: "OK")
             
         case .invalidEmail:
             UIAlertController.presentDismissingAlert(title: "Invalid Email", dismissAfter: 0.5)
@@ -115,7 +124,7 @@ class SignUpViewController: UIViewController {
             UIAlertController.presentDismissingAlert(title: "Invalid Last Name", dismissAfter: 0.5)
 
         case .invalid:
-            UIAlertController.presentDismissingAlert(title: "Unable to create account. Contact support @jrichardson@synergywindow.com", dismissAfter: 0.5)
+            UIAlertController.presentOkAlert(message: "Unable to create account. Contact support @jrichardson@synergywindow.com", actionOptionTitle: "OK")
 
         }
     }

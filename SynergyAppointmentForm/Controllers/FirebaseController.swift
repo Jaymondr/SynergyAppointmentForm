@@ -32,6 +32,8 @@ import FirebaseFirestore
 class FirebaseController {
     static let shared = FirebaseController()
 
+    let approvedEmailsCollectionID = "ApprovedEmailList"
+    
     let db = Firestore.firestore()
     
     // MARK: FORMS
@@ -124,7 +126,7 @@ class FirebaseController {
     // MARK: - USER
     func createUser(from user: UserAccount, completion: @escaping (_ user: UserAccount?, _ error: Error?) -> Void) {
         let docRef = db.collection(UserAccount.collectionKey).document(user.firebaseID)
-        var data = user.firebaseRepresentation
+        let data = user.firebaseRepresentation
         
         docRef.setData(data) { error in
             if let error = error {
@@ -160,11 +162,11 @@ class FirebaseController {
     func getUser(with firebaseID: String, completion: @escaping (_ user: UserAccount?, _ error: Error? ) -> Void) {
         let docRef = db.collection(UserAccount.collectionKey).document(firebaseID)
         docRef.getDocument(completion: { document, error in
-                if let error = error {
-                    print("There was an error getting forms: \(error)")
-                    completion(nil, error)
-                    return
-                }
+            if let error = error {
+                print("There was an error getting forms: \(error)")
+                completion(nil, error)
+                return
+            }
             if let document = document, document.exists,
                let data = document.data() {
                 let user = UserAccount(firebaseData: data, firebaseID: firebaseID)
@@ -175,27 +177,25 @@ class FirebaseController {
             }
         })
     }
-
     
-//    func getUser(with firebaseID: String, completion: @escaping (_ user: UserAccount?, _ error: Error? ) -> Void) {
-//        db.collection(UserAccount.collectionKey)
-//            .whereField(UserAccount.CodingKeys.firebaseID.rawValue, isEqualTo: firebaseID)
-//            .getDocuments { snapshot, error in
-//                if let error = error {
-//                    print("There was an error getting forms: \(error)")
-//                    completion(nil, error)
-//                    return
-//                }
-//                guard let documents = snapshot?.documents else {
-//                    completion(nil, nil)
-//                    return
-//                }
-//                let userDoc = documents.first
-//                if let data = userDoc?.data() {
-//                    let user = UserAccount(firebaseData: data, firebaseID: firebaseID)
-//                } else {
-//                    print("No Doc data"); completion(nil, nil)
-//                }
-//            }
-//    }
+    
+    // MARK: - APPROVED EMAILS
+    func getApprovedEmails(completion: @escaping (_ approvedEmails: [String]) -> Void) {
+        db.collection(FirebaseController.shared.approvedEmailsCollectionID).document("approvedEmailList").getDocument(completion: { document, err in
+            if let err = err {
+                print("Error: \(err)")
+                completion(["synergywindow.com"])
+                return
+            }
+            
+            if let document = document, document.exists,
+               let data = document.data(),
+               let emailList = data["emailList"] as? [String] {
+                completion(emailList)
+            } else {
+                print("No email list")
+                completion(["synergywindow.com"])
+            }
+        })
+    }
 }

@@ -276,6 +276,8 @@ class FormDetailViewController: UIViewController {
         commentsTextView.text = form.comments
         dateTimePicker.date = form.date
         
+        reasonTextView.layer.cornerRadius = 5.0
+        commentsTextView.layer.cornerRadius = 5.0
         
         // BACKGROUND
         var labelColor: CGColor
