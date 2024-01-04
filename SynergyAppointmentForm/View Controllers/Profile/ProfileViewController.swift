@@ -130,12 +130,12 @@ class ProfileViewController: UIViewController {
     private func configureViewForState() {
         if UserAccount.currentUser == nil {
             // NOT SIGNED IN
-            hide([logOutButton, nameStackView, salesStackView, emailStackView])
+            hide([logOutButton, nameStackView, salesStackView, emailStackView, deleteAccountButton])
             show([signInButton, emailTextField, passwordTextField])
             
         } else {
             // SIGNED IN
-            show([logOutButton, nameStackView, salesStackView, emailStackView])
+            show([logOutButton, nameStackView, salesStackView, emailStackView, deleteAccountButton])
             hide([signInButton, emailTextField, passwordTextField])
         }
     }
