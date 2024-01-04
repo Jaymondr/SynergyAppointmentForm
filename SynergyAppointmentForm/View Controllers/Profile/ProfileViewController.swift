@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import MessageUI
 
 protocol VisibleToggleable {
     var isVisible: Bool { get set }
@@ -25,6 +26,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var salesLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var deleteAccountButton: UIButton!
     
     
     // MARK: - LIFECYCLE
@@ -90,8 +92,27 @@ class ProfileViewController: UIViewController {
             }
         }
     }
+    @IBAction func deleteAccountButtonPressed(_ sender: Any) {
+        showMailComposer()
+    }
     
     // MARK: - FUNCTIONS
+    private func showMailComposer() {
+        guard let user = UserAccount.currentUser else { return }
+        guard MFMailComposeViewController.canSendMail() else { return }
+
+        let bodyText = "Please delete my account.\nName: \(user.firstName + " " + user.lastName)\nID: \(user.firebaseID)"
+        
+        let mailComposer = MFMailComposeViewController()
+        mailComposer.mailComposeDelegate = self
+        mailComposer.setToRecipients(["coretechniquellc@gmail.com"])
+        mailComposer.setSubject("Delete Account")
+        mailComposer.setMessageBody(bodyText, isHTML: false)
+
+        present(mailComposer, animated: true, completion: nil)
+    }
+
+    
     private func setupView() {
         navigationController?.navigationBar.tintColor = .eden
 
@@ -142,3 +163,12 @@ class ProfileViewController: UIViewController {
     */
 
 }
+
+// MARK: - EXTENSTIONS
+extension ProfileViewController: MFMailComposeViewControllerDelegate {
+
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+}
+
