@@ -50,6 +50,7 @@
 		67A5C09B2B28D09D00D16249 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A5C09A2B28D09D00D16249 /* SignUpViewController.swift */; };
 		67BB4F132B141A6000067D90 /* FirestoreType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BB4F122B141A6000067D90 /* FirestoreType.swift */; };
 		67BB4F152B141B3300067D90 /* FirebaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BB4F142B141B3300067D90 /* FirebaseModel.swift */; };
+		67CE58AB2B47ACA600D809B4 /* EmptyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67CE58AA2B47ACA600D809B4 /* EmptyTableViewCell.swift */; };
 		67DAFE932B073028003D6B5B /* FormError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DAFE922B073028003D6B5B /* FormError.swift */; };
 		67E4A6692B054BCF00024F06 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E4A6682B054BCF00024F06 /* Address.swift */; };
 		67EAEF202B14D148006E4995 /* Outcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EAEF1F2B14D148006E4995 /* Outcome.swift */; };
@@ -86,6 +87,7 @@
 		67A5C09A2B28D09D00D16249 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		67BB4F122B141A6000067D90 /* FirestoreType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreType.swift; sourceTree = "<group>"; };
 		67BB4F142B141B3300067D90 /* FirebaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseModel.swift; sourceTree = "<group>"; };
+		67CE58AA2B47ACA600D809B4 /* EmptyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTableViewCell.swift; sourceTree = "<group>"; };
 		67DAFE922B073028003D6B5B /* FormError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormError.swift; sourceTree = "<group>"; };
 		67DAFE952B073FBB003D6B5B /* SynergyAppointmentForm.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SynergyAppointmentForm.entitlements; sourceTree = "<group>"; };
 		67E4A6682B054BCF00024F06 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 			isa = PBXGroup;
 			children = (
 				67EBEE2A2B0BC629009FD021 /* FormTableViewCell.swift */,
+				67CE58AA2B47ACA600D809B4 /* EmptyTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -444,6 +447,7 @@
 				67ECD72E2B3789CF0045E893 /* ProfileViewController.swift in Sources */,
 				674603BC2B03DE0E00756102 /* FormController.swift in Sources */,
 				67A582F82B0D23F300D4B5DA /* FormDetailViewController.swift in Sources */,
+				67CE58AB2B47ACA600D809B4 /* EmptyTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

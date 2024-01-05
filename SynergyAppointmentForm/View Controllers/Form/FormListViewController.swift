@@ -62,6 +62,14 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     var pastAppointmentForms: [Form] = []
     var sortedAppointmentForms: [Form] = []
     
+    var formState: FormState {
+        if forms.isEmpty {
+            return .empty
+        } else {
+            return .populated
+        }
+    }
+    
     // SECTIONS
     let upcoming = 0
     let past = 1
@@ -141,16 +149,31 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: TABLEVIEW FUNCTIONS
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        switch formState {
+        case .empty:
+            return 1
+        case .populated:
+            return 2
+        }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == upcoming ? "UPCOMING" : "PAST"
+        switch formState {
+        case .empty:
+            return ""
+        case .populated:
+            return section == upcoming ? "UPCOMING" : "PAST"
+        }
     }
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == upcoming ? upcomingAppointmentForms.count : pastAppointmentForms.count
+        switch formState {
+        case .empty:
+            return 1
+        case .populated:
+            return section == upcoming ? upcomingAppointmentForms.count : pastAppointmentForms.count
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -158,16 +181,30 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "formCell", for: indexPath) as? FormTableViewCell else { return UITableViewCell() }
-        
+        switch formState {
+        case .empty:
+            return configureEmptyCell(indexPath: indexPath)
+        case .populated:
+            return configurePopulatedCell(indexPath: indexPath)
+        }
+    }
+
+    func configureEmptyCell(indexPath: IndexPath) -> UITableViewCell {
+        let emptyCell = tableView.dequeueReusableCell(withIdentifier: "emptyCell", for: indexPath) as! EmptyTableViewCell
+        return emptyCell
+    }
+
+    func configurePopulatedCell(indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "formCell", for: indexPath) as? FormTableViewCell else {
+            return UITableViewCell()
+        }
+
         if indexPath.section == upcoming {
             // UPCOMING
             let form = upcomingAppointmentForms[indexPath.row]
             cell.setCellData(with: form)
             cell.delegate = self
             cell.form = form
-           
-            return cell
 
         } else {
             // Past
@@ -175,10 +212,11 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             cell.setCellData(with: form)
             cell.delegate = self
             cell.form = form
-            return cell
         }
-        
+
+        return cell
     }
+
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
@@ -192,6 +230,9 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if formState == .empty {
+            return
+        }
         if indexPath.section == upcoming {
             // UPCOMING
             UIAlertController.presentDismissingAlert(title: "Upcoming Appointments CANNOT Be Deleted", dismissAfter: 1.2)
@@ -243,18 +284,30 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         
         if segue.identifier == "toCreateForm",
            let destinationVC = segue.destination as? FormViewController {
-            destinationVC.delegate = self
+            switch formState {
+            case .empty:
+                print("empty")
+            case .populated:
+                destinationVC.delegate = self
+            }
         }
         
         if segue.identifier == "toProfileVC",
            let destinationVC = segue.destination as? ProfileViewController {
             destinationVC.forms = self.forms
         }
+        
     }
 }
 
 
 // MARK: - EXTENSIONS
+extension FormListViewController {
+    enum FormState {
+        case empty
+        case populated
+    }
+}
 extension FormListViewController: FormDetailViewDelegate {
     func didUpdate(form: Form) {
         if let index = forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {
