@@ -68,7 +68,6 @@ class ProfileViewController: UIViewController {
         
         // FEEDBACK
         let feedbackAction = UIAlertAction(title: "Submit Feedback", style: .default) { _ in
-            guard let user = UserAccount.currentUser else { return }
             guard MFMailComposeViewController.canSendMail() else { return }
 
             let bodyText = "Please enter feedback here... "
