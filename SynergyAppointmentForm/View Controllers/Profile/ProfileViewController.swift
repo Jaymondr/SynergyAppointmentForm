@@ -40,12 +40,13 @@ class ProfileViewController: UIViewController {
         
     }
     
+    // MARK: - PROPERTIES
+    var sales: Int = 0
     var forms: [Form] = [] {
         didSet {
             sales = forms.filter( { $0.outcome == .sold } ).count
         }
     }
-    var sales: Int = 0
     
     
     // MARK: - BUTTONS
@@ -114,6 +115,7 @@ class ProfileViewController: UIViewController {
                     UIAlertController.presentDismissingAlert(title: "\(user.firstName) signed in.", dismissAfter: 1.2)
                     self.configureViewForState()
                     self.setupView()
+                    NotificationCenter.default.post(name: .signInNotification, object: nil)
                 }
             }
         }
@@ -128,6 +130,7 @@ class ProfileViewController: UIViewController {
                 UserAccount.currentUser = nil
                 self.configureViewForState()
                 print("Signed out user")
+                NotificationCenter.default.post(name: .signOutNotification, object: nil)
                 
             } catch let signOutError as NSError {
                 UIAlertController.presentDismissingAlert(title: signOutError.localizedDescription, dismissAfter: 2.0)
@@ -142,8 +145,8 @@ class ProfileViewController: UIViewController {
 
         salesLabel.text = "Sales: \(sales)"
         emailLabel.text = UserAccount.currentUser?.email ?? ""
-        var firstName = UserAccount.currentUser?.firstName ?? ""
-        var lastName = UserAccount.currentUser?.lastName ?? ""
+        let firstName = UserAccount.currentUser?.firstName ?? ""
+        let lastName = UserAccount.currentUser?.lastName ?? ""
         if let lastNameFirstLetter = lastName.first {
             nameLabel.text = "\(firstName) \(lastNameFirstLetter)."
         } else {

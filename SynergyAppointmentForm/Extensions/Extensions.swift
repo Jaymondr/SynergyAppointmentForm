@@ -9,6 +9,12 @@ import UIKit
 import AudioToolbox
 
 
+// MARK: - NOTIFICATIONS
+extension Notification.Name {
+    static let signOutNotification = Notification.Name("SignOutNotification")
+    static let signInNotification = Notification.Name("SignInNotification")
+}
+
 // MARK: - UIVIEW
 extension UIView: VisibleToggleable {
     var isVisible: Bool {

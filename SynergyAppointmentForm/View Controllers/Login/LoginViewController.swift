@@ -44,8 +44,9 @@ class LoginViewController: UIViewController {
                         let userDefaultsData = user.toUserDefaultsDictionary()
                         UserDefaults.standard.set(userDefaultsData, forKey: UserAccount.kUser)
                     
-                    UIAlertController.presentDismissingAlert(title: "Welcome back \(user.firstName)", dismissAfter: 1.2)
+                    UIAlertController.presentDismissingAlert(title: "Welcome back \(user.firstName)!", dismissAfter: 1.2)
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
+                        NotificationCenter.default.post(name: .signInNotification, object: nil)
                         self.navigationController?.popToRootViewController(animated: false)
                     }
                 }

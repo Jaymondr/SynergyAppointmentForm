@@ -43,8 +43,18 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.refreshControl = refreshControl
         tableView.separatorStyle = .none
         setTitleAttributes()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleSignOutNotification),
+                                               name: .signOutNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleSignInNotification), name: .signInNotification, object: nil)
         
     }    
+    
+    deinit {
+        // Remove the observer when the view controller is deallocated
+        NotificationCenter.default.removeObserver(self)
+    }
     
     // MARK: PROPERTIES
     var forms: [Form] = []
@@ -76,6 +86,20 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             self.splitForms(forms: forms)
         }
     }
+    
+    @objc func handleSignOutNotification() {
+        // Reset the data array or perform any other necessary actions
+        forms = []
+        upcomingAppointmentForms = []
+        pastAppointmentForms = []
+        sortedAppointmentForms = []
+        tableView.reloadData()
+    }
+    
+    @objc func handleSignInNotification() {
+        loadForms()
+    }
+    
     
     // Function to present the sign-in view controller
     func presentLoginChoiceVC() {
