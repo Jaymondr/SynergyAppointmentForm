@@ -9,6 +9,7 @@ import Foundation
 import Firebase
 
 class UserAccount {
+    // MARK: COMPUTED PROPERTIES
     static var currentUser: UserAccount? {
         get {
             guard let uid = Auth.auth().currentUser?.uid, let userDictionary = UserDefaults.standard.dictionary(forKey: kUser), let dictionaryID = userDictionary[UserAccount.CodingKeys.firebaseID.rawValue] as? String, uid == dictionaryID else {
@@ -35,20 +36,14 @@ class UserAccount {
         return true
     }
     
+    
+    // MARK: PROPERTIES
     static let collectionKey = "Users"
     static let kUser = "User"
-    
     var firebaseID: String
     var firstName: String
     var lastName: String
     var email: String
-    
-    init(firebaseID: String, firstName: String, lastName: String, email: String) {
-        self.firebaseID = firebaseID
-        self.firstName = firstName
-        self.lastName = lastName
-        self.email = email
-    }
     
     var firebaseRepresentation: [String : FirestoreType] {
         let firebaseRepresentation: [String : FirestoreType] = [
@@ -56,18 +51,14 @@ class UserAccount {
             UserAccount.CodingKeys.firstName.rawValue               : firstName,
             UserAccount.CodingKeys.lastName.rawValue                : lastName,
             UserAccount.CodingKeys.email.rawValue                   : email,
+            
         ]
-        
         return firebaseRepresentation
     }
     
-    required init?(firebaseData: [String : Any], firebaseID: String) {
-        guard let firstName = firebaseData[Form.CodingKeys.firstName.rawValue] as? String,
-              let lastName = firebaseData[Form.CodingKeys.lastName.rawValue] as? String,
-              let email = firebaseData[Form.CodingKeys.email.rawValue] as? String
-                
-        else { return nil }
-        
+    
+    // MARK: INITIALIZERS
+    init(firebaseID: String, firstName: String, lastName: String, email: String) {
         self.firebaseID = firebaseID
         self.firstName = firstName
         self.lastName = lastName
@@ -86,29 +77,38 @@ class UserAccount {
         self.email = email
     }
     
+    required init?(firebaseData: [String : Any], firebaseID: String) {
+        guard let firstName = firebaseData[Form.CodingKeys.firstName.rawValue] as? String,
+              let lastName = firebaseData[Form.CodingKeys.lastName.rawValue] as? String,
+              let email = firebaseData[Form.CodingKeys.email.rawValue] as? String
+        else { return nil }
+        
+        self.firebaseID = firebaseID
+        self.firstName = firstName
+        self.lastName = lastName
+        self.email = email
+    }
+    
+    
+    // MARK: FUNCTIONS
     func toUserDefaultsDictionary() -> [String: Any] {
         let userDefaultsDictionary: [String : Any] = [
             UserAccount.CodingKeys.firebaseID.rawValue:              uID,
             UserAccount.CodingKeys.firstName.rawValue:               firstName,
             UserAccount.CodingKeys.lastName.rawValue:                lastName,
             UserAccount.CodingKeys.email.rawValue:                   email,
+            
         ]
-        
         return userDefaultsDictionary
     }
     
     
+    // MARK: ENUMS
     enum CodingKeys: String, CodingKey {
         case email = "email"
         case firebaseID = "firebaseID"
         case firstName = "firstName"
         case lastName = "lastName"
-        
-//        // CHANGE FOR NEW USER
-//        case userID = "jaymondR" // i.e jaymondR
-//        case userFirstName = "Jaymond" // This is how name appears in text and trello
-//        case userLastName = "Richardson" // unused currently
-//        case userEmail = "jrichardson@synergywindow.com" // unused currently
     }
 }
 
