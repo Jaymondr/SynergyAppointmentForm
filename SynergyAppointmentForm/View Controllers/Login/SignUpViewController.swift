@@ -39,10 +39,15 @@ class SignUpViewController: UIViewController {
               let lastName = lastNameTextField.text
         else { return .invalid }
         
-        let approvedEmails = approvedEmails ?? ["synergywindow", "gmail", "energyone"]
-        let validEmailDomain = approvedEmails.contains { domain in
+        let validEmailDomain: Bool
+        if let approvedEmails = approvedEmails {
+            validEmailDomain = approvedEmails.contains { domain in
                 return email.hasSuffix("@\(domain)")
             }
+        } else {
+            validEmailDomain = true // Allow any email if approvedEmails is nil
+        }
+
         let validFirstName = firstName != ""
         let validLastName = lastName != ""
         let validPassword = password.count > 5 && password.range(of: "[A-Z]", options: .regularExpression) != nil && password.range(of: "[a-z]", options: .regularExpression) != nil

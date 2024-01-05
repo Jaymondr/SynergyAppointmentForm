@@ -180,11 +180,11 @@ class FirebaseController {
     
     
     // MARK: - APPROVED EMAILS
-    func getApprovedEmails(completion: @escaping (_ approvedEmails: [String]) -> Void) {
+    func getApprovedEmails(completion: @escaping (_ approvedEmails: [String]?) -> Void) {
         db.collection(FirebaseController.shared.approvedEmailsCollectionID).document("approvedEmailList").getDocument(completion: { document, err in
             if let err = err {
                 print("Error: \(err)")
-                completion(["synergywindow.com"])
+                completion(nil)
                 return
             }
             
@@ -194,7 +194,7 @@ class FirebaseController {
                 completion(emailList)
             } else {
                 print("No email list")
-                completion(["synergywindow.com"])
+                completion(nil)
             }
         })
     }
