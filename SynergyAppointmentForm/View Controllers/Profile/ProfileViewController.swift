@@ -50,7 +50,7 @@ class ProfileViewController: UIViewController {
     
     // MARK: - BUTTONS
     @IBAction func settingsBarButtonPressed(_ sender: Any) {
-        let alert = UIAlertController(title: "Settings", message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
         let deleteAccountAction = UIAlertAction(title: "DELETE ACCOUNT", style: .destructive) { _ in
             guard let user = UserAccount.currentUser else { return }
             guard MFMailComposeViewController.canSendMail() else { return }
