@@ -26,7 +26,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var salesLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
-    @IBOutlet weak var deleteAccountButton: UIButton!
+    @IBOutlet weak var settingsButton: UIBarButtonItem!
     
     
     // MARK: - LIFECYCLE
@@ -47,7 +47,50 @@ class ProfileViewController: UIViewController {
     }
     var sales: Int = 0
     
+    
     // MARK: - BUTTONS
+    @IBAction func settingsBarButtonPressed(_ sender: Any) {
+        let alert = UIAlertController(title: "Settings", message: nil, preferredStyle: .alert)
+        let deleteAccountAction = UIAlertAction(title: "DELETE ACCOUNT", style: .destructive) { _ in
+            guard let user = UserAccount.currentUser else { return }
+            guard MFMailComposeViewController.canSendMail() else { return }
+
+            let bodyText = "Please delete my account.\nName: \(user.firstName + " " + user.lastName)\nID: \(user.firebaseID)"
+            
+            let mailComposer = MFMailComposeViewController()
+            mailComposer.mailComposeDelegate = self
+            mailComposer.setToRecipients(["coretechniquellc@gmail.com"])
+            mailComposer.setSubject("Delete Account")
+            mailComposer.setMessageBody(bodyText, isHTML: false)
+
+            self.present(mailComposer, animated: true, completion: nil)
+        }
+        
+        // FEEDBACK
+        let feedbackAction = UIAlertAction(title: "Submit Feedback", style: .default) { _ in
+            guard let user = UserAccount.currentUser else { return }
+            guard MFMailComposeViewController.canSendMail() else { return }
+
+            let bodyText = "Please enter feedback here... "
+            
+            let mailComposer = MFMailComposeViewController()
+            mailComposer.mailComposeDelegate = self
+            mailComposer.setToRecipients(["coretechniquellc@gmail.com"])
+            mailComposer.setSubject("User Feedback")
+            mailComposer.setMessageBody(bodyText, isHTML: false)
+
+            self.present(mailComposer, animated: true, completion: nil)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        alert.addAction(deleteAccountAction)
+        alert.addAction(feedbackAction)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true)
+        
+    }
+    
     @IBAction func signInButtonPressed(_ sender: Any) {
         guard let email = emailTextField.text,
               let password = passwordTextField.text else { return }
@@ -92,27 +135,9 @@ class ProfileViewController: UIViewController {
             }
         }
     }
-    @IBAction func deleteAccountButtonPressed(_ sender: Any) {
-        showMailComposer()
-    }
+
     
     // MARK: - FUNCTIONS
-    private func showMailComposer() {
-        guard let user = UserAccount.currentUser else { return }
-        guard MFMailComposeViewController.canSendMail() else { return }
-
-        let bodyText = "Please delete my account.\nName: \(user.firstName + " " + user.lastName)\nID: \(user.firebaseID)"
-        
-        let mailComposer = MFMailComposeViewController()
-        mailComposer.mailComposeDelegate = self
-        mailComposer.setToRecipients(["coretechniquellc@gmail.com"])
-        mailComposer.setSubject("Delete Account")
-        mailComposer.setMessageBody(bodyText, isHTML: false)
-
-        present(mailComposer, animated: true, completion: nil)
-    }
-
-    
     private func setupView() {
         navigationController?.navigationBar.tintColor = .eden
 
@@ -121,7 +146,7 @@ class ProfileViewController: UIViewController {
         var firstName = UserAccount.currentUser?.firstName ?? ""
         var lastName = UserAccount.currentUser?.lastName ?? ""
         if let lastNameFirstLetter = lastName.first {
-            nameLabel.text = "\(firstName) \(lastNameFirstLetter)"
+            nameLabel.text = "\(firstName) \(lastNameFirstLetter)."
         } else {
             nameLabel.text = firstName + lastName
         }
@@ -130,12 +155,12 @@ class ProfileViewController: UIViewController {
     private func configureViewForState() {
         if UserAccount.currentUser == nil {
             // NOT SIGNED IN
-            hide([logOutButton, nameStackView, salesStackView, emailStackView, deleteAccountButton])
+            hide([logOutButton, nameStackView, salesStackView, emailStackView])
             show([signInButton, emailTextField, passwordTextField])
             
         } else {
             // SIGNED IN
-            show([logOutButton, nameStackView, salesStackView, emailStackView, deleteAccountButton])
+            show([logOutButton, nameStackView, salesStackView, emailStackView])
             hide([signInButton, emailTextField, passwordTextField])
         }
     }
@@ -151,17 +176,6 @@ class ProfileViewController: UIViewController {
             view.isVisible = false
         }
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 // MARK: - EXTENSTIONS
