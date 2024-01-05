@@ -216,6 +216,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="addFormBarButton" destination="hQa-Ar-Ogm" id="V3M-z1-e6I"/>
                         <outlet property="tableView" destination="BvH-az-xey" id="Af1-de-Dvp"/>
                     </connections>
                 </viewController>
@@ -1034,7 +1035,7 @@
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="txY-EO-UMX">
                                                 <rect key="frame" x="0.0" y="0.0" width="366" height="34"/>
-                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="25"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="34"/>
                                                 <color key="textColor" name="eden"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1841,7 +1842,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="CJ0-JR-IkO"/>
+        <segue reference="rU6-U8-7l6"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="clear" catalog="system" width="128" height="114"/>

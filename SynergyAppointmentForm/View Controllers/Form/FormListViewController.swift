@@ -16,6 +16,7 @@ import UIKit
 class FormListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var addFormBarButton: UIBarButtonItem!
     
     let refreshControl = UIRefreshControl()
 
@@ -77,6 +78,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: - BUTTONS
     @IBAction func addFormButtonPressed(_ sender: Any) {
         self.vibrateForButtonPress(.medium)
+        
     }
     
     // MARK: FUNCTIONS
@@ -284,12 +286,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         
         if segue.identifier == "toCreateForm",
            let destinationVC = segue.destination as? FormViewController {
-            switch formState {
-            case .empty:
-                print("empty")
-            case .populated:
                 destinationVC.delegate = self
-            }
         }
         
         if segue.identifier == "toProfileVC",
