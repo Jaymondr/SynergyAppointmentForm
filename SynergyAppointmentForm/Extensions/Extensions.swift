@@ -9,6 +9,31 @@ import UIKit
 import AudioToolbox
 
 
+// MARK: - BAR BUTTON
+extension UIBarButtonItem {
+    static func customBackButton(target: Any?, action: Selector) -> UIBarButtonItem {
+         let chevronImage = UIImage(systemName: "chevron.left")
+         let backButtonTitle = " FORMS"
+
+         let button = UIButton(type: .system)
+         button.setTitle(backButtonTitle, for: .normal)
+         button.setImage(chevronImage, for: .normal)
+
+         // Set the title label font to bold
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+
+         button.setTitleColor(UIColor.eden, for: .normal)
+         button.sizeToFit()
+         button.addTarget(target, action: action, for: .touchUpInside)
+
+         let backButton = UIBarButtonItem(customView: button)
+         backButton.tintColor = .eden
+
+         return backButton
+     }
+
+}
+
 // MARK: - NOTIFICATIONS
 extension Notification.Name {
     static let signOutNotification = Notification.Name("SignOutNotification")
