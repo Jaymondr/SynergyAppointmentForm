@@ -92,7 +92,7 @@ class ProfileViewController: UIViewController {
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
-        alert.addActions([feedbackAction, branchAction, deleteAccountAction, cancelAction])
+        alert.addActions([branchAction, feedbackAction, deleteAccountAction, cancelAction])
         self.present(alert, animated: true)
         
     }
