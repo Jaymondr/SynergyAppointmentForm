@@ -505,7 +505,7 @@
                                                             <color key="baseForegroundColor" name="eden"/>
                                                         </buttonConfiguration>
                                                         <connections>
-                                                            <action selector="copyEmailButtonPressed:" destination="ncR-vK-5yf" eventType="touchUpInside" id="cK3-t4-XkN"/>
+                                                            <action selector="copyEmailButtonPressed:" destination="mzI-Pq-KQL" eventType="touchUpInside" id="Jzl-MF-Y7c"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
