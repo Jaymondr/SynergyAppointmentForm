@@ -72,25 +72,7 @@ class FormDetailViewController: UIViewController {
         return form?.outcome
     }
     
-    // MARK: FUNCTIONS
-    func updateFormWithOutcome(_ outcome: Outcome) {
-        guard let form = form else { return }
-
-        form.outcome = outcome
-        setUpView(with: form)
-
-        FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
-            if let error = error {
-                UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
-                print("Error: \(error)")
-                return
-            }
-
-            self.delegate?.didUpdate(form: form)
-            UIAlertController.presentDismissingAlert(title: "Label Updated!", dismissAfter: 0.6)
-        }
-    }
-    
+    // MARK: BUTTONS
     @IBAction func tagButtonPressed(_ sender: Any) {
         let alert = UIAlertController(title: "Add Label", message: "Select Label", preferredStyle: .alert)
         
@@ -194,6 +176,8 @@ class FormDetailViewController: UIViewController {
         }
     }
     
+    
+    // MARK: FUNCTIONS
     func setUpView(with form: Form?) {
         guard let form = form else { print("No Form!"); return }
         firstNameTextField?.text = form.firstName
@@ -290,6 +274,25 @@ class FormDetailViewController: UIViewController {
         
         return updatedForm
     }
+    
+    func updateFormWithOutcome(_ outcome: Outcome) {
+        guard let form = form else { return }
+
+        form.outcome = outcome
+        setUpView(with: form)
+
+        FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
+            if let error = error {
+                UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
+                print("Error: \(error)")
+                return
+            }
+
+            self.delegate?.didUpdate(form: form)
+            UIAlertController.presentDismissingAlert(title: "Label Updated!", dismissAfter: 0.6)
+        }
+    }
+
 }
 
 
