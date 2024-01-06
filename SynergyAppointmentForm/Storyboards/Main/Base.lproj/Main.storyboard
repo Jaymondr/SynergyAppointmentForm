@@ -490,14 +490,28 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="@synergywindow.com" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="3Xi-t9-FUK">
-                                                        <rect key="frame" x="95" y="0.0" width="278" height="40"/>
+                                                        <rect key="frame" x="95" y="0.0" width="238" height="40"/>
                                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" textContentType="email"/>
                                                     </textField>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="InQ-jj-STe">
+                                                        <rect key="frame" x="333" y="0.0" width="40" height="40"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" secondItem="InQ-jj-STe" secondAttribute="height" multiplier="1:1" id="JUW-TV-eLb"/>
+                                                        </constraints>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain" image="envelope.fill" catalog="system">
+                                                            <color key="baseForegroundColor" name="eden"/>
+                                                        </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="copyEmailButtonPressed:" destination="ncR-vK-5yf" eventType="touchUpInside" id="cK3-t4-XkN"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="WYj-V7-Sn6"/>
+                                                    <constraint firstItem="InQ-jj-STe" firstAttribute="width" secondItem="InQ-jj-STe" secondAttribute="height" multiplier="1:1" id="yfB-eo-RfL"/>
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="nJd-Jf-bSH">
@@ -1896,6 +1910,7 @@
         <image name="doc" catalog="system" width="115" height="128"/>
         <image name="doc.fill" catalog="system" width="115" height="128"/>
         <image name="envelope" catalog="system" width="128" height="85"/>
+        <image name="envelope.fill" catalog="system" width="128" height="85"/>
         <image name="gear" catalog="system" width="128" height="122"/>
         <image name="info.circle" catalog="system" width="128" height="123"/>
         <image name="list.clipboard" catalog="system" width="98" height="128"/>

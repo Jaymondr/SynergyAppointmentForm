@@ -305,8 +305,8 @@
 		67FEDB822B34B2AC005D4421 /* Form */ = {
 			isa = PBXGroup;
 			children = (
-				674603C02B03E51000756102 /* FormViewController.swift */,
 				67EBEE2F2B0BC768009FD021 /* FormListViewController.swift */,
+				674603C02B03E51000756102 /* FormViewController.swift */,
 				67A582F72B0D23F300D4B5DA /* FormDetailViewController.swift */,
 			);
 			path = Form;
