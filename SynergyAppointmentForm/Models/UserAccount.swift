@@ -28,22 +28,13 @@ class UserAccount {
         }
     }
     
-    var uID: String {
-        return firebaseID
-    }
-    
     static var signUp: Bool {
         return true
     }
     
-    
-    // MARK: PROPERTIES
-    static let collectionKey = "Users"
-    static let kUser = "User"
-    var firebaseID: String
-    var firstName: String
-    var lastName: String
-    var email: String
+    var uID: String {
+        return firebaseID
+    }
     
     var firebaseRepresentation: [String : FirestoreType] {
         let firebaseRepresentation: [String : FirestoreType] = [
@@ -57,19 +48,36 @@ class UserAccount {
     }
     
     
+    // MARK: PROPERTIES
+    static let collectionKey = "Users"
+    static let kUser = "User"
+    var firebaseID: String
+    var firstName: String
+    var lastName: String
+    var email: String
+    var branch: Branch?
+
+    
     // MARK: INITIALIZERS
-    init(firebaseID: String, firstName: String, lastName: String, email: String) {
+    init(firebaseID: String, firstName: String, lastName: String, email: String, branch: Branch? = nil) {
         self.firebaseID = firebaseID
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
+        self.branch = branch
     }
     
     init?(userDefaultsDict: [String: Any], firebaseID: String) {
+        // REQUIRED PROPERTIES
         guard let firstName = userDefaultsDict[UserAccount.CodingKeys.firstName.rawValue] as? String,
               let lastName = userDefaultsDict[UserAccount.CodingKeys.lastName.rawValue] as? String,
               let email = userDefaultsDict[UserAccount.CodingKeys.email.rawValue] as? String
         else { return nil }
+        
+        // OPTIONALS
+        if let branchString = userDefaultsDict[UserAccount.CodingKeys.branch.rawValue] as? String {
+            self.branch = Branch(rawValue: branchString)
+        }
         
         self.firebaseID = firebaseID
         self.firstName = firstName
@@ -78,10 +86,16 @@ class UserAccount {
     }
     
     required init?(firebaseData: [String : Any], firebaseID: String) {
-        guard let firstName = firebaseData[Form.CodingKeys.firstName.rawValue] as? String,
-              let lastName = firebaseData[Form.CodingKeys.lastName.rawValue] as? String,
-              let email = firebaseData[Form.CodingKeys.email.rawValue] as? String
+        // REQUIRED PROPERTIES
+        guard let firstName = firebaseData[UserAccount.CodingKeys.firstName.rawValue] as? String,
+              let lastName = firebaseData[UserAccount.CodingKeys.lastName.rawValue] as? String,
+              let email = firebaseData[UserAccount.CodingKeys.email.rawValue] as? String
         else { return nil }
+        
+        // OPTIONALS
+        if let branchString = firebaseData[UserAccount.CodingKeys.branch.rawValue] as? String {
+            self.branch = Branch(rawValue: branchString)
+        }
         
         self.firebaseID = firebaseID
         self.firstName = firstName
@@ -92,19 +106,24 @@ class UserAccount {
     
     // MARK: FUNCTIONS
     func toUserDefaultsDictionary() -> [String: Any] {
-        let userDefaultsDictionary: [String : Any] = [
+        var userDefaultsDictionary: [String : Any] = [
             UserAccount.CodingKeys.firebaseID.rawValue:              uID,
             UserAccount.CodingKeys.firstName.rawValue:               firstName,
             UserAccount.CodingKeys.lastName.rawValue:                lastName,
             UserAccount.CodingKeys.email.rawValue:                   email,
             
         ]
+        if let branch = branch {
+            userDefaultsDictionary[UserAccount.CodingKeys.branch.rawValue] = branch.rawValue
+        }
+        
         return userDefaultsDictionary
     }
     
     
     // MARK: ENUMS
     enum CodingKeys: String, CodingKey {
+        case branch = "branch"
         case email = "email"
         case firebaseID = "firebaseID"
         case firstName = "firstName"

@@ -126,8 +126,12 @@ class FirebaseController {
     // MARK: - USER
     func createUser(from user: UserAccount, completion: @escaping (_ user: UserAccount?, _ error: Error?) -> Void) {
         let docRef = db.collection(UserAccount.collectionKey).document(user.firebaseID)
-        let data = user.firebaseRepresentation
+        var data = user.firebaseRepresentation
         
+        // ADD CREATED DATE
+        let createdDate = Timestamp(date: Date())
+        data["createdDate"] = createdDate
+    
         docRef.setData(data) { error in
             if let error = error {
                 completion(nil, error)

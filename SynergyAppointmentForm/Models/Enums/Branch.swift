@@ -15,5 +15,6 @@ enum Branch: String, CaseIterable {
     case lasVegas = "Las Vegas"
     case nashville = "Nashville"
     case raleigh = "Raleigh"
+    case southJordan = "South Jordan"
     case sanAntonio = "San Antonio"
 }

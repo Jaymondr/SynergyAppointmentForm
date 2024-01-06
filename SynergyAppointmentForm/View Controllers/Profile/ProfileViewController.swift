@@ -27,6 +27,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var salesLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var settingsButton: UIBarButtonItem!
+    @IBOutlet weak var branchLabel: UILabel!
     
     
     // MARK: - LIFECYCLE
@@ -145,6 +146,7 @@ class ProfileViewController: UIViewController {
 
         salesLabel.text = "Sales: \(sales)"
         emailLabel.text = UserAccount.currentUser?.email ?? ""
+        branchLabel.text = UserAccount.currentUser?.branch?.rawValue ?? ""
         let firstName = UserAccount.currentUser?.firstName ?? ""
         let lastName = UserAccount.currentUser?.lastName ?? ""
         if let lastNameFirstLetter = lastName.first {
