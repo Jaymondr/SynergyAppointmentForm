@@ -227,6 +227,8 @@ class ProfileViewController: UIViewController {
         print("Selected Branch: \(selectedBranch.rawValue)")
         UserAccountController.shared.updateBranch(newBranch: selectedBranch)
         branchLabel.text = selectedBranch.rawValue
+        emptyBranchStackView.isHidden = true
+        branchLabel.isVisible = true
     }
 }
 
