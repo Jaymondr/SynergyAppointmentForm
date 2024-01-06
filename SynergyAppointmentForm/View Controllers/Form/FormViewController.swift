@@ -252,6 +252,15 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         reasonTextview.layer.cornerRadius = 5.0
         commentsTextview.layer.cornerRadius = 5.0
         
+        // EMAIL PLACEHOLDER
+        if let branch = UserAccount.currentUser?.branch {
+            if branch == .southJordan {
+                emailTextfield.placeholder = "@synergywindow.com"
+            } else {
+                emailTextfield.placeholder = "@energyonewindows.com"
+            }
+        }
+        
         if traitCollection.userInterfaceStyle == .dark {
             // BACKGROUND
             let gradientLayer = CAGradientLayer()

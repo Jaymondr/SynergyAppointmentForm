@@ -73,7 +73,7 @@ class FormController {
     
     func copy(email: String?) {
         guard let user = UserAccount.currentUser else { return }
-        var emailString = email != "" ? email : user.email
+        let emailString = email != "" ? email : user.email
         UIPasteboard.general.string = emailString
         UIAlertController.presentDismissingAlert(title: "Email Copied!", dismissAfter: 0.3)
     }

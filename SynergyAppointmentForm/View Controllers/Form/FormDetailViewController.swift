@@ -202,6 +202,15 @@ class FormDetailViewController: UIViewController {
         reasonTextView.layer.cornerRadius = 5.0
         commentsTextView.layer.cornerRadius = 5.0
         
+        // EMAIL PLACEHOLDER
+        if let branch = UserAccount.currentUser?.branch {
+            if branch == .southJordan {
+                emailTextField.placeholder = "@synergywindow.com"
+            } else {
+                emailTextField.placeholder = "@energyonewindows.com"
+            }
+        }
+        
         // BACKGROUND
         var labelColor: CGColor
         
