@@ -73,6 +73,10 @@ class FormDetailViewController: UIViewController {
     }
     
     // MARK: BUTTONS
+    @IBAction func copyEmailButtonPressed(_ sender: Any) {
+        FormController.shared.copy(email: emailTextField.text)
+    }
+    
     @IBAction func tagButtonPressed(_ sender: Any) {
         let alert = UIAlertController(title: "Add Label", message: "Select Label", preferredStyle: .alert)
         
