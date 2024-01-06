@@ -43,6 +43,7 @@
 		674603BC2B03DE0E00756102 /* FormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674603BB2B03DE0E00756102 /* FormController.swift */; };
 		674603C12B03E51000756102 /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674603C02B03E51000756102 /* FormViewController.swift */; };
 		678162F32B48C6F500C48A52 /* Branch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678162F22B48C6F500C48A52 /* Branch.swift */; };
+		678162F72B48DFBA00C48A52 /* UserAccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678162F62B48DFBA00C48A52 /* UserAccountController.swift */; };
 		678FD77E2B1A3A3100FB515D /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678FD77D2B1A3A3100FB515D /* UserAccount.swift */; };
 		67A582F52B0D0AA500D4B5DA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A582F42B0D0AA500D4B5DA /* Extensions.swift */; };
 		67A582F82B0D23F300D4B5DA /* FormDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A582F72B0D23F300D4B5DA /* FormDetailViewController.swift */; };
@@ -81,6 +82,7 @@
 		674603BB2B03DE0E00756102 /* FormController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormController.swift; sourceTree = "<group>"; };
 		674603C02B03E51000756102 /* FormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
 		678162F22B48C6F500C48A52 /* Branch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Branch.swift; sourceTree = "<group>"; };
+		678162F62B48DFBA00C48A52 /* UserAccountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountController.swift; sourceTree = "<group>"; };
 		678FD77D2B1A3A3100FB515D /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
 		67A582F42B0D0AA500D4B5DA /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		67A582F72B0D23F300D4B5DA /* FormDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDetailViewController.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 			children = (
 				674603BB2B03DE0E00756102 /* FormController.swift */,
 				67EBEE3E2B0C051C009FD021 /* FirebaseController.swift */,
+				678162F62B48DFBA00C48A52 /* UserAccountController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -435,6 +438,7 @@
 				67EBEE2B2B0BC629009FD021 /* FormTableViewCell.swift in Sources */,
 				67FEDB852B34B2D3005D4421 /* LoginViewController.swift in Sources */,
 				67FEDB882B34B2FB005D4421 /* LoginChoiceViewController.swift in Sources */,
+				678162F72B48DFBA00C48A52 /* UserAccountController.swift in Sources */,
 				67EAEF202B14D148006E4995 /* Outcome.swift in Sources */,
 				674603A22B03D8F700756102 /* AppDelegate.swift in Sources */,
 				67A5C09B2B28D09D00D16249 /* SignUpViewController.swift in Sources */,
