@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="IT1-YZ-9Jb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="IT1-YZ-9Jb">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -489,15 +489,29 @@
                                                         <color key="textColor" name="eden"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="@synergywindow.com" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="3Xi-t9-FUK">
-                                                        <rect key="frame" x="95" y="0.0" width="278" height="40"/>
+                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="@energyonewindows.com" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="3Xi-t9-FUK">
+                                                        <rect key="frame" x="95" y="0.0" width="238" height="40"/>
                                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" textContentType="email"/>
                                                     </textField>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="InQ-jj-STe">
+                                                        <rect key="frame" x="333" y="0.0" width="40" height="40"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" secondItem="InQ-jj-STe" secondAttribute="height" multiplier="1:1" id="JUW-TV-eLb"/>
+                                                        </constraints>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain" image="envelope.fill" catalog="system">
+                                                            <color key="baseForegroundColor" name="eden"/>
+                                                        </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="copyEmailButtonPressed:" destination="ncR-vK-5yf" eventType="touchUpInside" id="cK3-t4-XkN"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="WYj-V7-Sn6"/>
+                                                    <constraint firstItem="InQ-jj-STe" firstAttribute="width" secondItem="InQ-jj-STe" secondAttribute="height" multiplier="1:1" id="yfB-eo-RfL"/>
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="nJd-Jf-bSH">
@@ -970,7 +984,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H5l-Pl-NpC">
-                                <rect key="frame" x="139" y="253.00000000000003" width="115" height="34.333333333333343"/>
+                                <rect key="frame" x="139" y="301" width="115" height="34.333333333333314"/>
                                 <color key="backgroundColor" name="eden"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="115" id="jjC-P4-d0m"/>
@@ -1028,24 +1042,68 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ST4-Hy-Nvh" userLabel="Profile">
-                                <rect key="frame" x="16" y="111" width="366" height="118"/>
+                                <rect key="frame" x="16" y="111" width="366" height="166"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="J0W-BJ-Q9E">
-                                        <rect key="frame" x="0.0" y="0.0" width="366" height="34"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="jgq-uu-Bxy">
+                                        <rect key="frame" x="0.0" y="0.0" width="366" height="82"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="txY-EO-UMX">
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="J0W-BJ-Q9E">
                                                 <rect key="frame" x="0.0" y="0.0" width="366" height="34"/>
-                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="34"/>
-                                                <color key="textColor" name="eden"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="txY-EO-UMX">
+                                                        <rect key="frame" x="0.0" y="0.0" width="366" height="34"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="34"/>
+                                                        <color key="textColor" name="eden"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="34" id="GG5-QE-j9W"/>
+                                                </constraints>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KxW-c3-Vyv">
+                                                <rect key="frame" x="0.0" y="34" width="366" height="24"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Branch name long" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aFB-UT-szD">
+                                                        <rect key="frame" x="0.0" y="0.0" width="366" height="24"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="24" id="4or-JO-s1i"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
+                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="left" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="ETh-OU-Muw" userLabel="Empty Branch Stack View">
+                                                <rect key="frame" x="0.0" y="58" width="366" height="24"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Branch" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FFi-Ti-S1U">
+                                                        <rect key="frame" x="0.0" y="0.0" width="202.33333333333334" height="24"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="24" id="taC-JC-nCB"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
+                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Afi-sh-5gR">
+                                                        <rect key="frame" x="202.33333333333337" y="0.0" width="163.66666666666663" height="24"/>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain">
+                                                            <imageReference key="image" image="info.circle" catalog="system" symbolScale="default"/>
+                                                            <color key="baseForegroundColor" name="eden"/>
+                                                        </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="branchInfoButtonPressed:" destination="65z-N3-3XZ" eventType="touchUpInside" id="2MV-hq-46A"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="34" id="GG5-QE-j9W"/>
-                                        </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="6h6-eb-qqb">
-                                        <rect key="frame" x="0.0" y="42" width="366" height="34"/>
+                                        <rect key="frame" x="0.0" y="90" width="366" height="34"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rel-QO-ovw">
                                                 <rect key="frame" x="0.0" y="0.0" width="366" height="34"/>
@@ -1059,7 +1117,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="ch3-TA-SzI">
-                                        <rect key="frame" x="0.0" y="84" width="366" height="34"/>
+                                        <rect key="frame" x="0.0" y="132" width="366" height="34"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sales: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rIr-hG-dkt">
                                                 <rect key="frame" x="0.0" y="0.0" width="366" height="34"/>
@@ -1098,9 +1156,12 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="branchInfoButton" destination="Afi-sh-5gR" id="ma6-dP-YDx"/>
+                        <outlet property="branchLabel" destination="aFB-UT-szD" id="JSt-C2-mI2"/>
                         <outlet property="emailLabel" destination="Rel-QO-ovw" id="d4o-al-rl8"/>
                         <outlet property="emailStackView" destination="6h6-eb-qqb" id="cDY-2Y-l78"/>
                         <outlet property="emailTextField" destination="KR2-Uv-wdW" id="oLH-fK-BZH"/>
+                        <outlet property="emptyBranchStackView" destination="ETh-OU-Muw" id="gXC-1d-F2l"/>
                         <outlet property="logOutButton" destination="H5l-Pl-NpC" id="2Dj-zN-BGD"/>
                         <outlet property="nameLabel" destination="txY-EO-UMX" id="3Nz-Zg-sjn"/>
                         <outlet property="nameStackView" destination="J0W-BJ-Q9E" id="Zx2-1M-OPD"/>
@@ -1365,7 +1426,7 @@
                                                         <color key="textColor" name="eden"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="@synergywindow.com" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="dSo-9I-5dP">
+                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="@energyonewindows.com" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="dSo-9I-5dP">
                                                         <rect key="frame" x="95" y="0.0" width="238" height="40"/>
                                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -1849,7 +1910,9 @@
         <image name="doc" catalog="system" width="115" height="128"/>
         <image name="doc.fill" catalog="system" width="115" height="128"/>
         <image name="envelope" catalog="system" width="128" height="85"/>
+        <image name="envelope.fill" catalog="system" width="128" height="85"/>
         <image name="gear" catalog="system" width="128" height="122"/>
+        <image name="info.circle" catalog="system" width="128" height="123"/>
         <image name="list.clipboard" catalog="system" width="98" height="128"/>
         <image name="location.fill.viewfinder" catalog="system" width="128" height="115"/>
         <image name="location.viewfinder" catalog="system" width="128" height="115"/>
@@ -1866,7 +1929,7 @@
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="opaqueSeparatorColor">
-            <color red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

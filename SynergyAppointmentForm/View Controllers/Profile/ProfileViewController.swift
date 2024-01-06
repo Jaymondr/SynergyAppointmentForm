@@ -19,6 +19,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var nameStackView: UIStackView!
     @IBOutlet weak var salesStackView: UIStackView!
     @IBOutlet weak var emailStackView: UIStackView!
+    @IBOutlet weak var emptyBranchStackView: UIStackView!
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var logOutButton: UIButton!
     @IBOutlet weak var emailTextField: UITextField!
@@ -27,6 +28,8 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var salesLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var settingsButton: UIBarButtonItem!
+    @IBOutlet weak var branchInfoButton: UIButton!
+    @IBOutlet weak var branchLabel: UILabel!
     
     
     // MARK: - LIFECYCLE
@@ -82,11 +85,14 @@ class ProfileViewController: UIViewController {
             self.present(mailComposer, animated: true, completion: nil)
         }
         
+        // BRANCH
+        let branchAction = UIAlertAction(title: "Choose Branch", style: .default) { _ in
+            self.showBranchSelectionAlert()
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
-        alert.addAction(deleteAccountAction)
-        alert.addAction(feedbackAction)
-        alert.addAction(cancelAction)
+        alert.addActions([branchAction, feedbackAction, deleteAccountAction, cancelAction])
         self.present(alert, animated: true)
         
     }
@@ -138,6 +144,11 @@ class ProfileViewController: UIViewController {
         }
     }
 
+    @IBAction func branchInfoButtonPressed(_ sender: Any) {
+        showBranchSelectionAlert()
+    }
+    
+    
     
     // MARK: - FUNCTIONS
     private func setupView() {
@@ -145,24 +156,37 @@ class ProfileViewController: UIViewController {
 
         salesLabel.text = "Sales: \(sales)"
         emailLabel.text = UserAccount.currentUser?.email ?? ""
+        branchLabel.text = UserAccount.currentUser?.branch?.rawValue ?? ""
         let firstName = UserAccount.currentUser?.firstName ?? ""
         let lastName = UserAccount.currentUser?.lastName ?? ""
+        
+        // NAME LABELS
         if let lastNameFirstLetter = lastName.first {
             nameLabel.text = "\(firstName) \(lastNameFirstLetter)."
         } else {
             nameLabel.text = firstName + lastName
+        }
+        
+        // BRANCH LABEL
+        if let branch = UserAccount.currentUser?.branch {
+            emptyBranchStackView.isHidden = true
+            branchLabel.text = branch.rawValue
+
+        } else {
+            branchLabel.isHidden = true
+            emptyBranchStackView.isVisible = true
         }
     }
     
     private func configureViewForState() {
         if UserAccount.currentUser == nil {
             // NOT SIGNED IN
-            hide([logOutButton, nameStackView, salesStackView, emailStackView])
+            hide([logOutButton, nameStackView, salesStackView, emailStackView, branchLabel])
             show([signInButton, emailTextField, passwordTextField])
             
         } else {
             // SIGNED IN
-            show([logOutButton, nameStackView, salesStackView, emailStackView])
+            show([logOutButton, nameStackView, salesStackView, emailStackView, branchLabel])
             hide([signInButton, emailTextField, passwordTextField])
         }
     }
@@ -177,6 +201,34 @@ class ProfileViewController: UIViewController {
         for var view in views {
             view.isVisible = false
         }
+    }
+    
+    func showBranchSelectionAlert() {
+        let alert = UIAlertController(title: "Select a Branch", message: nil, preferredStyle: .actionSheet)
+        
+        // Add actions for each branch
+        for branch in Branch.allCases {
+            let action = UIAlertAction(title: branch.rawValue, style: .default) { [weak self] _ in
+                // Handle the selected branch
+                self?.handleBranchSelection(branch)
+            }
+            alert.addAction(action)
+        }
+        
+        // Add cancel action
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
+        
+        // Present the alert
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func handleBranchSelection(_ selectedBranch: Branch) {
+        print("Selected Branch: \(selectedBranch.rawValue)")
+        UserAccountController.shared.updateBranch(newBranch: selectedBranch)
+        branchLabel.text = selectedBranch.rawValue
+        emptyBranchStackView.isHidden = true
+        branchLabel.isVisible = true
     }
 }
 

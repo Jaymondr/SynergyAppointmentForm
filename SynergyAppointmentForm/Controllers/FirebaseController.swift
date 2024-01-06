@@ -126,8 +126,12 @@ class FirebaseController {
     // MARK: - USER
     func createUser(from user: UserAccount, completion: @escaping (_ user: UserAccount?, _ error: Error?) -> Void) {
         let docRef = db.collection(UserAccount.collectionKey).document(user.firebaseID)
-        let data = user.firebaseRepresentation
+        var data = user.firebaseRepresentation
         
+        // ADD CREATED DATE
+        let createdDate = Timestamp(date: Date())
+        data["createdDate"] = createdDate
+    
         docRef.setData(data) { error in
             if let error = error {
                 completion(nil, error)
@@ -141,7 +145,7 @@ class FirebaseController {
     
     func createUser(firstName: String, lastName: String, email: String, completion: @escaping (_ user: UserAccount?, _ error: Error?) -> Void) {
         let docRef = db.collection(UserAccount.collectionKey).document()
-        var data: [String: Any] = [
+        let data: [String: Any] = [
             UserAccount.CodingKeys.firstName.rawValue  : firstName,
             UserAccount.CodingKeys.lastName.rawValue   : lastName,
             UserAccount.CodingKeys.email.rawValue      : email,
@@ -158,7 +162,7 @@ class FirebaseController {
             }
         }
     }
-    
+        
     func getUser(with firebaseID: String, completion: @escaping (_ user: UserAccount?, _ error: Error? ) -> Void) {
         let docRef = db.collection(UserAccount.collectionKey).document(firebaseID)
         docRef.getDocument(completion: { document, error in

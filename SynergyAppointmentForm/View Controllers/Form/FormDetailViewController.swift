@@ -72,107 +72,30 @@ class FormDetailViewController: UIViewController {
         return form?.outcome
     }
     
-    // MARK: FUNCTIONS
+    // MARK: BUTTONS
     @IBAction func tagButtonPressed(_ sender: Any) {
-        guard let form = form else { return }
         let alert = UIAlertController(title: "Add Label", message: "Select Label", preferredStyle: .alert)
         
-        let pendingAction = UIAlertAction(title: "Pending", style: .default) { action in
-            self.form?.outcome = .pending
+        for outcome in Outcome.allCases {
+            let action = UIAlertAction(title: outcome.rawValue.capitalized, style: .default) { _ in
+                self.updateFormWithOutcome(outcome)
+            }
             
-            self.setUpView(with: self.form)
-            FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
-                if let error = error {
-                    UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
-                    print("Error: \(error)")
-                    return
-                }
-                self.delegate?.didUpdate(form: form)
-                UIAlertController.presentDismissingAlert(title: "Label Updated!", dismissAfter: 0.6)
+            let color: UIColor
+            switch outcome {
+            case .pending: color = UIColor.eden
+            case .sold: color = UIColor.outcomeGreen
+            case .rescheduled: color = UIColor.outcomePurple
+            case .cancelled: color = UIColor.outcomeRed
+            case .ran: color = UIColor.outcomeBlue
+            case .ranIncomplete: color = UIColor.outcomeRed
             }
-        }
-
-        let soldAction = UIAlertAction(title: "SOLD", style: .default) { action in
-            self.form?.outcome = .sold
-            self.setUpView(with: self.form)
-            FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
-                if let error = error {
-                    UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
-                    print("Error: \(error)")
-                    return
-                }
-                self.delegate?.didUpdate(form: form)
-                UIAlertController.presentDismissingAlert(title: "Label Updated!", dismissAfter: 0.6)
-            }
+            
+            action.setValue(color, forKey: "titleTextColor")
+            alert.addAction(action)
         }
         
-        let rescheduleAction = UIAlertAction(title: "RESCHEDULED", style: .default) { action in
-            self.form?.outcome = .rescheduled
-            self.setUpView(with: self.form)
-            FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
-                if let error = error {
-                    UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
-                    print("Error: \(error)")
-                    return
-                }
-                self.delegate?.didUpdate(form: form)
-                UIAlertController.presentDismissingAlert(title: "Label Updated!", dismissAfter: 0.6)
-            }
-        }
-        
-        let cancelledAction = UIAlertAction(title: "CANCELLED", style: .default) { action in
-            self.form?.outcome = .cancelled
-            self.setUpView(with: self.form)
-            FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
-                if let error = error {
-                    UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
-                    print("Error: \(error)")
-                    return
-                }
-                self.delegate?.didUpdate(form: form)
-                UIAlertController.presentDismissingAlert(title: "Label Updated!", dismissAfter: 0.6)
-            }
-        }
-        
-        let ranAction = UIAlertAction(title: "RAN", style: .default) { action in
-            self.form?.outcome = .ran
-            self.setUpView(with: self.form)
-            FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
-                if let error = error {
-                    UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
-                    print("Error: \(error)")
-                    return
-                }
-                self.delegate?.didUpdate(form: form)
-                UIAlertController.presentDismissingAlert(title: "Label Updated!", dismissAfter: 0.6)
-            }
-        }
-        
-        let ranIncompleteAction = UIAlertAction(title: "RAN-INCOMPLETE", style: .default) { action in
-            self.form?.outcome = .ranIncomplete
-            self.setUpView(with: self.form)
-            FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
-                if let error = error {
-                    UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
-                    print("Error: \(error)")
-                    return
-                }
-                self.delegate?.didUpdate(form: form)
-                UIAlertController.presentDismissingAlert(title: "Label Updated!", dismissAfter: 0.6)
-            }
-        }
-        
-        let cancelAction = UIAlertAction(title: "CANCEL", style: .cancel)
-        
-        soldAction.setValue(UIColor.outcomeGreen, forKey: "titleTextColor")
-        ranAction.setValue(UIColor.outcomeBlue, forKey: "titleTextColor")
-        ranIncompleteAction.setValue(UIColor.outcomeRed, forKey: "titleTextColor")
-        pendingAction.setValue(UIColor.eden, forKey: "titleTextColor")
-        cancelledAction.setValue(UIColor.outcomeRed, forKey: "titleTextColor")
-        rescheduleAction.setValue(UIColor.outcomePurple, forKey: "titleTextColor")
-        
-        alert.addActions([soldAction, ranAction, ranIncompleteAction, cancelledAction, rescheduleAction, pendingAction, cancelAction])
-        
+        alert.addAction(UIAlertAction(title: "CANCEL", style: .cancel))
         self.present(alert, animated: true)
     }
     
@@ -205,7 +128,6 @@ class FormDetailViewController: UIViewController {
             UIAlertController.presentDismissingAlert(title: "Updated Form!", dismissAfter: 0.6)
             self.vibrate()
         }
-        
     }
     
     @IBAction func trelloCopyButtonPressed(_ sender: Any) {
@@ -232,7 +154,6 @@ class FormDetailViewController: UIViewController {
             self.zipTextField.text = address?.zip
             self.cityTextField.text = address?.city
             self.stateTextField.text = address?.state
-            
         }
     }
     
@@ -255,6 +176,8 @@ class FormDetailViewController: UIViewController {
         }
     }
     
+    
+    // MARK: FUNCTIONS
     func setUpView(with form: Form?) {
         guard let form = form else { print("No Form!"); return }
         firstNameTextField?.text = form.firstName
@@ -278,6 +201,15 @@ class FormDetailViewController: UIViewController {
         
         reasonTextView.layer.cornerRadius = 5.0
         commentsTextView.layer.cornerRadius = 5.0
+        
+        // EMAIL PLACEHOLDER
+        if let branch = UserAccount.currentUser?.branch {
+            if branch == .southJordan {
+                emailTextField.placeholder = "@synergywindow.com"
+            } else {
+                emailTextField.placeholder = "@energyonewindows.com"
+            }
+        }
         
         // BACKGROUND
         var labelColor: CGColor
@@ -327,10 +259,49 @@ class FormDetailViewController: UIViewController {
         guard let form = form else { UIAlertController.presentDismissingAlert(title: "Error: No Form.", dismissAfter: 0.6); return nil }
         guard let user = UserAccount.currentUser else { UIAlertController.presentDismissingAlert(title: "Error: No User.", dismissAfter: 0.6); return nil }
 
-        let updatedForm = Form(firebaseID: form.firebaseID, address: addressTextField.text ?? "", city: cityTextField.text ?? "", comments: commentsTextView.text ?? "", date: dateTimePicker.date, email: emailTextField.text ?? "", energyBill: energyBillTextField.text ?? "", financeOptions: financeOptionsTextField.text ?? "", firstName: firstNameTextField.text ?? "", lastName: lastNameTextField.text ?? "", numberOfWindows: numberOfWindowsTextField.text ?? "", outcome: tag ?? .pending, phone: phoneTextField.text ?? "", rate: rateTextField.text ?? "", reason: reasonTextView.text ?? "", retailQuote: quoteTextField.text ?? "", spouse: spouseTextField.text ?? "", state: stateTextField.text ?? "", userID: user.firebaseID, yearsOwned: yearsOwnedTextField.text ?? "", zip: zipTextField.text ?? "")
+        let updatedForm = Form(firebaseID: form.firebaseID,
+                               address: addressTextField.text ?? "",
+                               city: cityTextField.text ?? "",
+                               comments: commentsTextView.text ?? "",
+                               date: dateTimePicker.date,
+                               email: emailTextField.text ?? "",
+                               energyBill: energyBillTextField.text ?? "",
+                               financeOptions: financeOptionsTextField.text ?? "",
+                               firstName: firstNameTextField.text ?? "",
+                               lastName: lastNameTextField.text ?? "",
+                               numberOfWindows: numberOfWindowsTextField.text ?? "",
+                               outcome: tag ?? .pending, phone: phoneTextField.text ?? "",
+                               rate: rateTextField.text ?? "",
+                               reason: reasonTextView.text ?? "",
+                               retailQuote: quoteTextField.text ?? "",
+                               spouse: spouseTextField.text ?? "",
+                               state: stateTextField.text ?? "",
+                               userID: user.firebaseID,
+                               yearsOwned: yearsOwnedTextField.text ?? "",
+                               zip: zipTextField.text ?? ""
+        )
         
         return updatedForm
     }
+    
+    func updateFormWithOutcome(_ outcome: Outcome) {
+        guard let form = form else { return }
+
+        form.outcome = outcome
+        setUpView(with: form)
+
+        FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
+            if let error = error {
+                UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
+                print("Error: \(error)")
+                return
+            }
+
+            self.delegate?.didUpdate(form: form)
+            UIAlertController.presentDismissingAlert(title: "Label Updated!", dismissAfter: 0.6)
+        }
+    }
+
 }
 
 

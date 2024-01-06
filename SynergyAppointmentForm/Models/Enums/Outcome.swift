@@ -7,36 +7,36 @@
 
 import Foundation
 
-enum Outcome: String {
+enum Outcome: String, CaseIterable {
     case pending = "pending"
-    case cancelled = "cancelled"
-    case rescheduled = "rescheduled"
-    case ran = "ran"
-    case ranIncomplete = "ran-incomplete"
     case sold = "sold"
+    case ran = "ran"
+    case rescheduled = "rescheduled"
+    case ranIncomplete = "ran-incomplete"
+    case cancelled = "cancelled"
     
     static func fromString(_ stringValue: String) -> Outcome {
-            switch stringValue {
-            case "pending":
-                return .pending
-                
-            case "cancelled":
-                return .cancelled
-                
-            case "rescheduled":
-                return .rescheduled
-                
-            case "ran":
-                return .ran
-                
-            case "ran-incomplete":
-                return .ranIncomplete
-                
-            case "sold":
-                return .sold
-                
-            default:
-                return .pending
-            }
+        switch stringValue {
+        case "pending":
+            return .pending
+            
+        case "cancelled":
+            return .cancelled
+            
+        case "rescheduled":
+            return .rescheduled
+            
+        case "ran":
+            return .ran
+            
+        case "ran-incomplete":
+            return .ranIncomplete
+            
+        case "sold":
+            return .sold
+            
+        default:
+            return .pending
         }
+    }
 }
