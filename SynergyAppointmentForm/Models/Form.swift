@@ -21,6 +21,7 @@ class Form: FirebaseModel {
     var energyBill: String
     var financeOptions: String
     var firstName: String
+    var homeValue: String?
     var lastName: String
     var notes: String?
     var numberOfWindows: String
@@ -32,10 +33,11 @@ class Form: FirebaseModel {
     var spouse: String
     var state: String
     var userID: String
+    var yearBuilt: String?
     var yearsOwned: String
     var zip: String
     
-    init(firebaseID: String, address: String, city: String, comments: String, date: Date, email: String, energyBill: String, financeOptions: String, firstName: String, lastName: String, notes: String = "", numberOfWindows: String, outcome: Outcome = .pending, phone: String, rate: String, reason: String, retailQuote: String, spouse: String, state: String, userID: String, yearsOwned: String, zip: String) {
+    init(firebaseID: String, address: String, city: String, comments: String, date: Date, email: String, energyBill: String, financeOptions: String, firstName: String, homeValue: String, lastName: String, notes: String = "", numberOfWindows: String, outcome: Outcome = .pending, phone: String, rate: String, reason: String, retailQuote: String, spouse: String, state: String, userID: String, yearBuilt: String, yearsOwned: String, zip: String) {
         
         self.firebaseID = firebaseID
         self.address = address
@@ -46,6 +48,7 @@ class Form: FirebaseModel {
         self.energyBill = energyBill
         self.financeOptions = financeOptions
         self.firstName = firstName
+        self.homeValue = homeValue
         self.lastName = lastName
         self.notes = notes
         self.numberOfWindows = numberOfWindows
@@ -57,6 +60,7 @@ class Form: FirebaseModel {
         self.spouse = spouse
         self.state = state
         self.userID = userID
+        self.yearBuilt = yearBuilt
         self.yearsOwned = yearsOwned
         self.zip = zip
 
@@ -86,6 +90,8 @@ class Form: FirebaseModel {
 
         else { return nil }
         
+        let homeValue = firebaseData[Form.CodingKeys.homeValue.rawValue] as? String
+        let yearBuilt = firebaseData[Form.CodingKeys.yearBuilt.rawValue] as? String
         let notes = firebaseData[Form.CodingKeys.notes.rawValue] as? String
         let outcome = Outcome.fromString(outcomeString)
         
@@ -108,6 +114,8 @@ class Form: FirebaseModel {
         self.notes = notes
         self.numberOfWindows = numberOfWindows
         self.yearsOwned = yearsOwned
+        self.yearBuilt = yearBuilt
+        self.homeValue = homeValue
         self.userID = userID
         self.zip = zip
         self.rate = rate
@@ -123,6 +131,7 @@ class Form: FirebaseModel {
             Form.CodingKeys.energyBill.rawValue        : energyBill,
             Form.CodingKeys.financeOptions.rawValue    : financeOptions,
             Form.CodingKeys.firstName.rawValue         : firstName,
+            Form.CodingKeys.homeValue.rawValue         : homeValue ?? NSNull(),
             Form.CodingKeys.lastName.rawValue          : lastName,
             Form.CodingKeys.notes.rawValue             : notes ?? NSNull(),
             Form.CodingKeys.numberOfWindows.rawValue   : numberOfWindows,
@@ -134,10 +143,11 @@ class Form: FirebaseModel {
             Form.CodingKeys.spouse.rawValue            : spouse,
             Form.CodingKeys.state.rawValue             : state,
             Form.CodingKeys.userID.rawValue            : userID,
+            Form.CodingKeys.yearBuilt.rawValue         : yearBuilt ?? NSNull(),
             Form.CodingKeys.yearsOwned.rawValue        : yearsOwned,
             Form.CodingKeys.zip.rawValue               : zip
         ]
-        
+                
         return firebaseRepresentation
     }
     
@@ -155,6 +165,7 @@ class Form: FirebaseModel {
         case energyBill = "energyBill"
         case firstName = "firstName"
         case financeOptions = "financeOptions"
+        case homeValue = "homeValue"
         case lastName = "lastName"
         case notes = "notes"
         case numberOfWindows = "numberOfWindows"
@@ -166,6 +177,7 @@ class Form: FirebaseModel {
         case spouse = "spouse"
         case state = "state"
         case userID = "userID"
+        case yearBuilt = "yearBuilt"
         case yearsOwned = "yearsOwned"
         case zip = "zip"
     }

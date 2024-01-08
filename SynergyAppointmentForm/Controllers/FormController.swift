@@ -20,7 +20,34 @@ class FormController {
     
     // MARK: FUNCTIONS
     func createAndCopyForm(form: Form) {
+        guard let user = UserAccount.currentUser else { return }
+        if user.branch == .raleigh {
         UIPasteboard.general.string =
+        """
+        \(user.firstName)'s APPT
+        
+        Appointment for: \(form.date.formattedDay()) \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased()), \(form.date.formattedMonth()) \(form.date.formattedDayNumber())
+        
+        \(form.firstName) & \(form.spouse) \(form.lastName)
+        
+        \(form.address), \(form.city), \(form.state) \(form.zip)
+        
+        \(form.firstName)'s Phone: \(form.phone)
+        Email: \(form.email)
+        
+        \(form.homeValue ?? "--")k
+        Year Built: \(form.yearBuilt ?? "--")
+        Moved in \(form.yearsOwned) year(s) ago.
+        
+        Rating: \(form.rate)
+
+        Previous estimates: \(form.retailQuote)
+        
+        Comments: \(form.comments)
+        """
+            UIAlertController.presentDismissingAlert(title: "Form Copied!", dismissAfter: 0.3)
+        } else {
+            UIPasteboard.general.string =
         """
         APT FORM
         
@@ -48,7 +75,8 @@ class FormController {
         
         Comments: \(form.comments)
         """
-        UIAlertController.presentDismissingAlert(title: "Form Copied!", dismissAfter: 0.3)
+            UIAlertController.presentDismissingAlert(title: "Form Copied!", dismissAfter: 0.3)
+        }
     }
     
     func createAndCopyTrello(form: Form) {

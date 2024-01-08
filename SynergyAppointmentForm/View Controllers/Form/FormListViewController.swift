@@ -285,7 +285,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         if segue.identifier == "toCreateForm",
-           let destinationVC = segue.destination as? FormViewController {
+           let destinationVC = segue.destination as? CreateFormViewController {
                 destinationVC.delegate = self
         }
         

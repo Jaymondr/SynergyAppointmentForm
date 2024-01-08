@@ -14,7 +14,7 @@ protocol FormViewDelegate: AnyObject {
     func didUpdateNew(_ form: Form)
 }
 
-class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDelegate, UITextViewDelegate {
+class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDelegate, UITextViewDelegate {
     // MARK: OUTLETS
     @IBOutlet weak var dateTimePicker: UIDatePicker!
     @IBOutlet weak var firstNameTextfield: UITextField!
@@ -31,12 +31,17 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     @IBOutlet weak var quoteTextfield: UITextField!
     @IBOutlet weak var financeTextfield: UITextField!
     @IBOutlet weak var yearsOwnedTextfield: UITextField!
+    @IBOutlet weak var homeValueTextfield: UITextField!
+    @IBOutlet weak var yearBuiltTextfield: UITextField!
     @IBOutlet weak var reasonTextview: UITextView!
     @IBOutlet weak var rateTextfield: UITextField!
     @IBOutlet weak var commentsTextview: UITextView!
     @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var trelloButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
+    // STACK VIEWS
+    @IBOutlet weak var homeValueStackView: UIStackView!
+    @IBOutlet weak var yearBuiltStackView: UIStackView!
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var locationManager = CLLocationManager()
@@ -249,18 +254,54 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     }
     
     func setupView() {
+        guard let user = UserAccount.currentUser else { return }
+        // DEFAULT IMPLEMENTATIONS
+        homeValueStackView.isHidden = true
+        yearBuiltStackView.isHidden = true
+
+        
+        // VIEW FOR BRANCH
+        switch user.branch {
+        case .atlanta:
+            print("Form For Atlanta")
+            
+        case .austin:
+            print("Form For Austin")
+            
+        case .dallas:
+            print("Form For Dallas")
+            
+        case .houston:
+            print("Form For Houston")
+            
+        case .lasVegas:
+            print("Form For Las Vegas")
+            
+        case .nashville:
+            print("Form For Nashville")
+            
+        case .raleigh:
+            print("Form For Raleigh")
+            homeValueStackView.isVisible = true
+            yearBuiltStackView.isVisible = true
+            
+        case .southJordan:
+            print("Form For South Jordan")
+            emailTextfield.placeholder = "@synergywindow.com"
+
+        case .sanAntonio:
+            print("Form For San Antonio")
+            
+        default:
+            break
+        }
+        
+        // CORNER RADIUS
         reasonTextview.layer.cornerRadius = 5.0
         commentsTextview.layer.cornerRadius = 5.0
         
-        // EMAIL PLACEHOLDER
-        if let branch = UserAccount.currentUser?.branch {
-            if branch == .southJordan {
-                emailTextfield.placeholder = "@synergywindow.com"
-            } else {
-                emailTextfield.placeholder = "@energyonewindows.com"
-            }
-        }
-        
+                
+        // LIGHT/DARK MODE
         if traitCollection.userInterfaceStyle == .dark {
             // BACKGROUND
             let gradientLayer = CAGradientLayer()
@@ -300,7 +341,6 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
         if textField == firstNameTextfield {
             lastNameTextfield.becomeFirstResponder()
         } else if textField == lastNameTextfield {
@@ -347,6 +387,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
 
         // Change the border color based on the condition
         if newLength != 10 {
+            textField.layer.borderWidth = 1.0
             textField.layer.borderColor = UIColor.red.cgColor
         } else {
             textField.layer.borderColor = UIColor.clear.cgColor
@@ -358,7 +399,29 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     
     func createForm() -> Form? {
         guard let user = user else { return nil }
-        let form = Form(firebaseID: self.firebaseID, address: addressTextfield.text ?? "", city: cityTextfield.text ?? "", comments: commentsTextview.text ?? "", date: dateTimePicker.date, email: emailTextfield.text ?? "", energyBill: energyBillTextfield.text ?? "", financeOptions: financeTextfield.text ?? "", firstName: firstNameTextfield.text ?? "", lastName: lastNameTextfield.text ?? "", numberOfWindows: numberOfWindowsTexfield.text ?? "", phone: phoneTextfield.text ?? "", rate: rateTextfield.text ?? "", reason: reasonTextview.text ?? "", retailQuote: quoteTextfield.text ?? "", spouse: spouseTextfield.text ?? "", state: stateTextfield.text ?? "", userID: user.firebaseID, yearsOwned: yearsOwnedTextfield.text ?? "", zip: zipTextfield.text ?? "")
+        let form = Form(firebaseID: self.firebaseID,
+                        address: addressTextfield.text ?? "",
+                        city: cityTextfield.text ?? "",
+                        comments: commentsTextview.text ?? "",
+                        date: dateTimePicker.date,
+                        email: emailTextfield.text ?? "",
+                        energyBill: energyBillTextfield.text ?? "",
+                        financeOptions: financeTextfield.text ?? "",
+                        firstName: firstNameTextfield.text ?? "",
+                        homeValue: homeValueTextfield.text ?? "--",
+                        lastName: lastNameTextfield.text ?? "",
+                        numberOfWindows: numberOfWindowsTexfield.text ?? "",
+                        phone: phoneTextfield.text ?? "",
+                        rate: rateTextfield.text ?? "",
+                        reason: reasonTextview.text ?? "",
+                        retailQuote: quoteTextfield.text ?? "",
+                        spouse: spouseTextfield.text ?? "",
+                        state: stateTextfield.text ?? "",
+                        userID: user.firebaseID,
+                        yearBuilt: yearBuiltTextfield.text ?? "--",
+                        yearsOwned: yearsOwnedTextfield.text ?? "--",
+                        zip: zipTextfield.text ?? ""
+        )
         return form
     }
     
@@ -383,7 +446,7 @@ class FormViewController: UIViewController, CLLocationManagerDelegate, UITextFie
 }
 
 // MARK: - EXTENSIONS
-extension FormViewController: MFMessageComposeViewControllerDelegate {
+extension CreateFormViewController: MFMessageComposeViewControllerDelegate {
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
         controller.dismiss(animated: true, completion: nil)
     }
