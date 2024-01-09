@@ -207,7 +207,7 @@ extension Date {
     
     func formattedDayMonth() -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd"
+        formatter.dateFormat = "M/d"
         return formatter.string(from: self)
     }
     
