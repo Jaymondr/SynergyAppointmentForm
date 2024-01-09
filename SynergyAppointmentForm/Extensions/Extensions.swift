@@ -207,10 +207,22 @@ extension Date {
     
     func formattedDayMonth() -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd"
+        formatter.dateFormat = "M/d"
         return formatter.string(from: self)
     }
     
+    func formattedMonth() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM"
+        return formatter.string(from: self)
+    }
+    
+    func formattedDayNumber() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d"
+        return formatter.string(from: self)
+    }
+
     func formattedTime() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "h"

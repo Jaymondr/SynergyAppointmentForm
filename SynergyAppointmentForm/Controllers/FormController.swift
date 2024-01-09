@@ -17,10 +17,47 @@ class FormController {
     
     // MARK: PROPERTIES
     let geocoder = CLGeocoder()    
+    var companyName: String? {
+        if let branch = UserAccount.currentUser?.branch {
+            if branch == .southJordan || branch == .lasVegas {
+                return "Synergy"
+            } else {
+                return "Energy One"
+            }
+        }
+        return nil
+    }
     
     // MARK: FUNCTIONS
     func createAndCopyForm(form: Form) {
+        guard let user = UserAccount.currentUser else { return }
+        if user.branch == .raleigh {
         UIPasteboard.general.string =
+        """
+        \(user.firstName)'s APPT
+        
+        Appointment for: \(form.date.formattedDay()) \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased()), \(form.date.formattedMonth()) \(form.date.formattedDayNumber())
+        
+        \(form.firstName) & \(form.spouse) \(form.lastName)
+        
+        \(form.address), \(form.city), \(form.state) \(form.zip)
+        
+        \(form.firstName)'s Phone: \(form.phone)
+        Email: \(form.email)
+        
+        \(form.homeValue ?? "--")k
+        Year Built: \(form.yearBuilt ?? "--")
+        Moved in \(form.yearsOwned) year(s) ago.
+        
+        Rating: \(form.rate)
+
+        Previous estimates: \(form.retailQuote)
+        
+        Comments: \(form.comments)
+        """
+            UIAlertController.presentDismissingAlert(title: "Form Copied!", dismissAfter: 0.3)
+        } else {
+            UIPasteboard.general.string =
         """
         APT FORM
         
@@ -48,7 +85,8 @@ class FormController {
         
         Comments: \(form.comments)
         """
-        UIAlertController.presentDismissingAlert(title: "Form Copied!", dismissAfter: 0.3)
+            UIAlertController.presentDismissingAlert(title: "Form Copied!", dismissAfter: 0.3)
+        }
     }
     
     func createAndCopyTrello(form: Form) {
@@ -83,7 +121,7 @@ class FormController {
         
         let text =
         """
-        Hey \(form.firstName), it's \(user.firstName) with Synergy.
+        Hey \(form.firstName), it's \(user.firstName) with \(companyName ?? "windows").
         
         Your appointment is good to go for \(form.date.formattedDay()) \(form.date.formattedDayMonth()) at \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased()). Thanks for your time, and if you need anything just call or text!
         
@@ -146,6 +184,7 @@ class FormController {
         } else {
             print("Messages cannot be sent from this device.")
             viewController.title = "Unable to send messages"
+            alert.title = "Unable to send messages"
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                 alert.dismiss(animated: true)
             }

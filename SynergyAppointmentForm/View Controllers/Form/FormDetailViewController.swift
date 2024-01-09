@@ -16,7 +16,6 @@ protocol FormDetailViewDelegate: AnyObject {
 class FormDetailViewController: UIViewController {
     
     // MARK: OUTLETS
-    
     @IBOutlet weak var dateTimePicker: UIDatePicker!
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
@@ -31,14 +30,20 @@ class FormDetailViewController: UIViewController {
     @IBOutlet weak var energyBillTextField: UITextField!
     @IBOutlet weak var quoteTextField: UITextField!
     @IBOutlet weak var financeOptionsTextField: UITextField!
+    @IBOutlet weak var yearBuiltTextField: UITextField!
     @IBOutlet weak var yearsOwnedTextField: UITextField!
+    @IBOutlet weak var homeValueTextField: UITextField!
     @IBOutlet weak var reasonTextView: UITextView!
     @IBOutlet weak var rateTextField: UITextField!
     @IBOutlet weak var commentsTextView: UITextView!
     @IBOutlet weak var blurView: UIView!
     @IBOutlet weak var labelButton: UIButton!
-    
     @IBOutlet weak var saveButton: UIButton!
+    
+    // STACK VIEWS
+    @IBOutlet weak var homeValueStackView: UIStackView!
+    @IBOutlet weak var yearBuiltStackView: UIStackView!
+    
     
     @IBOutlet weak var activityIndicator:
     
@@ -184,6 +189,7 @@ class FormDetailViewController: UIViewController {
     // MARK: FUNCTIONS
     func setUpView(with form: Form?) {
         guard let form = form else { print("No Form!"); return }
+        guard let user = UserAccount.currentUser else { return }
         firstNameTextField?.text = form.firstName
         lastNameTextField?.text = form.lastName
         spouseTextField?.text = form.spouse
@@ -197,7 +203,9 @@ class FormDetailViewController: UIViewController {
         energyBillTextField.text = form.energyBill
         quoteTextField.text = form.retailQuote
         financeOptionsTextField.text = form.financeOptions
+        yearBuiltTextField.text = form.yearBuilt
         yearsOwnedTextField.text = form.yearsOwned
+        homeValueTextField.text = form.homeValue
         reasonTextView.text = form.reason
         rateTextField.text = form.rate
         commentsTextView.text = form.comments
@@ -206,13 +214,44 @@ class FormDetailViewController: UIViewController {
         reasonTextView.layer.cornerRadius = 5.0
         commentsTextView.layer.cornerRadius = 5.0
         
-        // EMAIL PLACEHOLDER
-        if let branch = UserAccount.currentUser?.branch {
-            if branch == .southJordan {
-                emailTextField.placeholder = "@synergywindow.com"
-            } else {
-                emailTextField.placeholder = "@energyonewindows.com"
-            }
+        // DEFAULT IMPLEMENTATIONS
+        homeValueStackView.isHidden = true
+        yearBuiltStackView.isHidden = true
+        
+        // VIEW FOR BRANCH
+        switch user.branch {
+        case .atlanta:
+            print("Form For Atlanta")
+            
+        case .austin:
+            print("Form For Austin")
+            
+        case .dallas:
+            print("Form For Dallas")
+            
+        case .houston:
+            print("Form For Houston")
+            
+        case .lasVegas:
+            print("Form For Las Vegas")
+            
+        case .nashville:
+            print("Form For Nashville")
+            
+        case .raleigh:
+            print("Form For Raleigh")
+            homeValueStackView.isVisible = true
+            yearBuiltStackView.isVisible = true
+            
+        case .southJordan:
+            print("Form For South Jordan")
+            emailTextField.placeholder = "@synergywindow.com"
+
+        case .sanAntonio:
+            print("Form For San Antonio")
+            
+        default:
+            break
         }
         
         // BACKGROUND
@@ -272,6 +311,7 @@ class FormDetailViewController: UIViewController {
                                energyBill: energyBillTextField.text ?? "",
                                financeOptions: financeOptionsTextField.text ?? "",
                                firstName: firstNameTextField.text ?? "",
+                               homeValue: homeValueTextField.text ?? "--",
                                lastName: lastNameTextField.text ?? "",
                                numberOfWindows: numberOfWindowsTextField.text ?? "",
                                outcome: tag ?? .pending, phone: phoneTextField.text ?? "",
@@ -281,7 +321,8 @@ class FormDetailViewController: UIViewController {
                                spouse: spouseTextField.text ?? "",
                                state: stateTextField.text ?? "",
                                userID: user.firebaseID,
-                               yearsOwned: yearsOwnedTextField.text ?? "",
+                               yearBuilt: yearBuiltTextField.text ?? "--",
+                               yearsOwned: yearsOwnedTextField.text ?? "--",
                                zip: zipTextField.text ?? ""
         )
         
