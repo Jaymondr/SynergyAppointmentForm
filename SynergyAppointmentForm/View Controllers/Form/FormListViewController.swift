@@ -12,7 +12,7 @@ import UIKit
  1. Add empty state UI ✅
  2. Add search bar ✅
  3. Add notification to select branch ✅
- 4. Add update label when user swipes right
+ 4. Remove unused buttons for other branches
  5. Add account types for branch manager, director, owner
  6. Add analytics
  7. Add filters for owner/branch manager
@@ -21,6 +21,7 @@ import UIKit
  10. Add follow up reminders
  11. Add partial sale feature-> keep track of partially sold homes to go back
  12. Add note screen when user swipes right
+ 13. Add update label when user swipes right
  */
 
 class FormListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
