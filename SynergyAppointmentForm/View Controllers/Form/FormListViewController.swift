@@ -136,15 +136,17 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     
     // Function to filter forms based on search text
     func filterForms(for searchText: String) {
-        // Update your forms array based on the searchText
-        // For example, you can filter by form.firstName or form.lastName
-        forms = forms.filter { form in
-            return form.firstName.lowercased().contains(searchText.lowercased()) ||
-                   form.lastName.lowercased().contains(searchText.lowercased())
+        if searchText.isEmpty {
+            splitForms(forms: forms)
+        } else {
+            var filteredForms = forms
+            filteredForms = forms.filter { form in
+                return form.firstName.lowercased().contains(searchText.lowercased()) ||
+                form.lastName.lowercased().contains(searchText.lowercased()) || form.spouse.lowercased().contains(searchText.lowercased()) || form.city.contains(searchText.lowercased()) || form.phone.contains(searchText.lowercased()) ||
+                form.outcome.rawValue.lowercased().contains(searchText.lowercased())
+            }
+            splitForms(forms: filteredForms)
         }
-        
-        // Update your sectioned arrays (upcomingAppointmentForms, pastAppointmentForms) if needed
-        splitForms(forms: forms)
     }
     
     // Function to present the sign-in view controller
