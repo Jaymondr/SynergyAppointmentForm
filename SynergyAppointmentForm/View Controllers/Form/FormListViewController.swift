@@ -10,7 +10,7 @@ import UIKit
 // MARK: - TODO
 /*
  1. Add empty state UI ✅
- 2. Add search bar
+ 2. Add search bar ✅
  3. Add notification to select branch
  4. Add update label when user swipes right
  5. Add account types for branch manager, director, owner
