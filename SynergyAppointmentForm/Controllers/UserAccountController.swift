@@ -31,7 +31,7 @@ class UserAccountController {
                 // Handle error as needed
             } else {
                 print("Branch updated successfully in Firebase!")
-                UIAlertController.presentDismissingAlert(title: "Updated Branch", dismissAfter: 0.3)
+                UIAlertController.presentDismissingAlert(title: "Added to \(newBranch.rawValue)'s branch", dismissAfter: 0.7)
             }
         }
     }

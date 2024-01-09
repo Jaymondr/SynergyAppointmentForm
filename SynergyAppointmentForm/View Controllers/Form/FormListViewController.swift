@@ -11,7 +11,7 @@ import UIKit
 /*
  1. Add empty state UI ✅
  2. Add search bar ✅
- 3. Add notification to select branch
+ 3. Add notification to select branch ✅
  4. Add update label when user swipes right
  5. Add account types for branch manager, director, owner
  6. Add analytics
@@ -36,6 +36,8 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         // Check for user
         if UserAccount.currentUser == nil {
             presentLoginChoiceVC()
+        } else if UserAccount.currentUser?.branch == nil {
+            showBranchSelectionAlert()
         }
     }
     
@@ -384,5 +386,27 @@ extension FormListViewController: NotesViewDelegate {
         let notesView = NotesView()
         notesView.form = form
         self.view.addSubview(notesView)
+    }
+}
+
+extension FormListViewController {
+    func showBranchSelectionAlert() {
+        let alert = UIAlertController(title: "Please Select a Branch", message: nil, preferredStyle: .actionSheet)
+        
+        // Add actions for each branch
+        for branch in Branch.allCases {
+            let action = UIAlertAction(title: branch.rawValue, style: .default) { _ in
+                // Handle the selected branch
+                UserAccountController.shared.updateBranch(newBranch: branch)
+            }
+            alert.addAction(action)
+        }
+        
+        // Add cancel action
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
+        
+        // Present the alert
+        present(alert, animated: true, completion: nil)
     }
 }
