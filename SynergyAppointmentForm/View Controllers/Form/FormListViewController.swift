@@ -9,14 +9,25 @@ import UIKit
 
 // MARK: - TODO
 /*
- 1. Add empty state UI
- 
+ 1. Add empty state UI ✅
+ 2. Add search bar ✅
+ 3. Add notification to select branch
+ 4. Add update label when user swipes right
+ 5. Add account types for branch manager, director, owner
+ 6. Add analytics
+ 7. Add filters for owner/branch manager
+ 8. Add confetti when user makes sale
+ 9. Add goals
+ 10. Add follow up reminders
+ 11. Add partial sale feature-> keep track of partially sold homes to go back
+ 12. Add note screen when user swipes right
  */
 
-class FormListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FormListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
-    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addFormBarButton: UIBarButtonItem!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var tableView: UITableView!
     
     let refreshControl = UIRefreshControl()
 
@@ -40,17 +51,20 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         loadForms()
-        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        setTitleAttributes()
+        
+        searchBar.delegate = self
         tableView.refreshControl = refreshControl
         tableView.separatorStyle = .none
-        setTitleAttributes()
+        
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleSignInNotification), name: .signInNotification, object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(handleSignOutNotification),
                                                name: .signOutNotification,
                                                object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleSignInNotification), name: .signInNotification, object: nil)
         
-    }    
+    }
     
     deinit {
         // Remove the observer when the view controller is deallocated
@@ -110,6 +124,30 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         loadForms()
     }
     
+    @objc func dismissKeyboard() {
+        searchBar.resignFirstResponder()
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        // Implement search functionality here
+        filterForms(for: searchText)
+        tableView.reloadData()
+    }
+    
+    // Function to filter forms based on search text
+    func filterForms(for searchText: String) {
+        if searchText.isEmpty {
+            splitForms(forms: forms)
+        } else {
+            var filteredForms = forms
+            filteredForms = forms.filter { form in
+                return form.firstName.lowercased().contains(searchText.lowercased()) ||
+                form.lastName.lowercased().contains(searchText.lowercased()) || form.spouse.lowercased().contains(searchText.lowercased()) || form.city.contains(searchText.lowercased()) || form.phone.contains(searchText.lowercased()) ||
+                form.outcome.rawValue.lowercased().contains(searchText.lowercased())
+            }
+            splitForms(forms: filteredForms)
+        }
+    }
     
     // Function to present the sign-in view controller
     func presentLoginChoiceVC() {
@@ -149,7 +187,6 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     // MARK: TABLEVIEW FUNCTIONS
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         switch formState {
         case .empty:

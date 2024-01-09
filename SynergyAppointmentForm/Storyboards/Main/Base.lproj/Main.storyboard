@@ -19,12 +19,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="BvH-az-xey">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="BvH-az-xey">
                                 <rect key="frame" x="0.0" y="103" width="393" height="749"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Search forms" id="E2q-le-yez">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="JHj-3R-XoM" id="DSa-oU-sa3"/>
+                                    </connections>
+                                </searchBar>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="formCell" rowHeight="138" id="4nh-tc-2PR" customClass="FormTableViewCell" customModule="SynergyAppointmentForm" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="393" height="138"/>
+                                        <rect key="frame" x="0.0" y="94" width="393" height="138"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4nh-tc-2PR" id="Amh-71-OWP">
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="138"/>
@@ -147,7 +155,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="emptyCell" rowHeight="130" id="9ue-Am-a5O" customClass="EmptyTableViewCell" customModule="SynergyAppointmentForm" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="188" width="393" height="130"/>
+                                        <rect key="frame" x="0.0" y="232" width="393" height="130"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9ue-Am-a5O" id="Izb-WU-6Yj">
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="130"/>
@@ -217,6 +225,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="addFormBarButton" destination="hQa-Ar-Ogm" id="V3M-z1-e6I"/>
+                        <outlet property="searchBar" destination="E2q-le-yez" id="svv-op-b0S"/>
                         <outlet property="tableView" destination="BvH-az-xey" id="Af1-de-Dvp"/>
                     </connections>
                 </viewController>
