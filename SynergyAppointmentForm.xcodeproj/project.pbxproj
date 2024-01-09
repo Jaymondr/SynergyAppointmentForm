@@ -34,6 +34,8 @@
 		671FB9322B0C091400D3CFAB /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 671FB9312B0C091400D3CFAB /* FirebaseRemoteConfigSwift */; };
 		671FB9342B0C091400D3CFAB /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 671FB9332B0C091400D3CFAB /* FirebaseStorage */; };
 		671FB9362B0C091400D3CFAB /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 671FB9352B0C091400D3CFAB /* FirebaseStorageCombine-Community */; };
+		673F85582B4DD66000465FE0 /* Notes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 673F85572B4DD66000465FE0 /* Notes.storyboard */; };
+		673F855A2B4DD68A00465FE0 /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673F85592B4DD68A00465FE0 /* NotesViewController.swift */; };
 		674603A22B03D8F700756102 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674603A12B03D8F700756102 /* AppDelegate.swift */; };
 		674603A42B03D8F700756102 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674603A32B03D8F700756102 /* SceneDelegate.swift */; };
 		674603A92B03D8F700756102 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 674603A72B03D8F700756102 /* Main.storyboard */; };
@@ -71,6 +73,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		673F85572B4DD66000465FE0 /* Notes.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Notes.storyboard; sourceTree = "<group>"; };
+		673F85592B4DD68A00465FE0 /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
 		6746039E2B03D8F700756102 /* SynergyAppointmentForm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SynergyAppointmentForm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		674603A12B03D8F700756102 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		674603A32B03D8F700756102 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -148,6 +152,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		673F85542B4DD62B00465FE0 /* Notes */ = {
+			isa = PBXGroup;
+			children = (
+				673F85572B4DD66000465FE0 /* Notes.storyboard */,
+			);
+			path = Notes;
+			sourceTree = "<group>";
+		};
+		673F855B2B4DD68E00465FE0 /* Notes */ = {
+			isa = PBXGroup;
+			children = (
+				673F85592B4DD68A00465FE0 /* NotesViewController.swift */,
+			);
+			path = Notes;
+			sourceTree = "<group>";
+		};
 		674603952B03D8F700756102 = {
 			isa = PBXGroup;
 			children = (
@@ -199,6 +219,7 @@
 				67FEDB822B34B2AC005D4421 /* Form */,
 				67FEDB832B34B2BE005D4421 /* Login */,
 				67ECD72F2B3789D30045E893 /* Profile */,
+				673F855B2B4DD68E00465FE0 /* Notes */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -206,6 +227,7 @@
 		674603B72B03DAED00756102 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				673F85542B4DD62B00465FE0 /* Notes */,
 				67A5C0992B28CDD500D16249 /* Main */,
 				67A5C0982B28CDB400D16249 /* SignUpScreen */,
 			);
@@ -417,6 +439,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				673F85582B4DD66000465FE0 /* Notes.storyboard in Resources */,
 				67A5C0972B28CDAD00D16249 /* SignUpScreen.storyboard in Resources */,
 				674603AE2B03D8FA00756102 /* LaunchScreen.storyboard in Resources */,
 				67EBEE322B0C0353009FD021 /* GoogleService-Info.plist in Resources */,
@@ -453,6 +476,7 @@
 				67EBEE3F2B0C051C009FD021 /* FirebaseController.swift in Sources */,
 				67ECD72E2B3789CF0045E893 /* ProfileViewController.swift in Sources */,
 				678162F32B48C6F500C48A52 /* Branch.swift in Sources */,
+				673F855A2B4DD68A00465FE0 /* NotesViewController.swift in Sources */,
 				674603BC2B03DE0E00756102 /* FormController.swift in Sources */,
 				67A582F82B0D23F300D4B5DA /* FormDetailViewController.swift in Sources */,
 				67CE58AB2B47ACA600D809B4 /* EmptyTableViewCell.swift in Sources */,
