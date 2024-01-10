@@ -258,7 +258,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         // DEFAULT IMPLEMENTATIONS
         homeValueStackView.isHidden = true
         yearBuiltStackView.isHidden = true
-
+        trelloButton.isHidden = true
         
         // VIEW FOR BRANCH
         switch user.branch {
@@ -288,6 +288,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         case .southJordan:
             print("Form For South Jordan")
             emailTextfield.placeholder = "@synergywindow.com"
+            trelloButton.isVisible = true
 
         case .sanAntonio:
             print("Form For San Antonio")

@@ -16,6 +16,7 @@ protocol FormDetailViewDelegate: AnyObject {
 class FormDetailViewController: UIViewController {
     
     // MARK: OUTLETS
+    @IBOutlet weak var trelloButton: UIButton!
     @IBOutlet weak var dateTimePicker: UIDatePicker!
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
@@ -217,6 +218,7 @@ class FormDetailViewController: UIViewController {
         // DEFAULT IMPLEMENTATIONS
         homeValueStackView.isHidden = true
         yearBuiltStackView.isHidden = true
+        trelloButton.isHidden = true
         
         // VIEW FOR BRANCH
         switch user.branch {
@@ -246,6 +248,7 @@ class FormDetailViewController: UIViewController {
         case .southJordan:
             print("Form For South Jordan")
             emailTextField.placeholder = "@synergywindow.com"
+            trelloButton.isVisible = true
 
         case .sanAntonio:
             print("Form For San Antonio")
