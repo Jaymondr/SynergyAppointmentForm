@@ -11,16 +11,16 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Notes View Controller-->
+        <!--NOTES-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController id="Y6W-OH-hqX" customClass="NotesViewController" customModule="SynergyAppointmentForm" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NotesViewController" title="NOTES" id="Y6W-OH-hqX" customClass="NotesViewController" customModule="SynergyAppointmentForm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LvJ-ak-W80">
-                                <rect key="frame" x="20" y="67" width="353" height="130"/>
+                                <rect key="frame" x="20" y="59" width="353" height="130"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wednesday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1MX-xp-13D">
                                         <rect key="frame" x="13" y="7.9999999999999982" width="108" height="25.333333333333329"/>
@@ -90,12 +90,17 @@
                                     <constraint firstItem="1MX-xp-13D" firstAttribute="leading" secondItem="LvJ-ak-W80" secondAttribute="leadingMargin" constant="5" id="zLu-oW-lsf"/>
                                 </constraints>
                             </view>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Notes: " textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="zHH-H0-kfD">
-                                <rect key="frame" x="16" y="239" width="361" height="537"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.55000000000000004" contentMode="scaleToFill" keyboardDismissMode="onDrag" text="Notes: " textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="zHH-H0-kfD">
+                                <rect key="frame" x="16" y="231" width="361" height="545"/>
+                                <color key="backgroundColor" name="noteYellow"/>
                                 <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ro1-nO-hpd">
                                 <rect key="frame" x="146.66666666666666" y="784" width="100" height="34"/>
@@ -117,7 +122,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PUa-g3-4Fa">
-                                <rect key="frame" x="162.66666666666666" y="197" width="68" height="34"/>
+                                <rect key="frame" x="162.66666666666666" y="189" width="68" height="34"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BvJ-Z8-pk9">
                                         <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
@@ -156,7 +161,7 @@
                             <constraint firstItem="zHH-H0-kfD" firstAttribute="top" secondItem="PUa-g3-4Fa" secondAttribute="bottom" constant="8" id="eZQ-bY-qmY"/>
                             <constraint firstItem="zHH-H0-kfD" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="fbF-qg-lzc"/>
                             <constraint firstItem="Ro1-nO-hpd" firstAttribute="top" secondItem="zHH-H0-kfD" secondAttribute="bottom" constant="8" id="gDh-Wz-580"/>
-                            <constraint firstItem="LvJ-ak-W80" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="8" id="iJF-XN-3oq"/>
+                            <constraint firstItem="LvJ-ak-W80" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="iJF-XN-3oq"/>
                             <constraint firstItem="Ro1-nO-hpd" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="mrV-UO-hCF"/>
                             <constraint firstItem="Ro1-nO-hpd" firstAttribute="bottom" secondItem="vDu-zF-Fre" secondAttribute="bottom" id="vJ3-af-n7a"/>
                         </constraints>
@@ -181,6 +186,9 @@
         <image name="text.bubble" catalog="system" width="128" height="110"/>
         <namedColor name="eden">
             <color red="0.14901960784313725" green="0.3843137254901961" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="noteYellow">
+            <color red="1" green="0.80784313725490198" blue="0.12941176470588237" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

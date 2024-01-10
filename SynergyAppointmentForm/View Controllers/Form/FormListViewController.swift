@@ -270,42 +270,94 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             self.refreshControl.endRefreshing()
         }
     }
-
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if formState == .empty {
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let viewNotesAction = UIContextualAction(style: .normal, title: "Notes") { [weak self] (_, _, completion) in
+            // Perform action when swiping left (view notes)
+            if indexPath.section == self?.upcoming, let form = self?.upcomingAppointmentForms[indexPath.row] {
+                self?.viewNotes(for: form)
+            } else if indexPath.section == self?.past, let form = self?.pastAppointmentForms[indexPath.row] {
+                // Implement the action you want for viewing notes
+                self?.viewNotes(for: form)
+            }
+            completion(true)
+        }
+        
+        /*
+        let labelAction = UIContextualAction(style: .normal, title: "Label") { [weak self] (_, _, completion) in
+            // Perform action when swiping left (view notes)
+            if indexPath.section == self?.upcoming, let form = self?.upcomingAppointmentForms[indexPath.row] {
+                self?.viewNotes(for: form)
+            } else if indexPath.section == self?.past, let form = self?.pastAppointmentForms[indexPath.row] {
+                // Implement the action you want for viewing notes
+                self?.viewNotes(for: form)
+            }
+            completion(true)
+        }
+         */
+        
+        // Set appearance and other configurations for the "View Notes" action
+        viewNotesAction.backgroundColor = UIColor.noteYellow // Customize the color as needed
+        
+        let configuration = UISwipeActionsConfiguration(actions: [viewNotesAction])
+        configuration.performsFirstActionWithFullSwipe = false
+        return configuration
+    }
+    
+    // Implement the functions to handle view notes and delete actions
+    private func viewNotes(for form: Form) {
+        // Implement the action for viewing notes
+        guard let notesViewController = UIStoryboard(name: "Notes", bundle: nil).instantiateViewController(withIdentifier: "NotesViewController") as? NotesViewController else {
             return
         }
-        if indexPath.section == upcoming {
-            // UPCOMING
-            UIAlertController.presentDismissingAlert(title: "Upcoming Appointments CANNOT Be Deleted", dismissAfter: 1.2)
-            
-        } else {
-            // PAST
-            let form = self.pastAppointmentForms[indexPath.row]
-            UIAlertController.presentMultipleOptionAlert(message: "Are you sure you want to delete \(form.firstName) \(form.lastName)'s past appointment form?", actionOptionTitle: "DELETE", cancelOptionTitle: "CANCEL") {
-                FirebaseController.shared.saveDeletedForm(form: form) { [self] error in
-                    if let error = error {
-                        print("Error Saving Form: \(error)")
-                        self.vibrateForError()
-                        UIAlertController.presentDismissingAlert(title: "Error Deleting Form: \(form.firstName + " " + form.lastName)", dismissAfter: 1.2)
-                        return
-                    }
-                    FirebaseController.shared.deleteForm(firebaseID: form.firebaseID) { error in
-                        if let error = error {
-                            print("Error Deleting Form: \(error)")
-                            self.vibrateForError()
-                            UIAlertController.presentDismissingAlert(title: "Error Deleting Form: \(form.firstName + " " + form.lastName)", dismissAfter: 1.2)
-                            return
-                        }
-                    }
-                    if let index = forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {
-                        forms.remove(at: index)
-                    }
-                    self.splitForms(forms: forms)
-                }
-            }
-        }
+        
+        // Set the form for the NotesViewController
+        notesViewController.form = form
+        
+        // Create a navigation controller to present the NotesViewController modally
+        let navigationController = UINavigationController(rootViewController: notesViewController)
+        
+        // Present the navigation controller modally
+        present(navigationController, animated: true, completion: nil)
+
     }
+    
+
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if formState == .empty {
+//            return
+//        }
+//        if indexPath.section == upcoming {
+//            // UPCOMING
+//            UIAlertController.presentDismissingAlert(title: "Upcoming Appointments CANNOT Be Deleted", dismissAfter: 1.2)
+//            
+//        } else {
+//            // PAST
+//            let form = self.pastAppointmentForms[indexPath.row]
+//            UIAlertController.presentMultipleOptionAlert(message: "Are you sure you want to delete \(form.firstName) \(form.lastName)'s past appointment form?", actionOptionTitle: "DELETE", cancelOptionTitle: "CANCEL") {
+//                FirebaseController.shared.saveDeletedForm(form: form) { [self] error in
+//                    if let error = error {
+//                        print("Error Saving Form: \(error)")
+//                        self.vibrateForError()
+//                        UIAlertController.presentDismissingAlert(title: "Error Deleting Form: \(form.firstName + " " + form.lastName)", dismissAfter: 1.2)
+//                        return
+//                    }
+//                    FirebaseController.shared.deleteForm(firebaseID: form.firebaseID) { error in
+//                        if let error = error {
+//                            print("Error Deleting Form: \(error)")
+//                            self.vibrateForError()
+//                            UIAlertController.presentDismissingAlert(title: "Error Deleting Form: \(form.firstName + " " + form.lastName)", dismissAfter: 1.2)
+//                            return
+//                        }
+//                    }
+//                    if let index = forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {
+//                        forms.remove(at: index)
+//                    }
+//                    self.splitForms(forms: forms)
+//                }
+//            }
+//        }
+//    }
 
     
     // MARK: - Navigation

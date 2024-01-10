@@ -46,6 +46,8 @@ class NotesViewController: UIViewController {
         // SETUP VIEW
         backgroundView.layer.cornerRadius = 8
         backgroundView.layer.borderWidth = 2.0
+        notesTextView.backgroundColor?.withAlphaComponent(0.1)
+        
         if traitCollection.userInterfaceStyle == .dark {
             firstNameLabel.textColor = .lightText
             timeLabel.textColor = .lightText
