@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -112,6 +112,9 @@
                                         <integer key="value" value="8"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="saveButtonPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="pc3-xu-9nX"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PUa-g3-4Fa">
                                 <rect key="frame" x="162.66666666666666" y="197" width="68" height="34"/>
@@ -158,6 +161,15 @@
                             <constraint firstItem="Ro1-nO-hpd" firstAttribute="bottom" secondItem="vDu-zF-Fre" secondAttribute="bottom" id="vJ3-af-n7a"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="backgroundView" destination="LvJ-ak-W80" id="xBe-53-nIl"/>
+                        <outlet property="cityStateLabel" destination="p7f-eW-MVb" id="htu-WS-XBz"/>
+                        <outlet property="dateLabel" destination="YTr-vt-aYb" id="pB5-PQ-Ils"/>
+                        <outlet property="dayLabel" destination="1MX-xp-13D" id="yjZ-Mo-Iwj"/>
+                        <outlet property="firstNameLabel" destination="J2n-NK-dg4" id="aZ6-bi-RuO"/>
+                        <outlet property="notesTextView" destination="zHH-H0-kfD" id="WTT-4b-4EP"/>
+                        <outlet property="timeLabel" destination="PKW-Zt-09B" id="rco-L3-ADY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
