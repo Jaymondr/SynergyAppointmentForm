@@ -33,7 +33,14 @@ class NotesViewController: UIViewController {
     // MARK: BUTTONS
     @IBAction func saveButtonPressed(_ sender: Any) {
         print("Save form button pressed")
-        
+        guard let form = form else { return }
+        let note = notesTextView.text ?? ""
+        FirebaseController.shared.updateFormNotes(firebaseID: form.firebaseID, note: note) { error in
+            if let error = error {
+                print("Error: \(error)")
+            }
+        }
+        // TODO: Need to update table view cell form without making a get call. Call delegate didUpdateForm(with:)
     }
     
     
@@ -71,7 +78,7 @@ class NotesViewController: UIViewController {
         } else {
             firstNameLabel.text = form.firstName.uppercased() + " & " + form.spouse.uppercased()
         }
-        
+        notesTextView.text = form.notes
         // Set background view for outcome
         setOutcomeView(form: form)
     }
