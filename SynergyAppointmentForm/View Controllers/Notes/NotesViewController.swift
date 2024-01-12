@@ -63,7 +63,6 @@ class NotesViewController: UIViewController {
                 }
             }
         }
-        // TODO: Need to update table view cell form without making a get call. Call delegate didUpdateForm(with:)
     }
     
     
@@ -76,7 +75,6 @@ class NotesViewController: UIViewController {
         // SETUP VIEW
         backgroundView.layer.cornerRadius = 8
         backgroundView.layer.borderWidth = 2.0
-        notesTextView.backgroundColor?.withAlphaComponent(0.1)
         
         if traitCollection.userInterfaceStyle == .dark {
             firstNameLabel.textColor = .lightText

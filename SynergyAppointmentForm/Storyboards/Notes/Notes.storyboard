@@ -124,7 +124,7 @@
                                     <constraint firstItem="1MX-xp-13D" firstAttribute="leading" secondItem="LvJ-ak-W80" secondAttribute="leadingMargin" constant="5" id="zLu-oW-lsf"/>
                                 </constraints>
                             </view>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.55000000000000004" contentMode="scaleToFill" keyboardDismissMode="onDrag" text="Notes: " textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="zHH-H0-kfD">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" text="Notes: " textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="zHH-H0-kfD">
                                 <rect key="frame" x="16" y="196" width="361" height="315"/>
                                 <color key="backgroundColor" name="noteYellow"/>
                                 <constraints>
