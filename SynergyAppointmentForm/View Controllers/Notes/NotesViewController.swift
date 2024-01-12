@@ -32,7 +32,7 @@ class NotesViewController: UIViewController {
         setupView()
         // UNCOMMENT LATER
         messageButton.isHidden = true
-        labelButton.isHidden = true
+        tagButton.isHidden = true
         self.navigationController?.navigationBar.isHidden = true
     }
     
