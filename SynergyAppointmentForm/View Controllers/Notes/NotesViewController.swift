@@ -13,6 +13,7 @@ protocol NotesViewDelegate: AnyObject {
 
 class NotesViewController: UIViewController {
     // MARK: - OUTLETS
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
@@ -29,7 +30,7 @@ class NotesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        
+        self.navigationController?.navigationBar.isHidden = true
     }
     
     // MARK: - PROPERTIES
@@ -41,10 +42,19 @@ class NotesViewController: UIViewController {
     @IBAction func saveButtonPressed(_ sender: Any) {
         print("Save form button pressed")
         guard let form = form else { return }
-        let note = notesTextView.text ?? ""
-        FirebaseController.shared.updateFormNotes(firebaseID: form.firebaseID, note: note) { error in
+        let notes = notesTextView.text ?? ""
+        form.notes = notes
+        FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { updatedForm, error in
             if let error = error {
                 print("Error: \(error)")
+            }
+            if let updatedForm = updatedForm {
+                self.delegate?.didUpdateForm(with: updatedForm)
+                self.vibrateForButtonPress(.heavy)
+                self.titleLabel.text = "SAVED!"
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                    self.titleLabel.text = "Notes"
+                }
             }
         }
         // TODO: Need to update table view cell form without making a get call. Call delegate didUpdateForm(with:)

@@ -120,7 +120,7 @@ class FormDetailViewController: UIViewController {
         }
         
         print("form id: \(form.firebaseID)")
-        FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
+        FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { updatedForm, error in
             DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
                 self.saveButton.isEnabled = true
@@ -316,7 +316,7 @@ class FormDetailViewController: UIViewController {
                                firstName: firstNameTextField.text ?? "",
                                homeValue: homeValueTextField.text ?? "--",
                                lastName: lastNameTextField.text ?? "",
-                               notes: form.notes,
+                               notes: form.notes ?? "Notes: ",
                                numberOfWindows: numberOfWindowsTextField.text ?? "",
                                outcome: tag ?? .pending, phone: phoneTextField.text ?? "",
                                rate: rateTextField.text ?? "",
@@ -339,7 +339,7 @@ class FormDetailViewController: UIViewController {
         form.outcome = outcome
         setUpView(with: form)
 
-        FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
+        FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { updatedForm, error in
             if let error = error {
                 UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
                 print("Error: \(error)")

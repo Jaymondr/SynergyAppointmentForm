@@ -9,7 +9,6 @@ import UIKit
 
 class FormTableViewCell: UITableViewCell {
         
-    @IBOutlet weak var showNotesButton: UIButton!
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
@@ -43,13 +42,11 @@ class FormTableViewCell: UITableViewCell {
             timeLabel.textColor = .lightText
             dateLabel.textColor = .lightText
             dayLabel.textColor = .lightText
-            showNotesButton.tintColor = .lightText
         } else {
             firstNameLabel.textColor = .black
             timeLabel.textColor = .black
             dateLabel.textColor = .black
             dayLabel.textColor = .black
-            showNotesButton.tintColor = .black
         }
     }
 

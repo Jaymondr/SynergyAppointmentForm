@@ -98,30 +98,17 @@ class FirebaseController {
     }
     
     // UPDATE
-    func updateForm(firebaseID: String, form: Form, completion: @escaping (_ error: Error?) -> Void) {
+    func updateForm(firebaseID: String, form: Form, completion: @escaping (_ updatedForm: Form?, _ error: Error?) -> Void) {
         let data = form.firebaseRepresentation
         db.collection(Form.CodingKeys.collectionID.rawValue).document(firebaseID).updateData(data) { error in
             if let error = error {
-                completion(error)
+                completion(nil, error)
                 print("There was an error updating the form: \(error)")
                 return
             }
+            let updatedForm = Form(firebaseData: data, firebaseID: firebaseID)
             print("Successfully updated form. ID: \(firebaseID), Name: \(form.firstName)")
-            completion(nil)
-        }
-    }
-    
-    func updateFormNotes(firebaseID: String, note: String, completion: @escaping (_ error: Error?) -> Void) {
-        let data = [Form.CodingKeys.notes.rawValue: note]
-        
-        db.collection(Form.CodingKeys.collectionID.rawValue).document(firebaseID).updateData(data) { error in
-            if let error = error {
-                completion(error)
-                print("There was an error updating the form note: \(error)")
-                return
-            }
-            print("Successfully updated form note. ID: \(firebaseID)")
-            completion(nil)
+            completion(updatedForm, nil)
         }
     }
     

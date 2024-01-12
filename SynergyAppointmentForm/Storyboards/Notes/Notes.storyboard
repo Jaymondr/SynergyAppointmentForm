@@ -139,37 +139,57 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ByQ-Xh-EBz">
-                                <rect key="frame" x="302" y="8" width="75" height="34"/>
-                                <color key="backgroundColor" name="outcomeBlue"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BNZ-rd-qqD">
+                                <rect key="frame" x="171.66666666666666" y="8" width="50" height="34"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="CJh-dl-6P8"/>
-                                    <constraint firstAttribute="width" constant="75" id="EWy-dj-Izx"/>
+                                    <constraint firstAttribute="height" constant="34" id="7Jb-6Y-h3L"/>
+                                    <constraint firstAttribute="width" constant="50" id="hnb-xm-P9B"/>
                                 </constraints>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cVM-OF-KwU">
+                                <rect key="frame" x="312" y="8" width="65" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="65" id="3lj-92-vqd"/>
+                                    <constraint firstAttribute="height" constant="34" id="cFX-eY-RQx"/>
+                                </constraints>
+                                <color key="tintColor" name="outcomeBlue"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Save"/>
+                                <buttonConfiguration key="configuration" style="plain">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="Save">
+                                            <attributes>
+                                                <font key="NSFont" metaFont="system" size="18"/>
+                                                <font key="NSOriginalFont" size="12" name="Helvetica"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </buttonConfiguration>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="8"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="saveButtonPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="3p3-Ig-RbT"/>
+                                    <action selector="saveButtonPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="nim-Fa-iwP"/>
                                 </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="LvJ-ak-W80" firstAttribute="top" secondItem="ByQ-Xh-EBz" secondAttribute="bottom" constant="8" symbolic="YES" id="ApU-7c-vGy"/>
                             <constraint firstItem="LvJ-ak-W80" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="B4S-G6-tXl"/>
+                            <constraint firstItem="cVM-OF-KwU" firstAttribute="centerY" secondItem="BNZ-rd-qqD" secondAttribute="centerY" id="HNO-R2-svE"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="LvJ-ak-W80" secondAttribute="trailing" constant="20" id="KYI-XS-PlF"/>
+                            <constraint firstItem="LvJ-ak-W80" firstAttribute="top" secondItem="BNZ-rd-qqD" secondAttribute="bottom" constant="8" id="NCQ-HU-kcI"/>
+                            <constraint firstItem="BNZ-rd-qqD" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="Okb-Vw-rIm"/>
                             <constraint firstItem="zHH-H0-kfD" firstAttribute="top" secondItem="LvJ-ak-W80" secondAttribute="bottom" constant="16" id="Pmx-ek-eZR"/>
-                            <constraint firstAttribute="trailing" secondItem="ByQ-Xh-EBz" secondAttribute="trailing" constant="16" id="PvU-rM-Q16"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="zHH-H0-kfD" secondAttribute="trailing" constant="16" id="S9K-va-9ik"/>
+                            <constraint firstAttribute="trailing" secondItem="cVM-OF-KwU" secondAttribute="trailing" constant="16" id="Zv2-o7-HJ7"/>
+                            <constraint firstItem="BNZ-rd-qqD" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" constant="8" id="cKP-8f-h0U"/>
                             <constraint firstItem="zHH-H0-kfD" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="fbF-qg-lzc"/>
-                            <constraint firstItem="LvJ-ak-W80" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" constant="50" id="iJF-XN-3oq"/>
                         </constraints>
                     </view>
                     <size key="freeformSize" width="393" height="852"/>
@@ -183,6 +203,7 @@
                         <outlet property="notesTextView" destination="zHH-H0-kfD" id="WTT-4b-4EP"/>
                         <outlet property="tagButton" destination="BvJ-Z8-pk9" id="UHv-j5-Wn8"/>
                         <outlet property="timeLabel" destination="PKW-Zt-09B" id="rco-L3-ADY"/>
+                        <outlet property="titleLabel" destination="BNZ-rd-qqD" id="DVE-hC-r9M"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

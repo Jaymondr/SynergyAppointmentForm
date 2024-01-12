@@ -174,7 +174,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             if form.firebaseID.isNotEmpty {
                 // UPDATE FORM
                 saveQueue.async {
-                    FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
+                    FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { updatedForm, error in
                         DispatchQueue.main.async {
                             self.saveButton.isEnabled = true
                             self.activityIndicator.stopAnimating()
