@@ -9,7 +9,7 @@ import UIKit
 import CoreLocation
 import MessageUI
 
-protocol FormViewDelegate: AnyObject {
+protocol CreateFormViewDelegate: AnyObject {
     func didAddNewForm(_ form: Form)
     func didUpdateNew(_ form: Form)
 }
@@ -45,7 +45,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var locationManager = CLLocationManager()
-    weak var delegate: FormViewDelegate?
+    weak var delegate: CreateFormViewDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()

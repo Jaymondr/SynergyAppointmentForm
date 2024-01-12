@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol NotesViewDelegate: AnyObject {
+    func didUpdateForm(with form: Form)
+}
+
 class NotesViewController: UIViewController {
     // MARK: - OUTLETS
     @IBOutlet weak var dayLabel: UILabel!
@@ -16,6 +20,8 @@ class NotesViewController: UIViewController {
     @IBOutlet weak var cityStateLabel: UILabel!
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var notesTextView: UITextView!
+    @IBOutlet weak var tagButton: UIButton!
+    @IBOutlet weak var messageButton: UIButton!
     
     
     
@@ -28,6 +34,7 @@ class NotesViewController: UIViewController {
     
     // MARK: - PROPERTIES
     var form: Form?
+    weak var delegate: NotesViewDelegate?
     
     
     // MARK: BUTTONS

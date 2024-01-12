@@ -42,15 +42,6 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        for subview in self.view.subviews {
-            if subview is NotesView {
-                subview.removeFromSuperview()
-            }
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadForms()
@@ -245,14 +236,12 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             // UPCOMING
             let form = upcomingAppointmentForms[indexPath.row]
             cell.setCellData(with: form)
-            cell.delegate = self
             cell.form = form
 
         } else {
             // Past
             let form = pastAppointmentForms[indexPath.row]
             cell.setCellData(with: form)
-            cell.delegate = self
             cell.form = form
         }
 
@@ -276,6 +265,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             // Perform action when swiping left (view notes)
             if indexPath.section == self?.upcoming, let form = self?.upcomingAppointmentForms[indexPath.row] {
                 self?.viewNotes(for: form)
+                
             } else if indexPath.section == self?.past, let form = self?.pastAppointmentForms[indexPath.row] {
                 // Implement the action you want for viewing notes
                 self?.viewNotes(for: form)
@@ -313,7 +303,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         
         // Set the form for the NotesViewController
         notesViewController.form = form
-        
+        notesViewController.delegate = self
         // Create a navigation controller to present the NotesViewController modally
         let navigationController = UINavigationController(rootViewController: notesViewController)
         
@@ -407,7 +397,18 @@ extension FormListViewController: FormDetailViewDelegate {
     }
 }
 
-extension FormListViewController: FormViewDelegate {
+extension FormListViewController: NotesViewDelegate {
+    func didUpdateForm(with form: Form) {
+        if !forms.contains(where: { $0.firebaseID == form.firebaseID }),
+           let index = forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {
+            forms[index] = form
+            splitForms(forms: forms)
+            tableView.reloadData()
+        }
+    }
+}
+
+extension FormListViewController: CreateFormViewDelegate {
     func didAddNewForm(_ form: Form) {
         if !forms.contains(where: { $0.firebaseID == form.firebaseID }) {
             print(forms.count)
@@ -425,20 +426,6 @@ extension FormListViewController: FormViewDelegate {
             splitForms(forms: forms)
             tableView.reloadData()
         }
-    }
-}
-
-extension FormListViewController: NotesViewDelegate {
-    func showNotesView(form: Form) {
-        // Remove existing notes views
-        for subview in self.view.subviews {
-                    if subview is NotesView {
-                        subview.removeFromSuperview()
-                    }
-                }
-        let notesView = NotesView()
-        notesView.form = form
-        self.view.addSubview(notesView)
     }
 }
 

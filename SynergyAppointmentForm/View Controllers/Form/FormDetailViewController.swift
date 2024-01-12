@@ -316,6 +316,7 @@ class FormDetailViewController: UIViewController {
                                firstName: firstNameTextField.text ?? "",
                                homeValue: homeValueTextField.text ?? "--",
                                lastName: lastNameTextField.text ?? "",
+                               notes: form.notes,
                                numberOfWindows: numberOfWindowsTextField.text ?? "",
                                outcome: tag ?? .pending, phone: phoneTextField.text ?? "",
                                rate: rateTextField.text ?? "",

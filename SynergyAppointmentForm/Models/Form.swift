@@ -37,7 +37,7 @@ class Form: FirebaseModel {
     var yearsOwned: String
     var zip: String
     
-    init(firebaseID: String, address: String, city: String, comments: String, date: Date, email: String, energyBill: String, financeOptions: String, firstName: String, homeValue: String, lastName: String, notes: String = "", numberOfWindows: String, outcome: Outcome = .pending, phone: String, rate: String, reason: String, retailQuote: String, spouse: String, state: String, userID: String, yearBuilt: String, yearsOwned: String, zip: String) {
+    init(firebaseID: String, address: String, city: String, comments: String, date: Date, email: String, energyBill: String, financeOptions: String, firstName: String, homeValue: String, lastName: String, notes: String?, numberOfWindows: String, outcome: Outcome = .pending, phone: String, rate: String, reason: String, retailQuote: String, spouse: String, state: String, userID: String, yearBuilt: String, yearsOwned: String, zip: String) {
         
         self.firebaseID = firebaseID
         self.address = address

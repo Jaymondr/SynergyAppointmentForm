@@ -49,7 +49,6 @@
 		678FD77E2B1A3A3100FB515D /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678FD77D2B1A3A3100FB515D /* UserAccount.swift */; };
 		67A582F52B0D0AA500D4B5DA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A582F42B0D0AA500D4B5DA /* Extensions.swift */; };
 		67A582F82B0D23F300D4B5DA /* FormDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A582F72B0D23F300D4B5DA /* FormDetailViewController.swift */; };
-		67A5C0922B2243B500D16249 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A5C0912B2243B500D16249 /* NotesView.swift */; };
 		67A5C0972B28CDAD00D16249 /* SignUpScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67A5C0962B28CDAD00D16249 /* SignUpScreen.storyboard */; };
 		67A5C09B2B28D09D00D16249 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A5C09A2B28D09D00D16249 /* SignUpViewController.swift */; };
 		67BB4F132B141A6000067D90 /* FirestoreType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67BB4F122B141A6000067D90 /* FirestoreType.swift */; };
@@ -90,7 +89,6 @@
 		678FD77D2B1A3A3100FB515D /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
 		67A582F42B0D0AA500D4B5DA /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		67A582F72B0D23F300D4B5DA /* FormDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDetailViewController.swift; sourceTree = "<group>"; };
-		67A5C0912B2243B500D16249 /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
 		67A5C0962B28CDAD00D16249 /* SignUpScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SignUpScreen.storyboard; sourceTree = "<group>"; };
 		67A5C09A2B28D09D00D16249 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		67BB4F122B141A6000067D90 /* FirestoreType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreType.swift; sourceTree = "<group>"; };
@@ -193,7 +191,6 @@
 				674603BA2B03DB0B00756102 /* Models */,
 				674603BD2B03DE1300756102 /* Controllers */,
 				674603B62B03DADE00756102 /* View Controllers */,
-				67A5C0932B2243B900D16249 /* Views */,
 				67EBEE2C2B0BC632009FD021 /* Cells */,
 				674603B72B03DAED00756102 /* Storyboards */,
 				674603B52B03D99600756102 /* Resources */,
@@ -263,14 +260,6 @@
 				67A582F42B0D0AA500D4B5DA /* Extensions.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		67A5C0932B2243B900D16249 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				67A5C0912B2243B500D16249 /* NotesView.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		67A5C0982B28CDB400D16249 /* SignUpScreen */ = {
@@ -467,7 +456,6 @@
 				67A5C09B2B28D09D00D16249 /* SignUpViewController.swift in Sources */,
 				674603A42B03D8F700756102 /* SceneDelegate.swift in Sources */,
 				678FD77E2B1A3A3100FB515D /* UserAccount.swift in Sources */,
-				67A5C0922B2243B500D16249 /* NotesView.swift in Sources */,
 				674603B92B03DB0400756102 /* Form.swift in Sources */,
 				67DAFE932B073028003D6B5B /* FormError.swift in Sources */,
 				67A582F52B0D0AA500D4B5DA /* Extensions.swift in Sources */,

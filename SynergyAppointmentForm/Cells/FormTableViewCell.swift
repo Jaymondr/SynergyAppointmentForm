@@ -7,14 +7,8 @@
 
 import UIKit
 
-protocol NotesViewDelegate: AnyObject {
-    func showNotesView(form: Form)
-}
-
 class FormTableViewCell: UITableViewCell {
-    
-    weak var delegate: NotesViewDelegate?
-    
+        
     @IBOutlet weak var showNotesButton: UIButton!
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
@@ -40,14 +34,6 @@ class FormTableViewCell: UITableViewCell {
     // MARK: - PROPERTIES
     var form: Form?
 
-    
-    // MARK: - ACTIONS
-    @IBAction func notesButtonPressed(_ sender: Any) {
-        print("Notes Button Pressed")
-        guard let form = form else { return }
-        delegate?.showNotesView(form: form)
-    }
-    
     
     // MARK: - FUNCTIONS
     private func resetCell() {
@@ -92,13 +78,11 @@ class FormTableViewCell: UITableViewCell {
             timeLabel.textColor = .lightText
             dateLabel.textColor = .lightText
             dayLabel.textColor = .lightText
-            showNotesButton.tintColor = .lightGray
         } else {
             firstNameLabel.textColor = .black
             timeLabel.textColor = .black
             dateLabel.textColor = .black
             dayLabel.textColor = .black
-            showNotesButton.tintColor = .black
         }
     }
     
