@@ -30,6 +30,9 @@ class NotesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        // UNCOMMENT LATER
+        messageButton.isHidden = true
+        labelButton.isHidden = true
         self.navigationController?.navigationBar.isHidden = true
     }
     
@@ -52,8 +55,11 @@ class NotesViewController: UIViewController {
                 self.delegate?.didUpdateForm(with: updatedForm)
                 self.vibrateForButtonPress(.heavy)
                 self.titleLabel.text = "SAVED!"
+                self.titleLabel.textColor = UIColor.outcomeGreen
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                     self.titleLabel.text = "Notes"
+                    self.titleLabel.textColor = .black
+
                 }
             }
         }
