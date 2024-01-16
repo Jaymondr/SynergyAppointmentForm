@@ -450,7 +450,7 @@ extension FormListViewController {
     func showBranchSelectionAlert() {
         let alert = UIAlertController(title: "Please Select a Branch", message: nil, preferredStyle: .actionSheet)
         
-        // Add actions for each branch
+        // Adds actions for each branch
         for branch in Branch.allCases {
             let action = UIAlertAction(title: branch.rawValue, style: .default) { _ in
                 // Handle the selected branch
@@ -459,9 +459,14 @@ extension FormListViewController {
             alert.addAction(action)
         }
         
-        // Add cancel action
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(cancelAction)
+        
+        if let popoverController = alert.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0) // Set the position
+            popoverController.permittedArrowDirections = []
+        }
         
         // Present the alert
         present(alert, animated: true, completion: nil)
