@@ -382,19 +382,18 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        // Check if the current length is less than or equal to 10
         let currentLength = (textField.text ?? "").count
         let newLength = currentLength + string.count - range.length
 
-        // Change the border color based on the condition
-        if newLength != 10 {
-            textField.layer.borderWidth = 1.0
-            textField.layer.borderColor = UIColor.red.cgColor
-        } else {
-            textField.layer.borderColor = UIColor.clear.cgColor
+        if textField == phoneTextfield {
+            if newLength != 10 {
+                textField.layer.borderWidth = 1.0
+                textField.layer.borderColor = UIColor.red.cgColor
+            } else {
+                textField.layer.borderColor = UIColor.clear.cgColor
+            }
         }
 
-        // Allow the text change if needed
         return true
     }
     

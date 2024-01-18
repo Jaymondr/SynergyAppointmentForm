@@ -334,7 +334,14 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     private func deleteForm(_ form: Form) {
+        let group = DispatchGroup()
+        
+        group.enter()
         FirebaseController.shared.saveDeletedForm(form: form) { [weak self] error in
+            defer {
+                group.leave()
+            }
+            
             guard let self = self else { return }
             if let error = error {
                 print("Error Saving Form: \(error)")
@@ -345,8 +352,12 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                 )
                 return
             }
-
+            
+            group.enter()
             FirebaseController.shared.deleteForm(firebaseID: form.firebaseID) { error in
+                defer {
+                    group.leave()
+                }
                 if let error = error {
                     print("Error Deleting Form: \(error)")
                     self.vibrateForError()
@@ -356,11 +367,13 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                     )
                     return
                 }
-
-                if let index = self.forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {
-                    self.forms.remove(at: index)
+                
+                group.notify(queue: .main) {
+                    if let index = self.forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {
+                        self.forms.remove(at: index)
+                    }
+                    self.splitForms(forms: self.forms)
                 }
-                self.splitForms(forms: self.forms)
             }
         }
     }
