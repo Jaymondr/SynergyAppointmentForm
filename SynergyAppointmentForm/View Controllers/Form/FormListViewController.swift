@@ -330,18 +330,15 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             cancelOptionTitle: "CANCEL"
         ) { [weak self] in
             self?.deleteForm(form)
+            if var forms = self?.forms, let index = forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {
+                forms.remove(at: index)
+                self?.splitForms(forms: forms)
+            }
         }
     }
 
     private func deleteForm(_ form: Form) {
-        let group = DispatchGroup()
-        
-        group.enter()
         FirebaseController.shared.saveDeletedForm(form: form) { [weak self] error in
-            defer {
-                group.leave()
-            }
-            
             guard let self = self else { return }
             if let error = error {
                 print("Error Saving Form: \(error)")
@@ -352,28 +349,16 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                 )
                 return
             }
-            
-            group.enter()
-            FirebaseController.shared.deleteForm(firebaseID: form.firebaseID) { error in
-                defer {
-                    group.leave()
-                }
-                if let error = error {
-                    print("Error Deleting Form: \(error)")
-                    self.vibrateForError()
-                    UIAlertController.presentDismissingAlert(
-                        title: "Error Deleting Form: \(form.firstName + " " + form.lastName)",
-                        dismissAfter: 1.2
-                    )
-                    return
-                }
-                
-                group.notify(queue: .main) {
-                    if let index = self.forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {
-                        self.forms.remove(at: index)
-                    }
-                    self.splitForms(forms: self.forms)
-                }
+        }
+        
+        FirebaseController.shared.deleteForm(firebaseID: form.firebaseID) { error in
+            if let error = error {
+                print("Error Deleting Form: \(error)")
+                self.vibrateForError()
+                UIAlertController.presentDismissingAlert(
+                    title: "Error Deleting Form: \(form.firstName + " " + form.lastName)",
+                    dismissAfter: 1.2
+                )
             }
         }
     }
