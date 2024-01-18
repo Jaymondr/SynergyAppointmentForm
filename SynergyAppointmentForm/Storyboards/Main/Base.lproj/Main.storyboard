@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="IT1-YZ-9Jb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="IT1-YZ-9Jb">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -96,20 +96,6 @@
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B09-jb-nlt">
-                                                            <rect key="frame" x="321" y="96" width="24" height="24"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="24" id="age-IF-teT"/>
-                                                                <constraint firstAttribute="width" secondItem="B09-jb-nlt" secondAttribute="height" multiplier="1:1" id="zTz-hU-awt"/>
-                                                            </constraints>
-                                                            <state key="normal" title="Button"/>
-                                                            <buttonConfiguration key="configuration" style="plain" image="list.clipboard" catalog="system" title="">
-                                                                <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            </buttonConfiguration>
-                                                            <connections>
-                                                                <action selector="notesButtonPressed:" destination="4nh-tc-2PR" eventType="touchUpInside" id="2h1-37-AQM"/>
-                                                            </connections>
-                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
@@ -119,14 +105,12 @@
                                                         <constraint firstItem="XdU-SK-72q" firstAttribute="leading" secondItem="zRl-iJ-MDQ" secondAttribute="leadingMargin" constant="5" id="JAW-6R-wX2"/>
                                                         <constraint firstItem="KvD-Sv-yli" firstAttribute="centerY" secondItem="3i5-Ma-mg9" secondAttribute="centerY" id="Sl3-ct-2tk"/>
                                                         <constraint firstItem="bkQ-QU-oGZ" firstAttribute="top" secondItem="FOp-d2-PfR" secondAttribute="bottom" constant="8" id="Wbk-8V-5jE"/>
-                                                        <constraint firstAttribute="bottom" secondItem="B09-jb-nlt" secondAttribute="bottom" constant="10" id="i7J-Xd-hJE"/>
                                                         <constraint firstItem="bkQ-QU-oGZ" firstAttribute="centerX" secondItem="FOp-d2-PfR" secondAttribute="centerX" id="ixm-4T-ypg"/>
                                                         <constraint firstItem="FOp-d2-PfR" firstAttribute="leading" secondItem="zRl-iJ-MDQ" secondAttribute="leading" constant="10" id="ktG-ZR-5dy"/>
                                                         <constraint firstAttribute="trailing" secondItem="KvD-Sv-yli" secondAttribute="trailing" constant="8" id="pxb-8B-BYS"/>
                                                         <constraint firstAttribute="trailing" secondItem="FOp-d2-PfR" secondAttribute="trailing" constant="10" id="sFb-le-RHh"/>
                                                         <constraint firstItem="FOp-d2-PfR" firstAttribute="top" secondItem="KvD-Sv-yli" secondAttribute="bottom" constant="8" id="swk-p9-zDV"/>
                                                         <constraint firstItem="XdU-SK-72q" firstAttribute="top" secondItem="zRl-iJ-MDQ" secondAttribute="topMargin" id="tqY-a6-LTY"/>
-                                                        <constraint firstAttribute="trailing" secondItem="B09-jb-nlt" secondAttribute="trailing" constant="8" id="ypU-Oh-A9N"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -149,7 +133,6 @@
                                             <outlet property="dayLabel" destination="XdU-SK-72q" id="IZh-3X-xkX"/>
                                             <outlet property="dropShadowView" destination="b2W-Mu-8eG" id="t9i-Eb-BPN"/>
                                             <outlet property="firstNameLabel" destination="WvX-J8-lhM" id="V1e-hE-qX7"/>
-                                            <outlet property="showNotesButton" destination="B09-jb-nlt" id="V2V-1Q-tHz"/>
                                             <outlet property="timeLabel" destination="KvD-Sv-yli" id="EMs-i1-wm5"/>
                                             <segue destination="mzI-Pq-KQL" kind="show" identifier="toFormDetail" id="WqX-tD-Frz"/>
                                         </connections>
@@ -1025,6 +1008,7 @@
                         <outlet property="saveButton" destination="TBu-Aa-7Bb" id="bS0-VW-Ddv"/>
                         <outlet property="spouseTextField" destination="x5m-f3-aZ7" id="s1f-Op-Qtf"/>
                         <outlet property="stateTextField" destination="7HF-df-Hto" id="DGt-0z-RJ1"/>
+                        <outlet property="trelloButton" destination="zZU-zE-gEC" id="LVq-P2-uLg"/>
                         <outlet property="yearBuiltStackView" destination="mCV-qd-n5D" id="Dgb-nf-Imn"/>
                         <outlet property="yearBuiltTextField" destination="4Dg-iL-94c" id="HF8-la-54g"/>
                         <outlet property="yearsOwnedTextField" destination="h8z-1j-4Hi" id="Clk-DT-p3l"/>
@@ -1033,7 +1017,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uvv-HJ-5Iz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4636" y="-289"/>
+            <point key="canvasLocation" x="4635.8778625954201" y="-289.43661971830988"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="2oQ-rg-E0A">
@@ -2024,7 +2008,6 @@
         <image name="envelope.fill" catalog="system" width="128" height="85"/>
         <image name="gear" catalog="system" width="128" height="122"/>
         <image name="info.circle" catalog="system" width="128" height="123"/>
-        <image name="list.clipboard" catalog="system" width="98" height="128"/>
         <image name="location.fill.viewfinder" catalog="system" width="128" height="115"/>
         <image name="location.viewfinder" catalog="system" width="128" height="115"/>
         <image name="person.crop.circle" catalog="system" width="128" height="123"/>

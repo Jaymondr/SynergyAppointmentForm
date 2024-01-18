@@ -16,6 +16,7 @@ protocol FormDetailViewDelegate: AnyObject {
 class FormDetailViewController: UIViewController {
     
     // MARK: OUTLETS
+    @IBOutlet weak var trelloButton: UIButton!
     @IBOutlet weak var dateTimePicker: UIDatePicker!
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
@@ -119,7 +120,7 @@ class FormDetailViewController: UIViewController {
         }
         
         print("form id: \(form.firebaseID)")
-        FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
+        FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { updatedForm, error in
             DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
                 self.saveButton.isEnabled = true
@@ -217,6 +218,7 @@ class FormDetailViewController: UIViewController {
         // DEFAULT IMPLEMENTATIONS
         homeValueStackView.isHidden = true
         yearBuiltStackView.isHidden = true
+        trelloButton.isHidden = true
         
         // VIEW FOR BRANCH
         switch user.branch {
@@ -246,6 +248,7 @@ class FormDetailViewController: UIViewController {
         case .southJordan:
             print("Form For South Jordan")
             emailTextField.placeholder = "@synergywindow.com"
+            trelloButton.isVisible = true
 
         case .sanAntonio:
             print("Form For San Antonio")
@@ -313,6 +316,7 @@ class FormDetailViewController: UIViewController {
                                firstName: firstNameTextField.text ?? "",
                                homeValue: homeValueTextField.text ?? "--",
                                lastName: lastNameTextField.text ?? "",
+                               notes: form.notes ?? "Notes: ",
                                numberOfWindows: numberOfWindowsTextField.text ?? "",
                                outcome: tag ?? .pending, phone: phoneTextField.text ?? "",
                                rate: rateTextField.text ?? "",
@@ -335,7 +339,7 @@ class FormDetailViewController: UIViewController {
         form.outcome = outcome
         setUpView(with: form)
 
-        FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
+        FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { updatedForm, error in
             if let error = error {
                 UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
                 print("Error: \(error)")

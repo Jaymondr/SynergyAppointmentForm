@@ -12,7 +12,7 @@ import UIKit
  1. Add empty state UI ✅
  2. Add search bar ✅
  3. Add notification to select branch ✅
- 4. Remove unused buttons for other branches
+ 4. Remove unused buttons for other branches ✅
  5. Add account types for branch manager, director, owner
  6. Add analytics
  7. Add filters for owner/branch manager
@@ -22,6 +22,7 @@ import UIKit
  11. Add partial sale feature-> keep track of partially sold homes to go back
  12. Add note screen when user swipes right
  13. Add update label when user swipes right
+ 14. Fix bug where delete form then create new form then form list shows deleted form until reload
  */
 
 class FormListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
@@ -39,15 +40,6 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             presentLoginChoiceVC()
         } else if UserAccount.currentUser?.branch == nil {
             showBranchSelectionAlert()
-        }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        for subview in self.view.subviews {
-            if subview is NotesView {
-                subview.removeFromSuperview()
-            }
         }
     }
     
@@ -132,12 +124,10 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        // Implement search functionality here
         filterForms(for: searchText)
         tableView.reloadData()
     }
     
-    // Function to filter forms based on search text
     func filterForms(for searchText: String) {
         if searchText.isEmpty {
             splitForms(forms: forms)
@@ -145,23 +135,20 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             var filteredForms = forms
             filteredForms = forms.filter { form in
                 return form.firstName.lowercased().contains(searchText.lowercased()) ||
-                form.lastName.lowercased().contains(searchText.lowercased()) || form.spouse.lowercased().contains(searchText.lowercased()) || form.city.contains(searchText.lowercased()) || form.phone.contains(searchText.lowercased()) ||
+                form.lastName.lowercased().contains(searchText.lowercased()) || form.spouse.lowercased().contains(searchText.lowercased()) || form.city.lowercased().contains(searchText.lowercased()) || form.phone.contains(searchText.lowercased()) ||
                 form.outcome.rawValue.lowercased().contains(searchText.lowercased())
             }
             splitForms(forms: filteredForms)
         }
     }
     
-    // Function to present the sign-in view controller
     func presentLoginChoiceVC() {
-        // Replace "SignUpStoryboard" with the name of your storyboard file
         let storyboard = UIStoryboard(name: "SignUpScreen", bundle: nil)
         
         guard let loginChoiceVC = storyboard.instantiateViewController(withIdentifier: "LoginChoiceViewController") as? LoginChoiceViewController else { return }
         navigationController?.pushViewController(loginChoiceVC, animated: false)
     }
     
-    // Separates the forms into upcoming and past for table view section
     func splitForms(forms: [Form]) {
         upcomingAppointmentForms.removeAll()
         pastAppointmentForms.removeAll()
@@ -179,7 +166,6 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         self.tableView.reloadData()
     }
     
-    // Sets title for Form list
     func setTitleAttributes() {
         if let navigationController = self.navigationController {
             self.navigationItem.title = "FORMS"
@@ -241,18 +227,8 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             return UITableViewCell()
         }
 
-        if indexPath.section == upcoming {
-            // UPCOMING
-            let form = upcomingAppointmentForms[indexPath.row]
+        if let form = self.getFormForIndexPath(indexPath) {
             cell.setCellData(with: form)
-            cell.delegate = self
-            cell.form = form
-
-        } else {
-            // Past
-            let form = pastAppointmentForms[indexPath.row]
-            cell.setCellData(with: form)
-            cell.delegate = self
             cell.form = form
         }
 
@@ -270,42 +246,119 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             self.refreshControl.endRefreshing()
         }
     }
-
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if formState == .empty {
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let viewNotesAction = UIContextualAction(style: .normal, title: "Notes") { [weak self] (_, _, completion) in
+            if let form = self?.getFormForIndexPath(indexPath) {
+                self?.viewNotes(for: form)
+            }
+            completion(true)
+        }
+        
+        /*
+        let labelAction = UIContextualAction(style: .normal, title: "Label") { [weak self] (_, _, completion) in
+            // Perform action when swiping left (view notes)
+            if indexPath.section == self?.upcoming, let form = self?.upcomingAppointmentForms[indexPath.row] {
+                self?.viewNotes(for: form)
+            } else if indexPath.section == self?.past, let form = self?.pastAppointmentForms[indexPath.row] {
+                // Implement the action you want for viewing notes
+                self?.viewNotes(for: form)
+            }
+            completion(true)
+        }
+         */
+        
+        viewNotesAction.backgroundColor = UIColor.noteYellow
+        
+        let configuration = UISwipeActionsConfiguration(actions: [viewNotesAction])
+        configuration.performsFirstActionWithFullSwipe = false
+        return configuration
+    }
+        
+    private func viewNotes(for form: Form) {
+        guard let notesViewController = UIStoryboard(name: "Notes", bundle: nil).instantiateViewController(withIdentifier: "NotesViewController") as? NotesViewController else {
             return
         }
-        if indexPath.section == upcoming {
-            // UPCOMING
-            UIAlertController.presentDismissingAlert(title: "Upcoming Appointments CANNOT Be Deleted", dismissAfter: 1.2)
-            
-        } else {
-            // PAST
-            let form = self.pastAppointmentForms[indexPath.row]
-            UIAlertController.presentMultipleOptionAlert(message: "Are you sure you want to delete \(form.firstName) \(form.lastName)'s past appointment form?", actionOptionTitle: "DELETE", cancelOptionTitle: "CANCEL") {
-                FirebaseController.shared.saveDeletedForm(form: form) { [self] error in
-                    if let error = error {
-                        print("Error Saving Form: \(error)")
-                        self.vibrateForError()
-                        UIAlertController.presentDismissingAlert(title: "Error Deleting Form: \(form.firstName + " " + form.lastName)", dismissAfter: 1.2)
-                        return
-                    }
-                    FirebaseController.shared.deleteForm(firebaseID: form.firebaseID) { error in
-                        if let error = error {
-                            print("Error Deleting Form: \(error)")
-                            self.vibrateForError()
-                            UIAlertController.presentDismissingAlert(title: "Error Deleting Form: \(form.firstName + " " + form.lastName)", dismissAfter: 1.2)
-                            return
-                        }
-                    }
-                    if let index = forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {
-                        forms.remove(at: index)
-                    }
-                    self.splitForms(forms: forms)
+        
+        notesViewController.form = form
+        notesViewController.delegate = self
+
+        let navigationController = UINavigationController(rootViewController: notesViewController)
+        
+        present(navigationController, animated: true, completion: nil)
+
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (_, _, completion) in
+
+            if let form = self?.getFormForIndexPath(indexPath) {
+                if indexPath.section == self?.upcoming {
+                    UIAlertController.presentDismissingAlert(title: "Cannot delete upcoming appointments", dismissAfter: 1.7)
+                } else {
+                    self?.confirmDelete(for: form)
                 }
+            }
+            completion(true)
+        }
+
+        deleteAction.backgroundColor = .red
+
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        configuration.performsFirstActionWithFullSwipe = false
+        return configuration
+    }
+
+    private func getFormForIndexPath(_ indexPath: IndexPath) -> Form? {
+        if indexPath.section == upcoming {
+            return upcomingAppointmentForms[indexPath.row]
+        } else if indexPath.section == past {
+            return pastAppointmentForms[indexPath.row]
+        }
+        return nil
+    }
+
+    private func confirmDelete(for form: Form) {
+        UIAlertController.presentMultipleOptionAlert(
+            message: "Are you sure you want to delete \(form.firstName) \(form.lastName)'s past appointment form?",
+            actionOptionTitle: "DELETE",
+            cancelOptionTitle: "CANCEL"
+        ) { [weak self] in
+            self?.deleteForm(form)
+            if var forms = self?.forms, let index = forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {
+                forms.remove(at: index)
+                self?.splitForms(forms: forms)
+                UIAlertController.presentDismissingAlert(title: "Deleted", dismissAfter: 0.5)
             }
         }
     }
+
+    private func deleteForm(_ form: Form) {
+        FirebaseController.shared.saveDeletedForm(form: form) { [weak self] error in
+            guard let self = self else { return }
+            if let error = error {
+                print("Error Saving Form: \(error)")
+                self.vibrateForError()
+                UIAlertController.presentDismissingAlert(
+                    title: "Error Deleting Form: \(form.firstName + " " + form.lastName)",
+                    dismissAfter: 1.2
+                )
+                return
+            }
+        }
+        
+        FirebaseController.shared.deleteForm(firebaseID: form.firebaseID) { error in
+            if let error = error {
+                print("Error Deleting Form: \(error)")
+                self.vibrateForError()
+                UIAlertController.presentDismissingAlert(
+                    title: "Error Deleting Form: \(form.firstName + " " + form.lastName)",
+                    dismissAfter: 1.2
+                )
+            }
+        }
+    }
+
 
     
     // MARK: - Navigation
@@ -355,7 +408,18 @@ extension FormListViewController: FormDetailViewDelegate {
     }
 }
 
-extension FormListViewController: FormViewDelegate {
+extension FormListViewController: NotesViewDelegate {
+    func didUpdateForm(with form: Form) {
+        if !forms.contains(where: { $0.firebaseID == form.firebaseID }),
+           let index = forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {
+            forms[index] = form
+            splitForms(forms: forms)
+            tableView.reloadData()
+        }
+    }
+}
+
+extension FormListViewController: CreateFormViewDelegate {
     func didAddNewForm(_ form: Form) {
         if !forms.contains(where: { $0.firebaseID == form.firebaseID }) {
             print(forms.count)
@@ -376,25 +440,11 @@ extension FormListViewController: FormViewDelegate {
     }
 }
 
-extension FormListViewController: NotesViewDelegate {
-    func showNotesView(form: Form) {
-        // Remove existing notes views
-        for subview in self.view.subviews {
-                    if subview is NotesView {
-                        subview.removeFromSuperview()
-                    }
-                }
-        let notesView = NotesView()
-        notesView.form = form
-        self.view.addSubview(notesView)
-    }
-}
-
 extension FormListViewController {
     func showBranchSelectionAlert() {
         let alert = UIAlertController(title: "Please Select a Branch", message: nil, preferredStyle: .actionSheet)
         
-        // Add actions for each branch
+        // Adds actions for each branch
         for branch in Branch.allCases {
             let action = UIAlertAction(title: branch.rawValue, style: .default) { _ in
                 // Handle the selected branch
@@ -403,9 +453,14 @@ extension FormListViewController {
             alert.addAction(action)
         }
         
-        // Add cancel action
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(cancelAction)
+        
+        if let popoverController = alert.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0) // Set the position
+            popoverController.permittedArrowDirections = []
+        }
         
         // Present the alert
         present(alert, animated: true, completion: nil)

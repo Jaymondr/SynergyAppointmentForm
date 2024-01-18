@@ -7,15 +7,8 @@
 
 import UIKit
 
-protocol NotesViewDelegate: AnyObject {
-    func showNotesView(form: Form)
-}
-
 class FormTableViewCell: UITableViewCell {
-    
-    weak var delegate: NotesViewDelegate?
-    
-    @IBOutlet weak var showNotesButton: UIButton!
+        
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
@@ -41,14 +34,6 @@ class FormTableViewCell: UITableViewCell {
     var form: Form?
 
     
-    // MARK: - ACTIONS
-    @IBAction func notesButtonPressed(_ sender: Any) {
-        print("Notes Button Pressed")
-        guard let form = form else { return }
-        delegate?.showNotesView(form: form)
-    }
-    
-    
     // MARK: - FUNCTIONS
     private func resetCell() {
         dropShadowView.layer.applySketchShadow(color: .clear, alpha: 0.0, x: 0.0, y: 0.0, blur: 0.0, spread: 0.0)
@@ -57,13 +42,11 @@ class FormTableViewCell: UITableViewCell {
             timeLabel.textColor = .lightText
             dateLabel.textColor = .lightText
             dayLabel.textColor = .lightText
-            showNotesButton.tintColor = .lightText
         } else {
             firstNameLabel.textColor = .black
             timeLabel.textColor = .black
             dateLabel.textColor = .black
             dayLabel.textColor = .black
-            showNotesButton.tintColor = .black
         }
     }
 
@@ -92,13 +75,11 @@ class FormTableViewCell: UITableViewCell {
             timeLabel.textColor = .lightText
             dateLabel.textColor = .lightText
             dayLabel.textColor = .lightText
-            showNotesButton.tintColor = .lightGray
         } else {
             firstNameLabel.textColor = .black
             timeLabel.textColor = .black
             dateLabel.textColor = .black
             dayLabel.textColor = .black
-            showNotesButton.tintColor = .black
         }
     }
     

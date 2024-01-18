@@ -9,7 +9,7 @@ import UIKit
 import CoreLocation
 import MessageUI
 
-protocol FormViewDelegate: AnyObject {
+protocol CreateFormViewDelegate: AnyObject {
     func didAddNewForm(_ form: Form)
     func didUpdateNew(_ form: Form)
 }
@@ -45,7 +45,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var locationManager = CLLocationManager()
-    weak var delegate: FormViewDelegate?
+    weak var delegate: CreateFormViewDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -174,7 +174,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             if form.firebaseID.isNotEmpty {
                 // UPDATE FORM
                 saveQueue.async {
-                    FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { error in
+                    FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { updatedForm, error in
                         DispatchQueue.main.async {
                             self.saveButton.isEnabled = true
                             self.activityIndicator.stopAnimating()
@@ -258,7 +258,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         // DEFAULT IMPLEMENTATIONS
         homeValueStackView.isHidden = true
         yearBuiltStackView.isHidden = true
-
+        trelloButton.isHidden = true
         
         // VIEW FOR BRANCH
         switch user.branch {
@@ -288,6 +288,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         case .southJordan:
             print("Form For South Jordan")
             emailTextfield.placeholder = "@synergywindow.com"
+            trelloButton.isVisible = true
 
         case .sanAntonio:
             print("Form For San Antonio")
@@ -381,19 +382,18 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        // Check if the current length is less than or equal to 10
         let currentLength = (textField.text ?? "").count
         let newLength = currentLength + string.count - range.length
 
-        // Change the border color based on the condition
-        if newLength != 10 {
-            textField.layer.borderWidth = 1.0
-            textField.layer.borderColor = UIColor.red.cgColor
-        } else {
-            textField.layer.borderColor = UIColor.clear.cgColor
+        if textField == phoneTextfield {
+            if newLength != 10 {
+                textField.layer.borderWidth = 1.0
+                textField.layer.borderColor = UIColor.red.cgColor
+            } else {
+                textField.layer.borderColor = UIColor.clear.cgColor
+            }
         }
 
-        // Allow the text change if needed
         return true
     }
     
