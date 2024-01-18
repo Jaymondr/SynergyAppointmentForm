@@ -206,20 +206,22 @@ class ProfileViewController: UIViewController {
     func showBranchSelectionAlert() {
         let alert = UIAlertController(title: "Select a Branch", message: nil, preferredStyle: .actionSheet)
         
-        // Add actions for each branch
         for branch in Branch.allCases {
             let action = UIAlertAction(title: branch.rawValue, style: .default) { [weak self] _ in
-                // Handle the selected branch
                 self?.handleBranchSelection(branch)
             }
             alert.addAction(action)
         }
         
-        // Add cancel action
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(cancelAction)
         
-        // Present the alert
+        if let popoverController = alert.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0) // Set the position
+            popoverController.permittedArrowDirections = []
+        }
+        
         present(alert, animated: true, completion: nil)
     }
     
