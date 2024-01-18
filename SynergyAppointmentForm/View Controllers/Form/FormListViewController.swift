@@ -12,7 +12,7 @@ import UIKit
  1. Add empty state UI ✅
  2. Add search bar ✅
  3. Add notification to select branch ✅
- 4. Remove unused buttons for other branches
+ 4. Remove unused buttons for other branches ✅
  5. Add account types for branch manager, director, owner
  6. Add analytics
  7. Add filters for owner/branch manager
@@ -22,6 +22,7 @@ import UIKit
  11. Add partial sale feature-> keep track of partially sold homes to go back
  12. Add note screen when user swipes right
  13. Add update label when user swipes right
+ 14. Fix bug where delete form then create new form then form list shows deleted form until reload
  */
 
 class FormListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
@@ -123,12 +124,10 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        // Implement search functionality here
         filterForms(for: searchText)
         tableView.reloadData()
     }
     
-    // Function to filter forms based on search text
     func filterForms(for searchText: String) {
         if searchText.isEmpty {
             splitForms(forms: forms)
@@ -136,23 +135,20 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             var filteredForms = forms
             filteredForms = forms.filter { form in
                 return form.firstName.lowercased().contains(searchText.lowercased()) ||
-                form.lastName.lowercased().contains(searchText.lowercased()) || form.spouse.lowercased().contains(searchText.lowercased()) || form.city.contains(searchText.lowercased()) || form.phone.contains(searchText.lowercased()) ||
+                form.lastName.lowercased().contains(searchText.lowercased()) || form.spouse.lowercased().contains(searchText.lowercased()) || form.city.lowercased().contains(searchText.lowercased()) || form.phone.contains(searchText.lowercased()) ||
                 form.outcome.rawValue.lowercased().contains(searchText.lowercased())
             }
             splitForms(forms: filteredForms)
         }
     }
     
-    // Function to present the sign-in view controller
     func presentLoginChoiceVC() {
-        // Replace "SignUpStoryboard" with the name of your storyboard file
         let storyboard = UIStoryboard(name: "SignUpScreen", bundle: nil)
         
         guard let loginChoiceVC = storyboard.instantiateViewController(withIdentifier: "LoginChoiceViewController") as? LoginChoiceViewController else { return }
         navigationController?.pushViewController(loginChoiceVC, animated: false)
     }
     
-    // Separates the forms into upcoming and past for table view section
     func splitForms(forms: [Form]) {
         upcomingAppointmentForms.removeAll()
         pastAppointmentForms.removeAll()
@@ -170,7 +166,6 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         self.tableView.reloadData()
     }
     
-    // Sets title for Form list
     func setTitleAttributes() {
         if let navigationController = self.navigationController {
             self.navigationItem.title = "FORMS"
@@ -333,6 +328,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             if var forms = self?.forms, let index = forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {
                 forms.remove(at: index)
                 self?.splitForms(forms: forms)
+                UIAlertController.presentDismissingAlert(title: "Deleted", dismissAfter: 0.5)
             }
         }
     }

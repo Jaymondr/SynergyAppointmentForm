@@ -43,26 +43,7 @@ class NotesViewController: UIViewController {
     
     // MARK: BUTTONS
     @IBAction func saveButtonPressed(_ sender: Any) {
-        print("Save form button pressed")
-        guard let form = form else { return }
-        let notes = notesTextView.text ?? ""
-        form.notes = notes
-        FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { updatedForm, error in
-            if let error = error {
-                print("Error: \(error)")
-            }
-            if let updatedForm = updatedForm {
-                self.delegate?.didUpdateForm(with: updatedForm)
-                self.vibrateForButtonPress(.heavy)
-                self.titleLabel.text = "SAVED!"
-                self.titleLabel.textColor = UIColor.outcomeGreen
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-                    self.titleLabel.text = "Notes"
-                    self.titleLabel.textColor = .black
-
-                }
-            }
-        }
+        saveForm()
     }
     
     
@@ -102,6 +83,29 @@ class NotesViewController: UIViewController {
         notesTextView.text = form.notes
         // Set background view for outcome
         setOutcomeView(form: form)
+    }
+    
+    private func saveForm() {
+        guard let form = form else { return }
+
+        let notes = notesTextView.text ?? ""
+        form.notes = notes
+        FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { updatedForm, error in
+            if let error = error {
+                print("Error: \(error)")
+            }
+            if let updatedForm = updatedForm {
+                self.delegate?.didUpdateForm(with: updatedForm)
+                self.vibrateForButtonPress(.heavy)
+                self.titleLabel.text = "SAVED!"
+                self.titleLabel.textColor = UIColor.outcomeGreen
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                    self.titleLabel.text = "Notes"
+                    self.titleLabel.textColor = .black
+
+                }
+            }
+        }
     }
     
     private func setOutcomeView(form: Form) {
