@@ -33,6 +33,10 @@ class ProfileViewController: UIViewController {
     
     // REPORTS
     @IBOutlet weak var salesRate: UILabel!
+    @IBOutlet weak var ranRate: UILabel!
+    @IBOutlet weak var ranIncompleteRate: UILabel!
+    @IBOutlet weak var rescheduledRate: UILabel!
+    @IBOutlet weak var cancelledRate: UILabel!
     
     
     // MARK: - LIFECYCLE
@@ -190,11 +194,22 @@ class ProfileViewController: UIViewController {
                 pastAppointmentForms.append(form)
             }
         }
-        print("Past forms count: \(pastAppointmentForms.count)")
-        print("all forms count: \(forms.count)")
 
         // SOLD
-        salesRate.text = String(ReportController.shared.calculateTurnoverRate(for: pastAppointmentForms, outcome: .sold)) + "%"
+        salesRate.text = ReportController.shared.calculateTurnoverRate(for: pastAppointmentForms, outcome: .sold) + "%"
+        
+        // CANCELLED
+        cancelledRate.text = ReportController.shared.calculateTurnoverRate(for: pastAppointmentForms, outcome: .cancelled) + "%"
+        
+        // RESCHEDULED
+        rescheduledRate.text = ReportController.shared.calculateTurnoverRate(for: pastAppointmentForms, outcome: .rescheduled) + "%"
+
+        // RAN
+        ranRate.text = ReportController.shared.calculateTurnoverRate(for: pastAppointmentForms, outcome: .ran) + "%"
+
+        // RAN-INCOMPLETE
+        ranIncompleteRate.text = ReportController.shared.calculateTurnoverRate(for: pastAppointmentForms, outcome: .ranIncomplete) + "%"
+
     }
     
     private func configureViewForState() {
