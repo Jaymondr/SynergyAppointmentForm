@@ -31,6 +31,9 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var branchInfoButton: UIButton!
     @IBOutlet weak var branchLabel: UILabel!
     
+    // REPORTS
+    @IBOutlet weak var salesRate: UILabel!
+    
     
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
@@ -40,6 +43,7 @@ class ProfileViewController: UIViewController {
         
         // Loads view data and style
         setupView()
+        getReports()
         
     }
     
@@ -176,6 +180,21 @@ class ProfileViewController: UIViewController {
             branchLabel.isHidden = true
             emptyBranchStackView.isVisible = true
         }
+    }
+    
+    func getReports() {
+        var pastAppointmentForms: [Form] = []
+        let sortedAppointmentForms = forms.sorted {$0.date < $1.date}
+        for form in sortedAppointmentForms {
+            if form.date < Date() {
+                pastAppointmentForms.append(form)
+            }
+        }
+        print("Past forms count: \(pastAppointmentForms.count)")
+        print("all forms count: \(forms.count)")
+
+        // SOLD
+        salesRate.text = String(ReportController.shared.calculateTurnoverRate(for: pastAppointmentForms, outcome: .sold)) + "%"
     }
     
     private func configureViewForState() {
