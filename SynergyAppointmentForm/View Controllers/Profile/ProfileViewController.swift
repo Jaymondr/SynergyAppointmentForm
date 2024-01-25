@@ -32,6 +32,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var branchLabel: UILabel!
     
     // REPORTS
+    @IBOutlet weak var reportsView: UIView!
     @IBOutlet weak var salesRate: UILabel!
     @IBOutlet weak var ranRate: UILabel!
     @IBOutlet weak var ranIncompleteRate: UILabel!
@@ -108,6 +109,7 @@ class ProfileViewController: UIViewController {
     @IBAction func signInButtonPressed(_ sender: Any) {
         guard let email = emailTextField.text,
               let password = passwordTextField.text else { return }
+        passwordTextField.resignFirstResponder()
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
             if let error = error {
                 print("There was an error: \(error)")
@@ -215,12 +217,12 @@ class ProfileViewController: UIViewController {
     private func configureViewForState() {
         if UserAccount.currentUser == nil {
             // NOT SIGNED IN
-            hide([logOutButton, nameStackView, salesStackView, emailStackView, branchLabel])
+            hide([logOutButton, nameStackView, salesStackView, emailStackView, branchLabel, reportsView])
             show([signInButton, emailTextField, passwordTextField])
             
         } else {
             // SIGNED IN
-            show([logOutButton, nameStackView, salesStackView, emailStackView, branchLabel])
+            show([logOutButton, nameStackView, salesStackView, emailStackView, branchLabel, reportsView])
             hide([signInButton, emailTextField, passwordTextField])
         }
     }
