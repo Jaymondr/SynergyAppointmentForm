@@ -43,10 +43,12 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         loadForms()
         setTitleAttributes()
         
+        // SEARCHBAR
         searchBar.delegate = self
         tableView.refreshControl = refreshControl
         tableView.separatorStyle = .none
-        
+        searchBar.setImage(UIImage(named: "arrow.up.arrow.down"), for: .bookmark, state: .normal)
+
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         NotificationCenter.default.addObserver(self, selector: #selector(handleSignInNotification), name: .signInNotification, object: nil)
         NotificationCenter.default.addObserver(self,
@@ -138,6 +140,16 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         } else {
             print("Current user is nil.")
         }
+        
+        // SEARCHBAR
+        searchBar.showsBookmarkButton = UserAccount.currentUser?.accountType != .coordinator
+    }
+    
+    func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
+        print("handle search bar button click")
+    
+        let alert = UIAlertController(title: "Filter Forms", message: "Show forms:", preferredStyle: .alert)
+        
     }
     
     @objc func handleSignOutNotification() {

@@ -183,6 +183,25 @@ class FirebaseController {
         })
     }
     
+    func getUsers(for branch: Branch, completion: @escaping (_ users: [UserAccount?], _ error: Error?) -> Void) {
+        db.collection(UserAccount.collectionKey).whereField(UserAccount.CodingKeys.accountType.rawValue, isEqualTo: branch.rawValue).getDocuments { snap, error in
+            if let error = error {
+                print("There was an error getting users for \(branch.rawValue)")
+                completion([], nil)
+            }
+            
+            if let docs = snap?.documents {
+                var users: [UserAccount?] = []
+                for doc in docs {
+                    let data = doc.data()
+                    let user = UserAccount(firebaseData: data, firebaseID: doc.documentID)
+                    users.append(user)
+                }
+                completion(users, nil)
+            }
+        }
+    }
+    
     
     // MARK: - APPROVED EMAILS
     func getApprovedEmails(completion: @escaping (_ approvedEmails: [String]?) -> Void) {
