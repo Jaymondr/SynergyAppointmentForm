@@ -35,5 +35,29 @@ class UserAccountController {
             }
         }
     }
+    
+    func updateAccountType(to accountType: AccountType) {
+        guard let user = UserAccount.currentUser else { return }
+        // Update locally
+        user.accountType = accountType
+        
+        // Update UserDefaults
+        if var userDefaultsDict = UserDefaults.standard.dictionary(forKey: UserAccount.kUser) {
+            userDefaultsDict[UserAccount.CodingKeys.accountType.rawValue] = accountType.rawValue
+            UserDefaults.standard.set(userDefaultsDict, forKey: UserAccount.kUser)
+        }
+        
+        // Update in Firebase
+        let userRef = Firestore.firestore().collection(UserAccount.collectionKey).document(user.uID)
+        userRef.updateData([UserAccount.CodingKeys.accountType.rawValue: accountType.rawValue]) { error in
+            if let error = error {
+                print("Error updating account type in Firebase: \(error.localizedDescription)")
+                // Handle error as needed
+            } else {
+                print("Account type updated successfully in Firebase!")
+                UIAlertController.presentDismissingAlert(title: "Updated account type to \(accountType.rawValue)", dismissAfter: 1.4)
+            }
+        }
+    }
 }
 

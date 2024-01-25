@@ -35,12 +35,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // Check for user
-        if UserAccount.currentUser == nil {
-            presentLoginChoiceVC()
-        } else if UserAccount.currentUser?.branch == nil {
-            showBranchSelectionAlert()
-        }
+            startUpFunctions()
     }
     
     override func viewDidLoad() {
@@ -103,6 +98,45 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             }
             self.forms = forms
             self.splitForms(forms: forms)
+        }
+    }
+    
+    func startUpFunctions() {
+        // Check for user
+        if UserAccount.currentUser == nil {
+            presentLoginChoiceVC()
+        } else if UserAccount.currentUser?.branch == nil {
+            showBranchSelectionAlert()
+        }
+        
+        // Set account type to default coordinator
+        if UserAccount.currentUser?.accountType == nil {
+            UserAccountController.shared.updateAccountType(to: .coordinator)
+        }
+        
+        if let currentUser = UserAccount.currentUser {
+            // Fetches user from Firebase to see if there are changes to the account type
+            FirebaseController.shared.getUser(with: currentUser.firebaseID) { user, error in
+                if let error = error {
+                    print("There was an error getting the user: \(error.localizedDescription)")
+                    return
+                }
+                
+                if let user = user, let accountType = user.accountType {
+                    if currentUser.accountType != accountType {
+                        // Update the account type locally to match cloud data
+                        UserAccountController.shared.updateAccountType(to: accountType)
+                        // Update UserDefaults
+                        UserDefaults.standard.set(accountType.rawValue, forKey: "accountType")
+                    } else {
+                        print("Account type is already up to date.")
+                    }
+                } else {
+                    print("User data is nil or account type is nil.")
+                }
+            }
+        } else {
+            print("Current user is nil.")
         }
     }
     
