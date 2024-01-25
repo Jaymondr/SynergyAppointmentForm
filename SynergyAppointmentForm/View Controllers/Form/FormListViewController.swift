@@ -42,13 +42,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidLoad()
         loadForms()
         setTitleAttributes()
-        
-        FirebaseController.shared.getUsers(for: .southJordan) { users, error in
-            for user in users {
-                print("South Jordan User: \(user.firstName)")
-            }
-        }
-        
+                
         // SEARCHBAR
         searchBar.delegate = self
         tableView.refreshControl = refreshControl
@@ -150,8 +144,42 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     
     func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
         print("handle search bar button click")
-    
-        let alert = UIAlertController(title: "Filter Forms", message: "Show forms:", preferredStyle: .alert)
+        FirebaseController.shared.getUsers(for: .southJordan) { users, error in
+            if let error = error {
+                print("Error: \(error)")
+                return
+            }
+            
+            let alert = UIAlertController(title: "Filter Forms", message: "Show forms:", preferredStyle: .alert)
+            let allAction = UIAlertAction(title: "All", style: .default)
+            alert.addAction(allAction)
+            
+            for user in users {
+                let userAction = UIAlertAction(title: user.firstName, style: .default) { _ in
+                    print("Selected user: \(user.firstName)")
+                }
+                alert.addAction(userAction)
+            }
+            
+            self.present(alert, animated: true)
+        }
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
     }
     
