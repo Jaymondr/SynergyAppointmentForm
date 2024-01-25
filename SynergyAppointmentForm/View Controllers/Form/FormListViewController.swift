@@ -100,6 +100,17 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    func loadForms(for firebaseID: String) {
+        FirebaseController.shared.getForms(for: firebaseID) { forms, error in
+            if let error = error {
+                print("Error fetching forms: \(error)")
+            }
+            self.forms = forms
+            self.splitForms(forms: forms)
+        }
+
+    }
+    
     func startUpFunctions() {
         // Check for user
         if UserAccount.currentUser == nil {
@@ -157,10 +168,10 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             for user in users {
                 let userAction = UIAlertAction(title: user.firstName, style: .default) { _ in
                     print("Selected user: \(user.firstName)")
+                    self.loadForms(for: user.firebaseID)
                 }
                 alert.addAction(userAction)
             }
-            
             self.present(alert, animated: true)
         }
         
