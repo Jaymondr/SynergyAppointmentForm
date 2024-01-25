@@ -224,24 +224,27 @@ class ProfileViewController: UIViewController {
         // SOLD
         let soldCount = ReportController.shared.getNumber(of: .sold, from: pastAppointmentForms)
         salesRate.text = ReportController.shared.calculateTurnoverRate(for: pastAppointmentForms, outcome: .sold) + "%"
-        soldNumber.text = "Sold(\(soldCount))"
+        soldNumber.text = "Sold (\(soldCount))"
         
         // CANCELLED
         let cancelledCount = ReportController.shared.getNumber(of: .cancelled, from: pastAppointmentForms)
         cancelledRate.text = ReportController.shared.calculateTurnoverRate(for: pastAppointmentForms, outcome: .cancelled) + "%"
-        cancelledNumber.text = "Cancelled(\(cancelledCount))"
+        cancelledNumber.text = "Cancelled (\(cancelledCount))"
+        
         // RESCHEDULED
         let rescheduledCount = ReportController.shared.getNumber(of: .rescheduled, from: pastAppointmentForms)
         rescheduledRate.text = ReportController.shared.calculateTurnoverRate(for: pastAppointmentForms, outcome: .rescheduled) + "%"
-        rescheduledNumber.text = "Rescheduled(\(rescheduledCount))"
+        rescheduledNumber.text = "Rescheduled (\(rescheduledCount))"
+        
         // RAN
         let ranCount = ReportController.shared.getNumber(of: .ran, from: pastAppointmentForms)
         ranRate.text = ReportController.shared.calculateTurnoverRate(for: pastAppointmentForms, outcome: .ran) + "%"
-        ranNumber.text = "Ran(\(ranCount))"
+        ranNumber.text = "Ran (\(ranCount))"
+        
         // RAN-INCOMPLETE
         let ranIncomplete = ReportController.shared.getNumber(of: .ranIncomplete, from: pastAppointmentForms)
         ranIncompleteRate.text = ReportController.shared.calculateTurnoverRate(for: pastAppointmentForms, outcome: .ranIncomplete) + "%"
-        ranIncompleteNumber.text = "Ran-Incomplete(\(ranIncomplete))"
+        ranIncompleteNumber.text = "Ran/Incomplete (\(ranIncomplete))"
     }
     
     private func configureViewForState() {
