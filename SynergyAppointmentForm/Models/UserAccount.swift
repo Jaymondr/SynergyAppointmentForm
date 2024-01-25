@@ -49,7 +49,9 @@ class UserAccount {
     
     
     // MARK: PROPERTIES
+    /// Users
     static let collectionKey = "Users"
+    /// User
     static let kUser = "User"
     var firebaseID: String
     var firstName: String

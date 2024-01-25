@@ -43,6 +43,12 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         loadForms()
         setTitleAttributes()
         
+        FirebaseController.shared.getUsers(for: .southJordan) { users, error in
+            for user in users {
+                print("South Jordan User: \(user.firstName)")
+            }
+        }
+        
         // SEARCHBAR
         searchBar.delegate = self
         tableView.refreshControl = refreshControl
@@ -94,9 +100,6 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         FirebaseController.shared.getForms(for: user.firebaseID) { forms, error in
             if let error = error {
                 print("Error fetching forms: \(error)")
-            }
-            for form in forms {
-                print("Name: \(form.firstName)")
             }
             self.forms = forms
             self.splitForms(forms: forms)

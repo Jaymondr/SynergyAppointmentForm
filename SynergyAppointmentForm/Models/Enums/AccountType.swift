@@ -8,8 +8,12 @@
 import Foundation
 
 enum AccountType: String, CaseIterable {
+    /// Administrator
     case admin = "Aministrator"
+    /// Branch Manager
     case manager = "Branch Manager"
+    /// Marketing Director
     case director = "Marketing Director"
+    /// Marketing Coordinator
     case coordinator = "Marketing Coordinator"
 }
