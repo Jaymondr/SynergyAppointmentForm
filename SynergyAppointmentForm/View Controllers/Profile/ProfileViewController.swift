@@ -16,28 +16,36 @@ protocol VisibleToggleable {
 class ProfileViewController: UIViewController {
     
     // MARK: - OUTLETS
-    @IBOutlet weak var nameStackView: UIStackView!
-    @IBOutlet weak var salesStackView: UIStackView!
-    @IBOutlet weak var emailStackView: UIStackView!
+    @IBOutlet weak var settingsButton: UIBarButtonItem!
+    
+    // PROFILE CARD
+    @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var emptyBranchStackView: UIStackView!
-    @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var logOutButton: UIButton!
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var salesLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
-    @IBOutlet weak var settingsButton: UIBarButtonItem!
     @IBOutlet weak var branchInfoButton: UIButton!
     @IBOutlet weak var branchLabel: UILabel!
+    
+    // SIGN IN CARD
+    @IBOutlet weak var signInView: UIView!
+    @IBOutlet weak var signInButton: UIButton!
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
     
     // REPORTS
     @IBOutlet weak var reportsView: UIView!
     @IBOutlet weak var salesRate: UILabel!
+    @IBOutlet weak var soldNumber: UILabel!
     @IBOutlet weak var ranRate: UILabel!
+    @IBOutlet weak var ranNumber: UILabel!
     @IBOutlet weak var ranIncompleteRate: UILabel!
+    @IBOutlet weak var ranIncompleteNumber: UILabel!
     @IBOutlet weak var rescheduledRate: UILabel!
+    @IBOutlet weak var rescheduledNumber: UILabel!
     @IBOutlet weak var cancelledRate: UILabel!
+    @IBOutlet weak var cancelledNumber: UILabel!
     
     
     // MARK: - LIFECYCLE
@@ -186,6 +194,22 @@ class ProfileViewController: UIViewController {
             branchLabel.isHidden = true
             emptyBranchStackView.isVisible = true
         }
+        
+        // REPORT CARD
+        reportsView.layer.cornerRadius = 8
+        reportsView.layer.borderWidth = 1.5
+        reportsView.layer.borderColor = UIColor.outcomeGreen.cgColor
+        
+        // PROFILE CARD
+        profileView.layer.borderWidth = 1.5
+        profileView.layer.borderColor = UIColor.eden.cgColor
+        profileView.backgroundColor = .clear
+
+        // SIGN IN CARD
+        signInView.layer.borderWidth = 1.5
+        signInView.layer.borderColor = UIColor.outcomeBlue.cgColor
+        signInView.backgroundColor = .clear
+        
     }
     
     func getReports() {
@@ -198,32 +222,38 @@ class ProfileViewController: UIViewController {
         }
 
         // SOLD
+        let soldCount = ReportController.shared.getNumber(of: .sold, from: pastAppointmentForms)
         salesRate.text = ReportController.shared.calculateTurnoverRate(for: pastAppointmentForms, outcome: .sold) + "%"
+        soldNumber.text = "Sold(\(soldCount))"
         
         // CANCELLED
+        let cancelledCount = ReportController.shared.getNumber(of: .cancelled, from: pastAppointmentForms)
         cancelledRate.text = ReportController.shared.calculateTurnoverRate(for: pastAppointmentForms, outcome: .cancelled) + "%"
-        
+        cancelledNumber.text = "Cancelled(\(cancelledCount))"
         // RESCHEDULED
+        let rescheduledCount = ReportController.shared.getNumber(of: .rescheduled, from: pastAppointmentForms)
         rescheduledRate.text = ReportController.shared.calculateTurnoverRate(for: pastAppointmentForms, outcome: .rescheduled) + "%"
-
+        rescheduledNumber.text = "Rescheduled(\(rescheduledCount))"
         // RAN
+        let ranCount = ReportController.shared.getNumber(of: .ran, from: pastAppointmentForms)
         ranRate.text = ReportController.shared.calculateTurnoverRate(for: pastAppointmentForms, outcome: .ran) + "%"
-
+        ranNumber.text = "Ran(\(ranCount))"
         // RAN-INCOMPLETE
+        let ranIncomplete = ReportController.shared.getNumber(of: .ranIncomplete, from: pastAppointmentForms)
         ranIncompleteRate.text = ReportController.shared.calculateTurnoverRate(for: pastAppointmentForms, outcome: .ranIncomplete) + "%"
-
+        ranIncompleteNumber.text = "Ran-Incomplete(\(ranIncomplete))"
     }
     
     private func configureViewForState() {
         if UserAccount.currentUser == nil {
             // NOT SIGNED IN
-            hide([logOutButton, nameStackView, salesStackView, emailStackView, branchLabel, reportsView])
-            show([signInButton, emailTextField, passwordTextField])
+            hide([profileView, reportsView])
+            show([signInView])
             
         } else {
             // SIGNED IN
-            show([logOutButton, nameStackView, salesStackView, emailStackView, branchLabel, reportsView])
-            hide([signInButton, emailTextField, passwordTextField])
+            show([profileView, reportsView])
+            hide([signInView])
         }
     }
     
