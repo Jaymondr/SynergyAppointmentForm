@@ -47,7 +47,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         searchBar.delegate = self
         tableView.refreshControl = refreshControl
         tableView.separatorStyle = .none
-        searchBar.setImage(UIImage(named: "arrow.up.arrow.down"), for: .bookmark, state: .normal)
+        searchBar.setImage(UIImage(systemName: "arrow.up.arrow.down"), for: .bookmark, state: .normal)
 
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         NotificationCenter.default.addObserver(self, selector: #selector(handleSignInNotification), name: .signInNotification, object: nil)
@@ -100,15 +100,27 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    func loadForms(for firebaseID: String) {
-        FirebaseController.shared.getForms(for: firebaseID) { forms, error in
-            if let error = error {
-                print("Error fetching forms: \(error)")
+    func loadForms(for firebaseIDs: [String]) {
+        var filteredForms: [Form] = []
+        let dispatchGroup = DispatchGroup()
+        
+        for firebaseID in firebaseIDs {
+            dispatchGroup.enter()
+            FirebaseController.shared.getForms(for: firebaseID) { forms, error in
+                defer {
+                    dispatchGroup.leave()
+                }
+                if let error = error {
+                    print("Error fetching forms: \(error)")
+                } else {
+                    filteredForms.append(contentsOf: forms)
+                }
             }
-            self.forms = forms
-            self.splitForms(forms: forms)
         }
-
+        
+        dispatchGroup.notify(queue: .main) {
+            self.splitForms(forms: filteredForms)
+        }
     }
     
     func startUpFunctions() {
@@ -161,37 +173,26 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                 return
             }
             
-            let alert = UIAlertController(title: "Filter Forms", message: "Show forms:", preferredStyle: .alert)
-            let allAction = UIAlertAction(title: "All", style: .default)
-            alert.addAction(allAction)
+            let alert = UIAlertController(title: "Filter Forms", message: nil, preferredStyle: .alert)
+            let allAction = UIAlertAction(title: "All", style: .default) { _ in
+                var firebaseIDs: [String] = []
+                for user in users {
+                    firebaseIDs.append(user.firebaseID)
+                }
+                self.loadForms(for: firebaseIDs)
+
+            }
+                alert.addAction(allAction)
             
             for user in users {
                 let userAction = UIAlertAction(title: user.firstName, style: .default) { _ in
                     print("Selected user: \(user.firstName)")
-                    self.loadForms(for: user.firebaseID)
+                    self.loadForms(for: [user.firebaseID])
                 }
                 alert.addAction(userAction)
             }
             self.present(alert, animated: true)
         }
-        
-        
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
     }
     
     @objc func handleSignOutNotification() {
