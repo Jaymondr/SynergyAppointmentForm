@@ -29,7 +29,7 @@ class ReportController {
             return String(Int(round(turnoverRate)))
             
         } else {
-            return "--%"
+            return "--"
         }
     }
     

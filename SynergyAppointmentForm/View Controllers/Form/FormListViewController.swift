@@ -167,7 +167,8 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     
     func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
         print("handle search bar button click")
-        FirebaseController.shared.getUsers(for: .southJordan) { users, error in
+        guard let user = UserAccount.currentUser, let branch = user.branch else { return }
+        FirebaseController.shared.getUsers(for: branch) { users, error in
             if let error = error {
                 print("Error: \(error)")
                 return

@@ -37,6 +37,7 @@ class ProfileViewController: UIViewController {
     
     // REPORTS
     @IBOutlet weak var appointmentsLabel: UILabel!
+    @IBOutlet weak var filterButton: UIButton!
     @IBOutlet weak var pendingNumber: UILabel!
     @IBOutlet weak var reportsView: UIView!
     @IBOutlet weak var salesRate: UILabel!
@@ -59,7 +60,7 @@ class ProfileViewController: UIViewController {
         
         // Loads view data and style
         setupView()
-        getReports()
+        getReports(for: nil)
         
     }
     
@@ -169,6 +170,25 @@ class ProfileViewController: UIViewController {
         showBranchSelectionAlert()
     }
     
+    @IBAction func filterButtonPressed(_ sender: Any) {
+        guard let user = UserAccount.currentUser, let branch = user.branch else { return }
+        FirebaseController.shared.getUsers(for: branch) { users, error in
+            if let error = error {
+                print("Error: \(error)")
+                return
+            }
+            
+            let alert = UIAlertController(title: "Filter Reports", message: nil, preferredStyle: .alert)
+            for user in users {
+                let userAction = UIAlertAction(title: user.firstName, style: .default) { _ in
+                    print("Selected user: \(user.firstName)")
+                    self.getReports(for: user.firebaseID)
+                }
+                alert.addAction(userAction)
+            }
+            self.present(alert, animated: true)
+        }
+    }
     
     
     // MARK: - FUNCTIONS
@@ -218,41 +238,49 @@ class ProfileViewController: UIViewController {
         
     }
     
-    func getReports() {
-        // Get reports for non pending forms only
-        let nonPendingForms = forms.filter({ $0.outcome != .pending })
-
-        // ALL
-        appointmentsLabel.text = "Appointments (\(forms.count))"
-        
-        // PENDING
-        let pendingCount = ReportController.shared.getNumber(of: .pending, from: forms)
-        pendingNumber.text = "Pending (\(pendingCount))"
-        
-        // SOLD
-        let soldCount = ReportController.shared.getNumber(of: .sold, from: nonPendingForms)
-        salesRate.text = ReportController.shared.calculateTurnoverRate(for: nonPendingForms, outcome: .sold) + "%"
-        soldNumber.text = "Sold (\(soldCount))"
-        
-        // RAN
-        let ranCount = ReportController.shared.getNumber(of: .ran, from: nonPendingForms)
-        ranRate.text = ReportController.shared.calculateTurnoverRate(for: nonPendingForms, outcome: .ran) + "%"
-        ranNumber.text = "Ran (\(ranCount))"
-        
-        // RESCHEDULED
-        let rescheduledCount = ReportController.shared.getNumber(of: .rescheduled, from: nonPendingForms)
-        rescheduledRate.text = ReportController.shared.calculateTurnoverRate(for: nonPendingForms, outcome: .rescheduled) + "%"
-        rescheduledNumber.text = "Rescheduled (\(rescheduledCount))"
-        
-        // RAN-INCOMPLETE
-        let ranIncomplete = ReportController.shared.getNumber(of: .ranIncomplete, from: nonPendingForms)
-        ranIncompleteRate.text = ReportController.shared.calculateTurnoverRate(for: nonPendingForms, outcome: .ranIncomplete) + "%"
-        ranIncompleteNumber.text = "Ran/Incomplete (\(ranIncomplete))"
-        
-        // CANCELLED
-        let cancelledCount = ReportController.shared.getNumber(of: .cancelled, from: nonPendingForms)
-        cancelledRate.text = ReportController.shared.calculateTurnoverRate(for: nonPendingForms, outcome: .cancelled) + "%"
-        cancelledNumber.text = "Cancelled (\(cancelledCount))"
+    func getReports(for userID: String?) {
+        guard let user = UserAccount.currentUser else { return }
+        let userID = userID ?? user.firebaseID
+        FirebaseController.shared.getForms(for: userID) { forms, error in
+            if let error = error {
+                print("Error: \(error)")
+            }
+            
+            // Get reports for non pending forms only
+            let nonPendingForms = forms.filter({ $0.outcome != .pending })
+            
+            // ALL
+            self.appointmentsLabel.text = "Appointments (\(forms.count))"
+            
+            // PENDING
+            let pendingCount = ReportController.shared.getNumber(of: .pending, from: forms)
+            self.pendingNumber.text = "Pending (\(pendingCount))"
+            
+            // SOLD
+            let soldCount = ReportController.shared.getNumber(of: .sold, from: nonPendingForms)
+            self.salesRate.text = ReportController.shared.calculateTurnoverRate(for: nonPendingForms, outcome: .sold) + "%"
+            self.soldNumber.text = "Sold (\(soldCount))"
+            
+            // RAN
+            let ranCount = ReportController.shared.getNumber(of: .ran, from: nonPendingForms)
+            self.ranRate.text = ReportController.shared.calculateTurnoverRate(for: nonPendingForms, outcome: .ran) + "%"
+            self.ranNumber.text = "Ran (\(ranCount))"
+            
+            // RESCHEDULED
+            let rescheduledCount = ReportController.shared.getNumber(of: .rescheduled, from: nonPendingForms)
+            self.rescheduledRate.text = ReportController.shared.calculateTurnoverRate(for: nonPendingForms, outcome: .rescheduled) + "%"
+            self.rescheduledNumber.text = "Rescheduled (\(rescheduledCount))"
+            
+            // RAN-INCOMPLETE
+            let ranIncomplete = ReportController.shared.getNumber(of: .ranIncomplete, from: nonPendingForms)
+            self.ranIncompleteRate.text = ReportController.shared.calculateTurnoverRate(for: nonPendingForms, outcome: .ranIncomplete) + "%"
+            self.ranIncompleteNumber.text = "Ran/Incomplete (\(ranIncomplete))"
+            
+            // CANCELLED
+            let cancelledCount = ReportController.shared.getNumber(of: .cancelled, from: nonPendingForms)
+            self.cancelledRate.text = ReportController.shared.calculateTurnoverRate(for: nonPendingForms, outcome: .cancelled) + "%"
+            self.cancelledNumber.text = "Cancelled (\(cancelledCount))"
+        }
     }
     
     private func configureViewForState() {
@@ -265,6 +293,12 @@ class ProfileViewController: UIViewController {
             // SIGNED IN
             show([profileView, reportsView])
             hide([signInView])
+        }
+        
+        if UserAccount.currentUser?.accountType == .admin || UserAccount.currentUser?.accountType == .manager {
+            show([filterButton])
+        } else {
+            hide([filterButton])
         }
     }
     

@@ -1382,15 +1382,31 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aep-UY-0qz">
+                                        <rect key="frame" x="319" y="8" width="34" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="aep-UY-0qz" secondAttribute="height" multiplier="1:1" id="8Mp-5O-DWv"/>
+                                            <constraint firstAttribute="height" constant="34" id="OPb-Yv-Rtm"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="arrow.up.arrow.down" catalog="system">
+                                            <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="filterButtonPressed:" destination="65z-N3-3XZ" eventType="touchUpInside" id="Sli-KE-J3h"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="aep-UY-0qz" secondAttribute="trailing" constant="8" id="7hW-9O-vBS"/>
                                     <constraint firstItem="Vxd-U0-Fb3" firstAttribute="leading" secondItem="qVf-Di-Zvn" secondAttribute="leading" constant="8" id="OWA-IP-o4u"/>
                                     <constraint firstAttribute="bottom" secondItem="n0V-4j-nJM" secondAttribute="bottom" constant="16" id="OaJ-Cf-wrb"/>
                                     <constraint firstAttribute="trailing" secondItem="n0V-4j-nJM" secondAttribute="trailing" constant="12" id="UUL-g0-6Qo"/>
                                     <constraint firstItem="Vxd-U0-Fb3" firstAttribute="top" secondItem="XBr-Ln-EBT" secondAttribute="bottom" constant="8" id="Zlh-d2-mg4"/>
                                     <constraint firstItem="n0V-4j-nJM" firstAttribute="top" secondItem="Vxd-U0-Fb3" secondAttribute="bottom" constant="8" id="aeh-PY-vzf"/>
                                     <constraint firstItem="XBr-Ln-EBT" firstAttribute="top" secondItem="qVf-Di-Zvn" secondAttribute="top" constant="8" id="tty-Tv-GuP"/>
+                                    <constraint firstItem="aep-UY-0qz" firstAttribute="top" secondItem="qVf-Di-Zvn" secondAttribute="top" constant="8" id="uC8-in-hiK"/>
                                     <constraint firstAttribute="trailing" secondItem="Vxd-U0-Fb3" secondAttribute="trailing" constant="8" id="uNZ-RL-3iS"/>
                                     <constraint firstItem="XBr-Ln-EBT" firstAttribute="centerX" secondItem="qVf-Di-Zvn" secondAttribute="centerX" id="uzV-iM-7DW"/>
                                     <constraint firstItem="n0V-4j-nJM" firstAttribute="leading" secondItem="qVf-Di-Zvn" secondAttribute="leading" constant="12" id="wea-p9-bMQ"/>
@@ -1433,6 +1449,7 @@
                         <outlet property="emailLabel" destination="Rel-QO-ovw" id="d4o-al-rl8"/>
                         <outlet property="emailTextField" destination="KR2-Uv-wdW" id="oLH-fK-BZH"/>
                         <outlet property="emptyBranchStackView" destination="ETh-OU-Muw" id="gXC-1d-F2l"/>
+                        <outlet property="filterButton" destination="aep-UY-0qz" id="HaT-28-CMt"/>
                         <outlet property="logOutButton" destination="H5l-Pl-NpC" id="2Dj-zN-BGD"/>
                         <outlet property="nameLabel" destination="txY-EO-UMX" id="3Nz-Zg-sjn"/>
                         <outlet property="passwordTextField" destination="fZd-mw-gWY" id="L64-fW-8IP"/>
@@ -2238,6 +2255,7 @@
         <segue reference="rU6-U8-7l6"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="arrow.up.arrow.down" catalog="system" width="128" height="97"/>
         <image name="clear" catalog="system" width="128" height="114"/>
         <image name="doc" catalog="system" width="115" height="128"/>
         <image name="doc.fill" catalog="system" width="115" height="128"/>
