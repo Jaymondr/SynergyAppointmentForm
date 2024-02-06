@@ -161,6 +161,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                 pastAppointmentForms.append(form)
             }
         }
+        
         // SORT PAST FORMS NEWEST TO OLDEST
         pastAppointmentForms.sort { $0.date > $1.date}
         self.tableView.reloadData()
