@@ -148,7 +148,7 @@ class FormDetailViewController: UIViewController {
     
     @IBAction func sendMessageButtonPressed(_ sender: Any) {
         guard let form = createForm() else { return }
-        FormController.shared.prepareToSendMessage(form: form, phoneNumber: phoneTextField.text, viewController: self)
+        FormController.shared.prepareToSendMessage(form: form, phoneNumber: phoneTextField.text ?? "", viewController: self)
     }
     
     @IBAction func copyFormButtonPressed(_ sender: Any) {
@@ -172,6 +172,7 @@ class FormDetailViewController: UIViewController {
         self.vibrateForButtonPress(.heavy)
         FormController.shared.copy(phone: phoneNumber)
     }
+    
     @IBAction func clearReasonButtonPressed(_ sender: Any) {
         self.vibrateForButtonPress(.heavy)
         UIAlertController.presentMultipleOptionAlert(message: "Are you sure you want to clear this section?", actionOptionTitle: "Clear", cancelOptionTitle: "Cancel") {

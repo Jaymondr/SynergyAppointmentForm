@@ -79,7 +79,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
 
     @IBAction func messageButtonPressed(_ sender: Any) {
         if let form = createForm() {
-            FormController.shared.prepareToSendMessage(form: form, phoneNumber: phoneTextfield.text, viewController: self)
+            FormController.shared.prepareToSendMessage(form: form, phoneNumber: phoneTextfield.text ?? "", viewController: self)
         } else {
             UIAlertController.presentDismissingAlert(title: "Unable to create form...", dismissAfter: 1.0)
         }

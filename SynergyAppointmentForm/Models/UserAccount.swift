@@ -36,6 +36,14 @@ class UserAccount {
         return firebaseID
     }
     
+    var companyName: String {
+        if branch == .southJordan || branch == .lasVegas {
+            return "Synergy"
+        } else {
+            return "Energy One"
+        }
+    }
+    
     var firebaseRepresentation: [String : FirestoreType] {
         let firebaseRepresentation: [String : FirestoreType] = [
             UserAccount.CodingKeys.firebaseID.rawValue              : firebaseID,

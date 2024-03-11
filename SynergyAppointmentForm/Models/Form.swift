@@ -16,6 +16,7 @@ class Form: FirebaseModel {
     var address: String
     var city: String
     var comments: String
+    var createdDate: Date?
     var date: Date
     var email: String
     var energyBill: String
@@ -37,12 +38,13 @@ class Form: FirebaseModel {
     var yearsOwned: String
     var zip: String
     
-    init(firebaseID: String, address: String, city: String, comments: String, date: Date, email: String, energyBill: String, financeOptions: String, firstName: String, homeValue: String, lastName: String, notes: String = "Notes: ", numberOfWindows: String, outcome: Outcome = .pending, phone: String, rate: String, reason: String, retailQuote: String, spouse: String, state: String, userID: String, yearBuilt: String, yearsOwned: String, zip: String) {
+    init(firebaseID: String, address: String, city: String, comments: String, createdDate: Date, date: Date, email: String, energyBill: String, financeOptions: String, firstName: String, homeValue: String, lastName: String, notes: String = "Notes: ", numberOfWindows: String, outcome: Outcome = .pending, phone: String, rate: String, reason: String, retailQuote: String, spouse: String, state: String, userID: String, yearBuilt: String, yearsOwned: String, zip: String) {
         
         self.firebaseID = firebaseID
         self.address = address
         self.city = city
         self.comments = comments
+        self.createdDate = createdDate
         self.date = date
         self.email = email
         self.energyBill = energyBill
@@ -89,7 +91,8 @@ class Form: FirebaseModel {
               let zip = firebaseData[Form.CodingKeys.zip.rawValue] as? String
 
         else { return nil }
-        
+    
+        let createdDate = firebaseData[Form.CodingKeys.createdDate.rawValue] as? Date
         let homeValue = firebaseData[Form.CodingKeys.homeValue.rawValue] as? String
         let yearBuilt = firebaseData[Form.CodingKeys.yearBuilt.rawValue] as? String
         let notes = firebaseData[Form.CodingKeys.notes.rawValue] as? String
@@ -110,6 +113,7 @@ class Form: FirebaseModel {
         self.phone = phone
         self.reason = reason
         self.comments = comments
+        self.createdDate = createdDate
         self.financeOptions = financeOptions
         self.notes = notes
         self.numberOfWindows = numberOfWindows
@@ -126,6 +130,7 @@ class Form: FirebaseModel {
             Form.CodingKeys.address.rawValue           : address,
             Form.CodingKeys.city.rawValue              : city,
             Form.CodingKeys.comments.rawValue          : comments,
+            Form.CodingKeys.createdDate.rawValue       : Timestamp(date: createdDate ?? Date()),
             Form.CodingKeys.date.rawValue              : Timestamp(date: date),
             Form.CodingKeys.email.rawValue             : email,
             Form.CodingKeys.energyBill.rawValue        : energyBill,
@@ -160,6 +165,7 @@ class Form: FirebaseModel {
         case body = "body"
         case city = "city"
         case comments = "comments"
+        case createdDate = "createdDate"
         case date = "date"
         case email = "email"
         case energyBill = "energyBill"
