@@ -94,7 +94,7 @@ class FormController {
             let formString =
     """
     \(user.firstName)'s APPT
-    (Created Date: \(form.createdDate))
+    (Created Date: \(Date().formattedDayMonthYear()))
     
     Appointment for: \(form.date.formattedDay()) \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased()), \(form.date.formattedMonth()) \(form.date.formattedDayNumber())
     
@@ -231,8 +231,8 @@ class FormController {
         
         let managerTextAction = UIAlertAction(title: "Manager Text", style: .default) { _ in
             let text = FormController.shared.getCompletedFormText(from: form)
-            var alliePhone = "4708710421"
-            var hermanPhone = "7702985397"
+            let alliePhone = "4708710421"
+            let hermanPhone = "7702985397"
             self.sendMessage(body: text, recipients: [alliePhone, hermanPhone], alert: alert, viewController: viewController)
         }
 

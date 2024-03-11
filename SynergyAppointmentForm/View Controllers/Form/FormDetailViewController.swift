@@ -305,7 +305,6 @@ class FormDetailViewController: UIViewController {
     func createForm() -> Form? {
         guard let form = form else { UIAlertController.presentDismissingAlert(title: "Error: No Form.", dismissAfter: 0.6); return nil }
         guard let user = UserAccount.currentUser else { UIAlertController.presentDismissingAlert(title: "Error: No User.", dismissAfter: 0.6); return nil }
-
         let updatedForm = Form(firebaseID: form.firebaseID,
                                address: addressTextField.text ?? "",
                                city: cityTextField.text ?? "",
