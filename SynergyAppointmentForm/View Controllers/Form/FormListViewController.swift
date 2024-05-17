@@ -20,7 +20,7 @@ import UIKit
  9. Add goals
  10. Add follow up reminders
  11. Add partial sale feature-> keep track of partially sold homes to go back
- 12. Add note screen when user swipes right
+ 12. Add note screen when user swipes right ✅
  13. Add update label when user swipes right
  14. Fix bug where delete form then create new form then form list shows deleted form until reload
  */
@@ -35,23 +35,20 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // Check for user
-        if UserAccount.currentUser == nil {
-            presentLoginChoiceVC()
-        } else if UserAccount.currentUser?.branch == nil {
-            showBranchSelectionAlert()
-        }
+            startUpFunctions()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loadForms()
         setTitleAttributes()
-        
+                
+        // SEARCHBAR
         searchBar.delegate = self
         tableView.refreshControl = refreshControl
         tableView.separatorStyle = .none
-        
+        searchBar.setImage(UIImage(systemName: "slider.vertical.3"), for: .bookmark, state: .normal)
+
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         NotificationCenter.default.addObserver(self, selector: #selector(handleSignInNotification), name: .signInNotification, object: nil)
         NotificationCenter.default.addObserver(self,
@@ -98,11 +95,104 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             if let error = error {
                 print("Error fetching forms: \(error)")
             }
-            for form in forms {
-                print("Name: \(form.firstName)")
-            }
             self.forms = forms
             self.splitForms(forms: forms)
+        }
+    }
+    
+    func loadForms(for firebaseIDs: [String]) {
+        var filteredForms: [Form] = []
+        let dispatchGroup = DispatchGroup()
+        
+        for firebaseID in firebaseIDs {
+            dispatchGroup.enter()
+            FirebaseController.shared.getForms(for: firebaseID) { forms, error in
+                defer {
+                    dispatchGroup.leave()
+                }
+                if let error = error {
+                    print("Error fetching forms: \(error)")
+                } else {
+                    filteredForms.append(contentsOf: forms)
+                }
+            }
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            self.splitForms(forms: filteredForms)
+        }
+    }
+    
+    func startUpFunctions() {
+        // Check for user
+        if UserAccount.currentUser == nil {
+            presentLoginChoiceVC()
+        } else if UserAccount.currentUser?.branch == nil {
+            showBranchSelectionAlert()
+        }
+        
+        // Set account type to default coordinator
+        if UserAccount.currentUser?.accountType == nil {
+            UserAccountController.shared.updateAccountType(to: .coordinator)
+        }
+        
+        if let currentUser = UserAccount.currentUser {
+            // Fetches user from Firebase to see if there are changes to the account type
+            FirebaseController.shared.getUser(with: currentUser.firebaseID) { user, error in
+                if let error = error {
+                    print("There was an error getting the user: \(error.localizedDescription)")
+                    return
+                }
+                
+                if let user = user, let accountType = user.accountType {
+                    if currentUser.accountType != accountType {
+                        // Update the account type locally to match cloud data
+                        UserAccountController.shared.updateAccountType(to: accountType)
+                        // Update UserDefaults
+                        UserDefaults.standard.set(accountType.rawValue, forKey: "accountType")
+                    } else {
+                        print("Account type is already up to date.")
+                    }
+                } else {
+                    print("User data is nil or account type is nil.")
+                }
+            }
+        } else {
+            print("Current user is nil.")
+        }
+        
+        // SEARCHBAR
+        searchBar.showsBookmarkButton = UserAccount.currentUser?.accountType != .coordinator
+    }
+    
+    func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
+        print("handle search bar button click")
+        guard let user = UserAccount.currentUser, let branch = user.branch else { return }
+        FirebaseController.shared.getUsers(for: branch) { users, error in
+            if let error = error {
+                print("Error: \(error)")
+                return
+            }
+            
+            let alert = UIAlertController(title: "Filter Forms", message: nil, preferredStyle: .alert)
+            let allAction = UIAlertAction(title: "All", style: .default) { _ in
+                var firebaseIDs: [String] = []
+                for user in users {
+                    firebaseIDs.append(user.firebaseID)
+                }
+                self.loadForms(for: firebaseIDs)
+
+            }
+                alert.addAction(allAction)
+            
+            for user in users {
+                let userAction = UIAlertAction(title: user.firstName, style: .default) { _ in
+                    print("Selected user: \(user.firstName)")
+                    self.loadForms(for: [user.firebaseID])
+                }
+                alert.addAction(userAction)
+            }
+            self.present(alert, animated: true)
         }
     }
     
@@ -249,30 +339,66 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let form = self.getFormForIndexPath(indexPath)
+
         let viewNotesAction = UIContextualAction(style: .normal, title: "Notes") { [weak self] (_, _, completion) in
+            if let form = form {
+                self?.viewNotes(for: form)
+            }
+            completion(true)
+        }
+        
+        let updateLabelAction = UIContextualAction(style: .normal, title: "Outcome") { [weak self] (_, _, completion) in
             if let form = self?.getFormForIndexPath(indexPath) {
-                self?.viewNotes(for: form)
+                let alert = UIAlertController(title: "Select Outcome Label", message: nil, preferredStyle: .alert)
+                
+                for outcome in Outcome.allCases {
+                    let action = UIAlertAction(title: outcome.rawValue.capitalized, style: .default) { _ in
+                        form.outcome = outcome
+                        FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { updatedForm, error in
+                            if let error = error {
+                                UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
+                                print("Error: \(error)")
+                                return
+                            }
+                            self?.tableView.reloadData()
+                            UIAlertController.presentDismissingAlert(title: "Label Updated!", dismissAfter: 0.6)
+                        }
+                    }
+                    
+                    let color: UIColor
+                    switch outcome {
+                    case .pending: color = UIColor.eden
+                    case .sold: color = UIColor.outcomeGreen
+                    case .rescheduled: color = UIColor.outcomePurple
+                    case .cancelled: color = UIColor.outcomeRed
+                    case .ran: color = UIColor.outcomeBlue
+                    case .ranIncomplete: color = UIColor.outcomeRed
+                    }
+                    
+                    action.setValue(color, forKey: "titleTextColor")
+                    alert.addAction(action)
+                }
+                
+                alert.addAction(UIAlertAction(title: "CANCEL", style: .cancel))
+                self?.present(alert, animated: true)
             }
             completion(true)
         }
-        
-        /*
-        let labelAction = UIContextualAction(style: .normal, title: "Label") { [weak self] (_, _, completion) in
-            // Perform action when swiping left (view notes)
-            if indexPath.section == self?.upcoming, let form = self?.upcomingAppointmentForms[indexPath.row] {
-                self?.viewNotes(for: form)
-            } else if indexPath.section == self?.past, let form = self?.pastAppointmentForms[indexPath.row] {
-                // Implement the action you want for viewing notes
-                self?.viewNotes(for: form)
-            }
-            completion(true)
-        }
-         */
-        
+
         viewNotesAction.backgroundColor = UIColor.noteYellow
+        updateLabelAction.backgroundColor = switch form?.outcome {
+        case .pending: UIColor.eden
+        case .sold: UIColor.outcomeGreen
+        case .rescheduled: UIColor.outcomePurple
+        case .cancelled: UIColor.outcomeRed
+        case .ran: UIColor.outcomeBlue
+        case .ranIncomplete: UIColor.outcomeRed
+        default: UIColor.eden
+        }
         
-        let configuration = UISwipeActionsConfiguration(actions: [viewNotesAction])
-        configuration.performsFirstActionWithFullSwipe = false
+        let configuration = UISwipeActionsConfiguration(actions: [viewNotesAction, updateLabelAction])
+        configuration.performsFirstActionWithFullSwipe = true
         return configuration
     }
         

@@ -81,6 +81,7 @@ class NotesViewController: UIViewController {
             firstNameLabel.text = form.firstName.uppercased() + " & " + form.spouse.uppercased()
         }
         notesTextView.text = form.notes
+        notesTextView.textColor = .black
         // Set background view for outcome
         setOutcomeView(form: form)
     }

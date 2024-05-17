@@ -57,22 +57,26 @@ class UserAccount {
     
     
     // MARK: PROPERTIES
+    /// Users
     static let collectionKey = "Users"
+    /// User
     static let kUser = "User"
     var firebaseID: String
     var firstName: String
     var lastName: String
     var email: String
     var branch: Branch?
+    var accountType: AccountType?
 
     
     // MARK: INITIALIZERS
-    init(firebaseID: String, firstName: String, lastName: String, email: String, branch: Branch? = nil) {
+    init(firebaseID: String, firstName: String, lastName: String, email: String, branch: Branch? = nil, accountType: AccountType? = nil) {
         self.firebaseID = firebaseID
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
         self.branch = branch
+        self.accountType = accountType
     }
     
     init?(userDefaultsDict: [String: Any], firebaseID: String) {
@@ -85,6 +89,10 @@ class UserAccount {
         // OPTIONALS
         if let branchString = userDefaultsDict[UserAccount.CodingKeys.branch.rawValue] as? String {
             self.branch = Branch(rawValue: branchString)
+        }
+        
+        if let accountTypeString = userDefaultsDict[UserAccount.CodingKeys.accountType.rawValue] as? String {
+            self.accountType = AccountType(rawValue: accountTypeString)
         }
         
         self.firebaseID = firebaseID
@@ -103,6 +111,10 @@ class UserAccount {
         // OPTIONALS
         if let branchString = firebaseData[UserAccount.CodingKeys.branch.rawValue] as? String {
             self.branch = Branch(rawValue: branchString)
+        }
+        
+        if let accountTypeString = firebaseData[UserAccount.CodingKeys.accountType.rawValue] as? String {
+            self.accountType = AccountType(rawValue: accountTypeString)
         }
         
         self.firebaseID = firebaseID
@@ -125,12 +137,17 @@ class UserAccount {
             userDefaultsDictionary[UserAccount.CodingKeys.branch.rawValue] = branch.rawValue
         }
         
+        if let accountType = accountType {
+            userDefaultsDictionary[UserAccount.CodingKeys.accountType.rawValue] = accountType.rawValue
+        }
+        
         return userDefaultsDictionary
     }
     
     
     // MARK: ENUMS
     enum CodingKeys: String, CodingKey {
+        case accountType = "accountType"
         case branch = "branch"
         case email = "email"
         case firebaseID = "firebaseID"

@@ -12,26 +12,24 @@ class ReportController {
     static let shared = ReportController()
     
     func calculateTurnoverRate(for forms: [Form], outcome: Outcome) -> String {
-        // FORMS THAT HAVE AN OUTCOME OTHER THAN PENDING
-        let nonPendingForms = forms.filter({ $0.outcome != .pending })
         
-        if nonPendingForms.count != 0 {
+        if forms.count != 0 {
             var targets: Int = 0
             
-            for form in nonPendingForms {
+            for form in forms {
                 if form.outcome == outcome {
                     targets += 1
                 }
             }
             
             // Calculate turnover rate
-            let turnoverRate: Double = Double(100 / Double(nonPendingForms.count)) * Double(targets)
-            print("Forms count: \(nonPendingForms.count), targets: \(targets), turnover rate: \(turnoverRate)")
+            let turnoverRate: Double = Double(100 / Double(forms.count)) * Double(targets)
+            print("Forms count: \(forms.count), targets: \(targets), turnover rate: \(turnoverRate)")
             // Ceil rounds up to the nearest number
             return String(Int(round(turnoverRate)))
             
         } else {
-            return "--%"
+            return "--"
         }
     }
     

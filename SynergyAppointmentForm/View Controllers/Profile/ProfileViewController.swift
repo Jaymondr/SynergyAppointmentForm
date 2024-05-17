@@ -23,6 +23,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var emptyBranchStackView: UIStackView!
     @IBOutlet weak var logOutButton: UIButton!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var accountTypeLabel: UILabel!
     @IBOutlet weak var salesLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var branchInfoButton: UIButton!
@@ -35,6 +36,9 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     
     // REPORTS
+    @IBOutlet weak var appointmentsLabel: UILabel!
+    @IBOutlet weak var filterButton: UIButton!
+    @IBOutlet weak var pendingNumber: UILabel!
     @IBOutlet weak var reportsView: UIView!
     @IBOutlet weak var salesRate: UILabel!
     @IBOutlet weak var soldNumber: UILabel!
@@ -56,7 +60,8 @@ class ProfileViewController: UIViewController {
         
         // Loads view data and style
         setupView()
-        getReports()
+        getReports(for: nil)
+        filterButton.tintColor = .gray
         
     }
     
@@ -166,27 +171,34 @@ class ProfileViewController: UIViewController {
         showBranchSelectionAlert()
     }
     
+    @IBAction func filterButtonPressed(_ sender: Any) {
+        guard let user = UserAccount.currentUser, let branch = user.branch else { return }
+        FirebaseController.shared.getUsers(for: branch) { users, error in
+            if let error = error {
+                print("Error: \(error)")
+                return
+            }
+            
+            let alert = UIAlertController(title: "Filter Reports", message: nil, preferredStyle: .alert)
+            for user in users {
+                let userAction = UIAlertAction(title: user.firstName, style: .default) { _ in
+                    print("Selected user: \(user.firstName)")
+                    self.getReports(for: user.firebaseID)
+                }
+                alert.addAction(userAction)
+            }
+            self.present(alert, animated: true)
+        }
+    }
     
     
     // MARK: - FUNCTIONS
     private func setupView() {
         navigationController?.navigationBar.tintColor = .eden
-
-        salesLabel.text = "Sales: \(sales)"
-        emailLabel.text = UserAccount.currentUser?.email ?? ""
-        branchLabel.text = UserAccount.currentUser?.branch?.rawValue ?? ""
-        let firstName = UserAccount.currentUser?.firstName ?? ""
-        let lastName = UserAccount.currentUser?.lastName ?? ""
-        
-        // NAME LABELS
-        if let lastNameFirstLetter = lastName.first {
-            nameLabel.text = "\(firstName) \(lastNameFirstLetter)."
-        } else {
-            nameLabel.text = firstName + lastName
-        }
+        guard let user = UserAccount.currentUser else { return }
         
         // BRANCH LABEL
-        if let branch = UserAccount.currentUser?.branch {
+        if let branch = user.branch {
             emptyBranchStackView.isHidden = true
             branchLabel.text = branch.rawValue
 
@@ -204,6 +216,21 @@ class ProfileViewController: UIViewController {
         profileView.layer.borderWidth = 1.5
         profileView.layer.borderColor = UIColor.eden.cgColor
         profileView.backgroundColor = .clear
+        // Name
+        if let lastNameFirstLetter = user.lastName.first {
+            nameLabel.text = "\(user.firstName) \(lastNameFirstLetter)."
+        } else {
+            nameLabel.text = user.firstName + user.lastName
+        }
+        // Account Type
+        accountTypeLabel.text = user.accountType?.rawValue
+        // Branch
+        branchLabel.text = user.branch?.rawValue ?? ""
+        // Email
+        emailLabel.text = UserAccount.currentUser?.email ?? ""
+        // Sales
+        salesLabel.text = "Sales: \(sales)"
+
 
         // SIGN IN CARD
         signInView.layer.borderWidth = 1.5
@@ -212,39 +239,49 @@ class ProfileViewController: UIViewController {
         
     }
     
-    func getReports() {
-        var pastAppointmentForms: [Form] = []
-        let sortedAppointmentForms = forms.sorted {$0.date < $1.date}
-        for form in sortedAppointmentForms {
-            if form.date < Date() {
-                pastAppointmentForms.append(form)
+    func getReports(for userID: String?) {
+        guard let user = UserAccount.currentUser else { return }
+        let userID = userID ?? user.firebaseID
+        FirebaseController.shared.getForms(for: userID) { forms, error in
+            if let error = error {
+                print("Error: \(error)")
             }
+            
+            // Get reports for non pending forms only
+            let nonPendingForms = forms.filter({ $0.outcome != .pending })
+            
+            // ALL
+            self.appointmentsLabel.text = "Appointments (\(forms.count))"
+            
+            // PENDING
+            let pendingCount = ReportController.shared.getNumber(of: .pending, from: forms)
+            self.pendingNumber.text = "Pending (\(pendingCount))"
+            
+            // SOLD
+            let soldCount = ReportController.shared.getNumber(of: .sold, from: nonPendingForms)
+            self.salesRate.text = ReportController.shared.calculateTurnoverRate(for: nonPendingForms, outcome: .sold) + "%"
+            self.soldNumber.text = "Sold (\(soldCount))"
+            
+            // RAN
+            let ranCount = ReportController.shared.getNumber(of: .ran, from: nonPendingForms)
+            self.ranRate.text = ReportController.shared.calculateTurnoverRate(for: nonPendingForms, outcome: .ran) + "%"
+            self.ranNumber.text = "Ran (\(ranCount))"
+            
+            // RESCHEDULED
+            let rescheduledCount = ReportController.shared.getNumber(of: .rescheduled, from: nonPendingForms)
+            self.rescheduledRate.text = ReportController.shared.calculateTurnoverRate(for: nonPendingForms, outcome: .rescheduled) + "%"
+            self.rescheduledNumber.text = "Rescheduled (\(rescheduledCount))"
+            
+            // RAN-INCOMPLETE
+            let ranIncomplete = ReportController.shared.getNumber(of: .ranIncomplete, from: nonPendingForms)
+            self.ranIncompleteRate.text = ReportController.shared.calculateTurnoverRate(for: nonPendingForms, outcome: .ranIncomplete) + "%"
+            self.ranIncompleteNumber.text = "Ran/Incomplete (\(ranIncomplete))"
+            
+            // CANCELLED
+            let cancelledCount = ReportController.shared.getNumber(of: .cancelled, from: nonPendingForms)
+            self.cancelledRate.text = ReportController.shared.calculateTurnoverRate(for: nonPendingForms, outcome: .cancelled) + "%"
+            self.cancelledNumber.text = "Cancelled (\(cancelledCount))"
         }
-
-        // SOLD
-        let soldCount = ReportController.shared.getNumber(of: .sold, from: pastAppointmentForms)
-        salesRate.text = ReportController.shared.calculateTurnoverRate(for: pastAppointmentForms, outcome: .sold) + "%"
-        soldNumber.text = "Sold (\(soldCount))"
-        
-        // RAN
-        let ranCount = ReportController.shared.getNumber(of: .ran, from: pastAppointmentForms)
-        ranRate.text = ReportController.shared.calculateTurnoverRate(for: pastAppointmentForms, outcome: .ran) + "%"
-        ranNumber.text = "Ran (\(ranCount))"
-        
-        // RESCHEDULED
-        let rescheduledCount = ReportController.shared.getNumber(of: .rescheduled, from: pastAppointmentForms)
-        rescheduledRate.text = ReportController.shared.calculateTurnoverRate(for: pastAppointmentForms, outcome: .rescheduled) + "%"
-        rescheduledNumber.text = "Rescheduled (\(rescheduledCount))"
-        
-        // RAN-INCOMPLETE
-        let ranIncomplete = ReportController.shared.getNumber(of: .ranIncomplete, from: pastAppointmentForms)
-        ranIncompleteRate.text = ReportController.shared.calculateTurnoverRate(for: pastAppointmentForms, outcome: .ranIncomplete) + "%"
-        ranIncompleteNumber.text = "Ran/Incomplete (\(ranIncomplete))"
-        
-        // CANCELLED
-        let cancelledCount = ReportController.shared.getNumber(of: .cancelled, from: pastAppointmentForms)
-        cancelledRate.text = ReportController.shared.calculateTurnoverRate(for: pastAppointmentForms, outcome: .cancelled) + "%"
-        cancelledNumber.text = "Cancelled (\(cancelledCount))"
     }
     
     private func configureViewForState() {
@@ -257,6 +294,12 @@ class ProfileViewController: UIViewController {
             // SIGNED IN
             show([profileView, reportsView])
             hide([signInView])
+        }
+        
+        if UserAccount.currentUser?.accountType == .admin || UserAccount.currentUser?.accountType == .manager {
+            show([filterButton])
+        } else {
+            hide([filterButton])
         }
     }
     
