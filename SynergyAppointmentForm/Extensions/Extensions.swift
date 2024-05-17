@@ -195,7 +195,7 @@ public extension UIStoryboard {
 extension Date {
     func formattedStringDate() -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE MM/dd h a yyyy"
+        formatter.dateFormat = "EEEE MM/dd ha yyyy"
         return formatter.string(from: self)
     }
     

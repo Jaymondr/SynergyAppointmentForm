@@ -26,6 +26,7 @@ class FormController {
         let formString =
         """
         \(user.firstName)'s APPT
+        Created Date: \(Date().formattedStringDate())
         
         Appointment for: \(form.date.formattedDay()) \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased()), \(form.date.formattedMonth()) \(form.date.formattedDayNumber())
         
@@ -56,6 +57,7 @@ class FormController {
         let formString =
         """
         APT FORM
+        Created Date: \(Date().formattedStringDate())
         
         Appointment Day: \(form.date.formattedDay())
         Time: \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())
