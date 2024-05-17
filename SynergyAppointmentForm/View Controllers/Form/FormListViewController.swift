@@ -339,30 +339,66 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let form = self.getFormForIndexPath(indexPath)
+
         let viewNotesAction = UIContextualAction(style: .normal, title: "Notes") { [weak self] (_, _, completion) in
+            if let form = form {
+                self?.viewNotes(for: form)
+            }
+            completion(true)
+        }
+        
+        let updateLabelAction = UIContextualAction(style: .normal, title: "Outcome") { [weak self] (_, _, completion) in
             if let form = self?.getFormForIndexPath(indexPath) {
-                self?.viewNotes(for: form)
+                let alert = UIAlertController(title: "Select Outcome Label", message: nil, preferredStyle: .alert)
+                
+                for outcome in Outcome.allCases {
+                    let action = UIAlertAction(title: outcome.rawValue.capitalized, style: .default) { _ in
+                        form.outcome = outcome
+                        FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { updatedForm, error in
+                            if let error = error {
+                                UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
+                                print("Error: \(error)")
+                                return
+                            }
+                            self?.tableView.reloadData()
+                            UIAlertController.presentDismissingAlert(title: "Label Updated!", dismissAfter: 0.6)
+                        }
+                    }
+                    
+                    let color: UIColor
+                    switch outcome {
+                    case .pending: color = UIColor.eden
+                    case .sold: color = UIColor.outcomeGreen
+                    case .rescheduled: color = UIColor.outcomePurple
+                    case .cancelled: color = UIColor.outcomeRed
+                    case .ran: color = UIColor.outcomeBlue
+                    case .ranIncomplete: color = UIColor.outcomeRed
+                    }
+                    
+                    action.setValue(color, forKey: "titleTextColor")
+                    alert.addAction(action)
+                }
+                
+                alert.addAction(UIAlertAction(title: "CANCEL", style: .cancel))
+                self?.present(alert, animated: true)
             }
             completion(true)
         }
-        
-        /*
-        let labelAction = UIContextualAction(style: .normal, title: "Label") { [weak self] (_, _, completion) in
-            // Perform action when swiping left (view notes)
-            if indexPath.section == self?.upcoming, let form = self?.upcomingAppointmentForms[indexPath.row] {
-                self?.viewNotes(for: form)
-            } else if indexPath.section == self?.past, let form = self?.pastAppointmentForms[indexPath.row] {
-                // Implement the action you want for viewing notes
-                self?.viewNotes(for: form)
-            }
-            completion(true)
-        }
-         */
-        
+
         viewNotesAction.backgroundColor = UIColor.noteYellow
+        updateLabelAction.backgroundColor = switch form?.outcome {
+        case .pending: UIColor.eden
+        case .sold: UIColor.outcomeGreen
+        case .rescheduled: UIColor.outcomePurple
+        case .cancelled: UIColor.outcomeRed
+        case .ran: UIColor.outcomeBlue
+        case .ranIncomplete: UIColor.outcomeRed
+        default: UIColor.eden
+        }
         
-        let configuration = UISwipeActionsConfiguration(actions: [viewNotesAction])
-        configuration.performsFirstActionWithFullSwipe = false
+        let configuration = UISwipeActionsConfiguration(actions: [viewNotesAction, updateLabelAction])
+        configuration.performsFirstActionWithFullSwipe = true
         return configuration
     }
         

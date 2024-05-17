@@ -84,7 +84,7 @@ class FormDetailViewController: UIViewController {
     }
     
     @IBAction func tagButtonPressed(_ sender: Any) {
-        let alert = UIAlertController(title: "Add Label", message: "Select Label", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Select Outcome Label", message: nil, preferredStyle: .alert)
         
         for outcome in Outcome.allCases {
             let action = UIAlertAction(title: outcome.rawValue.capitalized, style: .default) { _ in
