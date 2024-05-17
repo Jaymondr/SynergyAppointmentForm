@@ -240,9 +240,18 @@ class FormController {
             let text = FormController.shared.createFollowUpText(from: form)
             self.sendMessage(body: text, recipients: [phoneNumber], alert: alert, viewController: viewController)
         }
+        
+        let seeConversationAction = UIAlertAction(title: "See Conversation", style: .default) { _ in
+            self.sendMessage(body: "", recipients: [phoneNumber], alert: alert, viewController: viewController)
+        }
 
         // ADD ALERT
-        alert.addActions([homeownerTextAction, managerTextAction, followUpTextAction, cancelAction])
+        alert.addAction(homeownerTextAction)
+        if UserAccount.currentUser?.branch == .raleigh {
+            alert.addAction(managerTextAction)
+        }
+        alert.addAction(seeConversationAction)
+        alert.addAction(cancelAction)
         viewController.present(alert, animated: true)
     }
 
