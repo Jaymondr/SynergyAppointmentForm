@@ -61,6 +61,7 @@ class ProfileViewController: UIViewController {
         // Loads view data and style
         setupView()
         getReports(for: nil)
+        filterButton.tintColor = .gray
         
     }
     
