@@ -20,7 +20,7 @@ import UIKit
  9. Add goals
  10. Add follow up reminders
  11. Add partial sale feature-> keep track of partially sold homes to go back
- 12. Add note screen when user swipes right
+ 12. Add note screen when user swipes right ✅
  13. Add update label when user swipes right
  14. Fix bug where delete form then create new form then form list shows deleted form until reload
  */
@@ -47,7 +47,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         searchBar.delegate = self
         tableView.refreshControl = refreshControl
         tableView.separatorStyle = .none
-        searchBar.setImage(UIImage(systemName: "arrow.up.arrow.down"), for: .bookmark, state: .normal)
+        searchBar.setImage(UIImage(systemName: "slider.vertical.3"), for: .bookmark, state: .normal)
 
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         NotificationCenter.default.addObserver(self, selector: #selector(handleSignInNotification), name: .signInNotification, object: nil)
