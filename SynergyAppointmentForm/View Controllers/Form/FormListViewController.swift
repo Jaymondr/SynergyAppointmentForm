@@ -13,16 +13,23 @@ import UIKit
  2. Add search bar ✅
  3. Add notification to select branch ✅
  4. Remove unused buttons for other branches ✅
- 5. Add account types for branch manager, director, owner
- 6. Add analytics
- 7. Add filters for owner/branch manager
+ 5. Add account types for branch manager, director, owner ✅
+ 6. Add analytics ✅
+ 7. Add filters for owner/branch manager ✅
  8. Add confetti when user makes sale
  9. Add goals
  10. Add follow up reminders
  11. Add partial sale feature-> keep track of partially sold homes to go back
  12. Add note screen when user swipes right ✅
- 13. Add update label when user swipes right
+ 13. Add update label when user swipes right ✅
  14. Fix bug where delete form then create new form then form list shows deleted form until reload
+ 15. Fix bug when managers save changes, their userID gets saved and appointment becomes theirs
+ 16. Add reason to form on Raleigh branch
+ 17. Add teams
+ 18. Add team name
+ 19. Improve look
+ 20. Add director view
+ 21. Only load first 20 appointments till user scrolls down
  */
 
 class FormListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
@@ -144,7 +151,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                     return
                 }
                 
-                if let user = user, let accountType = user.accountType {
+                if let user = user, let accountType = user.accountType, let teamID = user.teamID {
                     if currentUser.accountType != accountType {
                         // Update the account type locally to match cloud data
                         UserAccountController.shared.updateAccountType(to: accountType)
@@ -152,6 +159,13 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                         UserDefaults.standard.set(accountType.rawValue, forKey: "accountType")
                     } else {
                         print("Account type is already up to date.")
+                    }
+                    
+                    if currentUser.teamID != teamID {
+                        // Update the teamID locally to match cloud data
+                        UserAccountController.shared.updateTeamID(to: teamID)
+                        // Update UserDefaults
+                        UserDefaults.standard.set(teamID, forKey: "teamID")
                     }
                 } else {
                     print("User data is nil or account type is nil.")

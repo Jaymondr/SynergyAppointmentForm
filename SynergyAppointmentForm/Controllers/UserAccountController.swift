@@ -59,5 +59,29 @@ class UserAccountController {
             }
         }
     }
+    
+    func updateTeamID(to teamID: String) {
+        guard let user = UserAccount.currentUser else { return }
+        // Update Locally
+        user.teamID = teamID
+        
+        // Update UserDefaults
+        if var userDefaultsDict = UserDefaults.standard.dictionary(forKey: UserAccount.kUser) {
+            userDefaultsDict[UserAccount.CodingKeys.teamID.rawValue] = teamID
+            UserDefaults.standard.set(userDefaultsDict, forKey: UserAccount.kUser)
+            
+            // Update in Firebase
+            let userRef = Firestore.firestore().collection(UserAccount.collectionKey).document(user.uID)
+            userRef.updateData([UserAccount.CodingKeys.teamID.rawValue: teamID]) {error in
+                if let error = error {
+                    print("Error updating teamID  in Firebase: \(error.localizedDescription)")
+                    // Handle error as needed
+                } else {
+                    print("Team ID updated successfully in Firebase!")
+                    UIAlertController.presentDismissingAlert(title: "Updated team ID to \(teamID)", dismissAfter: 1.4)
+                }
+            }
+        }
+    }
 }
 
