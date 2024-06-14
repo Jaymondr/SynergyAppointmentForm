@@ -1,4 +1,22 @@
-// Define the Team class
+//
+//  Team.swift
+//  SynergyAppointmentForm
+//
+//  Created by Jaymond Richardson on 6/14/24.
+//
+
+// MARK: - TODO
+/*
+ 1. Need to double check user defaults functions
+ 2. Double check and finish start up function that check for changes in teamID on account
+ 3. Add capability for Manager to assing user to directors team
+ 4. Make sure i can change things in firebase and them be updated in the app
+ 5. Add button in account page to change teams
+ 6. User can have multiple teams?
+ 
+ 
+ */
+
 class Team {
     
     // Firebase Collection Key
