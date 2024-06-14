@@ -16,6 +16,7 @@ protocol CreateFormViewDelegate: AnyObject {
 
 class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDelegate, UITextViewDelegate {
     // MARK: OUTLETS
+    @IBOutlet weak var showCalendarButton: UIButton!
     @IBOutlet weak var dateTimePicker: UIDatePicker!
     @IBOutlet weak var firstNameTextfield: UITextField!
     @IBOutlet weak var lastNameTextfield: UITextField!
@@ -102,6 +103,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             UIAlertController.presentDismissingAlert(title: "Unable to create form...", dismissAfter: 1.0)
         }
     }
+    
     
     @IBAction func locationButtonPressed(_ sender: Any) {
         self.vibrateForButtonPress(.heavy)

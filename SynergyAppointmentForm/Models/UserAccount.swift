@@ -66,16 +66,18 @@ class UserAccount {
     var lastName: String
     var email: String
     var branch: Branch?
+    var teamID: String?
     var accountType: AccountType?
 
     
     // MARK: INITIALIZERS
-    init(firebaseID: String, firstName: String, lastName: String, email: String, branch: Branch? = nil, accountType: AccountType? = nil) {
+    init(firebaseID: String, firstName: String, lastName: String, email: String, branch: Branch? = nil, teamID: String? = nil, accountType: AccountType? = nil) {
         self.firebaseID = firebaseID
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
         self.branch = branch
+        self.teamID = teamID
         self.accountType = accountType
     }
     
@@ -89,6 +91,10 @@ class UserAccount {
         // OPTIONALS
         if let branchString = userDefaultsDict[UserAccount.CodingKeys.branch.rawValue] as? String {
             self.branch = Branch(rawValue: branchString)
+        }
+        
+        if let teamID = userDefaultsDict[UserAccount.CodingKeys.teamID.rawValue] as? String {
+            self.teamID = teamID
         }
         
         if let accountTypeString = userDefaultsDict[UserAccount.CodingKeys.accountType.rawValue] as? String {
@@ -111,6 +117,10 @@ class UserAccount {
         // OPTIONALS
         if let branchString = firebaseData[UserAccount.CodingKeys.branch.rawValue] as? String {
             self.branch = Branch(rawValue: branchString)
+        }
+        
+        if let teamID = firebaseData[UserAccount.CodingKeys.teamID.rawValue] as? String {
+            self.teamID = teamID
         }
         
         if let accountTypeString = firebaseData[UserAccount.CodingKeys.accountType.rawValue] as? String {
@@ -137,6 +147,10 @@ class UserAccount {
             userDefaultsDictionary[UserAccount.CodingKeys.branch.rawValue] = branch.rawValue
         }
         
+        if let teamID = teamID {
+            userDefaultsDictionary[UserAccount.CodingKeys.teamID.rawValue] = teamID
+        }
+        
         if let accountType = accountType {
             userDefaultsDictionary[UserAccount.CodingKeys.accountType.rawValue] = accountType.rawValue
         }
@@ -144,6 +158,13 @@ class UserAccount {
         return userDefaultsDictionary
     }
     
+    func joinTeam(_ teamID: String) {
+        self.teamID = teamID
+    }
+    
+    func leaveTeam() {
+        self.teamID = nil
+    }
     
     // MARK: ENUMS
     enum CodingKeys: String, CodingKey {
@@ -153,6 +174,7 @@ class UserAccount {
         case firebaseID = "firebaseID"
         case firstName = "firstName"
         case lastName = "lastName"
+        case teamID = "teamID"
     }
 }
 

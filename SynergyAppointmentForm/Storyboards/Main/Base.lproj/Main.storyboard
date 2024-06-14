@@ -1490,13 +1490,16 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="373" height="50"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date/Time: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iti-Ej-prG">
-                                                        <rect key="frame" x="0.0" y="0.0" width="87.333333333333329" height="50"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="95" height="50"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="95" id="qfC-be-1SE"/>
+                                                        </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                                         <color key="textColor" name="eden"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="15" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="X4p-ef-jzr">
-                                                        <rect key="frame" x="87.333333333333343" y="0.0" width="285.66666666666663" height="50"/>
+                                                        <rect key="frame" x="95" y="0.0" width="278" height="50"/>
                                                     </datePicker>
                                                 </subviews>
                                             </stackView>
@@ -2288,7 +2291,7 @@
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="opaqueSeparatorColor">
-            <color red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
