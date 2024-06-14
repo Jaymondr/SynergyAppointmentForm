@@ -4,7 +4,6 @@ class Team {
     // Firebase Collection Key
     static let kCollectionKey = "Teams"
     
-    
     let teamID: String
     let name: String
     var repUserIDs: [String] // Stores only userIDs of reps
@@ -28,30 +27,18 @@ class Team {
         self.repUserIDs = []
         self.directorUserIDs = []
     }
+    
     required init?(firebaseData: [String : Any], firebaseID: String) {
-        // REQUIRED PROPERTIES
-        guard let firstName = firebaseData[UserAccount.CodingKeys.firstName.rawValue] as? String,
-              let lastName = firebaseData[UserAccount.CodingKeys.lastName.rawValue] as? String,
-              let email = firebaseData[UserAccount.CodingKeys.email.rawValue] as? String
+        guard let teamID = firebaseData[Team.CodingKeys.teamID.rawValue] as? String,
+              let name = firebaseData[Team.CodingKeys.name.rawValue] as? String,
+              let repUserIDs = firebaseData[Team.CodingKeys.repUserIDs.rawValue] as? [String],
+              let directorUserIDs = firebaseData[Team.CodingKeys.directorUserIDs.rawValue] as? [String]
         else { return nil }
-        
-        // OPTIONALS
-        if let branchString = firebaseData[UserAccount.CodingKeys.branch.rawValue] as? String {
-            self.branch = Branch(rawValue: branchString)
-        }
-        
-        if let teamID = firebaseData[UserAccount.CodingKeys.teamID.rawValue] as? String {
-            self.teamID = teamID
-        }
-        
-        if let accountTypeString = firebaseData[UserAccount.CodingKeys.accountType.rawValue] as? String {
-            self.accountType = AccountType(rawValue: accountTypeString)
-        }
-        
-        self.firebaseID = firebaseID
-        self.firstName = firstName
-        self.lastName = lastName
-        self.email = email
+                
+        self.teamID = teamID
+        self.name = name
+        self.repUserIDs = repUserIDs
+        self.directorUserIDs = directorUserIDs
     }
 
     
@@ -76,9 +63,10 @@ class Team {
         }
     }
     
+    
     // MARK: - ENUMS
     
-    enum CodingKeys: String, CaseIterable {
+    enum CodingKeys: String, CaseIterable, CodingKey {
         case teamID = "teamID"
         case name = "name"
         case repUserIDs = "repUserIDs"
