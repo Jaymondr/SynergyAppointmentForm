@@ -57,8 +57,10 @@ class UserAccount {
     
     
     // MARK: PROPERTIES
+    // Firestore collection key
     /// Users
     static let collectionKey = "Users"
+    // UserDefaults Key
     /// User
     static let kUser = "User"
     var firebaseID: String

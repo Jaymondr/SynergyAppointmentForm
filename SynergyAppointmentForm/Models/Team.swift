@@ -13,6 +13,10 @@
  4. Make sure i can change things in firebase and them be updated in the app
  5. Add button in account page to change teams
  6. User can have multiple teams?
+ 7. Add tab bar for appointments, leads, and profile
+ 8. Add view for marketing directors
+ 9. Add get directions button
+ 10. Add lead card
  
  
  */
@@ -58,7 +62,6 @@ class Team {
         self.repUserIDs = repUserIDs
         self.directorUserIDs = directorUserIDs
     }
-
     
     // MARK: - METHODS
     func addRep(_ userID: String) {
