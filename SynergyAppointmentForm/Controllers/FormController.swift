@@ -45,6 +45,8 @@ class FormController {
 
         Previous estimates: \(form.retailQuote)
         
+        Reason: \(form.reason)
+
         Comments: \(form.comments)
         """
             
