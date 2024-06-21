@@ -25,7 +25,7 @@ class FormController {
         // RALEIGHS FORM LAYOUT
         let formString =
         """
-        \(user.firstName)'s APPT
+        \(user.firstName)'s APPT \()
         Created Date: \(Date().formattedStringDate())
         
         Appointment for: \(form.date.formattedDay()) \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased()), \(form.date.formattedMonth()) \(form.date.formattedDayNumber())

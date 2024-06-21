@@ -205,6 +205,26 @@ class FirebaseController {
     }
     
     
+    // MARK: - TEAMS
+    func getTeam(teamID: String, completion: @escaping (_ team: Team?, _ error: Error?) -> Void) {
+        db.collection(Team.kCollectionKey).document(teamID).getDocument { snap, error in
+            if let error = error {
+                print("Error fetching team. Error: \(error)")
+                completion(nil, error)
+            }
+            
+            if let data = snap?.data() {
+                let team = Team(firebaseData: data, firebaseID: teamID)
+                completion(team, nil)
+                
+            } else {
+                print("Error getting team. NO ERROR, NO TEAM... UH OH!")
+                completion(nil, nil)
+            }
+        }
+    }
+    
+    
     // MARK: - APPROVED EMAILS
     func getApprovedEmails(completion: @escaping (_ approvedEmails: [String]?) -> Void) {
         db.collection(FirebaseController.shared.approvedEmailsCollectionID).document("approvedEmailList").getDocument(completion: { document, err in
