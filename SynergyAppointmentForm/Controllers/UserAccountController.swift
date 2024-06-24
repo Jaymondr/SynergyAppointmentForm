@@ -10,6 +10,17 @@ import Firebase
 
 class UserAccountController {
     static let shared = UserAccountController()
+        
+    static let kTeamName = "teamName"
+
+    var teamName: String? {
+        get {
+            return UserDefaults.standard.string(forKey: UserAccountController.kTeamName)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: UserAccountController.kTeamName)
+        }
+    }
     
     // MARK: - Update Branch Function
     func updateBranch(newBranch: Branch) {
@@ -65,22 +76,39 @@ class UserAccountController {
         // Update Locally
         user.teamID = teamID
         
-        // Update UserDefaults
-        if var userDefaultsDict = UserDefaults.standard.dictionary(forKey: UserAccount.kUser) {
-            userDefaultsDict[UserAccount.CodingKeys.teamID.rawValue] = teamID
-            UserDefaults.standard.set(userDefaultsDict, forKey: UserAccount.kUser)
-            
-            // Update in Firebase
-            let userRef = Firestore.firestore().collection(UserAccount.collectionKey).document(user.uID)
-            userRef.updateData([UserAccount.CodingKeys.teamID.rawValue: teamID]) {error in
-                if let error = error {
-                    print("Error updating teamID  in Firebase: \(error.localizedDescription)")
-                    // Handle error as needed
-                } else {
-                    print("Team ID updated successfully in Firebase!")
-                    UIAlertController.presentDismissingAlert(title: "Updated team ID to \(teamID)", dismissAfter: 1.4)
+        FirebaseController.shared.getTeam(teamID: teamID) { team, error in
+            if let error = error {
+                print("Error getting Team from firebase!")
+            }
+            if let team = team {
+                
+                // Update UserDefaults
+                if var userDefaultsDict = UserDefaults.standard.dictionary(forKey: UserAccount.kUser) {
+                    userDefaultsDict[UserAccount.CodingKeys.teamID.rawValue] = teamID
+                    UserDefaults.standard.set(userDefaultsDict, forKey: UserAccount.kUser)
+                    self.updateTeamNameInUserDefaults(to: team.name)
+                    
+                    // Update in Firebase
+                    let userRef = Firestore.firestore().collection(UserAccount.collectionKey).document(user.uID)
+                    userRef.updateData([UserAccount.CodingKeys.teamID.rawValue: teamID]) {error in
+                        if let error = error {
+                            print("Error updating teamID  in Firebase: \(error.localizedDescription)")
+                            // Handle error as needed
+                        } else {
+                            print("Team ID updated successfully in Firebase!")
+                            UIAlertController.presentDismissingAlert(title: "Updated team ID to \(teamID)", dismissAfter: 1.4)
+                        }
+                    }
                 }
             }
+        }
+    }
+    
+    func updateTeamNameInUserDefaults(to teamName: String) {
+        // Update UserDefaults
+        if var userDefaultsDict = UserDefaults.standard.dictionary(forKey: UserAccountController.kTeamName) {
+            userDefaultsDict[UserAccount.CodingKeys.teamName.rawValue] = teamName
+            UserDefaults.standard.set(userDefaultsDict, forKey: UserAccount.kUser)
         }
     }
 }

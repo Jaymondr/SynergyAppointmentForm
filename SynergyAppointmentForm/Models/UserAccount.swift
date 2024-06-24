@@ -177,6 +177,7 @@ class UserAccount {
         case firstName = "firstName"
         case lastName = "lastName"
         case teamID = "teamID"
+        case teamName = "teamName"
     }
 }
 
