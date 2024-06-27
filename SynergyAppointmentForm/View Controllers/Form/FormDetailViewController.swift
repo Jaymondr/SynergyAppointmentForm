@@ -324,7 +324,7 @@ class FormDetailViewController: UIViewController {
                                retailQuote: quoteTextField.text ?? "",
                                spouse: spouseTextField.text ?? "",
                                state: stateTextField.text ?? "",
-                               userID: user.firebaseID,
+                               userID: form.userID,
                                yearBuilt: yearBuiltTextField.text ?? "--",
                                yearsOwned: yearsOwnedTextField.text ?? "--",
                                zip: zipTextField.text ?? ""

@@ -181,9 +181,9 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                     firebaseIDs.append(user.firebaseID)
                 }
                 self.loadForms(for: firebaseIDs)
-
+                
             }
-                alert.addAction(allAction)
+            alert.addAction(allAction)
             
             for user in users {
                 let userAction = UIAlertAction(title: user.firstName, style: .default) { _ in
@@ -192,6 +192,10 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                 }
                 alert.addAction(userAction)
             }
+        
+            let okAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+            alert.addAction(okAction)
             self.present(alert, animated: true)
         }
     }
