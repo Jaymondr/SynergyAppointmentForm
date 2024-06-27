@@ -9,6 +9,13 @@ import UIKit
 import CoreLocation
 import MessageUI
 
+// MARK: - TODO:
+/*
+ 1. 🐞 When viewing other users forms and you hit the search bar, it does not search the other users forms
+ 2. 🐞 When making edits to another users form, it doesn't update it in the table view locally
+ 
+ */
+
 protocol FormDetailViewDelegate: AnyObject {
     func didUpdate(form: Form)
 }
