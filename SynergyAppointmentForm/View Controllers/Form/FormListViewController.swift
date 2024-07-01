@@ -30,6 +30,7 @@ import UIKit
  19. Improve look
  20. Add director view
  21. Only load first 20 appointments till user scrolls down
+ 22. Fix User Defaults duplicate data. (Check startup functions)
  */
 
 class FormListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
@@ -144,37 +145,39 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         // Fetch User Account from Firebase and check for changes to the ACCOUNT TYPE or TEAM
-        if let currentUser = UserAccount.currentUser {
-            FirebaseController.shared.getUser(with: currentUser.firebaseID) { user, error in
-                if let error = error {
-                    print("There was an error getting the user: \(error.localizedDescription)")
-                    return
-                }
-                
-                if let user = user, let accountType = user.accountType, let teamID = user.teamID {
-                    if currentUser.accountType != accountType {
-                        // Update the account type locally to match cloud data
-                        UserAccountController.shared.updateAccountType(to: accountType)
-                        // Update UserDefaults
-                        UserDefaults.standard.set(accountType.rawValue, forKey: "accountType")
-                    } else {
-                        print("Account type is already up to date.")
-                    }
-                    
-                    if currentUser.teamID != teamID {
-                        // Update the teamID locally to match cloud data
-//                        UserAccountController.shared.updateTeamID(to: teamID)
-                        // Update UserDefaults
-                        UserDefaults.standard.set(teamID, forKey: "teamID")
-                        let teamname = UserDefaults.standard.string(forKey: "teamID")
-                        UIAlertController.presentDismissingAlert(title: "Team \(teamname ?? "blank")", dismissAfter: 1.4)
-                    }
-                } else {
-                    print("User data is nil or account type is nil.")
+        guard let currentUser = UserAccount.currentUser else { print("Current User Nil"); return }
+        
+        FirebaseController.shared.getUser(with: currentUser.firebaseID) { user, error in
+            if let error = error {
+                print("There was an error getting the user: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let user = user, let accountType = user.accountType, let teamID = user.teamID else { print("User, accountType, or teamID is nil"); return }
+            
+            // Check for Account Type changes
+            if currentUser.accountType != accountType {
+                // Update the account type locally to match cloud data
+                UserAccountController.shared.updateAccountType(to: accountType)
+                // Update UserDefaults
+                UserDefaults.standard.set(accountType.rawValue, forKey: "accountType")
+            } else {
+                print("Account type is already up to date.")
+            }
+            
+            // Check for TeamID changes
+            if currentUser.teamID != teamID {
+                // Update UserDefaults to match firebase
+                UserAccountController.shared.updateTeamID(to: teamID)
+                UserDefaults.standard.set(teamID, forKey: Team.kTeamID)
+                                
+                // Fetch team name and update User Defaults
+                FirebaseController.shared.getTeamName(teamID: teamID) { teamName, error in
+                    UserAccountController.shared.teamName = teamName // Get Set User Defaults with new teamName
+                    let userDefaultsTeamName = UserDefaults.standard.string(forKey: Team.kTeamName)
+                    UIAlertController.presentDismissingAlert(title: "\(userDefaultsTeamName ?? "Team/Name")", dismissAfter: 2.0)
                 }
             }
-        } else {
-            print("Current user is nil.")
         }
         
         // SEARCHBAR

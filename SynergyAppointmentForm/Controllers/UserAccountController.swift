@@ -15,10 +15,10 @@ class UserAccountController {
 
     var teamName: String? {
         get {
-            return UserDefaults.standard.string(forKey: UserAccountController.kTeamName)
+            return UserDefaults.standard.string(forKey: Team.kTeamName)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: UserAccountController.kTeamName)
+            UserDefaults.standard.set(newValue, forKey: Team.kTeamName)
         }
     }
     
@@ -71,8 +71,7 @@ class UserAccountController {
         }
     }
     
-    /* WILL USE WHEN USER CAN CHANGE TEAM
-    func updateTeamName(to teamID: String) {
+    func updateTeamID(to teamID: String) {
         guard let user = UserAccount.currentUser else { return }
         // Update Locally
         user.teamID = teamID
@@ -83,6 +82,7 @@ class UserAccountController {
             UserDefaults.standard.set(userDefaultsDict, forKey: UserAccount.kUser)
 
             // Update in Firebase
+            /*
             let userRef = Firestore.firestore().collection(UserAccount.collectionKey).document(user.uID)
             userRef.updateData([UserAccount.CodingKeys.teamID.rawValue: teamID]) {error in
                 if let error = error {
@@ -93,9 +93,10 @@ class UserAccountController {
                     
                 }
             }
+             */
         }
     }
-    */
+    
     
     
     func updateTeamNameInUserDefaults(to teamName: String) {

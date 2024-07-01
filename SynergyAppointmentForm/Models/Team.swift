@@ -25,6 +25,8 @@ class Team {
     
     // Firebase Collection Key
     static let kCollectionKey = "Teams"
+    static let kTeamID = "teamID"
+    static let kTeamName = "teamName"
     
     let teamID: String
     let name: String
