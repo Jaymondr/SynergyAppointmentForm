@@ -204,7 +204,6 @@ class FirebaseController {
         }
     }
     
-    
     // MARK: - TEAMS
     func getTeam(teamID: String, completion: @escaping (_ team: Team?, _ error: Error?) -> Void) {
         db.collection(Team.kCollectionKey).document(teamID).getDocument { snap, error in
@@ -220,6 +219,22 @@ class FirebaseController {
             } else {
                 print("Error getting team. NO ERROR, NO TEAM... UH OH!")
                 completion(nil, nil)
+            }
+        }
+    }
+    
+    func getTeamName(teamID: String, completion: @escaping (_ teamName: String?, _ error: Error?) -> Void) {
+        db.collection(Team.kCollectionKey).document(teamID).getDocument { snap, error in
+            if let error = error {
+                completion(nil, error)
+            }
+            
+            if let data = snap?.data() {
+                if let team = Team(firebaseData: data, firebaseID: teamID) {
+                    completion(team.name, nil)
+                } else {
+                    completion("<Team/Name>", nil)
+                }
             }
         }
     }

@@ -143,8 +143,8 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             UserAccountController.shared.updateAccountType(to: .coordinator)
         }
         
+        // Fetch User Account from Firebase and check for changes to the ACCOUNT TYPE or TEAM
         if let currentUser = UserAccount.currentUser {
-            // Fetches user from Firebase to see if there are changes to the account type
             FirebaseController.shared.getUser(with: currentUser.firebaseID) { user, error in
                 if let error = error {
                     print("There was an error getting the user: \(error.localizedDescription)")
@@ -163,9 +163,11 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                     
                     if currentUser.teamID != teamID {
                         // Update the teamID locally to match cloud data
-                        UserAccountController.shared.updateTeamID(to: teamID)
+//                        UserAccountController.shared.updateTeamID(to: teamID)
                         // Update UserDefaults
                         UserDefaults.standard.set(teamID, forKey: "teamID")
+                        let teamname = UserDefaults.standard.string(forKey: "teamID")
+                        UIAlertController.presentDismissingAlert(title: "Team \(teamname ?? "blank")", dismissAfter: 1.4)
                     }
                 } else {
                     print("User data is nil or account type is nil.")
