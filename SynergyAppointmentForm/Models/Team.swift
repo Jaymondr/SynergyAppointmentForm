@@ -30,7 +30,7 @@ class Team {
     
     let teamID: String
     let name: String
-    var repUserIDs: [String] // Stores only userIDs of reps
+    var memberIDs: [String] // Stores only userIDs of reps
     var directorUserIDs: [String] // Stores only userIDs of directors
     var scheduleNotes: String?
     
@@ -38,7 +38,7 @@ class Team {
         var firebaseRepresentation: [String : FirestoreType] = [
             Team.CodingKeys.teamID.rawValue             : teamID,
             Team.CodingKeys.name.rawValue               : name,
-            Team.CodingKeys.repUserIDs.rawValue         : repUserIDs,
+            Team.CodingKeys.memberIDs.rawValue         : memberIDs,
             Team.CodingKeys.directorUserIDs.rawValue    : directorUserIDs,
             
         ]
@@ -54,35 +54,35 @@ class Team {
     init(teamID: String, name: String) {
         self.teamID = teamID
         self.name = name
-        self.repUserIDs = []
+        self.memberIDs = []
         self.directorUserIDs = []
     }
     
     required init?(firebaseData: [String : Any], firebaseID: String) {
         guard let teamID = firebaseData[Team.CodingKeys.teamID.rawValue] as? String,
               let name = firebaseData[Team.CodingKeys.name.rawValue] as? String,
-              let repUserIDs = firebaseData[Team.CodingKeys.repUserIDs.rawValue] as? [String],
+              let memberIDs = firebaseData[Team.CodingKeys.memberIDs.rawValue] as? [String],
               let directorUserIDs = firebaseData[Team.CodingKeys.directorUserIDs.rawValue] as? [String]
         else { return nil }
                 
         self.teamID = teamID
         self.name = name
-        self.repUserIDs = repUserIDs
+        self.memberIDs = memberIDs
         self.directorUserIDs = directorUserIDs
     }
     
     // MARK: - METHODS
-    func addRep(_ userID: String) {
-        repUserIDs.append(userID)
+    func addMember(_ userID: String) {
+        memberIDs.append(userID)
     }
     
     func addDirector(_ userID: String) {
         directorUserIDs.append(userID)
     }
     
-    func removeRep(_ userID: String) {
-        if let index = repUserIDs.firstIndex(of: userID) {
-            repUserIDs.remove(at: index)
+    func removeMember(_ userID: String) {
+        if let index = memberIDs.firstIndex(of: userID) {
+            memberIDs.remove(at: index)
         }
     }
     
@@ -98,7 +98,7 @@ class Team {
     enum CodingKeys: String, CaseIterable, CodingKey {
         case teamID = "teamID"
         case name = "name"
-        case repUserIDs = "repUserIDs"
+        case memberIDs = "memberIDs"
         case directorUserIDs = "directorUserIDs"
         case scheduleNotes = "scheduleNotes"
     }

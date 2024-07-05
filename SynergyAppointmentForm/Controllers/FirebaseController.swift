@@ -239,6 +239,31 @@ class FirebaseController {
         }
     }
     
+    func getTeamAppointments(for team: Team, completion: @escaping (_ upcomingAppointments: [Form?], _ error: Error?) -> Void) {
+        // PROPERTIES
+        let now = Timestamp(date: Date())
+        var upcomingAppointmentForms: [Form] = []
+        
+        // Filter upcoming appointments
+        for id in team.memberIDs {
+            var forms: [Form] = []
+            db.collection(Form.collectionKey).whereField(Form.CodingKeys.date.rawValue, isGreaterThan: now).whereField(Form.CodingKeys.userID.rawValue, isEqualTo: id).getDocuments { query, error in
+                if let error = error {
+                    completion([], error)
+                }
+                if let query = query {
+                    for document in query.documents {
+                        let data = document.data()
+                        if let form = Form(firebaseData: data, firebaseID: document.documentID) {
+                            forms.append(form)
+                        }
+                    }
+                }
+            }
+            upcomingAppointmentForms.append(contentsOf: forms)
+        }
+    }
+    
     
     // MARK: - APPROVED EMAILS
     func getApprovedEmails(completion: @escaping (_ approvedEmails: [String]?) -> Void) {

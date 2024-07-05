@@ -106,7 +106,15 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     }
     
     @IBAction func showScheduleNotesButtonPressed(_ sender: Any) {
-        UIAlertController.presentDismissingAlert(title: "SHow Notes Button Pressed", dismissAfter: 2.0)
+        guard let teamID = UserAccount.currentUser?.teamID else { return }
+        FirebaseController.shared.getTeam(teamID: teamID) { team, error in
+            guard let team = team else { return }
+            FirebaseController.shared.getTeamAppointments(for: team) { upcomingAppointments, error in
+                if !upcomingAppointments.isEmpty {
+                    UIAlertController.presentDismissingAlert(title: "Number of upcoming Appointments: \(upcomingAppointments.count)", dismissAfter: 5.0)
+                }
+            }
+        }
     }
     
     @IBAction func locationButtonPressed(_ sender: Any) {
