@@ -32,15 +32,21 @@ class Team {
     let name: String
     var repUserIDs: [String] // Stores only userIDs of reps
     var directorUserIDs: [String] // Stores only userIDs of directors
+    var scheduleNotes: String?
     
     var firebaseRepresentation: [String : FirestoreType] {
-        let firebaseRepresentation: [String : FirestoreType] = [
+        var firebaseRepresentation: [String : FirestoreType] = [
             Team.CodingKeys.teamID.rawValue             : teamID,
             Team.CodingKeys.name.rawValue               : name,
             Team.CodingKeys.repUserIDs.rawValue         : repUserIDs,
             Team.CodingKeys.directorUserIDs.rawValue    : directorUserIDs,
             
         ]
+        
+        if let scheduleNotes = scheduleNotes {
+            firebaseRepresentation[Team.CodingKeys.scheduleNotes.rawValue] = scheduleNotes
+        }
+        
         return firebaseRepresentation
     }
     
@@ -94,5 +100,6 @@ class Team {
         case name = "name"
         case repUserIDs = "repUserIDs"
         case directorUserIDs = "directorUserIDs"
+        case scheduleNotes = "scheduleNotes"
     }
 }
