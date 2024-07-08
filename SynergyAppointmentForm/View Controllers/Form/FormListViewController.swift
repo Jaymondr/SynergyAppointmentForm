@@ -173,7 +173,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                                 
                 // Fetch team name and update User Defaults
                 FirebaseController.shared.getTeamName(teamID: teamID) { teamName, error in
-                    UserAccountController.shared.teamName = teamName // Get Set User Defaults with new teamName
+                    UserAccountController.shared.teamName = teamName 
                     let userDefaultsTeamName = UserDefaults.standard.string(forKey: Team.kTeamName)
                     UIAlertController.presentDismissingAlert(title: "\(userDefaultsTeamName ?? "Team/Name")", dismissAfter: 2.0)
                 }

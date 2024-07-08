@@ -204,6 +204,7 @@ class FirebaseController {
         }
     }
     
+    
     // MARK: - TEAMS
     func getTeam(teamID: String, completion: @escaping (_ team: Team?, _ error: Error?) -> Void) {
         db.collection(Team.kCollectionKey).document(teamID).getDocument { snap, error in
@@ -223,6 +224,7 @@ class FirebaseController {
         }
     }
     
+    
     func getTeamName(teamID: String, completion: @escaping (_ teamName: String?, _ error: Error?) -> Void) {
         db.collection(Team.kCollectionKey).document(teamID).getDocument { snap, error in
             if let error = error {
@@ -238,32 +240,71 @@ class FirebaseController {
             }
         }
     }
+
     
-    func getTeamAppointments(for team: Team, completion: @escaping (_ upcomingAppointments: [Form?], _ error: Error?) -> Void) {
-        // PROPERTIES
-        let now = Timestamp(date: Date())
-        var upcomingAppointmentForms: [Form] = []
+    func getTeamAsync(teamID: String) async throws -> Team {
+        let document = db.collection(Team.kCollectionKey).document(teamID)
         
-        // Filter upcoming appointments
-        for id in team.memberIDs {
-            var forms: [Form] = []
-            db.collection(Form.collectionKey).whereField(Form.CodingKeys.date.rawValue, isGreaterThan: now).whereField(Form.CodingKeys.userID.rawValue, isEqualTo: id).getDocuments { query, error in
-                if let error = error {
-                    completion([], error)
-                }
-                if let query = query {
-                    for document in query.documents {
-                        let data = document.data()
-                        if let form = Form(firebaseData: data, firebaseID: document.documentID) {
-                            forms.append(form)
-                        }
-                    }
-                }
+        do {
+            let snapshot = try await document.getDocument()
+            
+            if let data = snapshot.data(), let team = Team(firebaseData: data, firebaseID: teamID) {
+                return team
+            } else {
+                throw NSError(domain: "Domain Error", code: 404, userInfo: [NSLocalizedDescriptionKey: "Team data not found"])
             }
-            upcomingAppointmentForms.append(contentsOf: forms)
+        } catch {
+            throw error
+        }
+    }
+
+    
+    func getTeamNameAsync(teamID: String) async throws -> String {
+        let document = db.collection(Team.kCollectionKey).document(teamID)
+        
+        do {
+            let snapshot = try await document.getDocument()
+            
+            if let data = snapshot.data(), let team = Team(firebaseData: data, firebaseID: teamID) {
+                return team.name
+            } else {
+                return "<Team/Name>"
+            }
+        } catch {
+            throw error
         }
     }
     
+
+    func getTeamAppointmentsAsync(for team: Team?) async throws -> [Form] {
+        guard let team = team else {
+            throw NSError(domain: "Domain Error", code: 400, userInfo: [NSLocalizedDescriptionKey: "No team provided"])
+        }
+        
+        let now = Timestamp(date: Date())
+        var upcomingAppointmentForms: [Form] = []
+        
+        for id in team.memberIDs {
+            do {
+                let querySnapshot = try await db.collection(Form.collectionKey)
+                    .whereField(Form.CodingKeys.date.rawValue, isGreaterThan: now)
+                    .whereField(Form.CodingKeys.userID.rawValue, isEqualTo: id)
+                    .getDocuments()
+                
+                for document in querySnapshot.documents {
+                    let data = document.data()
+                    if let form = Form(firebaseData: data, firebaseID: document.documentID) {
+                        upcomingAppointmentForms.append(form)
+                    }
+                }
+            } catch {
+                throw error
+            }
+        }
+        
+        return upcomingAppointmentForms
+    }
+
     
     // MARK: - APPROVED EMAILS
     func getApprovedEmails(completion: @escaping (_ approvedEmails: [String]?) -> Void) {

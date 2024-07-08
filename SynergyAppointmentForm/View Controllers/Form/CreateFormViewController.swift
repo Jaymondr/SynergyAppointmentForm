@@ -105,17 +105,42 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         }
     }
     
-    @IBAction func showScheduleNotesButtonPressed(_ sender: Any) {
+    // Define an async function to fetch team data and handle UI updates
+    func fetchTeamDataAndHandleUI() async {
         guard let teamID = UserAccount.currentUser?.teamID else { return }
-        FirebaseController.shared.getTeam(teamID: teamID) { team, error in
-            guard let team = team else { return }
-            FirebaseController.shared.getTeamAppointments(for: team) { upcomingAppointments, error in
-                if !upcomingAppointments.isEmpty {
-                    UIAlertController.presentDismissingAlert(title: "Number of upcoming Appointments: \(upcomingAppointments.count)", dismissAfter: 5.0)
-                }
+        
+        do {
+            // Fetch team asynchronously
+            let team = try await FirebaseController.shared.getTeamAsync(teamID: teamID)
+                        
+            // Fetch appointments for the fetched team asynchronously
+            let appointments = try await FirebaseController.shared.getTeamAppointmentsAsync(for: team)
+            
+            
+            // TODO: Show full appointment times, and notes
+            if !appointments.isEmpty {
+                UIAlertController.presentDismissingAlert(title: "Number of upcoming Appointments: \(appointments.count)", dismissAfter: 5.0)
+            } else {
+                UIAlertController.presentDismissingAlert(title: "No upcoming Appointments found", dismissAfter: 5.0)
             }
+            
+        } catch {
+            print("Error fetching data: \(error.localizedDescription)")
+            UIAlertController.presentDismissingAlert(title: "Error fetching data: \(error.localizedDescription)", dismissAfter: 5.0)
         }
     }
+
+    // IBAction function
+    @IBAction func showScheduleNotesButtonPressed(_ sender: Any) {
+        Task {
+            await fetchTeamDataAndHandleUI()
+        }
+    }
+
+
+
+
+
     
     @IBAction func locationButtonPressed(_ sender: Any) {
         self.vibrateForButtonPress(.heavy)
