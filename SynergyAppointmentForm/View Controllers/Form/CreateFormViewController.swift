@@ -253,6 +253,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         }
     }
     
+    
     func fetchTeamDataAndHandleUI() async {
         guard let teamID = UserAccount.currentUser?.teamID else { return }
         
@@ -267,10 +268,11 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
                 UIAlertController.presentDismissingAlert(title: "Number of upcoming Appointments: \(appointments.count)", dismissAfter: 2.0)
                 
                 // Group and sort appointments by day
-                let sortedAppointments = groupAndSortAppointmentsByDay(appointments)
+                let numberOfDays = 3
+                let sortedAppointments = groupAndSortAppointmentsByDay(appointments, numberOfDays: numberOfDays)
                 
                 // Update the schedule UI for the next 3 days
-                updateScheduleUI(with: sortedAppointments, numberOfDays: 3)
+                updateScheduleUI(with: sortedAppointments, numberOfDays: numberOfDays)
             } else {
                 UIAlertController.presentDismissingAlert(title: "No upcoming Appointments found", dismissAfter: 5.0)
             }
@@ -282,11 +284,11 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     }
 
     // Group and sort appointments by day function
-    func groupAndSortAppointmentsByDay(_ appointments: [Form]) -> [[Form]] {
+    func groupAndSortAppointmentsByDay(_ appointments: [Form], numberOfDays: Int) -> [[Form]] {
         var groupedAppointments: [Date: [Form]] = [:]
-        
-        // Group appointments by day
         let calendar = Calendar.current
+
+        // Group appointments by day
         for appointment in appointments {
             let date = calendar.startOfDay(for: appointment.date)
             if groupedAppointments[date] == nil {
@@ -295,17 +297,23 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
                 groupedAppointments[date]?.append(appointment)
             }
         }
-        
+
         // Sort appointments within each day by time
         var sortedAppointmentsByDay: [[Form]] = []
-        let sortedDates = groupedAppointments.keys.sorted()
-        for date in sortedDates {
-            if let appointments = groupedAppointments[date] {
-                let sortedAppointments = appointments.sorted { $0.date < $1.date }
-                sortedAppointmentsByDay.append(sortedAppointments)
+        let today = calendar.startOfDay(for: Date())
+
+        for dayOffset in 0..<numberOfDays {
+            if let targetDate = calendar.date(byAdding: .day, value: dayOffset, to: today) {
+                if let dayAppointments = groupedAppointments[targetDate] {
+                    let sortedAppointments = dayAppointments.sorted { $0.date < $1.date }
+                    sortedAppointmentsByDay.append(sortedAppointments)
+                } else {
+                    // No appointments for this day, append an empty array
+                    sortedAppointmentsByDay.append([])
+                }
             }
         }
-        
+
         return sortedAppointmentsByDay
     }
 
@@ -313,26 +321,32 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     func updateScheduleUI(with appointmentsByDay: [[Form]], numberOfDays: Int) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "E M/d" // Format for displaying day and date
-        
+
         let textFields = [dayOneTextField, dayTwoTextField, dayThreeTextField]
-        
+
         for (index, textField) in textFields.enumerated() {
             guard index < numberOfDays else { break }
-            
+
             let targetDate = Date().addingDays(index)
             let formattedTargetDate = dateFormatter.string(from: targetDate ?? Date())
-            
+
+            var dayText = "\(formattedTargetDate)\n"
+
             if index < appointmentsByDay.count {
                 let dayAppointments = appointmentsByDay[index]
-                var dayText = "\(formattedTargetDate)\n"
-                for appointment in dayAppointments {
-                    let timeString = DateFormatter.localizedString(from: appointment.date, dateStyle: .none, timeStyle: .short)
-                    dayText.append("\(timeString)\n")
+                if !dayAppointments.isEmpty {
+                    for appointment in dayAppointments {
+                        let timeString = DateFormatter.localizedString(from: appointment.date, dateStyle: .none, timeStyle: .short)
+                        dayText.append("\(timeString)\n")
+                    }
+                } else {
+                    dayText.append("<OPEN>")
                 }
-                textField?.text = dayText.trimmingCharacters(in: .whitespacesAndNewlines)
             } else {
-                textField?.text = "\(formattedTargetDate)\n<OPEN>"
+                dayText.append("<OPEN>")
             }
+
+            textField?.text = dayText.trimmingCharacters(in: .whitespacesAndNewlines)
         }
     }
 
