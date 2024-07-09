@@ -110,35 +110,6 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             UIAlertController.presentDismissingAlert(title: "Unable to create form...", dismissAfter: 1.0)
         }
     }
-    
-    // Define an async function to fetch team data and handle UI updates
-    func fetchTeamDataAndHandleUI() async {
-        guard let teamID = UserAccount.currentUser?.teamID else { return }
-        
-        do {
-            // Fetch team asynchronously
-            let team = try await FirebaseController.shared.getTeamAsync(teamID: teamID)
-                        
-            // Fetch appointments for the fetched team asynchronously
-            let appointments = try await FirebaseController.shared.getTeamAppointmentsAsync(for: team)
-            
-            
-            // TODO: Show full appointment times, and notes
-            if !appointments.isEmpty {
-                UIAlertController.presentDismissingAlert(title: "Number of upcoming Appointments: \(appointments.count)", dismissAfter: 2.0)
-                let sortedAppointments = groupAndSortAppointmentsByDay(appointments)
-                
-                updateUI(with: sortedAppointments)
-                
-            } else {
-                UIAlertController.presentDismissingAlert(title: "No upcoming Appointments found", dismissAfter: 5.0)
-            }
-            
-        } catch {
-            print("Error fetching data: \(error.localizedDescription)")
-            UIAlertController.presentDismissingAlert(title: "Error fetching data: \(error.localizedDescription)", dismissAfter: 5.0)
-        }
-    }
 
     // IBAction function
     @IBAction func showScheduleNotesButtonPressed(_ sender: Any) {
@@ -282,65 +253,35 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         }
     }
     
-    func updateUI(with appointmentsByDay: [[Form]]) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "E M/d" // Format for displaying day and date
+    func fetchTeamDataAndHandleUI() async {
+        guard let teamID = UserAccount.currentUser?.teamID else { return }
         
-        // Update day1TextField
-        if appointmentsByDay.count > 0 {
-            let day1Appointments = appointmentsByDay[0]
-            let day1Date = dateFormatter.string(from: day1Appointments[0].date)
-            var day1Text = "\(day1Date)\n"
-            for appointment in day1Appointments {
-                let timeString = DateFormatter.localizedString(from: appointment.date, dateStyle: .none, timeStyle: .short)
-                day1Text.append("\(timeString)\n")
-            }
-            dayOneTextField.text = day1Text.trimmingCharacters(in: .whitespacesAndNewlines)
-        } else {
-            dayOneTextField.text = "\(Date().formattedDayDateMonth())\n<OPEN>"
-            dayTwoTextField.text = "\(Date().formattedDayDateMonth())\n<OPEN>"
-            dayThreeTextField.text = "\(Date().formattedDayDateMonth())\n<OPEN>"
-        }
-        
-        // Update day2TextField
-        if appointmentsByDay.count > 1, appointmentsByDay[1][0].date.formattedDay() == Date().addingDays(1)?.formattedDay() {
-            let day2Appointments = appointmentsByDay[1]
-            let day2Date = dateFormatter.string(from: day2Appointments[0].date)
-            var day2Text = "\(day2Date)\n"
-            for appointment in day2Appointments {
-                let timeString = DateFormatter.localizedString(from: appointment.date, dateStyle: .none, timeStyle: .short)
-                day2Text.append("\(timeString)\n")
-            }
-            dayTwoTextField.text = day2Text.trimmingCharacters(in: .whitespacesAndNewlines)
+        do {
+            // Fetch team asynchronously
+            let team = try await FirebaseController.shared.getTeamAsync(teamID: teamID)
             
-        } else {
-            let day1Appointments = appointmentsByDay[0]
-            let day1Date = day1Appointments[0].date
-            dayTwoTextField.text = "\(day1Date.addingDays(1)?.formattedDayDateMonth() ?? "")\n<OPEN>"
-//            let day2Appointments = appointmentsByDay[1]
-//            let day2Date = day2Appointments[0].date
-//            dayThreeTextField.text = "\(day2Date.addingDays(1)?.formattedDayMonth() ?? "")\n<OPEN>"
-        }
-        
-        // Update day3TextField
-        if appointmentsByDay.count > 2 || appointmentsByDay[0][0].date.addingDays(2)?.formattedDay() == appointmentsByDay[2][0].date.formattedDay() {
-            let day3Appointments = appointmentsByDay[2]
-            let day3Date = dateFormatter.string(from: day3Appointments[0].date)
-            var day3Text = "\(day3Date)\n"
-            for appointment in day3Appointments {
-                let timeString = DateFormatter.localizedString(from: appointment.date, dateStyle: .none, timeStyle: .short)
-                day3Text.append("\(timeString)\n")
-            }
-            dayThreeTextField.text = day3Text.trimmingCharacters(in: .whitespacesAndNewlines)
+            // Fetch appointments for the fetched team asynchronously
+            let appointments = try await FirebaseController.shared.getTeamAppointmentsAsync(for: team)
             
-        } else {
-            let day1Appointments = appointmentsByDay[0]
-            let day1Date = day1Appointments[0].date
-            dayThreeTextField.text = "\(day1Date.addingDays(2)?.formattedDayDateMonth() ?? "")\n<OPEN>"
+            if !appointments.isEmpty {
+                UIAlertController.presentDismissingAlert(title: "Number of upcoming Appointments: \(appointments.count)", dismissAfter: 2.0)
+                
+                // Group and sort appointments by day
+                let sortedAppointments = groupAndSortAppointmentsByDay(appointments)
+                
+                // Update the schedule UI for the next 3 days
+                updateScheduleUI(with: sortedAppointments, numberOfDays: 3)
+            } else {
+                UIAlertController.presentDismissingAlert(title: "No upcoming Appointments found", dismissAfter: 5.0)
+            }
+            
+        } catch {
+            print("Error fetching data: \(error.localizedDescription)")
+            UIAlertController.presentDismissingAlert(title: "Error fetching data: \(error.localizedDescription)", dismissAfter: 5.0)
         }
     }
 
-    
+    // Group and sort appointments by day function
     func groupAndSortAppointmentsByDay(_ appointments: [Form]) -> [[Form]] {
         var groupedAppointments: [Date: [Form]] = [:]
         
@@ -368,10 +309,33 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         return sortedAppointmentsByDay
     }
 
-    
-    func sortTeamsUpcomingAppointments(appointments: [Form?]) {
+    // Update schedule UI function
+    func updateScheduleUI(with appointmentsByDay: [[Form]], numberOfDays: Int) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "E M/d" // Format for displaying day and date
         
+        let textFields = [dayOneTextField, dayTwoTextField, dayThreeTextField]
+        
+        for (index, textField) in textFields.enumerated() {
+            guard index < numberOfDays else { break }
+            
+            let targetDate = Date().addingDays(index)
+            let formattedTargetDate = dateFormatter.string(from: targetDate ?? Date())
+            
+            if index < appointmentsByDay.count {
+                let dayAppointments = appointmentsByDay[index]
+                var dayText = "\(formattedTargetDate)\n"
+                for appointment in dayAppointments {
+                    let timeString = DateFormatter.localizedString(from: appointment.date, dateStyle: .none, timeStyle: .short)
+                    dayText.append("\(timeString)\n")
+                }
+                textField?.text = dayText.trimmingCharacters(in: .whitespacesAndNewlines)
+            } else {
+                textField?.text = "\(formattedTargetDate)\n<OPEN>"
+            }
+        }
     }
+
     
     func showLeaveConfirmationAlert() {
         let alert = UIAlertController(title: "Save Changes?", message: nil, preferredStyle: .alert)
