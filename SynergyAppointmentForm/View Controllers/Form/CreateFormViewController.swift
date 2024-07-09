@@ -18,6 +18,8 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     // MARK: OUTLETS
     // SCHEDULE
     @IBOutlet weak var showCalendarButton: UIButton!
+    @IBOutlet weak var scheduleView: UIView!
+    @IBOutlet weak var scheduleActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var dayOneTextField: UITextView!
     @IBOutlet weak var dayTwoTextField: UITextView!
     @IBOutlet weak var dayThreeTextField: UITextView!
@@ -113,9 +115,14 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
 
     // IBAction function
     @IBAction func showScheduleNotesButtonPressed(_ sender: Any) {
+        scheduleView.isHidden = false
         Task {
             await fetchTeamDataAndHandleUI()
         }
+    }
+    
+    @IBAction func closeScheduleButtonPressed(_ sender: Any) {
+        scheduleView.isHidden = true
     }
     
     @IBAction func locationButtonPressed(_ sender: Any) {
@@ -261,12 +268,13 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             // Fetch team asynchronously
             let team = try await FirebaseController.shared.getTeamAsync(teamID: teamID)
             
+            // Start the activity indicator
+            scheduleActivityIndicator.startAnimating()
+            
             // Fetch appointments for the fetched team asynchronously
             let appointments = try await FirebaseController.shared.getTeamAppointmentsAsync(for: team)
             
             if !appointments.isEmpty {
-                UIAlertController.presentDismissingAlert(title: "Number of upcoming Appointments: \(appointments.count)", dismissAfter: 2.0)
-                
                 // Group and sort appointments by day
                 let numberOfDays = 3
                 let sortedAppointments = groupAndSortAppointmentsByDay(appointments, numberOfDays: numberOfDays)
@@ -281,6 +289,9 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             print("Error fetching data: \(error.localizedDescription)")
             UIAlertController.presentDismissingAlert(title: "Error fetching data: \(error.localizedDescription)", dismissAfter: 5.0)
         }
+        
+        // Stop the activity indicator
+        scheduleActivityIndicator.stopAnimating()
     }
 
     // Group and sort appointments by day function
@@ -317,7 +328,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         return sortedAppointmentsByDay
     }
 
-    // Update schedule UI function
+    // UPDATE SCHEDULE UI
     func updateScheduleUI(with appointmentsByDay: [[Form]], numberOfDays: Int) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "E M/d" // Format for displaying day and date
@@ -329,24 +340,33 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
 
             let targetDate = Date().addingDays(index)
             let formattedTargetDate = dateFormatter.string(from: targetDate ?? Date())
-
-            var dayText = "\(formattedTargetDate)\n"
+            
+            let attributedText = NSMutableAttributedString(string: "\(formattedTargetDate)\n", attributes: [
+                .foregroundColor: UIColor.eden,
+                .font: UIFont.boldSystemFont(ofSize: 20)
+            ]) // Date color
 
             if index < appointmentsByDay.count {
                 let dayAppointments = appointmentsByDay[index]
                 if !dayAppointments.isEmpty {
                     for appointment in dayAppointments {
                         let timeString = DateFormatter.localizedString(from: appointment.date, dateStyle: .none, timeStyle: .short)
-                        dayText.append("\(timeString)\n")
+                        let appointmentText = NSAttributedString(string: "\(timeString)\n", attributes: [
+                            .foregroundColor: UIColor.outcomeBlue,
+                            .font: UIFont.boldSystemFont(ofSize: 17)
+                            ]) // Appointment time color
+                        attributedText.append(appointmentText)
                     }
                 } else {
-                    dayText.append("<OPEN>")
+                    let openText = NSAttributedString(string: "<OPEN>", attributes: [.foregroundColor: UIColor.outcomeGreen, .font: UIFont.boldSystemFont(ofSize: 17)]) // Open text color
+                    attributedText.append(openText)
                 }
             } else {
-                dayText.append("<OPEN>")
+                let openText = NSAttributedString(string: "<OPEN>", attributes: [.foregroundColor: UIColor.outcomeGreen, .font: UIFont.boldSystemFont(ofSize: 17)]) // Open text color
+                attributedText.append(openText)
             }
 
-            textField?.text = dayText.trimmingCharacters(in: .whitespacesAndNewlines)
+            textField?.attributedText = attributedText
         }
     }
 
@@ -373,6 +393,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         homeValueStackView.isHidden = true
         yearBuiltStackView.isHidden = true
         trelloButton.isHidden = true
+        scheduleView.isHidden = true
         
         // VIEW FOR BRANCH
         switch user.branch {
