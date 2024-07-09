@@ -16,7 +16,11 @@ protocol CreateFormViewDelegate: AnyObject {
 
 class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDelegate, UITextViewDelegate {
     // MARK: OUTLETS
+    // SCHEDULE
     @IBOutlet weak var showCalendarButton: UIButton!
+    @IBOutlet weak var dayOneTextField: UITextView!
+    @IBOutlet weak var dayTwoTextField: UITextView!
+    @IBOutlet weak var dayThreeTextField: UITextView!
     @IBOutlet weak var showScheduleNotesButton: UIButton!
     @IBOutlet weak var dateTimePicker: UIDatePicker!
     @IBOutlet weak var firstNameTextfield: UITextField!
@@ -68,12 +72,14 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         
     // MARK: PROPERTIES
     var firebaseID: String = ""
+    var savedForm: Form?
+    var timeSlots = ["10am", "12pm", "2pm", "4pm", "6pm", "8pm"]
+    var timeSlotLabels: [UILabel] = []
     var user: UserAccount? {
         UserAccount.currentUser
     }
 
-    var savedForm: Form?
-    
+
     // MARK: BUTTONS
     @IBAction func saveButtonPressed(_ sender: Any) {
         saveForm()
@@ -119,7 +125,11 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             
             // TODO: Show full appointment times, and notes
             if !appointments.isEmpty {
-                UIAlertController.presentDismissingAlert(title: "Number of upcoming Appointments: \(appointments.count)", dismissAfter: 5.0)
+                UIAlertController.presentDismissingAlert(title: "Number of upcoming Appointments: \(appointments.count)", dismissAfter: 2.0)
+                let sortedAppointments = groupAndSortAppointmentsByDay(appointments)
+                
+                updateUI(with: sortedAppointments)
+                
             } else {
                 UIAlertController.presentDismissingAlert(title: "No upcoming Appointments found", dismissAfter: 5.0)
             }
@@ -136,11 +146,6 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             await fetchTeamDataAndHandleUI()
         }
     }
-
-
-
-
-
     
     @IBAction func locationButtonPressed(_ sender: Any) {
         self.vibrateForButtonPress(.heavy)
@@ -201,6 +206,16 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         setupView()
     }
 
+    @objc func backButtonPressed() {
+        let newForm = createForm()
+        if savedForm != newForm {
+            showLeaveConfirmationAlert()
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    
     // MARK: FUNCTIONS
     func saveForm() {
         self.vibrateForButtonPress(.medium)
@@ -267,13 +282,95 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         }
     }
     
-    @objc func backButtonPressed() {
-        let newForm = createForm()
-        if savedForm != newForm {
-            showLeaveConfirmationAlert()
+    func updateUI(with appointmentsByDay: [[Form]]) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "E M/d" // Format for displaying day and date
+        
+        // Update day1TextField
+        if appointmentsByDay.count > 0 {
+            let day1Appointments = appointmentsByDay[0]
+            let day1Date = dateFormatter.string(from: day1Appointments[0].date)
+            var day1Text = "\(day1Date)\n"
+            for appointment in day1Appointments {
+                let timeString = DateFormatter.localizedString(from: appointment.date, dateStyle: .none, timeStyle: .short)
+                day1Text.append("\(timeString)\n")
+            }
+            dayOneTextField.text = day1Text.trimmingCharacters(in: .whitespacesAndNewlines)
         } else {
-            self.navigationController?.popViewController(animated: true)
+            dayOneTextField.text = "\(Date().formattedDayDateMonth())\n<OPEN>"
+            dayTwoTextField.text = "\(Date().formattedDayDateMonth())\n<OPEN>"
+            dayThreeTextField.text = "\(Date().formattedDayDateMonth())\n<OPEN>"
         }
+        
+        // Update day2TextField
+        if appointmentsByDay.count > 1, appointmentsByDay[1][0].date.formattedDay() == Date().addingDays(1)?.formattedDay() {
+            let day2Appointments = appointmentsByDay[1]
+            let day2Date = dateFormatter.string(from: day2Appointments[0].date)
+            var day2Text = "\(day2Date)\n"
+            for appointment in day2Appointments {
+                let timeString = DateFormatter.localizedString(from: appointment.date, dateStyle: .none, timeStyle: .short)
+                day2Text.append("\(timeString)\n")
+            }
+            dayTwoTextField.text = day2Text.trimmingCharacters(in: .whitespacesAndNewlines)
+            
+        } else {
+            let day1Appointments = appointmentsByDay[0]
+            let day1Date = day1Appointments[0].date
+            dayTwoTextField.text = "\(day1Date.addingDays(1)?.formattedDayDateMonth() ?? "")\n<OPEN>"
+//            let day2Appointments = appointmentsByDay[1]
+//            let day2Date = day2Appointments[0].date
+//            dayThreeTextField.text = "\(day2Date.addingDays(1)?.formattedDayMonth() ?? "")\n<OPEN>"
+        }
+        
+        // Update day3TextField
+        if appointmentsByDay.count > 2 || appointmentsByDay[0][0].date.addingDays(2)?.formattedDay() == appointmentsByDay[2][0].date.formattedDay() {
+            let day3Appointments = appointmentsByDay[2]
+            let day3Date = dateFormatter.string(from: day3Appointments[0].date)
+            var day3Text = "\(day3Date)\n"
+            for appointment in day3Appointments {
+                let timeString = DateFormatter.localizedString(from: appointment.date, dateStyle: .none, timeStyle: .short)
+                day3Text.append("\(timeString)\n")
+            }
+            dayThreeTextField.text = day3Text.trimmingCharacters(in: .whitespacesAndNewlines)
+            
+        } else {
+            let day1Appointments = appointmentsByDay[0]
+            let day1Date = day1Appointments[0].date
+            dayThreeTextField.text = "\(day1Date.addingDays(2)?.formattedDayDateMonth() ?? "")\n<OPEN>"
+        }
+    }
+
+    
+    func groupAndSortAppointmentsByDay(_ appointments: [Form]) -> [[Form]] {
+        var groupedAppointments: [Date: [Form]] = [:]
+        
+        // Group appointments by day
+        let calendar = Calendar.current
+        for appointment in appointments {
+            let date = calendar.startOfDay(for: appointment.date)
+            if groupedAppointments[date] == nil {
+                groupedAppointments[date] = [appointment]
+            } else {
+                groupedAppointments[date]?.append(appointment)
+            }
+        }
+        
+        // Sort appointments within each day by time
+        var sortedAppointmentsByDay: [[Form]] = []
+        let sortedDates = groupedAppointments.keys.sorted()
+        for date in sortedDates {
+            if let appointments = groupedAppointments[date] {
+                let sortedAppointments = appointments.sorted { $0.date < $1.date }
+                sortedAppointmentsByDay.append(sortedAppointments)
+            }
+        }
+        
+        return sortedAppointmentsByDay
+    }
+
+    
+    func sortTeamsUpcomingAppointments(appointments: [Form?]) {
+        
     }
     
     func showLeaveConfirmationAlert() {

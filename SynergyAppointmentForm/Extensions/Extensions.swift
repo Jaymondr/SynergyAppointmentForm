@@ -193,6 +193,10 @@ public extension UIStoryboard {
 
 // MARK: - DATE
 extension Date {
+    func addingDays(_ days: Int) -> Date? {
+        return Calendar.current.date(byAdding: .day, value: days, to: self)
+    }
+    
     func formattedStringDate() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE MM/dd ha yyyy"
@@ -208,6 +212,12 @@ extension Date {
     func formattedDayMonth() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "M/d"
+        return formatter.string(from: self)
+    }
+    
+    func formattedDayDateMonth() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd M/d"
         return formatter.string(from: self)
     }
     
