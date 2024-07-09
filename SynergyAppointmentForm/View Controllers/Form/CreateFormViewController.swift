@@ -75,8 +75,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     // MARK: PROPERTIES
     var firebaseID: String = ""
     var savedForm: Form?
-    var timeSlots = ["10am", "12pm", "2pm", "4pm", "6pm", "8pm"]
-    var timeSlotLabels: [UILabel] = []
+    var upcomingAppointmentsByDay: [[Form]] = []
     var user: UserAccount? {
         UserAccount.currentUser
     }
@@ -262,36 +261,40 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     
     
     func fetchTeamDataAndHandleUI() async {
-        guard let teamID = UserAccount.currentUser?.teamID else { return }
-        
-        do {
-            // Fetch team asynchronously
-            let team = try await FirebaseController.shared.getTeamAsync(teamID: teamID)
+        if upcomingAppointmentsByDay.isEmpty {
+            guard let teamID = UserAccount.currentUser?.teamID else { return }
             
-            // Start the activity indicator
-            scheduleActivityIndicator.startAnimating()
-            
-            // Fetch appointments for the fetched team asynchronously
-            let appointments = try await FirebaseController.shared.getTeamAppointmentsAsync(for: team)
-            
-            if !appointments.isEmpty {
-                // Group and sort appointments by day
-                let numberOfDays = 3
-                let sortedAppointments = groupAndSortAppointmentsByDay(appointments, numberOfDays: numberOfDays)
+            do {
+                // Fetch team asynchronously
+                let team = try await FirebaseController.shared.getTeamAsync(teamID: teamID)
                 
-                // Update the schedule UI for the next 3 days
-                updateScheduleUI(with: sortedAppointments, numberOfDays: numberOfDays)
-            } else {
-                UIAlertController.presentDismissingAlert(title: "No upcoming Appointments found", dismissAfter: 5.0)
+                // Start the activity indicator
+                scheduleActivityIndicator.startAnimating()
+                
+                // Fetch appointments for the fetched team asynchronously
+                let appointments = try await FirebaseController.shared.getTeamAppointmentsAsync(for: team)
+                
+                if !appointments.isEmpty {
+                    // Group and sort appointments by day
+                    let numberOfDays = 3
+                    let sortedAppointments = groupAndSortAppointmentsByDay(appointments, numberOfDays: numberOfDays)
+                    upcomingAppointmentsByDay = sortedAppointments // Hold locally to reduce server traffic
+                    // Update the schedule UI for the next 3 days
+                    updateScheduleUI(with: sortedAppointments, numberOfDays: numberOfDays)
+                } else {
+                    UIAlertController.presentDismissingAlert(title: "No upcoming Appointments found", dismissAfter: 5.0)
+                }
+                
+            } catch {
+                print("Error fetching data: \(error.localizedDescription)")
+                UIAlertController.presentDismissingAlert(title: "Error fetching data: \(error.localizedDescription)", dismissAfter: 5.0)
             }
             
-        } catch {
-            print("Error fetching data: \(error.localizedDescription)")
-            UIAlertController.presentDismissingAlert(title: "Error fetching data: \(error.localizedDescription)", dismissAfter: 5.0)
+            // Stop the activity indicator
+            scheduleActivityIndicator.stopAnimating()
+        } else {
+            print("Already fetched appointments")
         }
-        
-        // Stop the activity indicator
-        scheduleActivityIndicator.stopAnimating()
     }
 
     // Group and sort appointments by day function
