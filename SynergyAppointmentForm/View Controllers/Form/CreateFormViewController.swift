@@ -271,6 +271,8 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
                 // Fetch team asynchronously
                 let team = try await FirebaseController.shared.getTeamAsync(teamID: teamID)
                 fetchedTeam = team
+                // SCHEDULE TITLE
+                ScheduleTitleLabel.text = fetchedTeam?.name ?? "Schedule"
                 // Start the activity indicator
                 scheduleActivityIndicator.startAnimating()
                 
@@ -468,12 +470,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             textfield.layer.borderWidth = 1.5
             textfield.layer.borderColor = UIColor.eden.cgColor
             textfield.layer.cornerRadius = 8
-            textfield.textAlignment = .right
         }
-        
-        
-        // SCHEDULE TITLE
-        ScheduleTitleLabel.text = fetchedTeam?.name ?? "Schedule"
         
                 
         // LIGHT/DARK MODE

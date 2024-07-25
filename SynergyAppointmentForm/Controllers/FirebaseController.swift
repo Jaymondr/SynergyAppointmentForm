@@ -289,6 +289,8 @@ class FirebaseController {
                 let querySnapshot = try await db.collection(Form.collectionKey)
                     .whereField(Form.CodingKeys.date.rawValue, isGreaterThan: now)
                     .whereField(Form.CodingKeys.userID.rawValue, isEqualTo: id)
+                    .whereField(Form.CodingKeys.outcome.rawValue, isEqualTo: Outcome.pending.rawValue)
+//                    .whereField(Form.CodingKeys.outcome.rawValue, isEqualTo: Outcome.rescheduled.rawValue) // Cannot query
                     .getDocuments()
                 
                 for document in querySnapshot.documents {
