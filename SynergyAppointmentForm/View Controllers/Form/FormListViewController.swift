@@ -187,7 +187,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
         print("handle search bar button click")
         guard let user = UserAccount.currentUser, let branch = user.branch else { return }
-        FirebaseController.shared.getUsers(for: branch) { users, error in
+        FirebaseController.shared.getActiveUsers(for: branch) { users, error in
             if let error = error {
                 print("Error: \(error)")
                 return
@@ -204,8 +204,10 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             }
             alert.addAction(allAction)
             
-            for user in users {
-                let userAction = UIAlertAction(title: user.firstName, style: .default) { _ in
+            let sortedUsers = users.sorted { $0.firstName < $1.firstName }
+            
+            for user in sortedUsers {
+                let userAction = UIAlertAction(title: "\(user.firstName.uppercased()) \(user.lastName.first?.uppercased() ?? "").", style: .default) { _ in
                     print("Selected user: \(user.firstName)")
                     self.loadForms(for: [user.firebaseID])
                 }

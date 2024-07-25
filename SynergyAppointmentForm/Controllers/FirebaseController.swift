@@ -183,8 +183,11 @@ class FirebaseController {
         })
     }
     
-    func getUsers(for branch: Branch, completion: @escaping (_ users: [UserAccount], _ error: Error?) -> Void) {
-        db.collection(UserAccount.collectionKey).whereField(UserAccount.CodingKeys.branch.rawValue, isEqualTo: branch.rawValue).getDocuments { snap, error in
+    func getActiveUsers(for branch: Branch, completion: @escaping (_ users: [UserAccount], _ error: Error?) -> Void) {
+        db.collection(UserAccount.collectionKey)
+            .whereField(UserAccount.CodingKeys.branch.rawValue, isEqualTo: branch.rawValue)
+            .whereField(UserAccount.CodingKeys.isActive.rawValue, isEqualTo: true)
+            .getDocuments { snap, error in
             if let error = error {
                 print("There was an error getting users for \(branch.rawValue)")
                 completion([], error)

@@ -173,7 +173,7 @@ class ProfileViewController: UIViewController {
     
     @IBAction func filterButtonPressed(_ sender: Any) {
         guard let user = UserAccount.currentUser, let branch = user.branch else { return }
-        FirebaseController.shared.getUsers(for: branch) { users, error in
+        FirebaseController.shared.getActiveUsers(for: branch) { users, error in
             if let error = error {
                 print("Error: \(error)")
                 return
