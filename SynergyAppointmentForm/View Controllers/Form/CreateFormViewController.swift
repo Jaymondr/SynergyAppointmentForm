@@ -465,10 +465,10 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
 
         // SCHEDULE TEXTFIELD
         for textfield in scheduleTextFields {
-//            textfield.layer.borderWidth = 1.5
-//            textfield.layer.borderColor = UIColor.eden.cgColor
-//            textfield.layer.cornerRadius = 8
-            
+            textfield.layer.borderWidth = 1.5
+            textfield.layer.borderColor = UIColor.eden.cgColor
+            textfield.layer.cornerRadius = 8
+            textfield.textAlignment = .right
         }
         
         
