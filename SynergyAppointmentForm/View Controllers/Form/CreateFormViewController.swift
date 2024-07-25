@@ -25,6 +25,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     @IBOutlet weak var dayTwoTextField: UITextView!
     @IBOutlet weak var dayThreeTextField: UITextView!
     @IBOutlet weak var showScheduleButton: UIButton!
+    // FORM
     @IBOutlet weak var dateTimePicker: UIDatePicker!
     @IBOutlet weak var firstNameTextfield: UITextField!
     @IBOutlet weak var lastNameTextfield: UITextField!
@@ -118,7 +119,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     @IBAction func showScheduleNotesButtonPressed(_ sender: Any) {
         scheduleView.isHidden = false
         Task {
-            await fetchTeamDataAndHandleUI()
+            await fetchTeamAppoinntments(forDays: 4)
         }
     }
     
@@ -262,7 +263,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     }
     
     
-    func fetchTeamDataAndHandleUI() async {
+    func fetchTeamAppoinntments(forDays numberOfDays: Int) async {
         if upcomingAppointmentsByDay.isEmpty {
             guard let teamID = UserAccount.currentUser?.teamID else { return }
             
@@ -278,7 +279,6 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
                 
                 if !appointments.isEmpty {
                     // Group and sort appointments by day
-                    let numberOfDays = 3
                     let sortedAppointments = groupAndSortAppointmentsByDay(appointments, numberOfDays: numberOfDays)
                     upcomingAppointmentsByDay = sortedAppointments // Hold locally to reduce server traffic
                     // Update the schedule UI for the next 3 days
@@ -353,13 +353,31 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
 
             if index < appointmentsByDay.count {
                 let dayAppointments = appointmentsByDay[index]
-                if !dayAppointments.isEmpty {
+                if dayAppointments.isNotEmpty {
+                    var timeSlotsCount: [Date: Int] = [:]
                     for appointment in dayAppointments {
-                        let timeString = DateFormatter.localizedString(from: appointment.date, dateStyle: .none, timeStyle: .short)
-                        let appointmentText = NSAttributedString(string: "\(timeString)\n", attributes: [
-                            .foregroundColor: UIColor.outcomeBlue,
-                            .font: UIFont.systemFont(ofSize: 17, weight: .medium)
+                        timeSlotsCount[appointment.date, default: 0] += 1
+                    }
+                    
+                    let sortedAppointments = timeSlotsCount.keys.sorted()
+
+                    for appointmentDate in sortedAppointments {
+                        let count = timeSlotsCount[appointmentDate] ?? 0
+                        let timeString = DateFormatter.localizedString(from: appointmentDate, dateStyle: .none, timeStyle: .short)
+                        let appointmentText: NSAttributedString
+                        
+                        if count > 1 {
+                            appointmentText = NSAttributedString(string: "\(timeString) (\(count))\n", attributes: [
+                                .foregroundColor: UIColor.outcomeBlue,
+                                .font: UIFont.systemFont(ofSize: 17, weight: .medium)
                             ]) // Appointment time color
+                        } else {
+                            appointmentText = NSAttributedString(string: "\(timeString)\n", attributes: [
+                                .foregroundColor: UIColor.outcomeBlue,
+                                .font: UIFont.systemFont(ofSize: 17, weight: .medium)
+                            ]) // Appointment time color
+                        }
+                        
                         attributedText.append(appointmentText)
                     }
                 } else {
@@ -443,13 +461,13 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         commentsTextview.layer.cornerRadius = 5.0
         
         // SCHEDULE
-        var scheduleTextFields: [UITextView] = [dayOneTextField, dayTwoTextField, dayThreeTextField]
+        let scheduleTextFields: [UITextView] = [dayOneTextField, dayTwoTextField, dayThreeTextField]
 
         // SCHEDULE TEXTFIELD
         for textfield in scheduleTextFields {
-            textfield.layer.borderWidth = 1.5
-            textfield.layer.borderColor = UIColor.eden.cgColor
-            textfield.layer.cornerRadius = 8
+//            textfield.layer.borderWidth = 1.5
+//            textfield.layer.borderColor = UIColor.eden.cgColor
+//            textfield.layer.cornerRadius = 8
             
         }
         

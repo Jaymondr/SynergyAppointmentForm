@@ -90,6 +90,14 @@ extension String {
 }
 
 
+// MARK: - Array
+extension Array {
+    var isNotEmpty: Bool {
+        return !self.isEmpty
+    }
+}
+
+
 // MARK: - CALAYER
 extension CALayer {
     func applySketchShadow(color: UIColor, alpha: CGFloat, x: CGFloat, y: CGFloat, blur: CGFloat, spread: CGFloat) {
