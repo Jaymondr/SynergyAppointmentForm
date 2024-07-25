@@ -16,6 +16,16 @@ protocol CreateFormViewDelegate: AnyObject {
 
 class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDelegate, UITextViewDelegate {
     // MARK: OUTLETS
+    // SCHEDULE
+    @IBOutlet weak var showCalendarButton: UIButton!
+    @IBOutlet weak var scheduleView: UIView!
+    @IBOutlet weak var ScheduleTitleLabel: UILabel!
+    @IBOutlet weak var scheduleActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var dayOneTextField: UITextView!
+    @IBOutlet weak var dayTwoTextField: UITextView!
+    @IBOutlet weak var dayThreeTextField: UITextView!
+    @IBOutlet weak var showScheduleButton: UIButton!
+    // FORM
     @IBOutlet weak var dateTimePicker: UIDatePicker!
     @IBOutlet weak var firstNameTextfield: UITextField!
     @IBOutlet weak var lastNameTextfield: UITextField!
@@ -66,12 +76,14 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         
     // MARK: PROPERTIES
     var firebaseID: String = ""
+    var savedForm: Form?
+    var upcomingAppointmentsByDay: [[Form]] = []
+    var fetchedTeam: Team?
     var user: UserAccount? {
         UserAccount.currentUser
     }
 
-    var savedForm: Form?
-    
+
     // MARK: BUTTONS
     @IBAction func saveButtonPressed(_ sender: Any) {
         saveForm()
@@ -101,6 +113,18 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         } else {
             UIAlertController.presentDismissingAlert(title: "Unable to create form...", dismissAfter: 1.0)
         }
+    }
+
+    // IBAction function
+    @IBAction func showScheduleNotesButtonPressed(_ sender: Any) {
+        scheduleView.isHidden = false
+        Task {
+            await fetchTeamAppoinntments(forDays: 4)
+        }
+    }
+    
+    @IBAction func closeScheduleButtonPressed(_ sender: Any) {
+        scheduleView.isHidden = true
     }
     
     @IBAction func locationButtonPressed(_ sender: Any) {
@@ -162,6 +186,16 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         setupView()
     }
 
+    @objc func backButtonPressed() {
+        let newForm = createForm()
+        if savedForm != newForm {
+            showLeaveConfirmationAlert()
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    
     // MARK: FUNCTIONS
     func saveForm() {
         self.vibrateForButtonPress(.medium)
@@ -228,14 +262,139 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         }
     }
     
-    @objc func backButtonPressed() {
-        let newForm = createForm()
-        if savedForm != newForm {
-            showLeaveConfirmationAlert()
+    
+    func fetchTeamAppoinntments(forDays numberOfDays: Int) async {
+        if upcomingAppointmentsByDay.isEmpty {
+            guard let teamID = UserAccount.currentUser?.teamID else { return }
+            
+            do {
+                // Fetch team asynchronously
+                let team = try await FirebaseController.shared.getTeamAsync(teamID: teamID)
+                fetchedTeam = team
+                // SCHEDULE TITLE
+                ScheduleTitleLabel.text = fetchedTeam?.name ?? "Schedule"
+                // Start the activity indicator
+                scheduleActivityIndicator.startAnimating()
+                
+                // Fetch appointments for the fetched team asynchronously
+                let appointments = try await FirebaseController.shared.getTeamAppointmentsAsync(for: team)
+                
+                if !appointments.isEmpty {
+                    // Group and sort appointments by day
+                    let sortedAppointments = groupAndSortAppointmentsByDay(appointments, numberOfDays: numberOfDays)
+                    upcomingAppointmentsByDay = sortedAppointments // Hold locally to reduce server traffic
+                    // Update the schedule UI for the next 3 days
+                    updateScheduleUI(with: sortedAppointments, numberOfDays: numberOfDays)
+                } else {
+                    UIAlertController.presentDismissingAlert(title: "No upcoming Appointments found", dismissAfter: 1.5)
+                }
+                
+            } catch {
+                print("Error fetching data: \(error.localizedDescription)")
+                UIAlertController.presentDismissingAlert(title: "Error fetching data: \(error.localizedDescription)", dismissAfter: 5.0)
+            }
+            
+            // Stop the activity indicator
+            scheduleActivityIndicator.stopAnimating()
         } else {
-            self.navigationController?.popViewController(animated: true)
+            print("Already fetched appointments")
         }
     }
+
+    // Group and sort appointments by day function
+    func groupAndSortAppointmentsByDay(_ appointments: [Form], numberOfDays: Int) -> [[Form]] {
+        var groupedAppointments: [Date: [Form]] = [:]
+        let calendar = Calendar.current
+
+        // Group appointments by day
+        for appointment in appointments {
+            let date = calendar.startOfDay(for: appointment.date)
+            if groupedAppointments[date] == nil {
+                groupedAppointments[date] = [appointment]
+            } else {
+                groupedAppointments[date]?.append(appointment)
+            }
+        }
+
+        // Sort appointments within each day by time
+        var sortedAppointmentsByDay: [[Form]] = []
+        let today = calendar.startOfDay(for: Date())
+
+        for dayOffset in 0..<numberOfDays {
+            if let targetDate = calendar.date(byAdding: .day, value: dayOffset, to: today) {
+                if let dayAppointments = groupedAppointments[targetDate] {
+                    let sortedAppointments = dayAppointments.sorted { $0.date < $1.date }
+                    sortedAppointmentsByDay.append(sortedAppointments)
+                } else {
+                    // No appointments for this day, append an empty array
+                    sortedAppointmentsByDay.append([])
+                }
+            }
+        }
+
+        return sortedAppointmentsByDay
+    }
+
+    // UPDATE SCHEDULE UI
+    func updateScheduleUI(with appointmentsByDay: [[Form]], numberOfDays: Int) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "E M/d" // Format for displaying day and date
+
+        let textFields = [dayOneTextField, dayTwoTextField, dayThreeTextField]
+
+        for (index, textField) in textFields.enumerated() {
+            guard index < numberOfDays else { break }
+
+            let targetDate = Date().addingDays(index)
+            let formattedTargetDate = dateFormatter.string(from: targetDate ?? Date())
+            
+            let attributedText = NSMutableAttributedString(string: "\(formattedTargetDate)\n", attributes: [
+                .foregroundColor: UIColor.eden,
+                .font: UIFont.systemFont(ofSize: 18, weight: .medium)
+            ]) // Date color
+
+            if index < appointmentsByDay.count {
+                let dayAppointments = appointmentsByDay[index]
+                if dayAppointments.isNotEmpty {
+                    var timeSlotsCount: [Date: Int] = [:]
+                    for appointment in dayAppointments {
+                        timeSlotsCount[appointment.date, default: 0] += 1
+                    }
+                    
+                    let sortedAppointments = timeSlotsCount.keys.sorted()
+
+                    for appointmentDate in sortedAppointments {
+                        let count = timeSlotsCount[appointmentDate] ?? 0
+                        let timeString = DateFormatter.localizedString(from: appointmentDate, dateStyle: .none, timeStyle: .short)
+                        let appointmentText: NSAttributedString
+                        
+                        if count > 1 {
+                            appointmentText = NSAttributedString(string: "\(timeString) (\(count))\n", attributes: [
+                                .foregroundColor: UIColor.outcomeBlue,
+                                .font: UIFont.systemFont(ofSize: 17, weight: .medium)
+                            ]) // Appointment time color
+                        } else {
+                            appointmentText = NSAttributedString(string: "\(timeString)\n", attributes: [
+                                .foregroundColor: UIColor.outcomeBlue,
+                                .font: UIFont.systemFont(ofSize: 17, weight: .medium)
+                            ]) // Appointment time color
+                        }
+                        
+                        attributedText.append(appointmentText)
+                    }
+                } else {
+                    let openText = NSAttributedString(string: "<OPEN>", attributes: [.foregroundColor: UIColor.outcomeGreen, .font: UIFont.boldSystemFont(ofSize: 17)]) // Open text color
+                    attributedText.append(openText)
+                }
+            } else {
+                let openText = NSAttributedString(string: "<OPEN>", attributes: [.foregroundColor: UIColor.outcomeGreen, .font: UIFont.boldSystemFont(ofSize: 17)]) // Open text color
+                attributedText.append(openText)
+            }
+
+            textField?.attributedText = attributedText
+        }
+    }
+
     
     func showLeaveConfirmationAlert() {
         let alert = UIAlertController(title: "Save Changes?", message: nil, preferredStyle: .alert)
@@ -259,6 +418,8 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         homeValueStackView.isHidden = true
         yearBuiltStackView.isHidden = true
         trelloButton.isHidden = true
+        scheduleView.isHidden = true
+        showScheduleButton.isHidden = user.teamID == nil
         
         // VIEW FOR BRANCH
         switch user.branch {
@@ -300,6 +461,16 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         // CORNER RADIUS
         reasonTextview.layer.cornerRadius = 5.0
         commentsTextview.layer.cornerRadius = 5.0
+        
+        // SCHEDULE
+        let scheduleTextFields: [UITextView] = [dayOneTextField, dayTwoTextField, dayThreeTextField]
+
+        // SCHEDULE TEXTFIELD
+        for textfield in scheduleTextFields {
+            textfield.layer.borderWidth = 1.5
+            textfield.layer.borderColor = UIColor.eden.cgColor
+            textfield.layer.cornerRadius = 8
+        }
         
                 
         // LIGHT/DARK MODE

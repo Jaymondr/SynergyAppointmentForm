@@ -17,6 +17,7 @@ class FormController {
     
     // MARK: PROPERTIES
     let geocoder = CLGeocoder()    
+    var teamName: String = UserAccountController.shared.teamName ?? "Team \(UserAccount.currentUser?.branch?.rawValue ?? "")"
     
     // MARK: FUNCTIONS
     func createAndCopyForm(form: Form) {
@@ -26,6 +27,8 @@ class FormController {
         let formString =
         """
         \(user.firstName)'s APPT
+        (\(teamName))
+
         Created Date: \(Date().formattedStringDate())
         
         Appointment for: \(form.date.formattedDay()) \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased()), \(form.date.formattedMonth()) \(form.date.formattedDayNumber())

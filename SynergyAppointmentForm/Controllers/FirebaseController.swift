@@ -205,6 +205,109 @@ class FirebaseController {
     }
     
     
+    // MARK: - TEAMS
+    func getTeam(teamID: String, completion: @escaping (_ team: Team?, _ error: Error?) -> Void) {
+        db.collection(Team.kCollectionKey).document(teamID).getDocument { snap, error in
+            if let error = error {
+                print("Error fetching team. Error: \(error)")
+                completion(nil, error)
+            }
+            
+            if let data = snap?.data() {
+                let team = Team(firebaseData: data, firebaseID: teamID)
+                completion(team, nil)
+                
+            } else {
+                print("Error getting team. NO ERROR, NO TEAM... UH OH!")
+                completion(nil, nil)
+            }
+        }
+    }
+    
+    
+    func getTeamName(teamID: String, completion: @escaping (_ teamName: String?, _ error: Error?) -> Void) {
+        db.collection(Team.kCollectionKey).document(teamID).getDocument { snap, error in
+            if let error = error {
+                completion(nil, error)
+            }
+            
+            if let data = snap?.data() {
+                if let team = Team(firebaseData: data, firebaseID: teamID) {
+                    completion(team.name, nil)
+                } else {
+                    completion("<Team/Name>", nil)
+                }
+            }
+        }
+    }
+
+    
+    func getTeamAsync(teamID: String) async throws -> Team {
+        let document = db.collection(Team.kCollectionKey).document(teamID)
+        
+        do {
+            let snapshot = try await document.getDocument()
+            
+            if let data = snapshot.data(), let team = Team(firebaseData: data, firebaseID: teamID) {
+                return team
+            } else {
+                throw NSError(domain: "Domain Error", code: 404, userInfo: [NSLocalizedDescriptionKey: "Team data not found"])
+            }
+        } catch {
+            throw error
+        }
+    }
+
+    
+    func getTeamNameAsync(teamID: String) async throws -> String {
+        let document = db.collection(Team.kCollectionKey).document(teamID)
+        
+        do {
+            let snapshot = try await document.getDocument()
+            
+            if let data = snapshot.data(), let team = Team(firebaseData: data, firebaseID: teamID) {
+                return team.name
+            } else {
+                return "<Team/Name>"
+            }
+        } catch {
+            throw error
+        }
+    }
+    
+
+    func getTeamAppointmentsAsync(for team: Team?) async throws -> [Form] {
+        guard let team = team else {
+            throw NSError(domain: "Domain Error", code: 400, userInfo: [NSLocalizedDescriptionKey: "No team provided"])
+        }
+        
+        let now = Timestamp(date: Date())
+        var upcomingAppointmentForms: [Form] = []
+        
+        for id in team.memberIDs {
+            do {
+                let querySnapshot = try await db.collection(Form.collectionKey)
+                    .whereField(Form.CodingKeys.date.rawValue, isGreaterThan: now)
+                    .whereField(Form.CodingKeys.userID.rawValue, isEqualTo: id)
+                    .whereField(Form.CodingKeys.outcome.rawValue, isEqualTo: Outcome.pending.rawValue)
+//                    .whereField(Form.CodingKeys.outcome.rawValue, isEqualTo: Outcome.rescheduled.rawValue) // Cannot query
+                    .getDocuments()
+                
+                for document in querySnapshot.documents {
+                    let data = document.data()
+                    if let form = Form(firebaseData: data, firebaseID: document.documentID) {
+                        upcomingAppointmentForms.append(form)
+                    }
+                }
+            } catch {
+                throw error
+            }
+        }
+        
+        return upcomingAppointmentForms
+    }
+
+    
     // MARK: - APPROVED EMAILS
     func getApprovedEmails(completion: @escaping (_ approvedEmails: [String]?) -> Void) {
         db.collection(FirebaseController.shared.approvedEmailsCollectionID).document("approvedEmailList").getDocument(completion: { document, err in

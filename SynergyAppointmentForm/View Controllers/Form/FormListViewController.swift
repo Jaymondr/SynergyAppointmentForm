@@ -13,16 +13,24 @@ import UIKit
  2. Add search bar ✅
  3. Add notification to select branch ✅
  4. Remove unused buttons for other branches ✅
- 5. Add account types for branch manager, director, owner
- 6. Add analytics
- 7. Add filters for owner/branch manager
+ 5. Add account types for branch manager, director, owner ✅
+ 6. Add analytics ✅
+ 7. Add filters for owner/branch manager ✅
  8. Add confetti when user makes sale
  9. Add goals
  10. Add follow up reminders
  11. Add partial sale feature-> keep track of partially sold homes to go back
  12. Add note screen when user swipes right ✅
- 13. Add update label when user swipes right
+ 13. Add update label when user swipes right ✅
  14. Fix bug where delete form then create new form then form list shows deleted form until reload
+ 15. Fix bug when managers save changes, their userID gets saved and appointment becomes theirs
+ 16. Add reason to form on Raleigh branch ✅
+ 17. Add teams
+ 18. Add team name 
+ 19. Improve look
+ 20. Add director view
+ 21. Only load first 20 appointments till user scrolls down
+ 22. Fix User Defaults duplicate data. (Check startup functions)
  */
 
 class FormListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
@@ -136,29 +144,40 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             UserAccountController.shared.updateAccountType(to: .coordinator)
         }
         
-        if let currentUser = UserAccount.currentUser {
-            // Fetches user from Firebase to see if there are changes to the account type
-            FirebaseController.shared.getUser(with: currentUser.firebaseID) { user, error in
-                if let error = error {
-                    print("There was an error getting the user: \(error.localizedDescription)")
-                    return
-                }
-                
-                if let user = user, let accountType = user.accountType {
-                    if currentUser.accountType != accountType {
-                        // Update the account type locally to match cloud data
-                        UserAccountController.shared.updateAccountType(to: accountType)
-                        // Update UserDefaults
-                        UserDefaults.standard.set(accountType.rawValue, forKey: "accountType")
-                    } else {
-                        print("Account type is already up to date.")
-                    }
-                } else {
-                    print("User data is nil or account type is nil.")
+        // Fetch User Account from Firebase and check for changes to the ACCOUNT TYPE or TEAM
+        guard let currentUser = UserAccount.currentUser else { print("Current User Nil"); return }
+        
+        FirebaseController.shared.getUser(with: currentUser.firebaseID) { user, error in
+            if let error = error {
+                print("There was an error getting the user: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let user = user, let accountType = user.accountType, let teamID = user.teamID else { print("User, accountType, or teamID is nil"); return }
+            
+            // Check for Account Type changes
+            if currentUser.accountType != accountType {
+                // Update the account type locally to match cloud data
+                UserAccountController.shared.updateAccountType(to: accountType)
+                // Update UserDefaults
+                UserDefaults.standard.set(accountType.rawValue, forKey: "accountType")
+            } else {
+                print("Account type is already up to date.")
+            }
+            
+            // Check for TeamID changes
+            if currentUser.teamID != teamID {
+                // Update UserDefaults to match firebase
+                UserAccountController.shared.updateTeamID(to: teamID)
+                UserDefaults.standard.set(teamID, forKey: Team.kTeamID)
+                                
+                // Fetch team name and update User Defaults
+                FirebaseController.shared.getTeamName(teamID: teamID) { teamName, error in
+                    UserAccountController.shared.teamName = teamName 
+                    let userDefaultsTeamName = UserDefaults.standard.string(forKey: Team.kTeamName)
+                    UIAlertController.presentDismissingAlert(title: "\(userDefaultsTeamName ?? "Team/Name")", dismissAfter: 2.0)
                 }
             }
-        } else {
-            print("Current user is nil.")
         }
         
         // SEARCHBAR
