@@ -67,17 +67,19 @@ class UserAccount {
     var firstName: String
     var lastName: String
     var email: String
+    var isActive: Bool?
     var branch: Branch?
     var teamID: String?
     var accountType: AccountType?
 
     
     // MARK: INITIALIZERS
-    init(firebaseID: String, firstName: String, lastName: String, email: String, branch: Branch? = nil, teamID: String? = nil, accountType: AccountType? = nil) {
+    init(firebaseID: String, firstName: String, lastName: String, email: String, isActive: Bool = true, branch: Branch? = nil, teamID: String? = nil, accountType: AccountType? = nil) {
         self.firebaseID = firebaseID
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
+        self.isActive = isActive
         self.branch = branch
         self.teamID = teamID
         self.accountType = accountType
@@ -101,6 +103,10 @@ class UserAccount {
         
         if let accountTypeString = userDefaultsDict[UserAccount.CodingKeys.accountType.rawValue] as? String {
             self.accountType = AccountType(rawValue: accountTypeString)
+        }
+        
+        if let isActive = userDefaultsDict[UserAccount.CodingKeys.isActive.rawValue] as? Bool {
+            self.isActive = isActive
         }
         
         self.firebaseID = firebaseID
@@ -127,6 +133,10 @@ class UserAccount {
         
         if let accountTypeString = firebaseData[UserAccount.CodingKeys.accountType.rawValue] as? String {
             self.accountType = AccountType(rawValue: accountTypeString)
+        }
+        
+        if let isActive = firebaseData[UserAccount.CodingKeys.isActive.rawValue] as? Bool {
+            self.isActive = isActive
         }
         
         self.firebaseID = firebaseID
@@ -157,6 +167,10 @@ class UserAccount {
             userDefaultsDictionary[UserAccount.CodingKeys.accountType.rawValue] = accountType.rawValue
         }
         
+        if let isActive = isActive {
+            userDefaultsDictionary[UserAccount.CodingKeys.isActive.rawValue] = isActive
+        }
+        
         return userDefaultsDictionary
     }
     
@@ -171,6 +185,7 @@ class UserAccount {
     // MARK: ENUMS
     enum CodingKeys: String, CodingKey {
         case accountType = "accountType"
+        case isActive = "isActive"
         case branch = "branch"
         case email = "email"
         case firebaseID = "firebaseID"
