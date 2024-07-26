@@ -72,7 +72,7 @@ class NotesViewController: UIViewController {
     
     func setFormData(with form: Form) {
         dayLabel.text = form.date.formattedDay()
-        dateLabel.text = form.date.formattedDayMonth()
+        dateLabel.text = form.date.formattedDayMonthShort()
         timeLabel.text = "\(form.date.formattedTime())\(form.date.formattedAmpm())"
         cityStateLabel.text = "\(form.city.uppercased())(\(form.state))"
         if form.spouse.isEmpty {

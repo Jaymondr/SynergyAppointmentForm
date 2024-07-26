@@ -66,7 +66,7 @@ class FormController {
         
         Appointment Day: \(form.date.formattedDay())
         Time: \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())
-        Date: \(form.date.formattedDayMonth())
+        Date: \(form.date.formattedDayMonthShort())
         Name: \(form.firstName + " " + form.lastName)
         Spouse: \(form.spouse)
         Address: \(form.address)
@@ -133,7 +133,7 @@ class FormController {
     
     Appointment Day: \(form.date.formattedDay())
     Time: \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())
-    Date: \(form.date.formattedDayMonth())
+    Date: \(form.date.formattedDayMonthShort())
     Name: \(form.firstName + " " + form.lastName)
     Spouse: \(form.spouse)
     Address: \(form.address)
@@ -163,11 +163,11 @@ class FormController {
         guard let user = UserAccount.currentUser else { return }
         let trelloString = form.spouse.isNotEmpty ?
         """
-        \(form.date.formattedDay()) \(form.date.formattedDayMonth()) @\(form.date.formattedTime()) \(form.firstName) & \(form.spouse) \(form.lastName) (\(form.city)) -\(user.firstName)
+        \(form.date.formattedDay()) \(form.date.formattedDayMonthShort()) @\(form.date.formattedTime()) \(form.firstName) & \(form.spouse) \(form.lastName) (\(form.city)) -\(user.firstName)
         """
         :
         """
-        \(form.date.formattedDay()) \(form.date.formattedDayMonth()) @\(form.date.formattedTime()) \(form.firstName) \(form.lastName) (\(form.city)) -\(user.firstName)
+        \(form.date.formattedDay()) \(form.date.formattedDayMonthShort()) @\(form.date.formattedTime()) \(form.firstName) \(form.lastName) (\(form.city)) -\(user.firstName)
         """
         UIPasteboard.general.string = trelloString
 
@@ -193,7 +193,7 @@ class FormController {
         """
         Hey \(form.firstName), it's \(user.firstName) with \(user.companyName) Windows.
         
-        Your appointment is good to go for \(form.date.formattedDay()) \(form.date.formattedDayMonth()) at \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased()). Thanks for your time, and if you need anything just call or text!
+        Your appointment is good to go for \(form.date.formattedDay()) \(form.date.formattedDayMonthShort()) at \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased()). Thanks for your time, and if you need anything just call or text!
         
         - \(user.firstName)
         """
