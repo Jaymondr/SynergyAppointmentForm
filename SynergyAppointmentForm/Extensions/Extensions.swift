@@ -50,6 +50,15 @@ extension UIView: VisibleToggleable {
             isHidden = !newValue
         }
     }
+    
+    func roundTopCorners(radius: CGFloat) {
+        let path = UIBezierPath(roundedRect: self.bounds,
+                                byRoundingCorners: [.topLeft, .topRight],
+                                cornerRadii: CGSize(width: radius, height: radius))
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        self.layer.mask = mask
+    }
 }
 
 // MARK: - UIVIEWCONTROLLER
