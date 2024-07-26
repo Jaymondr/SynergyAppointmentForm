@@ -8,6 +8,7 @@
 import Foundation
 
 enum Outcome: String, CaseIterable {
+    case lead = "lead"
     case pending = "pending"
     case sold = "sold"
     case ran = "ran"
@@ -17,6 +18,9 @@ enum Outcome: String, CaseIterable {
     
     static func fromString(_ stringValue: String) -> Outcome {
         switch stringValue {
+        case "lead":
+            return .lead
+            
         case "pending":
             return .pending
             

@@ -393,6 +393,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                     
                     let color: UIColor
                     switch outcome {
+                    case .lead: color = UIColor.outcomeYellow.withAlphaComponent(1.0)
                     case .pending: color = UIColor.eden
                     case .sold: color = UIColor.outcomeGreen
                     case .rescheduled: color = UIColor.outcomePurple

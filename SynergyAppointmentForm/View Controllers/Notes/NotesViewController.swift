@@ -112,6 +112,9 @@ class NotesViewController: UIViewController {
     private func setOutcomeView(form: Form) {
         let alpha: Double = 0.4
         switch form.outcome {
+        case .lead:
+            backgroundView.layer.borderColor = UIColor.outcomeYellow.cgColor
+            backgroundView.backgroundColor = UIColor.outcomeYellow.withAlphaComponent(alpha)
         case .pending:
             backgroundView.layer.borderColor = UIColor.eden.cgColor
             backgroundView.backgroundColor = UIColor.eden.withAlphaComponent(alpha)
