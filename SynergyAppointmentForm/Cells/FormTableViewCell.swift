@@ -16,7 +16,7 @@ class FormTableViewCell: UITableViewCell {
     @IBOutlet weak var cityStateLabel: UILabel!
     @IBOutlet weak var cellView: UIView!
     @IBOutlet weak var dropShadowView: UIView!
-    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var outcomeView: UIView!
     
     
     // MARK: - LIFECYCLE
@@ -69,10 +69,10 @@ class FormTableViewCell: UITableViewCell {
     
     func loadView() {
         dropShadowView.layer.cornerRadius = 8
-        cellView.layer.cornerRadius = 8
-        cellView.layer.borderWidth = 2.0
+        cellView.layer.cornerRadius = 16
+        cellView.layer.borderWidth = 0.0
         cellView.backgroundColor = .clear
-        headerView.roundTopCorners(radius: 8)
+        outcomeView.roundCorners(radius: 8, corners: [.topLeft, .bottomLeft])
         if traitCollection.userInterfaceStyle == .dark {
             firstNameLabel.textColor = .lightText
             timeLabel.textColor = .lightText
@@ -87,33 +87,33 @@ class FormTableViewCell: UITableViewCell {
     }
     
     private func setOutcomeView(form: Form) {
-        let alpha: Double = 0.4
+        let alpha: Double = 1
         switch form.outcome {
         case .lead:
             cellView.layer.borderColor = UIColor.outcomeYellow.cgColor
-            headerView.backgroundColor = UIColor.outcomeYellow.withAlphaComponent(alpha)
+            outcomeView.backgroundColor = UIColor.outcomeYellow.withAlphaComponent(alpha)
         case .pending:
             cellView.layer.borderColor = UIColor.eden.cgColor
-            headerView.backgroundColor = UIColor.eden.withAlphaComponent(alpha)
+            outcomeView.backgroundColor = UIColor.eden.withAlphaComponent(alpha)
 //            dropShadowView.layer.applySketchShadow(color: .eden, alpha: 0.6, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
         case .cancelled:
             cellView.layer.borderColor = UIColor.outcomeRed.cgColor
-            headerView.backgroundColor = UIColor.outcomeRed.withAlphaComponent(alpha)
+            outcomeView.backgroundColor = UIColor.outcomeRed.withAlphaComponent(alpha)
 //            dropShadowView.layer.applySketchShadow(color: .outcomeRed, alpha: 0.6, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
         case .rescheduled:
             cellView.layer.borderColor = UIColor.outcomePurple.cgColor
-            headerView.backgroundColor = UIColor.outcomePurple.withAlphaComponent(alpha)
+            outcomeView.backgroundColor = UIColor.outcomePurple.withAlphaComponent(alpha)
 //            dropShadowView.layer.applySketchShadow(color: .outcomePurple, alpha: 0.6, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
         case .ran:
             cellView.layer.borderColor = UIColor.outcomeBlue.cgColor
-            headerView.backgroundColor = UIColor.outcomeBlue.withAlphaComponent(alpha)
+            outcomeView.backgroundColor = UIColor.outcomeBlue.withAlphaComponent(alpha)
 //            dropShadowView.layer.applySketchShadow(color: .outcomeBlue, alpha: 0.6, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
         case .ranIncomplete:
             cellView.layer.borderColor = UIColor.outcomeBlue.cgColor
-            headerView.backgroundColor = UIColor.outcomeRed.withAlphaComponent(alpha)
+            outcomeView.backgroundColor = UIColor.outcomeRed.withAlphaComponent(alpha)
         case .sold:
             cellView.layer.borderColor = UIColor.outcomeGreen.cgColor
-            headerView.backgroundColor = UIColor.outcomeGreen.withAlphaComponent(alpha)
+            outcomeView.backgroundColor = UIColor.outcomeGreen.withAlphaComponent(alpha)
             dropShadowView.layer.applySketchShadow(color: .outcomeGreen, alpha: 0.6, x: 0.0, y: 1.0, blur: 5.0, spread: 0.0)
         }
     }
