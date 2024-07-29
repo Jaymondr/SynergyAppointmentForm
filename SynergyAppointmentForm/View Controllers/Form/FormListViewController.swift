@@ -285,7 +285,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     func setTitleAttributes() {
         if let navigationController = self.navigationController {
             self.navigationItem.title = "FORMS"
-            navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.eden]
+            navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.steel]
             navigationController.navigationBar.titleTextAttributes?[NSAttributedString.Key.font] = UIFont.systemFont(ofSize: 24.0, weight: .medium)
         }
     }
@@ -353,7 +353,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
 
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
+        return 92
     }
     
     @objc private func refreshData(_ sender: Any) {

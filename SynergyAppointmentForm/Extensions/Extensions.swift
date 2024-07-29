@@ -226,6 +226,12 @@ extension Date {
         return formatter.string(from: self)
     }
     
+    func formattedDayAbbr() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EE"
+        return formatter.string(from: self)
+    }
+    
     func formattedDayMonthShort() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "M/d"
@@ -235,6 +241,34 @@ extension Date {
     func formattedDayMonth() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM d"
+        let dayString = formatter.string(from: self)
+        
+        let calendar = Calendar.current
+        let day = calendar.component(.day, from: self)
+        
+        let daySuffix: String
+        switch day {
+        case 11, 12, 13:
+            daySuffix = "th"
+        default:
+            switch day % 10 {
+            case 1:
+                daySuffix = "st"
+            case 2:
+                daySuffix = "nd"
+            case 3:
+                daySuffix = "rd"
+            default:
+                daySuffix = "th"
+            }
+        }
+        
+        return "\(dayString)\(daySuffix)"
+    }
+    
+    func formattedDayMonthAbbr() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d"
         let dayString = formatter.string(from: self)
         
         let calendar = Calendar.current
