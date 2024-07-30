@@ -287,9 +287,8 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     func setTitleAttributes() {
         if let navigationController = self.navigationController {
             self.navigationItem.title = "FORMS"
-            navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+            navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.steel]
             navigationController.navigationBar.titleTextAttributes?[NSAttributedString.Key.font] = UIFont.systemFont(ofSize: 24.0, weight: .medium)
-            navigationController.navigationBar.barTintColor = .steel
         }
     }
     
