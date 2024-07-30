@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MessageUI
 
 // MARK: - TODO
 /*
@@ -34,6 +35,7 @@ import UIKit
  */
 
 class FormListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+    
     
     @IBOutlet weak var addFormBarButton: UIBarButtonItem!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -347,6 +349,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         if let form = self.getFormForIndexPath(indexPath) {
             cell.setCellData(with: form)
             cell.form = form
+            cell.delegate = self
         }
 
         return cell
@@ -620,3 +623,119 @@ extension FormListViewController {
         present(alert, animated: true, completion: nil)
     }
 }
+
+
+    // MARK: - DELEGATE FUNCTIONS
+extension FormListViewController: FormTableViewCellDelegate, MFMessageComposeViewControllerDelegate {
+    func getDirectionsButtonPressed(form: Form) {
+        if form.address.isEmpty {
+            UIAlertController.presentDismissingAlert(title: "No Address Found", dismissAfter: 1.0)
+        } else {
+            showMapOptions(form.address)
+        }
+    }
+    
+    func sendMessageButtonPressed(form: Form) {
+        print("Send message delegate")
+        askToSendTextMessage(form.phone)
+    }
+    
+    func callButtonPressed(form: Form) {
+        print("Call button delegate")
+        callPhoneNumber(form.phone)
+    }
+    
+    private func showMapOptions(_ address: String) {
+        let alertController = UIAlertController(title: "Open in Maps", message: "Choose an app", preferredStyle: .actionSheet)
+        
+        let googleMapsAction = UIAlertAction(title: "Google Maps", style: .default) { _ in
+            self.openGoogleMaps(for: address)
+        }
+        let appleMapsAction = UIAlertAction(title: "Apple Maps", style: .default) { _ in
+            self.openAppleMaps(for: address)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alertController.addActions([appleMapsAction, googleMapsAction, cancelAction])
+        
+        self.present(alertController, animated: true)
+        
+    }
+    
+    private func openGoogleMaps(for address: String) {
+        let urlString = "comgooglemaps://?q=\(address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
+        if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            let browserURLString = "https://www.google.com/maps/search/?api=1&query=\(address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
+            if let browserURL = URL(string: browserURLString) {
+                UIApplication.shared.open(browserURL, options: [:], completionHandler: nil)
+            }
+        }
+    }
+    
+    private func openAppleMaps(for address: String) {
+        let urlString = "http://maps.apple.com/?q=\(address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
+        if let url = URL(string: urlString) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+
+    private func callPhoneNumber(_ phoneNumber: String) {
+        if let phoneCallURL = URL(string: "tel://\(phoneNumber)"), UIApplication.shared.canOpenURL(phoneCallURL) {
+            UIApplication.shared.open(phoneCallURL, options: [:], completionHandler: nil)
+        } else {
+            let alert = UIAlertController(title: "Error", message: "Your device cannot make phone calls", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    private func askToSendTextMessage(_ phoneNumber: String) {
+            let alertController = UIAlertController(title: "Send Text Message", message: "Would you like to send a text message to this number: \(phoneNumber)?", preferredStyle: .alert)
+
+            let textAction = UIAlertAction(title: "Text", style: .default) { _ in
+                self.sendTextMessage(phoneNumber)
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
+            alertController.addAction(textAction)
+            alertController.addAction(cancelAction)
+
+            present(alertController, animated: true, completion: nil)
+        }
+
+        private func sendTextMessage(_ phoneNumber: String) {
+            if MFMessageComposeViewController.canSendText() {
+                let messageVC = MFMessageComposeViewController()
+                messageVC.body = ""
+                messageVC.recipients = [phoneNumber]
+                messageVC.messageComposeDelegate = self
+
+                present(messageVC, animated: true, completion: nil)
+            } else {
+                let alert = UIAlertController(title: "Error", message: "Your device cannot send text messages", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                present(alert, animated: true, completion: nil)
+            }
+        }
+
+        // MARK: - MFMessageComposeViewControllerDelegate
+
+        func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+            switch result {
+            case .cancelled:
+                print("Message cancelled")
+            case .sent:
+                print("Message sent")
+            case .failed:
+                print("Message failed")
+            @unknown default:
+                print("Unknown result")
+            }
+            controller.dismiss(animated: true, completion: nil)
+        }
+}
+
+
+

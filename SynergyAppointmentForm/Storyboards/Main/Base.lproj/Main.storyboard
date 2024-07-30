@@ -190,6 +190,9 @@
                                                                     <buttonConfiguration key="configuration" style="plain" image="location.fill" catalog="system">
                                                                         <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage"/>
                                                                     </buttonConfiguration>
+                                                                    <connections>
+                                                                        <action selector="getDirectionsButtonPressed:" destination="4nh-tc-2PR" eventType="touchUpInside" id="raw-7E-RzE"/>
+                                                                    </connections>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uM1-iQ-0N4">
                                                                     <rect key="frame" x="30" y="0.0" width="28" height="28"/>
@@ -200,6 +203,9 @@
                                                                     <buttonConfiguration key="configuration" style="plain" image="message.fill" catalog="system">
                                                                         <color key="baseForegroundColor" name="outcomeGreen"/>
                                                                     </buttonConfiguration>
+                                                                    <connections>
+                                                                        <action selector="sendMessageButtonPressed:" destination="4nh-tc-2PR" eventType="touchUpInside" id="qZg-j3-TiK"/>
+                                                                    </connections>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xXI-9t-Boe">
                                                                     <rect key="frame" x="60" y="0.0" width="28" height="28"/>
@@ -210,6 +216,9 @@
                                                                     <buttonConfiguration key="configuration" style="plain" image="phone.fill" catalog="system">
                                                                         <color key="baseForegroundColor" name="outcomeGreen"/>
                                                                     </buttonConfiguration>
+                                                                    <connections>
+                                                                        <action selector="callButtonPressed:" destination="4nh-tc-2PR" eventType="touchUpInside" id="b3Y-Ci-Z55"/>
+                                                                    </connections>
                                                                 </button>
                                                             </subviews>
                                                             <constraints>
@@ -255,14 +264,17 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="callButton" destination="xXI-9t-Boe" id="Ms8-B1-ti4"/>
                                             <outlet property="cellView" destination="zRl-iJ-MDQ" id="0rI-Le-7aL"/>
                                             <outlet property="cityStateLabel" destination="bkQ-QU-oGZ" id="wt5-rY-dP2"/>
                                             <outlet property="dateLabel" destination="3i5-Ma-mg9" id="omM-EL-f4j"/>
                                             <outlet property="dayLabel" destination="XdU-SK-72q" id="IZh-3X-xkX"/>
                                             <outlet property="dropShadowView" destination="b2W-Mu-8eG" id="t9i-Eb-BPN"/>
                                             <outlet property="firstNameLabel" destination="WvX-J8-lhM" id="V1e-hE-qX7"/>
+                                            <outlet property="getDirectionsButton" destination="qfw-8p-xcj" id="qZN-nn-9bx"/>
                                             <outlet property="outcomeLabel" destination="twK-ti-ECd" id="nJv-kQ-eJ4"/>
                                             <outlet property="outcomeView" destination="B7K-4A-jXC" id="CGU-cF-N1C"/>
+                                            <outlet property="sendMessageButton" destination="uM1-iQ-0N4" id="usj-Ch-JVi"/>
                                             <outlet property="timeLabel" destination="KvD-Sv-yli" id="EMs-i1-wm5"/>
                                             <segue destination="mzI-Pq-KQL" kind="show" identifier="toFormDetail" id="WqX-tD-Frz"/>
                                         </connections>

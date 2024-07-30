@@ -6,8 +6,17 @@
 //
 
 import UIKit
+import CoreLocation
+
+protocol FormTableViewCellDelegate: AnyObject {
+    func getDirectionsButtonPressed(form: Form)
+    func sendMessageButtonPressed(form: Form)
+    func callButtonPressed(form: Form)
+}
 
 class FormTableViewCell: UITableViewCell {
+    
+    weak var delegate: FormTableViewCellDelegate?
         
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
@@ -18,6 +27,9 @@ class FormTableViewCell: UITableViewCell {
     @IBOutlet weak var dropShadowView: UIView!
     @IBOutlet weak var outcomeView: UIView!
     @IBOutlet weak var outcomeLabel: UILabel!
+    @IBOutlet weak var getDirectionsButton: UIButton!
+    @IBOutlet weak var sendMessageButton: UIButton!
+    @IBOutlet weak var callButton: UIButton!
     
     
     // MARK: - LIFECYCLE
@@ -35,6 +47,30 @@ class FormTableViewCell: UITableViewCell {
     // MARK: - PROPERTIES
     var form: Form?
 
+    
+    // MARK: - BUTTONS
+    @IBAction func getDirectionsButtonPressed(_ sender: Any) {
+        print("Directions button pressed")
+        guard let form = form else { return }
+        delegate?.getDirectionsButtonPressed(form: form)
+        
+    }
+    
+    @IBAction func sendMessageButtonPressed(_ sender: Any) {
+        print("Message button pressed")
+        guard let form = form else { return }
+        delegate?.sendMessageButtonPressed(form: form)
+
+    }
+    
+    @IBAction func callButtonPressed(_ sender: Any) {
+        print("Call button pressed")
+        guard let form = form else { return }
+        delegate?.callButtonPressed(form: form)
+
+    }
+    
+    
     
     // MARK: - FUNCTIONS
     private func resetCell() {
