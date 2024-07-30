@@ -17,6 +17,7 @@ class FormTableViewCell: UITableViewCell {
     @IBOutlet weak var cellView: UIView!
     @IBOutlet weak var dropShadowView: UIView!
     @IBOutlet weak var outcomeView: UIView!
+    @IBOutlet weak var outcomeLabel: UILabel!
     
     
     // MARK: - LIFECYCLE
@@ -38,6 +39,7 @@ class FormTableViewCell: UITableViewCell {
     // MARK: - FUNCTIONS
     private func resetCell() {
         dropShadowView.layer.applySketchShadow(color: .clear, alpha: 0.0, x: 0.0, y: 0.0, blur: 0.0, spread: 0.0)
+        outcomeLabel.font = .systemFont(ofSize: 10, weight: .light)
         if traitCollection.userInterfaceStyle == .dark {
             firstNameLabel.textColor = .lightText
             timeLabel.textColor = .lightText
@@ -69,7 +71,7 @@ class FormTableViewCell: UITableViewCell {
     
     func loadView() {
         dropShadowView.layer.cornerRadius = 8
-        cellView.layer.cornerRadius = 16
+//        cellView.layer.cornerRadius = 12
         cellView.layer.borderWidth = 0.0
         cellView.backgroundColor = .clear
         outcomeView.roundCorners(radius: 8, corners: [.topLeft, .bottomLeft])
@@ -78,6 +80,7 @@ class FormTableViewCell: UITableViewCell {
             timeLabel.textColor = .lightText
             dateLabel.textColor = .lightText
             dayLabel.textColor = .lightText
+            cellView.backgroundColor = .steel
         } else {
             firstNameLabel.textColor = .black
             timeLabel.textColor = .black
@@ -92,28 +95,43 @@ class FormTableViewCell: UITableViewCell {
         case .lead:
             cellView.layer.borderColor = UIColor.outcomeYellow.cgColor
             outcomeView.backgroundColor = UIColor.outcomeYellow.withAlphaComponent(alpha)
+            outcomeLabel.text = form.outcome.rawValue.uppercased()
+            outcomeLabel.textColor =  UIColor.outcomeYellow
         case .pending:
             cellView.layer.borderColor = UIColor.eden.cgColor
             outcomeView.backgroundColor = UIColor.eden.withAlphaComponent(alpha)
+            outcomeLabel.text = form.outcome.rawValue.uppercased()
+            outcomeLabel.textColor =  UIColor.eden
 //            dropShadowView.layer.applySketchShadow(color: .eden, alpha: 0.6, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
         case .cancelled:
             cellView.layer.borderColor = UIColor.outcomeRed.cgColor
             outcomeView.backgroundColor = UIColor.outcomeRed.withAlphaComponent(alpha)
+            outcomeLabel.text = form.outcome.rawValue.uppercased()
+            outcomeLabel.textColor =  UIColor.outcomeRed
 //            dropShadowView.layer.applySketchShadow(color: .outcomeRed, alpha: 0.6, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
         case .rescheduled:
             cellView.layer.borderColor = UIColor.outcomePurple.cgColor
             outcomeView.backgroundColor = UIColor.outcomePurple.withAlphaComponent(alpha)
+            outcomeLabel.text = form.outcome.rawValue.uppercased()
+            outcomeLabel.textColor =  UIColor.outcomePurple
 //            dropShadowView.layer.applySketchShadow(color: .outcomePurple, alpha: 0.6, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
         case .ran:
             cellView.layer.borderColor = UIColor.outcomeBlue.cgColor
             outcomeView.backgroundColor = UIColor.outcomeBlue.withAlphaComponent(alpha)
+            outcomeLabel.text = form.outcome.rawValue.uppercased()
+            outcomeLabel.textColor =  UIColor.outcomeBlue
 //            dropShadowView.layer.applySketchShadow(color: .outcomeBlue, alpha: 0.6, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
         case .ranIncomplete:
             cellView.layer.borderColor = UIColor.outcomeBlue.cgColor
             outcomeView.backgroundColor = UIColor.outcomeRed.withAlphaComponent(alpha)
+            outcomeLabel.text = form.outcome.rawValue.uppercased()
+            outcomeLabel.textColor =  UIColor.outcomeRed
         case .sold:
             cellView.layer.borderColor = UIColor.outcomeGreen.cgColor
             outcomeView.backgroundColor = UIColor.outcomeGreen.withAlphaComponent(alpha)
+            outcomeLabel.text = form.outcome.rawValue.uppercased()
+            outcomeLabel.textColor =  UIColor.outcomeGreen
+            outcomeLabel.font = .systemFont(ofSize: 11, weight: .semibold)
             dropShadowView.layer.applySketchShadow(color: .outcomeGreen, alpha: 0.6, x: 0.0, y: 1.0, blur: 5.0, spread: 0.0)
         }
     }
