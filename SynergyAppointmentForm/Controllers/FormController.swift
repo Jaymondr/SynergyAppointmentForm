@@ -213,7 +213,7 @@ class FormController {
     }
     
     func createFollowUpText(from form: Form) -> String {
-        guard let user = UserAccount.currentUser else { return "No User"}
+        guard let user = UserAccount.currentUser else { print("No User"); return ""}
         
         let text = """
             Hey \(form.firstName), it's \(user.firstName) with \(user.companyName) Windows.
@@ -222,16 +222,48 @@ class FormController {
             """
         return text
     }
+    
+    func createDirectorConfirmationText(form: Form) -> String {
+        guard let user = UserAccount.currentUser else { print("No User"); return ""}
+        let calendar = Calendar.current
+        var tomorrow = calendar.date(byAdding: .day, value: 1, to: Date())
+        var spouseString: String? {
+            if form.spouse.isNotEmpty {
+                return " and \(form.spouse)?"
+            } else {
+                return nil
+            }
+        }
+        var appointmentDateString: String {
+            if form.date.formattedDay() == Date().formattedDay() {
+                return "today at \(form.date.formattedTime()) \(form.date.formattedAmpm().uppercased())"
+            } else if form.date.formattedDay() == tomorrow?.formattedDay() {
+                return "tomorrow at \(form.date.formattedTime())\(form.date.formattedAmpm().uppercased())"
+            } else {
+                return "at \(form.date.formattedTime())\(form.date.formattedAmpm().uppercased()) on \(form.date.formattedDay()), \(form.date.formattedDayMonth())"
+            }
+        }
+        let text = """
+        Hi \(form.firstName),
+        
+        This is \(user.firstName), the Marketing Director at Energy One Windows of \(user.branch?.rawValue ?? "America"). I'm looking forward to meeting you, and plan to stop by \(appointmentDateString). Does that time still work for you\(spouseString ?? "?")
+        
+        Best regards,
+        \(user.firstName)
+        Marketing Director
+        """
+        return text
+    }
             
     func prepareToSendMessage(form: Form, phoneNumber: String, viewController: UIViewController) {
         // CREATE ALERT
-        let title: String = "Select Message Type"
+        let title: String = "Select Text Message Type"
         let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         
         // ACTIONS
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
-        let homeownerTextAction = UIAlertAction(title: "Homeowner Text", style: .default) { _ in
+        let homeownerTextAction = UIAlertAction(title: "Homeowner Appt. Details", style: .default) { _ in
             let text = FormController.shared.createHomeownerText(from: form)
             self.sendMessage(body: text, recipients: [phoneNumber], alert: alert, viewController: viewController)
         }

@@ -142,7 +142,7 @@
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="qMR-si-PNh"/>
                                                                     </constraints>
                                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
-                                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dec 31st" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3i5-Ma-mg9">
@@ -383,7 +383,7 @@
                                                         <rect key="frame" x="95" y="0.0" width="278" height="40"/>
                                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                     </textField>
                                                 </subviews>
                                                 <constraints>
@@ -406,7 +406,7 @@
                                                         <rect key="frame" x="95" y="0.0" width="278" height="40"/>
                                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                     </textField>
                                                 </subviews>
                                                 <constraints>
@@ -429,7 +429,7 @@
                                                         <rect key="frame" x="95" y="0.0" width="278" height="40"/>
                                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                     </textField>
                                                 </subviews>
                                                 <constraints>
@@ -452,7 +452,7 @@
                                                         <rect key="frame" x="95" y="0.0" width="238" height="40"/>
                                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                     </textField>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3xs-TQ-9Xm">
                                                         <rect key="frame" x="333" y="0.0" width="40" height="40"/>
@@ -511,7 +511,7 @@
                                                         <rect key="frame" x="95" y="0.0" width="278" height="40"/>
                                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                     </textField>
                                                 </subviews>
                                                 <constraints>
@@ -534,7 +534,7 @@
                                                         <rect key="frame" x="95" y="0.0" width="278" height="40"/>
                                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                                                     </textField>
                                                 </subviews>
                                                 <constraints>
@@ -593,7 +593,7 @@
                                                         <rect key="frame" x="95" y="0.0" width="238" height="40"/>
                                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" textContentType="email"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
                                                     </textField>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="InQ-jj-STe">
                                                         <rect key="frame" x="333" y="0.0" width="40" height="40"/>
@@ -1588,7 +1588,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="lLQ-EI-XKs">
-                                <rect key="frame" x="0.0" y="175.33333333333337" width="393" height="1824.6666666666665"/>
+                                <rect key="frame" x="0.0" y="175.33333333333337" width="393" height="1824.666666666667"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="fxY-5o-Wlp">
                                         <rect key="frame" x="10" y="0.0" width="373" height="2010"/>
@@ -1714,7 +1714,7 @@
                                                         <rect key="frame" x="95" y="0.0" width="278" height="40"/>
                                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                     </textField>
                                                 </subviews>
                                                 <constraints>
@@ -1737,7 +1737,7 @@
                                                         <rect key="frame" x="95" y="0.0" width="278" height="40"/>
                                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                     </textField>
                                                 </subviews>
                                                 <constraints>
@@ -1760,7 +1760,7 @@
                                                         <rect key="frame" x="95" y="0.0" width="278" height="40"/>
                                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                     </textField>
                                                 </subviews>
                                                 <constraints>
@@ -1783,7 +1783,7 @@
                                                         <rect key="frame" x="95" y="0.0" width="238" height="40"/>
                                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                     </textField>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ab-Zc-Xie">
                                                         <rect key="frame" x="333" y="0.0" width="40" height="40"/>
@@ -1842,7 +1842,7 @@
                                                         <rect key="frame" x="95" y="0.0" width="278" height="40"/>
                                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                     </textField>
                                                 </subviews>
                                                 <constraints>
@@ -1865,7 +1865,7 @@
                                                         <rect key="frame" x="95" y="0.0" width="278" height="40"/>
                                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                                                     </textField>
                                                 </subviews>
                                                 <constraints>
@@ -1924,7 +1924,7 @@
                                                         <rect key="frame" x="95" y="0.0" width="238" height="40"/>
                                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" textContentType="email"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
                                                     </textField>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HTe-ZR-WnN">
                                                         <rect key="frame" x="333" y="0.0" width="40" height="40"/>
@@ -2035,7 +2035,7 @@
                                                         <color key="textColor" name="eden"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="$20000" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H01-Aq-fMI">
+                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="$20000" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H01-Aq-fMI">
                                                         <rect key="frame" x="170" y="0.0" width="203" height="40"/>
                                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>

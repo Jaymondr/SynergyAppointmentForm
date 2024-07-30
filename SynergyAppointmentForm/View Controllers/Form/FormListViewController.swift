@@ -625,7 +625,7 @@ extension FormListViewController {
 }
 
 
-    // MARK: - DELEGATE FUNCTIONS
+    // MARK: - CELL DELEGATE FUNCTIONS
 extension FormListViewController: FormTableViewCellDelegate, MFMessageComposeViewControllerDelegate {
     func getDirectionsButtonPressed(form: Form) {
         if form.address.isEmpty {
@@ -637,7 +637,7 @@ extension FormListViewController: FormTableViewCellDelegate, MFMessageComposeVie
     
     func sendMessageButtonPressed(form: Form) {
         print("Send message delegate")
-        askToSendTextMessage(form.phone)
+        askToSendTextMessage(form)
     }
     
     func callButtonPressed(form: Form) {
@@ -691,24 +691,36 @@ extension FormListViewController: FormTableViewCellDelegate, MFMessageComposeVie
         }
     }
     
-    private func askToSendTextMessage(_ phoneNumber: String) {
-            let alertController = UIAlertController(title: "Send Text Message", message: "Would you like to send a text message to this number: \(phoneNumber)?", preferredStyle: .alert)
+    private func askToSendTextMessage(_ form: Form) {
+        guard let user = UserAccount.currentUser else { return }
+            let alertController = UIAlertController(title: "Send Text Message", message: nil, preferredStyle: .alert)
 
-            let textAction = UIAlertAction(title: "Text", style: .default) { _ in
-                self.sendTextMessage(phoneNumber)
+            let homeownerText = UIAlertAction(title: "Homeowner: Appt. Details", style: .default) { _ in
+                let text = FormController.shared.createHomeownerText(from: form)
+                self.sendTextMessage(form.phone, message: text)
             }
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            
+        let directorConfirmationAction = UIAlertAction(title: "Director: Confirmation Text", style: .default) { _ in
+            let text = FormController.shared.createDirectorConfirmationText(form: form)
+            self.sendTextMessage(form.phone, message: text)
+            }
 
-            alertController.addAction(textAction)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        if user.accountType != .coordinator {
+            alertController.addAction(directorConfirmationAction)
+        }
+
+            alertController.addAction(homeownerText)
             alertController.addAction(cancelAction)
 
             present(alertController, animated: true, completion: nil)
         }
 
-        private func sendTextMessage(_ phoneNumber: String) {
+    private func sendTextMessage(_ phoneNumber: String, message: String) {
             if MFMessageComposeViewController.canSendText() {
                 let messageVC = MFMessageComposeViewController()
-                messageVC.body = ""
+                messageVC.body = message
                 messageVC.recipients = [phoneNumber]
                 messageVC.messageComposeDelegate = self
 
