@@ -70,8 +70,8 @@ class FormTableViewCell: UITableViewCell {
     }
     
     func loadView() {
-        dropShadowView.layer.cornerRadius = 8
-//        cellView.layer.cornerRadius = 12
+        dropShadowView.layer.cornerRadius = 10
+        cellView.layer.cornerRadius = 10
         cellView.layer.borderWidth = 0.0
         cellView.backgroundColor = .clear
         outcomeView.roundCorners(radius: 8, corners: [.topLeft, .bottomLeft])

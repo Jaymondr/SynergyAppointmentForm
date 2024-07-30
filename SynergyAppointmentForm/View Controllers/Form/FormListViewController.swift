@@ -54,7 +54,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         // SEARCHBAR
         searchBar.delegate = self
         tableView.refreshControl = refreshControl
-        tableView.separatorStyle = .none
+//        tableView.separatorStyle = .none
         searchBar.setImage(UIImage(systemName: "slider.vertical.3"), for: .bookmark, state: .normal)
 
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
@@ -285,8 +285,9 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     func setTitleAttributes() {
         if let navigationController = self.navigationController {
             self.navigationItem.title = "FORMS"
-            navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.steel]
+            navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
             navigationController.navigationBar.titleTextAttributes?[NSAttributedString.Key.font] = UIFont.systemFont(ofSize: 24.0, weight: .medium)
+            navigationController.navigationBar.barTintColor = .steel
         }
     }
     
