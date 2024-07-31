@@ -289,6 +289,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             self.navigationItem.title = "FORMS"
             navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.steel]
             navigationController.navigationBar.titleTextAttributes?[NSAttributedString.Key.font] = UIFont.systemFont(ofSize: 24.0, weight: .medium)
+            navigationController.navigationBar.tintColor = UIColor.steel
         }
     }
     
