@@ -133,30 +133,31 @@ class FormTableViewCell: UITableViewCell {
             outcomeView.backgroundColor = UIColor.outcomeYellow.withAlphaComponent(alpha)
             outcomeLabel.text = form.outcome.rawValue.uppercased()
             outcomeLabel.textColor =  UIColor.outcomeYellow
+            dropShadowView.layer.applySketchShadow(color: .outcomeYellow, alpha: 0.6, x: 1.3, y: 2.0, blur: 5.0, spread: 0.0)
         case .pending:
             cellView.layer.borderColor = UIColor.eden.cgColor
             outcomeView.backgroundColor = UIColor.eden.withAlphaComponent(alpha)
             outcomeLabel.text = form.outcome.rawValue.uppercased()
             outcomeLabel.textColor =  UIColor.eden
-//            dropShadowView.layer.applySketchShadow(color: .eden, alpha: 0.6, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
+            dropShadowView.layer.applySketchShadow(color: .eden, alpha: 0.6, x: 1.3, y: 2.0, blur: 5.0, spread: 0.0)
         case .cancelled:
             cellView.layer.borderColor = UIColor.outcomeRed.cgColor
             outcomeView.backgroundColor = UIColor.outcomeRed.withAlphaComponent(alpha)
             outcomeLabel.text = form.outcome.rawValue.uppercased()
             outcomeLabel.textColor =  UIColor.outcomeRed
-//            dropShadowView.layer.applySketchShadow(color: .outcomeRed, alpha: 0.6, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
+            dropShadowView.layer.applySketchShadow(color: .outcomeRed, alpha: 0.6, x: 1.3, y: 2.0, blur: 5.0, spread: 0.0)
         case .rescheduled:
             cellView.layer.borderColor = UIColor.outcomePurple.cgColor
             outcomeView.backgroundColor = UIColor.outcomePurple.withAlphaComponent(alpha)
             outcomeLabel.text = form.outcome.rawValue.uppercased()
             outcomeLabel.textColor =  UIColor.outcomePurple
-//            dropShadowView.layer.applySketchShadow(color: .outcomePurple, alpha: 0.6, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
+            dropShadowView.layer.applySketchShadow(color: .outcomePurple, alpha: 0.6, x: 1.3, y: 2.0, blur: 5.0, spread: 0.0)
         case .ran:
             cellView.layer.borderColor = UIColor.outcomeBlue.cgColor
             outcomeView.backgroundColor = UIColor.outcomeBlue.withAlphaComponent(alpha)
             outcomeLabel.text = form.outcome.rawValue.uppercased()
             outcomeLabel.textColor =  UIColor.outcomeBlue
-//            dropShadowView.layer.applySketchShadow(color: .outcomeBlue, alpha: 0.6, x: 0.0, y: 0.0, blur: 20.0, spread: 0.0)
+            dropShadowView.layer.applySketchShadow(color: .outcomeBlue, alpha: 0.6, x: 1.3, y: 2.0, blur: 5.0, spread: 0.0)
         case .ranIncomplete:
             cellView.layer.borderColor = UIColor.outcomeBlue.cgColor
             outcomeView.backgroundColor = UIColor.outcomeRed.withAlphaComponent(alpha)
@@ -168,7 +169,7 @@ class FormTableViewCell: UITableViewCell {
             outcomeLabel.text = form.outcome.rawValue.uppercased()
             outcomeLabel.textColor =  UIColor.outcomeGreen
             outcomeLabel.font = .systemFont(ofSize: 11, weight: .semibold)
-            dropShadowView.layer.applySketchShadow(color: .outcomeGreen, alpha: 0.6, x: 0.0, y: 1.0, blur: 5.0, spread: 0.0)
+            dropShadowView.layer.applySketchShadow(color: .outcomeGreen, alpha: 0.7, x: 0.0, y: 1.0, blur: 5.0, spread: 0.0)
         }
     }
 }

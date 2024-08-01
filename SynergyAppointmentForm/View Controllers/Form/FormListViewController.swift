@@ -37,6 +37,7 @@ import MessageUI
 class FormListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     
+    @IBOutlet weak var confettiView: UIView!
     @IBOutlet weak var addFormBarButton: UIBarButtonItem!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
@@ -390,7 +391,11 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                                 return
                             }
                             self?.tableView.reloadData()
-                            UIAlertController.presentDismissingAlert(title: "Label Updated!", dismissAfter: 0.6)
+                            if outcome == .sold {
+                                UIAlertController.presentDismissingAlert(title: "🎊CONGRATS!🎊", dismissAfter: 3.0)
+                                self?.confettiView.isVisible = true
+                                self?.confettiView.startConfetti()
+                            }
                         }
                     }
                     
