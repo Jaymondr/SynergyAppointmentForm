@@ -393,8 +393,11 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                             self?.tableView.reloadData()
                             if outcome == .sold {
                                 UIAlertController.presentDismissingAlert(title: "🎊CONGRATS!🎊", dismissAfter: 3.0)
-                                self?.confettiView.isVisible = true
-                                self?.confettiView.startConfetti()
+                                self?.vibrateForSuccess()
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                    self?.confettiView.isVisible = true
+                                    self?.confettiView.startConfetti()
+                                }
                             }
                         }
                     }

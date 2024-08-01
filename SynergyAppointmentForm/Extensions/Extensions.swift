@@ -106,9 +106,9 @@ extension UIView: VisibleToggleable {
     
     func startConfetti() {
         let emitterLayer = CAEmitterLayer()
-        emitterLayer.emitterPosition = CGPoint(x: self.bounds.width / 2.0, y: -10)
+        emitterLayer.emitterPosition = CGPoint(x: self.bounds.width / 2.0, y: -200)
         emitterLayer.emitterShape = .line
-        emitterLayer.emitterSize = CGSize(width: self.bounds.size.width, height: 1)
+        emitterLayer.emitterSize = CGSize(width: self.bounds.size.width / 2, height: 1)
         emitterLayer.beginTime = CACurrentMediaTime()
         emitterLayer.timeOffset = CFTimeInterval(arc4random_uniform(6) + 5)
         
@@ -120,10 +120,11 @@ extension UIView: VisibleToggleable {
             for shape in shapes {
                 let cell = CAEmitterCell()
                 cell.contents = generateConfettiImage(color: color, shape: shape)
-                cell.birthRate = 5
-                cell.lifetime = 2.0 // Speed
+                cell.birthRate = 8
+                cell.lifetime = 7.0 // How long they are alive
                 cell.velocity = CGFloat(arc4random_uniform(300) + 300) // Speed
-                cell.velocityRange = 50
+                cell.velocityRange = 70
+                cell.yAcceleration = 150 // Gravity effect
                 cell.emissionLongitude = .pi
                 cell.emissionRange = .pi / 4
                 cell.spin = 3.5
@@ -174,7 +175,6 @@ extension UIViewController {
         generator.prepare()
         generator.impactOccurred()
     }
-
     
     func vibrate() {
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
