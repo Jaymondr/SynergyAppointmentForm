@@ -384,6 +384,14 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                 for outcome in Outcome.allCases {
                     let action = UIAlertAction(title: outcome.rawValue.capitalized, style: .default) { _ in
                         form.outcome = outcome
+                        if outcome == .sold {
+                            UIAlertController.presentDismissingAlert(title: "🎊CONGRATS!🎊", dismissAfter: 3.0)
+                            self?.vibrateForSuccess()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                self?.confettiView.isVisible = true
+                                self?.confettiView.startConfetti()
+                            }
+                        }
                         FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { updatedForm, error in
                             if let error = error {
                                 UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
@@ -391,14 +399,6 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                                 return
                             }
                             self?.tableView.reloadData()
-                            if outcome == .sold {
-                                UIAlertController.presentDismissingAlert(title: "🎊CONGRATS!🎊", dismissAfter: 3.0)
-                                self?.vibrateForSuccess()
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                                    self?.confettiView.isVisible = true
-                                    self?.confettiView.startConfetti()
-                                }
-                            }
                         }
                     }
                     
