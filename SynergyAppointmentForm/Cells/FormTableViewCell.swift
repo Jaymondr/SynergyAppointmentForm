@@ -116,7 +116,7 @@ class FormTableViewCell: UITableViewCell {
             timeLabel.textColor = .lightText
             dateLabel.textColor = .lightText
             dayLabel.textColor = .lightText
-            cellView.backgroundColor = .steel
+            cellView.backgroundColor = .black
         } else {
             firstNameLabel.textColor = .black
             timeLabel.textColor = .black

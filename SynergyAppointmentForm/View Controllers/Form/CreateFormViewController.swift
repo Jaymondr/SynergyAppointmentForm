@@ -65,7 +65,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         phoneTextfield.layer.borderColor = UIColor.clear.cgColor
         setupView()
         setTextFieldsDelegate()
-        navigationController?.navigationBar.tintColor = UIColor.eden
+        navigationController?.navigationBar.tintColor = UIColor.steel
         NotificationCenter.default.addObserver(self, selector: #selector(traitCollectionDidChange(_:)), name: NSNotification.Name("traitCollectionDidChangeNotification"), object: nil)
         
         // Uncomment line when you want to show save before leaving message
@@ -134,7 +134,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             self.zipTextfield.text = address?.zip
             self.cityTextfield.text = address?.city
             self.stateTextfield.text = address?.state
-            self.phoneTextfield.becomeFirstResponder()
+            self.numberOfWindowsTexfield.becomeFirstResponder()
         }
     }
     
@@ -286,8 +286,10 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
                 // Fetch team asynchronously
                 let team = try await FirebaseController.shared.getTeamAsync(teamID: teamID)
                 fetchedTeam = team
+                let teamName = fetchedTeam?.name
                 // SCHEDULE TITLE
-                ScheduleTitleLabel.text = fetchedTeam?.name ?? "Schedule"
+                ScheduleTitleLabel.text = (teamName != nil) ? (teamName! + " Schedule") : "Schedule"
+
                 // Start the activity indicator
                 scheduleActivityIndicator.startAnimating()
                 
@@ -486,13 +488,15 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             textView.layer.borderWidth = 1.5
             textView.layer.borderColor = UIColor.outcomeBlue.cgColor
             textView.layer.cornerRadius = 8
-            textView.backgroundColor = UIColor.steelAccent
+//            textView.backgroundColor = UIColor.steelAccent
         }
         
         let additionalCommentsTextViews: [UITextView] = [quoteTextView, reasonTextview, commentsTextview]
         
         for textView in additionalCommentsTextViews {
-            textView.layer.borderColor = UIColor.steelAccent.cgColor
+            textView.layer.borderWidth = 1
+            textView.layer.cornerRadius = 8.0
+            textView.layer.borderColor = UIColor.steel.cgColor
         }
         
         // TEXTFIELDS
@@ -507,15 +511,15 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             // BACKGROUND
             let gradientLayer = CAGradientLayer()
             gradientLayer.frame = view.bounds
-            gradientLayer.colors = [UIColor.black.cgColor, UIColor.black.cgColor, UIColor.eden.cgColor] // Gradient colors
-            gradientLayer.locations = [-0.05, 0.4, 2.0] // Gradient locations (start and end)
+            gradientLayer.colors = [UIColor.black.cgColor, UIColor.black.cgColor, UIColor.outcomeBlue.cgColor] // Gradient colors
+            gradientLayer.locations = [-0.05, 0.3, 3.0] // Gradient locations (start and end)
             view.layer.insertSublayer(gradientLayer, at: 0)
             
         } else {
             // BACKGROUND
             let gradientLayer = CAGradientLayer()
             gradientLayer.frame = view.bounds
-            gradientLayer.colors = [UIColor.white.cgColor, UIColor.white.cgColor, UIColor.eden.cgColor] // Gradient colors
+            gradientLayer.colors = [UIColor.white.cgColor, UIColor.white.cgColor, UIColor.outcomeBlue.cgColor] // Gradient colors
             gradientLayer.locations = [-0.05, 0.4, 3.0] // Gradient locations (start and end)
             view.layer.insertSublayer(gradientLayer, at: 0)
         }
@@ -547,28 +551,32 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         } else if textField == lastNameTextfield {
             spouseTextfield.becomeFirstResponder()
         } else if textField == spouseTextfield {
-            addressTextfield.becomeFirstResponder()
-        } else if textField == addressTextfield {
-            zipTextfield.becomeFirstResponder()
-        } else if textField == zipTextfield {
-            cityTextfield.becomeFirstResponder()
-        } else if textField == cityTextfield {
-            stateTextfield.becomeFirstResponder()
-        } else if textField == stateTextfield {
             phoneTextfield.becomeFirstResponder()
         } else if textField == phoneTextfield {
             emailTextfield.becomeFirstResponder()
         } else if textField == emailTextfield {
+            addressTextfield.becomeFirstResponder()
+        } else if textField == addressTextfield {
+            cityTextfield.becomeFirstResponder()
+        } else if textField == cityTextfield {
+            stateTextfield.becomeFirstResponder()
+        } else if textField == stateTextfield {
+            zipTextfield.becomeFirstResponder()
+        } else if textField == zipTextfield {
             numberOfWindowsTexfield.becomeFirstResponder()
         } else if textField == numberOfWindowsTexfield {
             energyBillTextfield.becomeFirstResponder()
         } else if textField == energyBillTextfield {
-            quoteTextView.becomeFirstResponder()
-        } else if textField == quoteTextView {
-            financeTextfield.becomeFirstResponder()
-        } else if textField == financeTextfield {
+            yearBuiltTextfield.becomeFirstResponder()
+        } else if textField == yearBuiltTextfield {
             yearsOwnedTextfield.becomeFirstResponder()
         } else if textField == yearsOwnedTextfield {
+            homeValueTextfield.becomeFirstResponder()
+        } else if textField == homeValueTextfield {
+            financeTextfield.becomeFirstResponder()
+        } else if textField == financeTextfield {
+            quoteTextView.becomeFirstResponder()
+        } else if textField == quoteTextView {
             reasonTextview.becomeFirstResponder()
         } else if textField == reasonTextview {
             rateTextfield.becomeFirstResponder()
