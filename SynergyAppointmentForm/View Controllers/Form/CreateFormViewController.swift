@@ -38,11 +38,11 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     @IBOutlet weak var emailTextfield: UITextField!
     @IBOutlet weak var numberOfWindowsTexfield: UITextField!
     @IBOutlet weak var energyBillTextfield: UITextField!
-    @IBOutlet weak var quoteTextfield: UITextField!
     @IBOutlet weak var financeTextfield: UITextField!
     @IBOutlet weak var yearsOwnedTextfield: UITextField!
     @IBOutlet weak var homeValueTextfield: UITextField!
     @IBOutlet weak var yearBuiltTextfield: UITextField!
+    @IBOutlet weak var quoteTextView: UITextView!
     @IBOutlet weak var reasonTextview: UITextView!
     @IBOutlet weak var rateTextfield: UITextField!
     @IBOutlet weak var commentsTextview: UITextView!
@@ -145,6 +145,21 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     
     @IBAction func copyEmailButtonPressed(_ sender: Any) {
         FormController.shared.copy(email: emailTextfield.text)
+    }
+    
+    @IBAction func clearQuoteButtonPressed(_ sender: Any) {
+        self.vibrateForButtonPress(.heavy)
+        let alert = UIAlertController(title: nil, message: "Are you sure you want to clear this section?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Clear", style: .default) {_ in
+            self.quoteTextView.text = ""
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true)
+        
     }
     
     @IBAction func clearReasonButtonPressed(_ sender: Any) {
@@ -459,19 +474,33 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         }
         
         // CORNER RADIUS
+        quoteTextView.layer.cornerRadius = 5.0
         reasonTextview.layer.cornerRadius = 5.0
         commentsTextview.layer.cornerRadius = 5.0
         
-        // SCHEDULE
-        let scheduleTextFields: [UITextView] = [dayOneTextField, dayTwoTextField, dayThreeTextField]
+        // SCHEDULE TEXTVIEWS
+        let scheduleTextViews: [UITextView] = [dayOneTextField, dayTwoTextField, dayThreeTextField]
 
         // SCHEDULE TEXTFIELD
-        for textfield in scheduleTextFields {
-            textfield.layer.borderWidth = 1.5
-            textfield.layer.borderColor = UIColor.eden.cgColor
-            textfield.layer.cornerRadius = 8
+        for textView in scheduleTextViews {
+            textView.layer.borderWidth = 1.5
+            textView.layer.borderColor = UIColor.outcomeBlue.cgColor
+            textView.layer.cornerRadius = 8
+            textView.backgroundColor = UIColor.steelAccent
         }
         
+        let additionalCommentsTextViews: [UITextView] = [quoteTextView, reasonTextview, commentsTextview]
+        
+        for textView in additionalCommentsTextViews {
+            textView.layer.borderColor = UIColor.steelAccent.cgColor
+        }
+        
+        // TEXTFIELDS
+        let textFields: [UITextField] = [firstNameTextfield, lastNameTextfield, spouseTextfield, addressTextfield, cityTextfield, stateTextfield, zipTextfield, phoneTextfield, emailTextfield, numberOfWindowsTexfield, energyBillTextfield,financeTextfield, yearBuiltTextfield, yearsOwnedTextfield, homeValueTextfield, rateTextfield]
+        
+        for textField in textFields {
+            textField.addBottomBorder(with: .steel, andHeight: 1)
+        }
                 
         // LIGHT/DARK MODE
         if traitCollection.userInterfaceStyle == .dark {
@@ -504,7 +533,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         emailTextfield.delegate = self
         numberOfWindowsTexfield.delegate = self
         energyBillTextfield.delegate = self
-        quoteTextfield.delegate = self
+        quoteTextView.delegate = self
         financeTextfield.delegate = self
         reasonTextview.delegate = self
         rateTextfield.delegate = self
@@ -534,8 +563,8 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         } else if textField == numberOfWindowsTexfield {
             energyBillTextfield.becomeFirstResponder()
         } else if textField == energyBillTextfield {
-            quoteTextfield.becomeFirstResponder()
-        } else if textField == quoteTextfield {
+            quoteTextView.becomeFirstResponder()
+        } else if textField == quoteTextView {
             financeTextfield.becomeFirstResponder()
         } else if textField == financeTextfield {
             yearsOwnedTextfield.becomeFirstResponder()
@@ -585,7 +614,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
                         phone: phoneTextfield.text ?? "",
                         rate: rateTextfield.text ?? "",
                         reason: reasonTextview.text ?? "",
-                        retailQuote: quoteTextfield.text ?? "",
+                        retailQuote: quoteTextView.text ?? "",
                         spouse: spouseTextfield.text ?? "",
                         state: stateTextfield.text ?? "",
                         userID: user.firebaseID,

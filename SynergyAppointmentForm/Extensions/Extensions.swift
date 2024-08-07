@@ -155,6 +155,18 @@ extension UIView: VisibleToggleable {
 }
 
 
+// MARK: - TEXTFIELD
+extension UITextField {
+    func addBottomBorder(with color: UIColor, andHeight height: CGFloat) {
+        let bottomLine = CALayer()
+        bottomLine.frame = CGRect(x: 0, y: self.frame.height - height, width: self.frame.width, height: height)
+        bottomLine.backgroundColor = color.cgColor
+        self.borderStyle = .none
+        self.layer.addSublayer(bottomLine)
+    }
+}
+
+
 // MARK: - UIVIEWCONTROLLER
 extension UIViewController {
     func vibrateForSuccess() {
