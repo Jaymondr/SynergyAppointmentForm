@@ -44,7 +44,6 @@ class FormDetailViewController: UIViewController {
     @IBOutlet weak var reasonTextView: UITextView!
     @IBOutlet weak var rateTextField: UITextField!
     @IBOutlet weak var commentsTextView: UITextView!
-    @IBOutlet weak var blurView: UIView!
     @IBOutlet weak var labelButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
     
@@ -67,15 +66,6 @@ class FormDetailViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = UIColor.eden
         setUpView(with: form)
-        if traitCollection.userInterfaceStyle == .dark {
-            blurView.backgroundColor = .black
-            dateTimePicker.tintColor = .lightText
-        } else {
-            let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
-            blurEffectView.frame = blurView.bounds
-
-            blurView.addSubview(blurEffectView)
-        }
     }
     
     // MARK: PROPERTIES
