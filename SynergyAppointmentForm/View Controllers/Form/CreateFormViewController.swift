@@ -118,16 +118,18 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
 
     // IBAction function
     @IBAction func showScheduleNotesButtonPressed(_ sender: Any) {
-        scheduleView.isHidden = false
-        Task {
-            await fetchTeamAppoinntments(forDays: 4)
+        if scheduleView.isHidden {
+            // Show the view and run the task
+            scheduleView.isHidden = false
+            Task {
+                await fetchTeamAppointments(forDays: 3)
+            }
+        } else {
+            // Hide the view and don't run the task
+            scheduleView.isHidden = true
         }
     }
-    
-    @IBAction func closeScheduleButtonPressed(_ sender: Any) {
-        scheduleView.isHidden = true
-    }
-    
+        
     @IBAction func locationButtonPressed(_ sender: Any) {
         self.vibrateForButtonPress(.heavy)
         FormController.shared.getLocationData(manager: &locationManager) { address in
@@ -280,7 +282,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     }
     
     
-    func fetchTeamAppoinntments(forDays numberOfDays: Int) async {
+    func fetchTeamAppointments(forDays numberOfDays: Int) async {
         if upcomingAppointmentsByDay.isEmpty {
             guard let teamID = UserAccount.currentUser?.teamID else { return }
             
@@ -368,7 +370,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             let formattedTargetDate = dateFormatter.string(from: targetDate ?? Date())
             
             let attributedText = NSMutableAttributedString(string: "\(formattedTargetDate)\n", attributes: [
-                .foregroundColor: UIColor.eden,
+                .foregroundColor: UIColor.steel,
                 .font: UIFont.systemFont(ofSize: 18, weight: .medium)
             ]) // Date color
 
