@@ -21,7 +21,7 @@ class FormTableViewCell: UITableViewCell {
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var firstNameLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var cityStateLabel: UILabel!
     @IBOutlet weak var cellView: UIView!
     @IBOutlet weak var dropShadowView: UIView!
@@ -77,12 +77,12 @@ class FormTableViewCell: UITableViewCell {
         dropShadowView.layer.applySketchShadow(color: .clear, alpha: 0.0, x: 0.0, y: 0.0, blur: 0.0, spread: 0.0)
         outcomeLabel.font = .systemFont(ofSize: 10, weight: .light)
         if traitCollection.userInterfaceStyle == .dark {
-            firstNameLabel.textColor = .lightText
+            nameLabel.textColor = .steel
             timeLabel.textColor = .lightText
             dateLabel.textColor = .lightText
             dayLabel.textColor = .lightText
         } else {
-            firstNameLabel.textColor = .black
+            nameLabel.textColor = .black
             timeLabel.textColor = .black
             dateLabel.textColor = .black
             dayLabel.textColor = .black
@@ -96,9 +96,9 @@ class FormTableViewCell: UITableViewCell {
         timeLabel.text = "\(form.date.formattedTime())\(form.date.formattedAmpm())"
         cityStateLabel.text = "\(form.city.uppercased())(\(form.state))"
         if form.spouse.isEmpty {
-            firstNameLabel.text = form.firstName.uppercased() + " " + form.lastName.uppercased()
+            nameLabel.text = form.firstName.uppercased() + " " + form.lastName.uppercased()
         } else {
-            firstNameLabel.text = form.firstName.uppercased() + " & " + form.spouse.uppercased()
+            nameLabel.text = form.firstName.uppercased() + " & " + form.spouse.uppercased()
         }
         
         // Set background view for outcome
@@ -112,13 +112,13 @@ class FormTableViewCell: UITableViewCell {
         cellView.backgroundColor = .clear
         outcomeView.roundCorners(radius: 8, corners: [.topLeft, .bottomLeft])
         if traitCollection.userInterfaceStyle == .dark {
-            firstNameLabel.textColor = .lightText
+            nameLabel.textColor = .steel
             timeLabel.textColor = .lightText
             dateLabel.textColor = .lightText
             dayLabel.textColor = .lightText
             cellView.backgroundColor = .black
         } else {
-            firstNameLabel.textColor = .black
+            nameLabel.textColor = .black
             timeLabel.textColor = .black
             dateLabel.textColor = .black
             dayLabel.textColor = .black
