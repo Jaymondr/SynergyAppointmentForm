@@ -78,6 +78,13 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     // MARK: PROPERTIES
     var firebaseID: String = ""
     var savedForm: Form?
+    var scrollOffset: CGFloat {
+        if scheduleView.isVisible {
+            return 193
+        } else {
+            return 0
+        }
+    }
     var upcomingAppointmentsByDay: [[Form]] = []
     var fetchedTeam: Team?
     var user: UserAccount? {
@@ -137,9 +144,9 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             self.zipTextfield.text = address?.zip
             self.cityTextfield.text = address?.city
             self.stateTextfield.text = address?.state
-            self.scrollView.scrollTo(yPosition: 350, animated: true)
-            self.numberOfWindowsTexfield.becomeFirstResponder()
         }
+        self.scrollView.scrollTo(yPosition: self.scrollOffset + 350, animated: true)
+        self.numberOfWindowsTexfield.becomeFirstResponder()
     }
     
     @IBAction func copyPhoneNumberPressed(_ sender: Any) {
@@ -552,32 +559,39 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
 
     }
     
+    // MARK: - TEXTFIELD RETURN METHOD
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == firstNameTextfield {
             lastNameTextfield.becomeFirstResponder()
         } else if textField == lastNameTextfield {
             spouseTextfield.becomeFirstResponder()
+            if scheduleView.isVisible {
+                scrollView.scrollTo(yPosition: scrollOffset, animated: true)
+            }
         } else if textField == spouseTextfield {
             phoneTextfield.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: 260, animated: true)
+            scrollView.scrollTo(yPosition: scrollOffset + 260, animated: true)
         } else if textField == phoneTextfield {
             emailTextfield.becomeFirstResponder()
+            scrollView.scrollTo(yPosition: scrollOffset + 260, animated: true)
         } else if textField == emailTextfield {
             addressTextfield.becomeFirstResponder()
+            scrollView.scrollTo(yPosition: scrollOffset + 260, animated: true)
         } else if textField == addressTextfield {
             cityTextfield.becomeFirstResponder()
-            scrollView.scrollDownBy(points: 48, animated: true)
+            scrollView.scrollTo(yPosition: scrollOffset + 260, animated: true)
         } else if textField == cityTextfield {
             stateTextfield.becomeFirstResponder()
-            scrollView.scrollDownBy(points: 48, animated: true)
+            scrollView.scrollTo(yPosition: scrollOffset + 260, animated: true)
         } else if textField == stateTextfield {
             zipTextfield.becomeFirstResponder()
+            scrollView.scrollDownBy(points: 88, animated: true)
         } else if textField == zipTextfield {
             numberOfWindowsTexfield.becomeFirstResponder()
-            scrollView.scrollDownBy(points: 48, animated: true)
+            scrollView.scrollTo(yPosition: scrollOffset + 520, animated: true)
         } else if textField == numberOfWindowsTexfield {
             energyBillTextfield.becomeFirstResponder()
-            scrollView.scrollDownBy(points: 48, animated: true)
+            scrollView.scrollTo(yPosition: scrollOffset + 520, animated: true)
         } else if textField == energyBillTextfield {
             yearBuiltTextfield.becomeFirstResponder()
             scrollView.scrollDownBy(points: 48, animated: true)
