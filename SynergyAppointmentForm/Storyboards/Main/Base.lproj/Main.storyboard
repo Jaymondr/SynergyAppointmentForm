@@ -1648,7 +1648,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="fxY-5o-Wlp">
                                         <rect key="frame" x="10" y="0.0" width="373" height="2272.6666666666665"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4is-Dd-H0Q">
+                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4is-Dd-H0Q" userLabel="Appointment form stack view">
                                                 <rect key="frame" x="0.0" y="0.0" width="373" height="34"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Appointment Form" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y6e-U0-Vvp">
@@ -1710,7 +1710,7 @@
                                                     </stackView>
                                                 </subviews>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="XBv-nH-vBU">
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="XBv-nH-vBU" userLabel="Form Spacer">
                                                 <rect key="frame" x="0.0" y="42" width="373" height="2"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LtC-mo-nbY">
@@ -1725,42 +1725,8 @@
                                                     </label>
                                                 </subviews>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="oG6-id-sE5" userLabel="DateTime Stack View">
-                                                <rect key="frame" x="0.0" y="52" width="373" height="34"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date / Time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iti-Ej-prG">
-                                                        <rect key="frame" x="0.0" y="0.0" width="95" height="34"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="95" id="qfC-be-1SE"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                                                        <color key="textColor" name="steel"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="15" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="X4p-ef-jzr">
-                                                        <rect key="frame" x="101" y="0.0" width="232" height="34"/>
-                                                        <color key="tintColor" name="steel"/>
-                                                    </datePicker>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CKy-LT-aVr">
-                                                        <rect key="frame" x="339" y="0.0" width="34" height="34"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="34" id="ofs-kV-9Px"/>
-                                                            <constraint firstAttribute="width" secondItem="CKy-LT-aVr" secondAttribute="height" multiplier="1:1" id="oz5-wj-Rll"/>
-                                                        </constraints>
-                                                        <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="plain">
-                                                            <imageReference key="image" image="calendar" catalog="system" symbolScale="large"/>
-                                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="24" weight="light"/>
-                                                            <color key="baseForegroundColor" name="outcomePurple"/>
-                                                        </buttonConfiguration>
-                                                        <connections>
-                                                            <action selector="showScheduleNotesButtonPressed:" destination="ncR-vK-5yf" eventType="touchUpInside" id="vR9-hc-FON"/>
-                                                        </connections>
-                                                    </button>
-                                                </subviews>
-                                            </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wql-dB-qxl">
-                                                <rect key="frame" x="0.0" y="94" width="373" height="185"/>
+                                                <rect key="frame" x="0.0" y="52" width="373" height="185"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Schedule" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oXK-1L-MA4">
                                                         <rect key="frame" x="144.33333333333334" y="0.0" width="84.666666666666657" height="35"/>
@@ -1818,6 +1784,40 @@
                                                     <constraint firstAttribute="bottom" secondItem="fE8-48-Jks" secondAttribute="bottom" id="pNc-Lj-tpX"/>
                                                 </constraints>
                                             </view>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="oG6-id-sE5" userLabel="DateTime Stack View">
+                                                <rect key="frame" x="0.0" y="245" width="373" height="34"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date / Time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iti-Ej-prG">
+                                                        <rect key="frame" x="0.0" y="0.0" width="95" height="34"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="95" id="qfC-be-1SE"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                                        <color key="textColor" name="steel"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="15" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="X4p-ef-jzr">
+                                                        <rect key="frame" x="101" y="0.0" width="232" height="34"/>
+                                                        <color key="tintColor" name="steel"/>
+                                                    </datePicker>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CKy-LT-aVr">
+                                                        <rect key="frame" x="339" y="0.0" width="34" height="34"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="34" id="ofs-kV-9Px"/>
+                                                            <constraint firstAttribute="width" secondItem="CKy-LT-aVr" secondAttribute="height" multiplier="1:1" id="oz5-wj-Rll"/>
+                                                        </constraints>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain">
+                                                            <imageReference key="image" image="calendar" catalog="system" symbolScale="large"/>
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="24" weight="light"/>
+                                                            <color key="baseForegroundColor" name="outcomePurple"/>
+                                                        </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="showScheduleNotesButtonPressed:" destination="ncR-vK-5yf" eventType="touchUpInside" id="vR9-hc-FON"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Personal Information" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aQv-wy-LOi">
                                                 <rect key="frame" x="0.0" y="287" width="373" height="21.666666666666686"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
@@ -2486,7 +2486,7 @@
                                             <constraint firstItem="ib0-hK-q06" firstAttribute="width" secondItem="Zwn-35-cP2" secondAttribute="width" id="Qzm-r0-90W"/>
                                             <constraint firstItem="3EA-k7-1k2" firstAttribute="leading" secondItem="fxY-5o-Wlp" secondAttribute="leading" id="Ra6-KX-jFc"/>
                                             <constraint firstItem="wql-dB-qxl" firstAttribute="leading" secondItem="fxY-5o-Wlp" secondAttribute="leading" id="dzF-sm-gbM"/>
-                                            <constraint firstItem="wql-dB-qxl" firstAttribute="top" secondItem="oG6-id-sE5" secondAttribute="bottom" constant="8" id="ru1-ls-S3C"/>
+                                            <constraint firstItem="wql-dB-qxl" firstAttribute="top" secondItem="XBv-nH-vBU" secondAttribute="bottom" constant="8" id="ru1-ls-S3C"/>
                                             <constraint firstAttribute="trailing" secondItem="0qt-5z-PNH" secondAttribute="trailing" id="s0g-k8-EEE"/>
                                             <constraint firstItem="0qt-5z-PNH" firstAttribute="leading" secondItem="fxY-5o-Wlp" secondAttribute="leading" id="xaQ-FA-0qm"/>
                                         </constraints>

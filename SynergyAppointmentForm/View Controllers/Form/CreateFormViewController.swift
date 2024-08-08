@@ -588,10 +588,10 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             scrollView.scrollDownBy(points: 88, animated: true)
         } else if textField == zipTextfield {
             numberOfWindowsTexfield.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scrollOffset + 520, animated: true)
+            scrollView.scrollTo(yPosition: scrollOffset + 550, animated: true)
         } else if textField == numberOfWindowsTexfield {
             energyBillTextfield.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scrollOffset + 520, animated: true)
+            scrollView.scrollTo(yPosition: scrollOffset + 550, animated: true)
         } else if textField == energyBillTextfield {
             yearBuiltTextfield.becomeFirstResponder()
             scrollView.scrollDownBy(points: 48, animated: true)
