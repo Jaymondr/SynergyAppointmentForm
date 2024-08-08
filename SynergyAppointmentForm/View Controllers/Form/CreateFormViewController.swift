@@ -16,6 +16,7 @@ protocol CreateFormViewDelegate: AnyObject {
 
 class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDelegate, UITextViewDelegate {
     // MARK: OUTLETS
+    @IBOutlet weak var scrollView: UIScrollView!
     // SCHEDULE
     @IBOutlet weak var showCalendarButton: UIButton!
     @IBOutlet weak var scheduleView: UIView!
@@ -134,6 +135,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             self.zipTextfield.text = address?.zip
             self.cityTextfield.text = address?.city
             self.stateTextfield.text = address?.state
+            self.scrollView.scrollTo(yPosition: 350, animated: true)
             self.numberOfWindowsTexfield.becomeFirstResponder()
         }
     }
@@ -537,6 +539,9 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         emailTextfield.delegate = self
         numberOfWindowsTexfield.delegate = self
         energyBillTextfield.delegate = self
+        yearBuiltTextfield.delegate = self
+        yearsOwnedTextfield.delegate = self
+        homeValueTextfield.delegate = self
         quoteTextView.delegate = self
         financeTextfield.delegate = self
         reasonTextview.delegate = self
@@ -552,36 +557,47 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             spouseTextfield.becomeFirstResponder()
         } else if textField == spouseTextfield {
             phoneTextfield.becomeFirstResponder()
+            scrollView.scrollTo(yPosition: 260, animated: true)
         } else if textField == phoneTextfield {
             emailTextfield.becomeFirstResponder()
         } else if textField == emailTextfield {
             addressTextfield.becomeFirstResponder()
         } else if textField == addressTextfield {
             cityTextfield.becomeFirstResponder()
+            scrollView.scrollDownBy(points: 48, animated: true)
         } else if textField == cityTextfield {
             stateTextfield.becomeFirstResponder()
+            scrollView.scrollDownBy(points: 48, animated: true)
         } else if textField == stateTextfield {
             zipTextfield.becomeFirstResponder()
         } else if textField == zipTextfield {
             numberOfWindowsTexfield.becomeFirstResponder()
+            scrollView.scrollDownBy(points: 48, animated: true)
         } else if textField == numberOfWindowsTexfield {
             energyBillTextfield.becomeFirstResponder()
+            scrollView.scrollDownBy(points: 48, animated: true)
         } else if textField == energyBillTextfield {
             yearBuiltTextfield.becomeFirstResponder()
+            scrollView.scrollDownBy(points: 48, animated: true)
         } else if textField == yearBuiltTextfield {
             yearsOwnedTextfield.becomeFirstResponder()
+            scrollView.scrollDownBy(points: 48, animated: true)
         } else if textField == yearsOwnedTextfield {
             homeValueTextfield.becomeFirstResponder()
+            scrollView.scrollDownBy(points: 48, animated: true)
         } else if textField == homeValueTextfield {
             financeTextfield.becomeFirstResponder()
+            scrollView.scrollDownBy(points: 98, animated: true)
         } else if textField == financeTextfield {
             quoteTextView.becomeFirstResponder()
+            scrollView.scrollTo(yPosition: 1000, animated: true)
         } else if textField == quoteTextView {
             reasonTextview.becomeFirstResponder()
         } else if textField == reasonTextview {
             rateTextfield.becomeFirstResponder()
         } else if textField == rateTextfield {
             commentsTextview.becomeFirstResponder()
+            scrollView.scrollTo(yPosition: 1300, animated: true)
         }
         else {
             textField.resignFirstResponder()

@@ -155,6 +155,26 @@ extension UIView: VisibleToggleable {
 }
 
 
+// MARK: - SCROLLVIEW
+extension UIScrollView {
+    func scrollDownBy(points: CGFloat, animated: Bool = true) {
+        var offset = self.contentOffset
+        let maxOffsetY = self.contentSize.height - self.bounds.height
+        
+        offset.y = min(offset.y + points, maxOffsetY)
+        self.setContentOffset(offset, animated: animated)
+    }
+    
+    func scrollTo(yPosition: CGFloat, animated: Bool = true) {
+        var offset = self.contentOffset
+        let maxOffsetY = self.contentSize.height - self.bounds.height
+        
+        offset.y = min(max(yPosition, 0), maxOffsetY)
+        self.setContentOffset(offset, animated: animated)
+    }
+}
+
+
 // MARK: - TEXTFIELD
 extension UITextField {
     func addBottomBorder(with color: UIColor, andHeight height: CGFloat) {
