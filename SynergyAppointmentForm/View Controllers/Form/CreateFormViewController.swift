@@ -581,7 +581,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             scrollView.scrollDownBy(points: 48, animated: true)
         } else if textField == yearBuiltTextfield {
             yearsOwnedTextfield.becomeFirstResponder()
-            scrollView.scrollDownBy(points: 48, animated: true)
+            scrollView.scrollDownBy(points: 60, animated: true)
         } else if textField == yearsOwnedTextfield {
             homeValueTextfield.becomeFirstResponder()
             scrollView.scrollDownBy(points: 48, animated: true)
