@@ -18,7 +18,6 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     // MARK: OUTLETS
     @IBOutlet weak var scrollView: UIScrollView!
     // SCHEDULE
-    @IBOutlet weak var showCalendarButton: UIButton!
     @IBOutlet weak var scheduleView: UIView!
     @IBOutlet weak var ScheduleTitleLabel: UILabel!
     @IBOutlet weak var scheduleActivityIndicator: UIActivityIndicatorView!
@@ -28,25 +27,25 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     @IBOutlet weak var showScheduleButton: UIButton!
     // FORM
     @IBOutlet weak var dateTimePicker: UIDatePicker!
-    @IBOutlet weak var firstNameTextfield: UITextField!
-    @IBOutlet weak var lastNameTextfield: UITextField!
-    @IBOutlet weak var spouseTextfield: UITextField!
-    @IBOutlet weak var addressTextfield: UITextField!
-    @IBOutlet weak var zipTextfield: UITextField!
-    @IBOutlet weak var cityTextfield: UITextField!
-    @IBOutlet weak var stateTextfield: UITextField!
-    @IBOutlet weak var phoneTextfield: UITextField!
-    @IBOutlet weak var emailTextfield: UITextField!
-    @IBOutlet weak var numberOfWindowsTexfield: UITextField!
-    @IBOutlet weak var energyBillTextfield: UITextField!
-    @IBOutlet weak var financeTextfield: UITextField!
-    @IBOutlet weak var yearsOwnedTextfield: UITextField!
-    @IBOutlet weak var homeValueTextfield: UITextField!
-    @IBOutlet weak var yearBuiltTextfield: UITextField!
+    @IBOutlet weak var firstNameTextField: UITextField!
+    @IBOutlet weak var lastNameTextField: UITextField!
+    @IBOutlet weak var spouseTextField: UITextField!
+    @IBOutlet weak var addressTextField: UITextField!
+    @IBOutlet weak var zipTextField: UITextField!
+    @IBOutlet weak var cityTextField: UITextField!
+    @IBOutlet weak var stateTextField: UITextField!
+    @IBOutlet weak var phoneTextField: UITextField!
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var numberOfWindowsTextField: UITextField!
+    @IBOutlet weak var energyBillTextField: UITextField!
+    @IBOutlet weak var financeTextField: UITextField!
+    @IBOutlet weak var yearsOwnedTextField: UITextField!
+    @IBOutlet weak var homeValueTextField: UITextField!
+    @IBOutlet weak var yearBuiltTextField: UITextField!
     @IBOutlet weak var quoteTextView: UITextView!
-    @IBOutlet weak var reasonTextview: UITextView!
-    @IBOutlet weak var rateTextfield: UITextField!
-    @IBOutlet weak var commentsTextview: UITextView!
+    @IBOutlet weak var reasonTextView: UITextView!
+    @IBOutlet weak var rateTextField: UITextField!
+    @IBOutlet weak var commentsTextView: UITextView!
     @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var trelloButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
@@ -61,9 +60,9 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.delegate = self
-        phoneTextfield.layer.borderWidth = 1.0
-        phoneTextfield.layer.cornerRadius = 5
-        phoneTextfield.layer.borderColor = UIColor.clear.cgColor
+        phoneTextField.layer.borderWidth = 1.0
+        phoneTextField.layer.cornerRadius = 5
+        phoneTextField.layer.borderColor = UIColor.clear.cgColor
         setupView()
         setTextFieldsDelegate()
         navigationController?.navigationBar.tintColor = UIColor.steel
@@ -107,7 +106,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
 
     @IBAction func messageButtonPressed(_ sender: Any) {
         if let form = createForm() {
-            FormController.shared.prepareToSendMessage(form: form, phoneNumber: phoneTextfield.text ?? "", viewController: self)
+            FormController.shared.prepareToSendMessage(form: form, phoneNumber: phoneTextField.text ?? "", viewController: self)
         } else {
             UIAlertController.presentDismissingAlert(title: "Unable to create form...", dismissAfter: 1.0)
         }
@@ -148,22 +147,22 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     @IBAction func locationButtonPressed(_ sender: Any) {
         self.vibrateForButtonPress(.heavy)
         FormController.shared.getLocationData(manager: &locationManager) { address in
-            self.addressTextfield.text = address?.address
-            self.zipTextfield.text = address?.zip
-            self.cityTextfield.text = address?.city
-            self.stateTextfield.text = address?.state
+            self.addressTextField.text = address?.address
+            self.zipTextField.text = address?.zip
+            self.cityTextField.text = address?.city
+            self.stateTextField.text = address?.state
         }
         self.scrollView.scrollTo(yPosition: self.scheduleViewScrollOffset + 350, animated: true)
-        self.numberOfWindowsTexfield.becomeFirstResponder()
+        self.numberOfWindowsTextField.becomeFirstResponder()
     }
     
     @IBAction func copyPhoneNumberPressed(_ sender: Any) {
         self.vibrateForButtonPress(.heavy)
-        FormController.shared.copy(phone: phoneTextfield.text)
+        FormController.shared.copy(phone: phoneTextField.text)
     }
     
     @IBAction func copyEmailButtonPressed(_ sender: Any) {
-        FormController.shared.copy(email: emailTextfield.text)
+        FormController.shared.copy(email: emailTextField.text)
     }
     
     @IBAction func clearQuoteButtonPressed(_ sender: Any) {
@@ -185,7 +184,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         self.vibrateForButtonPress(.heavy)
         let alert = UIAlertController(title: nil, message: "Are you sure you want to clear this section?", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Clear", style: .default) {_ in
-            self.reasonTextview.text = ""
+            self.reasonTextView.text = ""
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
@@ -200,7 +199,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         self.vibrateForButtonPress(.heavy)
         let alert = UIAlertController(title: nil, message: "Are you sure you want to clear this section?", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Clear", style: .default) {_ in
-            self.commentsTextview.text = ""
+            self.commentsTextView.text = ""
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
@@ -233,95 +232,83 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     // MARK: FUNCTIONS
     func saveForm() {
         self.vibrateForButtonPress(.medium)
-        if let form = createForm() {
-            let saveQueue = DispatchQueue(label: "com.example.saveQueue", qos: .background)
+        
+        guard let form = createForm() else {
+            UIAlertController.presentDismissingAlert(title: "Unable to create form...", dismissAfter: 1.0)
+            return
+        }
+
+        let saveQueue = DispatchQueue(label: "com.example.saveQueue", qos: .background)
+        saveButton.isEnabled = false
+        activityIndicator.startAnimating()
+
+        let completion: (Error?) -> Void = { error in
+            DispatchQueue.main.async {
+                self.saveButton.isEnabled = true
+                self.activityIndicator.stopAnimating()
+            }
             
-            saveButton.isEnabled = false
-            activityIndicator.startAnimating()
-            
-            if form.firebaseID.isNotEmpty {
-                // UPDATE FORM
-                saveQueue.async {
-                    FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { updatedForm, error in
-                        DispatchQueue.main.async {
-                            self.saveButton.isEnabled = true
-                            self.activityIndicator.stopAnimating()
-                        }
-                        if let error = error {
-                            print("there was an error: \(error)")
-                            DispatchQueue.main.async {
-                                UIAlertController.presentDismissingAlert(title: "Failed to Save Form", dismissAfter: 1.2)
-                                self.vibrateForError()
-                            }
-                            return
-                        }
-                        DispatchQueue.main.async {
-                            self.delegate?.didUpdateNew(form)
-                            self.savedForm = form
-                            UIAlertController.presentDismissingAlert(title: "Form Updated!", dismissAfter: 0.5)
-                            self.vibrate()
-                        }
-                    }
-                }
-            } else {
-                // CREATE FORM IN FIREBASE
-                saveQueue.async {
-                    FirebaseController.shared.saveForm(form: form) { savedForm, error in
-                        DispatchQueue.main.async {
-                            self.saveButton.isEnabled = true
-                            self.activityIndicator.stopAnimating()
-                        }
-                        if let error = error {
-                            print("Error: \(error)")
-                            DispatchQueue.main.async {
-                                UIAlertController.presentDismissingAlert(title: "Failed to Save Form", dismissAfter: 1.2)
-                                self.vibrateForError()
-                            }
-                            return
-                        }
-                        
-                        guard let savedForm = savedForm else { print("No Form!"); return }
-                        self.firebaseID = savedForm.firebaseID
-                        DispatchQueue.main.async {
-                            self.delegate?.didAddNewForm(savedForm)
-                            self.savedForm = form
-                            UIAlertController.presentDismissingAlert(title: "Form Saved!", dismissAfter: 0.5)
-                            self.vibrate()
-                        }
-                    }
+            if let error = error {
+                print("Error: \(error)")
+                DispatchQueue.main.async {
+                    UIAlertController.presentDismissingAlert(title: "Failed to Save Form", dismissAfter: 1.2)
+                    self.vibrateForError()
                 }
             }
+        }
+
+        let handleSaveResult: (Form?, Error?) -> Void = { savedForm, error in
+            completion(error)
+            
+            guard error == nil, let savedForm = savedForm else { return }
+            self.firebaseID = savedForm.firebaseID
+            DispatchQueue.main.async {
+                self.delegate?.didAddNewForm(savedForm)
+                self.savedForm = savedForm
+                UIAlertController.presentDismissingAlert(title: "Form Saved!", dismissAfter: 0.5)
+                self.vibrate()
+            }
+        }
+
+        if form.firebaseID.isNotEmpty {
+            // Update Form
+            saveQueue.async {
+                FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form, completion: handleSaveResult)
+            }
         } else {
-            UIAlertController.presentDismissingAlert(title: "Unable to create form...", dismissAfter: 1.0)
+            // Create Form
+            saveQueue.async {
+                FirebaseController.shared.saveForm(form: form, completion: handleSaveResult)
+            }
         }
     }
+
     
     func createForm() -> Form? {
         guard let user = user else { return nil }
-        let form = Form(firebaseID: self.firebaseID,
-                        address: addressTextfield.text ?? "",
-                        city: cityTextfield.text ?? "",
-                        comments: commentsTextview.text ?? "",
+        return Form(firebaseID: self.firebaseID,
+                        address: addressTextField.text ?? "",
+                        city: cityTextField.text ?? "",
+                        comments: commentsTextView.text ?? "",
                         date: dateTimePicker.date,
-                        email: emailTextfield.text ?? "",
-                        energyBill: energyBillTextfield.text ?? "",
-                        financeOptions: financeTextfield.text ?? "",
-                        firstName: firstNameTextfield.text ?? "",
-                        homeValue: homeValueTextfield.text ?? "--",
-                        lastName: lastNameTextfield.text ?? "",
-                        numberOfWindows: numberOfWindowsTexfield.text ?? "",
-                        phone: phoneTextfield.text ?? "",
-                        rate: rateTextfield.text ?? "",
-                        reason: reasonTextview.text ?? "",
+                        email: emailTextField.text ?? "",
+                        energyBill: energyBillTextField.text ?? "",
+                        financeOptions: financeTextField.text ?? "",
+                        firstName: firstNameTextField.text ?? "",
+                        homeValue: homeValueTextField.text ?? "--",
+                        lastName: lastNameTextField.text ?? "",
+                        numberOfWindows: numberOfWindowsTextField.text ?? "",
+                        phone: phoneTextField.text ?? "",
+                        rate: rateTextField.text ?? "",
+                        reason: reasonTextView.text ?? "",
                         retailQuote: quoteTextView.text ?? "",
-                        spouse: spouseTextfield.text ?? "",
-                        state: stateTextfield.text ?? "",
+                        spouse: spouseTextField.text ?? "",
+                        state: stateTextField.text ?? "",
                         userID: user.firebaseID,
-                        yearBuilt: yearBuiltTextfield.text ?? "--",
-                        yearsOwned: yearsOwnedTextfield.text ?? "--",
-                        zip: zipTextfield.text ?? ""
+                        yearBuilt: yearBuiltTextField.text ?? "--",
+                        yearsOwned: yearsOwnedTextField.text ?? "--",
+                        zip: zipTextField.text ?? ""
         )
-        return form
     }
     
     func fetchTeamAppointments(forDays numberOfDays: Int) async {
@@ -511,7 +498,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             
         case .southJordan:
             print("Form For South Jordan")
-            emailTextfield.placeholder = "@synergywindow.com"
+            emailTextField.placeholder = "@synergywindow.com"
             trelloButton.isVisible = true
 
         case .sanAntonio:
@@ -523,8 +510,8 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         
         // CORNER RADIUS
         quoteTextView.layer.cornerRadius = 5.0
-        reasonTextview.layer.cornerRadius = 5.0
-        commentsTextview.layer.cornerRadius = 5.0
+        reasonTextView.layer.cornerRadius = 5.0
+        commentsTextView.layer.cornerRadius = 5.0
         
         // SCHEDULE TEXTVIEWS
         let scheduleTextViews: [UITextView] = [dayOneTextField, dayTwoTextField, dayThreeTextField]
@@ -537,7 +524,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
 //            textView.backgroundColor = UIColor.steelAccent
         }
         
-        let additionalCommentsTextViews: [UITextView] = [quoteTextView, reasonTextview, commentsTextview]
+        let additionalCommentsTextViews: [UITextView] = [quoteTextView, reasonTextView, commentsTextView]
         
         for textView in additionalCommentsTextViews {
             textView.layer.borderWidth = 1
@@ -546,7 +533,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         }
         
         // TEXTFIELDS
-        let textFields: [UITextField] = [firstNameTextfield, lastNameTextfield, spouseTextfield, addressTextfield, cityTextfield, stateTextfield, zipTextfield, phoneTextfield, emailTextfield, numberOfWindowsTexfield, energyBillTextfield,financeTextfield, yearBuiltTextfield, yearsOwnedTextfield, homeValueTextfield, rateTextfield]
+        let textFields: [UITextField] = [firstNameTextField, lastNameTextField, spouseTextField, addressTextField, cityTextField, stateTextField, zipTextField, phoneTextField, emailTextField, numberOfWindowsTextField, energyBillTextField,financeTextField, yearBuiltTextField, yearsOwnedTextField, homeValueTextField, rateTextField]
         
         for textField in textFields {
             textField.addBottomBorder(with: .steel, andHeight: 1)
@@ -572,96 +559,96 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     }
     
     func setTextFieldsDelegate() {
-        firstNameTextfield.delegate = self
-        lastNameTextfield.delegate = self
-        spouseTextfield.delegate = self
-        addressTextfield.delegate = self
-        zipTextfield.delegate = self
-        cityTextfield.delegate = self
-        stateTextfield.delegate = self
-        phoneTextfield.delegate = self
-        emailTextfield.delegate = self
-        numberOfWindowsTexfield.delegate = self
-        energyBillTextfield.delegate = self
-        yearBuiltTextfield.delegate = self
-        yearsOwnedTextfield.delegate = self
-        homeValueTextfield.delegate = self
+        firstNameTextField.delegate = self
+        lastNameTextField.delegate = self
+        spouseTextField.delegate = self
+        addressTextField.delegate = self
+        zipTextField.delegate = self
+        cityTextField.delegate = self
+        stateTextField.delegate = self
+        phoneTextField.delegate = self
+        emailTextField.delegate = self
+        numberOfWindowsTextField.delegate = self
+        energyBillTextField.delegate = self
+        yearBuiltTextField.delegate = self
+        yearsOwnedTextField.delegate = self
+        homeValueTextField.delegate = self
         quoteTextView.delegate = self
-        financeTextfield.delegate = self
-        reasonTextview.delegate = self
-        rateTextfield.delegate = self
-        commentsTextview.delegate = self
+        financeTextField.delegate = self
+        reasonTextView.delegate = self
+        rateTextField.delegate = self
+        commentsTextView.delegate = self
         
-        textFieldScrollPositions[firstNameTextfield] = 0
-        textFieldScrollPositions[lastNameTextfield] = 100
-        textFieldScrollPositions[spouseTextfield] = 100
-        textFieldScrollPositions[phoneTextfield] = 230
-        textFieldScrollPositions[emailTextfield] = 260
-        textFieldScrollPositions[addressTextfield] = 260
-        textFieldScrollPositions[cityTextfield] = 260
-        textFieldScrollPositions[stateTextfield] = 260
-        textFieldScrollPositions[zipTextfield] = 344
-        textFieldScrollPositions[numberOfWindowsTexfield] = 550
-        textFieldScrollPositions[energyBillTextfield] = 550
-        textFieldScrollPositions[yearBuiltTextfield] = 550
-        textFieldScrollPositions[yearsOwnedTextfield] = 550
-        textFieldScrollPositions[homeValueTextfield] = 804
-        textFieldScrollPositions[financeTextfield] = 930 + branchScrollOffset
-        textFieldScrollPositions[rateTextfield] = 1300 + branchScrollOffset
+        textFieldScrollPositions[firstNameTextField] = 0
+        textFieldScrollPositions[lastNameTextField] = 100
+        textFieldScrollPositions[spouseTextField] = 100
+        textFieldScrollPositions[phoneTextField] = 230
+        textFieldScrollPositions[emailTextField] = 260
+        textFieldScrollPositions[addressTextField] = 260
+        textFieldScrollPositions[cityTextField] = 260
+        textFieldScrollPositions[stateTextField] = 260
+        textFieldScrollPositions[zipTextField] = 344
+        textFieldScrollPositions[numberOfWindowsTextField] = 550
+        textFieldScrollPositions[energyBillTextField] = 550
+        textFieldScrollPositions[yearBuiltTextField] = 550
+        textFieldScrollPositions[yearsOwnedTextField] = 550
+        textFieldScrollPositions[homeValueTextField] = 804
+        textFieldScrollPositions[financeTextField] = 930 + branchScrollOffset
+        textFieldScrollPositions[rateTextField] = 1300 + branchScrollOffset
 
     }
     
     // MARK: - TEXTFIELD RETURN METHOD
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == firstNameTextfield {
-            lastNameTextfield.becomeFirstResponder()
+        if textField == firstNameTextField {
+            lastNameTextField.becomeFirstResponder()
             scrollView.scrollTo(yPosition: scheduleViewScrollOffset, animated: true)
-        } else if textField == lastNameTextfield {
-            spouseTextfield.becomeFirstResponder()
+        } else if textField == lastNameTextField {
+            spouseTextField.becomeFirstResponder()
             scrollView.scrollTo(yPosition: scheduleViewScrollOffset, animated: true)
-        } else if textField == spouseTextfield {
-            phoneTextfield.becomeFirstResponder()
+        } else if textField == spouseTextField {
+            phoneTextField.becomeFirstResponder()
             scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 230, animated: true)
-        } else if textField == phoneTextfield {
-            emailTextfield.becomeFirstResponder()
+        } else if textField == phoneTextField {
+            emailTextField.becomeFirstResponder()
             scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 260, animated: true)
-        } else if textField == emailTextfield {
-            addressTextfield.becomeFirstResponder()
+        } else if textField == emailTextField {
+            addressTextField.becomeFirstResponder()
             scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 260, animated: true)
-        } else if textField == addressTextfield {
-            cityTextfield.becomeFirstResponder()
+        } else if textField == addressTextField {
+            cityTextField.becomeFirstResponder()
             scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 260, animated: true)
-        } else if textField == cityTextfield {
-            stateTextfield.becomeFirstResponder()
+        } else if textField == cityTextField {
+            stateTextField.becomeFirstResponder()
             scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 260, animated: true)
-        } else if textField == stateTextfield {
-            zipTextfield.becomeFirstResponder()
+        } else if textField == stateTextField {
+            zipTextField.becomeFirstResponder()
             scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 344, animated: true)
-        } else if textField == zipTextfield {
-            numberOfWindowsTexfield.becomeFirstResponder()
+        } else if textField == zipTextField {
+            numberOfWindowsTextField.becomeFirstResponder()
             scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 550, animated: true)
-        } else if textField == numberOfWindowsTexfield {
-            energyBillTextfield.becomeFirstResponder()
+        } else if textField == numberOfWindowsTextField {
+            energyBillTextField.becomeFirstResponder()
             scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 550, animated: true)
-        } else if textField == energyBillTextfield {
-            yearBuiltTextfield.becomeFirstResponder()
-        } else if textField == yearBuiltTextfield {
-            yearsOwnedTextfield.becomeFirstResponder()
-        } else if textField == yearsOwnedTextfield {
-            homeValueTextfield.becomeFirstResponder()
+        } else if textField == energyBillTextField {
+            yearBuiltTextField.becomeFirstResponder()
+        } else if textField == yearBuiltTextField {
+            yearsOwnedTextField.becomeFirstResponder()
+        } else if textField == yearsOwnedTextField {
+            homeValueTextField.becomeFirstResponder()
             scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 706, animated: true)
-        } else if textField == homeValueTextfield {
-            financeTextfield.becomeFirstResponder()
+        } else if textField == homeValueTextField {
+            financeTextField.becomeFirstResponder()
             scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 804, animated: true)
-        } else if textField == financeTextfield {
+        } else if textField == financeTextField {
             quoteTextView.becomeFirstResponder()
             scrollView.scrollTo(yPosition: scheduleViewScrollOffset + branchScrollOffset + 1000, animated: true)
         } else if textField == quoteTextView {
-            reasonTextview.becomeFirstResponder()
-        } else if textField == reasonTextview {
-            rateTextfield.becomeFirstResponder()
-        } else if textField == rateTextfield {
-            commentsTextview.becomeFirstResponder()
+            reasonTextView.becomeFirstResponder()
+        } else if textField == reasonTextView {
+            rateTextField.becomeFirstResponder()
+        } else if textField == rateTextField {
+            commentsTextView.becomeFirstResponder()
             scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 1300, animated: true)
         }
         else {
@@ -681,12 +668,12 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         scrollView.scrollTo(yPosition: scrollPosition + scheduleViewScrollOffset, animated: true)
     }
 
-    // Changes phone textfield border color
+    // Changes phone textField border color
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentLength = (textField.text ?? "").count
         let newLength = currentLength + string.count - range.length
 
-        if textField == phoneTextfield {
+        if textField == phoneTextField {
             if newLength != 10 {
                 textField.layer.borderWidth = 1.0
                 textField.layer.borderColor = UIColor.red.cgColor
