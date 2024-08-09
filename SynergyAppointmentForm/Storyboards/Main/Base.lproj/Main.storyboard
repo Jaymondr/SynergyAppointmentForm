@@ -1728,15 +1728,34 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wql-dB-qxl">
                                                 <rect key="frame" x="0.0" y="52" width="373" height="185"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Schedule" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oXK-1L-MA4">
-                                                        <rect key="frame" x="144.33333333333334" y="0.0" width="84.666666666666657" height="35"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="35" id="Tnd-XG-KZq"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
-                                                        <color key="textColor" name="outcomeBlue"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="p4c-ME-2w0">
+                                                        <rect key="frame" x="124.66666666666666" y="0.0" width="123.66666666666666" height="35"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Schedule" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oXK-1L-MA4">
+                                                                <rect key="frame" x="0.0" y="0.0" width="84.666666666666671" height="35"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="35" id="Tnd-XG-KZq"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                                                <color key="textColor" name="outcomeBlue"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="unc-9E-uPG">
+                                                                <rect key="frame" x="88.666666666666686" y="0.0" width="35" height="35"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" secondItem="unc-9E-uPG" secondAttribute="height" multiplier="1:1" id="vOo-fW-set"/>
+                                                                </constraints>
+                                                                <state key="normal" title="Button"/>
+                                                                <buttonConfiguration key="configuration" style="plain" image="arrow.clockwise.icloud" catalog="system">
+                                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="18"/>
+                                                                    <color key="baseForegroundColor" name="outcomePurple"/>
+                                                                </buttonConfiguration>
+                                                                <connections>
+                                                                    <action selector="fetchCloudScheduleButtonPressed:" destination="ncR-vK-5yf" eventType="touchUpInside" id="8qv-I2-X1R"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                    </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="fE8-48-Jks">
                                                         <rect key="frame" x="0.0" y="35" width="373" height="150"/>
                                                         <subviews>
@@ -1768,17 +1787,18 @@
                                                     </stackView>
                                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="hbQ-5a-E9n">
                                                         <rect key="frame" x="94" y="74" width="185" height="37"/>
+                                                        <color key="color" name="outcomePurple"/>
                                                     </activityIndicatorView>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="hbQ-5a-E9n" firstAttribute="centerY" secondItem="wql-dB-qxl" secondAttribute="centerY" id="2pR-Wb-HTe"/>
-                                                    <constraint firstItem="oXK-1L-MA4" firstAttribute="centerX" secondItem="wql-dB-qxl" secondAttribute="centerX" id="3To-Tq-QYD"/>
+                                                    <constraint firstItem="p4c-ME-2w0" firstAttribute="centerX" secondItem="wql-dB-qxl" secondAttribute="centerX" id="7oZ-0b-DCz"/>
                                                     <constraint firstAttribute="height" constant="185" id="7sL-Ce-SEt"/>
                                                     <constraint firstItem="hbQ-5a-E9n" firstAttribute="centerX" secondItem="wql-dB-qxl" secondAttribute="centerX" id="HBp-oO-dqg"/>
                                                     <constraint firstItem="fE8-48-Jks" firstAttribute="top" secondItem="wql-dB-qxl" secondAttribute="top" constant="35" id="MQ2-N6-r0q"/>
-                                                    <constraint firstItem="oXK-1L-MA4" firstAttribute="top" secondItem="wql-dB-qxl" secondAttribute="top" id="RgR-mw-oZY"/>
                                                     <constraint firstItem="fE8-48-Jks" firstAttribute="leading" secondItem="wql-dB-qxl" secondAttribute="leading" id="Tj5-Z6-EMB"/>
+                                                    <constraint firstItem="fE8-48-Jks" firstAttribute="top" secondItem="p4c-ME-2w0" secondAttribute="bottom" id="cjm-dx-aTK"/>
                                                     <constraint firstItem="hbQ-5a-E9n" firstAttribute="width" secondItem="wql-dB-qxl" secondAttribute="height" multiplier="1:1" id="hLR-WH-SJ1"/>
                                                     <constraint firstAttribute="trailing" secondItem="fE8-48-Jks" secondAttribute="trailing" id="koZ-5a-qDo"/>
                                                     <constraint firstAttribute="bottom" secondItem="fE8-48-Jks" secondAttribute="bottom" id="pNc-Lj-tpX"/>
@@ -2604,6 +2624,7 @@
         <segue reference="rU6-U8-7l6"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="arrow.clockwise.icloud" catalog="system" width="128" height="90"/>
         <image name="calendar" catalog="system" width="128" height="107"/>
         <image name="doc" catalog="system" width="115" height="128"/>
         <image name="doc.fill" catalog="system" width="115" height="128"/>

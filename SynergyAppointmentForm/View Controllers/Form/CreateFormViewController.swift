@@ -133,17 +133,26 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     // IBAction function
     @IBAction func showScheduleNotesButtonPressed(_ sender: Any) {
         if scheduleView.isHidden {
-            // Show the view and run the task
             scheduleView.isHidden = false
-            Task {
-                await fetchTeamAppointments(forDays: 3)
+            if upcomingAppointmentsByDay.isEmpty {
+                Task {
+                    await fetchTeamAppointments(forDays: 3)
+                }
+            } else {
+                print("Already Fetch appointments")
             }
         } else {
-            // Hide the view and don't run the task
             scheduleView.isHidden = true
         }
     }
         
+    @IBAction func fetchCloudScheduleButtonPressed(_ sender: Any) {
+        print("Fetching schedule changes")
+        Task {
+            await fetchTeamAppointments(forDays:3)
+        }
+    }
+    
     @IBAction func locationButtonPressed(_ sender: Any) {
         self.vibrateForButtonPress(.heavy)
         FormController.shared.getLocationData(manager: &locationManager) { address in
@@ -166,48 +175,15 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     }
     
     @IBAction func clearQuoteButtonPressed(_ sender: Any) {
-        self.vibrateForButtonPress(.heavy)
-        let alert = UIAlertController(title: nil, message: "Are you sure you want to clear this section?", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Clear", style: .default) {_ in
-            self.quoteTextView.text = ""
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        
-        alert.addAction(okAction)
-        alert.addAction(cancelAction)
-        
-        self.present(alert, animated: true)
-        
+        clearSection(textView: quoteTextView)
     }
     
     @IBAction func clearReasonButtonPressed(_ sender: Any) {
-        self.vibrateForButtonPress(.heavy)
-        let alert = UIAlertController(title: nil, message: "Are you sure you want to clear this section?", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Clear", style: .default) {_ in
-            self.reasonTextView.text = ""
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        
-        alert.addAction(okAction)
-        alert.addAction(cancelAction)
-        
-        self.present(alert, animated: true)
-        
+        clearSection(textView: reasonTextView)
     }
     
     @IBAction func clearCommentsButtonPressed(_ sender: Any) {
-        self.vibrateForButtonPress(.heavy)
-        let alert = UIAlertController(title: nil, message: "Are you sure you want to clear this section?", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Clear", style: .default) {_ in
-            self.commentsTextView.text = ""
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        
-        alert.addAction(okAction)
-        alert.addAction(cancelAction)
-        
-        self.present(alert, animated: true)
-        
+        clearSection(textView: commentsTextView)
     }
     
     deinit {
@@ -282,7 +258,6 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             }
         }
     }
-
     
     func createForm() -> Form? {
         guard let user = user else { return nil }
@@ -311,8 +286,21 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         )
     }
     
+    func clearSection(textView: UITextView) {
+        self.vibrateForButtonPress(.heavy)
+        let alert = UIAlertController(title: nil, message: "Are you sure you want to clear this section?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Clear", style: .default) {_ in
+            textView.text = ""
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true)
+    }
+    
     func fetchTeamAppointments(forDays numberOfDays: Int) async {
-        if upcomingAppointmentsByDay.isEmpty {
             guard let teamID = UserAccount.currentUser?.teamID else { return }
             
             do {
@@ -343,13 +331,9 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
                 print("Error fetching data: \(error.localizedDescription)")
                 UIAlertController.presentDismissingAlert(title: "Error fetching data: \(error.localizedDescription)", dismissAfter: 5.0)
             }
-            
-            // Stop the activity indicator
             scheduleActivityIndicator.stopAnimating()
-        } else {
-            print("Already fetched appointments")
         }
-    }
+    
 
     // Group and sort appointments by day function
     func groupAndSortAppointmentsByDay(_ appointments: [Form], numberOfDays: Int) -> [[Form]] {
