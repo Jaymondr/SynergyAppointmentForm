@@ -77,19 +77,27 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     // MARK: PROPERTIES
     var firebaseID: String = ""
     var savedForm: Form?
-    var scrollOffset: CGFloat {
-        if scheduleView.isVisible {
-            return 193
-        } else {
-            return 0
-        }
-    }
     var upcomingAppointmentsByDay: [[Form]] = []
     var fetchedTeam: Team?
     var user: UserAccount? {
         UserAccount.currentUser
     }
     private var textFieldScrollPositions: [UITextField: CGFloat] = [:]
+    var scheduleViewScrollOffset: CGFloat {
+        if scheduleView.isVisible {
+            return 193
+        } else {
+            return 0
+        }
+    }
+    
+    var branchScrollOffset: CGFloat {
+        if user?.branch != .raleigh {
+            return -90
+        } else {
+            return 0
+        }
+    }
 
 
     // MARK: BUTTONS
@@ -145,7 +153,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             self.cityTextfield.text = address?.city
             self.stateTextfield.text = address?.state
         }
-        self.scrollView.scrollTo(yPosition: self.scrollOffset + 350, animated: true)
+        self.scrollView.scrollTo(yPosition: self.scheduleViewScrollOffset + 350, animated: true)
         self.numberOfWindowsTexfield.becomeFirstResponder()
     }
     
@@ -585,21 +593,21 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         commentsTextview.delegate = self
         
         textFieldScrollPositions[firstNameTextfield] = 0
-        textFieldScrollPositions[lastNameTextfield] = scrollOffset + 100
-        textFieldScrollPositions[spouseTextfield] = scrollOffset + 240
-        textFieldScrollPositions[phoneTextfield] = scrollOffset + 240
-        textFieldScrollPositions[emailTextfield] = scrollOffset + 260
-        textFieldScrollPositions[addressTextfield] = scrollOffset + 260
-        textFieldScrollPositions[cityTextfield] = scrollOffset + 260
-        textFieldScrollPositions[stateTextfield] = scrollOffset + 300
-        textFieldScrollPositions[zipTextfield] = scrollOffset + 344
-        textFieldScrollPositions[numberOfWindowsTexfield] = scrollOffset + 550
-        textFieldScrollPositions[energyBillTextfield] = scrollOffset + 550
-        textFieldScrollPositions[yearBuiltTextfield] = scrollOffset + 550
-        textFieldScrollPositions[yearsOwnedTextfield] = scrollOffset + 550
-        textFieldScrollPositions[homeValueTextfield] = scrollOffset + 804
-        textFieldScrollPositions[financeTextfield] = scrollOffset + 930
-        textFieldScrollPositions[rateTextfield] = scrollOffset + 1300
+        textFieldScrollPositions[lastNameTextfield] = 100
+        textFieldScrollPositions[spouseTextfield] = 100
+        textFieldScrollPositions[phoneTextfield] = 230
+        textFieldScrollPositions[emailTextfield] = 260
+        textFieldScrollPositions[addressTextfield] = 260
+        textFieldScrollPositions[cityTextfield] = 260
+        textFieldScrollPositions[stateTextfield] = 260
+        textFieldScrollPositions[zipTextfield] = 344
+        textFieldScrollPositions[numberOfWindowsTexfield] = 550
+        textFieldScrollPositions[energyBillTextfield] = 550
+        textFieldScrollPositions[yearBuiltTextfield] = 550
+        textFieldScrollPositions[yearsOwnedTextfield] = 550
+        textFieldScrollPositions[homeValueTextfield] = 804
+        textFieldScrollPositions[financeTextfield] = 930 + branchScrollOffset
+        textFieldScrollPositions[rateTextfield] = 1300 + branchScrollOffset
 
     }
     
@@ -607,54 +615,54 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == firstNameTextfield {
             lastNameTextfield.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scrollOffset, animated: true)
+            scrollView.scrollTo(yPosition: scheduleViewScrollOffset, animated: true)
         } else if textField == lastNameTextfield {
             spouseTextfield.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scrollOffset, animated: true)
+            scrollView.scrollTo(yPosition: scheduleViewScrollOffset, animated: true)
         } else if textField == spouseTextfield {
             phoneTextfield.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scrollOffset + 260, animated: true)
+            scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 230, animated: true)
         } else if textField == phoneTextfield {
             emailTextfield.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scrollOffset + 260, animated: true)
+            scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 260, animated: true)
         } else if textField == emailTextfield {
             addressTextfield.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scrollOffset + 260, animated: true)
+            scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 260, animated: true)
         } else if textField == addressTextfield {
             cityTextfield.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scrollOffset + 260, animated: true)
+            scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 260, animated: true)
         } else if textField == cityTextfield {
             stateTextfield.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scrollOffset + 260, animated: true)
+            scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 260, animated: true)
         } else if textField == stateTextfield {
             zipTextfield.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scrollOffset + 344, animated: true)
+            scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 344, animated: true)
         } else if textField == zipTextfield {
             numberOfWindowsTexfield.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scrollOffset + 550, animated: true)
+            scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 550, animated: true)
         } else if textField == numberOfWindowsTexfield {
             energyBillTextfield.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scrollOffset + 550, animated: true)
+            scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 550, animated: true)
         } else if textField == energyBillTextfield {
             yearBuiltTextfield.becomeFirstResponder()
         } else if textField == yearBuiltTextfield {
             yearsOwnedTextfield.becomeFirstResponder()
         } else if textField == yearsOwnedTextfield {
             homeValueTextfield.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scrollOffset + 706, animated: true)
+            scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 706, animated: true)
         } else if textField == homeValueTextfield {
             financeTextfield.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scrollOffset + 804, animated: true)
+            scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 804, animated: true)
         } else if textField == financeTextfield {
             quoteTextView.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scrollOffset + 1000, animated: true)
+            scrollView.scrollTo(yPosition: scheduleViewScrollOffset + branchScrollOffset + 1000, animated: true)
         } else if textField == quoteTextView {
             reasonTextview.becomeFirstResponder()
         } else if textField == reasonTextview {
             rateTextfield.becomeFirstResponder()
         } else if textField == rateTextfield {
             commentsTextview.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scrollOffset + 1300, animated: true)
+            scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 1300, animated: true)
         }
         else {
             textField.resignFirstResponder()
@@ -670,7 +678,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
 
     private func scrollToTextField(_ textField: UITextField, at scrollPosition: CGFloat) {
         // Ensure scrollView is properly set up
-        scrollView.scrollTo(yPosition: scrollPosition, animated: true)
+        scrollView.scrollTo(yPosition: scrollPosition + scheduleViewScrollOffset, animated: true)
     }
 
     // Changes phone textfield border color
