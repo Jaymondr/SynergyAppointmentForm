@@ -72,7 +72,6 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         // Uncomment line when you want to show save before leaving message
 //        let backButton = UIBarButtonItem.customBackButton(target: self, action: #selector(backButtonPressed))
 //        navigationItem.leftBarButtonItem = backButton
-
     }
         
     // MARK: PROPERTIES
@@ -90,6 +89,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     var user: UserAccount? {
         UserAccount.currentUser
     }
+    private var textFieldScrollPositions: [UITextField: CGFloat] = [:]
 
 
     // MARK: BUTTONS
@@ -583,6 +583,23 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         reasonTextview.delegate = self
         rateTextfield.delegate = self
         commentsTextview.delegate = self
+        
+        textFieldScrollPositions[firstNameTextfield] = 0
+        textFieldScrollPositions[lastNameTextfield] = scrollOffset + 100
+        textFieldScrollPositions[spouseTextfield] = scrollOffset + 240
+        textFieldScrollPositions[phoneTextfield] = scrollOffset + 240
+        textFieldScrollPositions[emailTextfield] = scrollOffset + 260
+        textFieldScrollPositions[addressTextfield] = scrollOffset + 260
+        textFieldScrollPositions[cityTextfield] = scrollOffset + 260
+        textFieldScrollPositions[stateTextfield] = scrollOffset + 300
+        textFieldScrollPositions[zipTextfield] = scrollOffset + 344
+        textFieldScrollPositions[numberOfWindowsTexfield] = scrollOffset + 550
+        textFieldScrollPositions[energyBillTextfield] = scrollOffset + 550
+        textFieldScrollPositions[yearBuiltTextfield] = scrollOffset + 550
+        textFieldScrollPositions[yearsOwnedTextfield] = scrollOffset + 550
+        textFieldScrollPositions[homeValueTextfield] = scrollOffset + 804
+        textFieldScrollPositions[financeTextfield] = scrollOffset + 930
+        textFieldScrollPositions[rateTextfield] = scrollOffset + 1300
 
     }
     
@@ -645,6 +662,17 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         return true
     }
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if let scrollPosition = textFieldScrollPositions[textField] {
+            scrollToTextField(textField, at: scrollPosition)
+        }
+    }
+
+    private func scrollToTextField(_ textField: UITextField, at scrollPosition: CGFloat) {
+        // Ensure scrollView is properly set up
+        scrollView.scrollTo(yPosition: scrollPosition, animated: true)
+    }
+
     // Changes phone textfield border color
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentLength = (textField.text ?? "").count
