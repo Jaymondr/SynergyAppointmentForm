@@ -288,6 +288,33 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         }
     }
     
+    func createForm() -> Form? {
+        guard let user = user else { return nil }
+        let form = Form(firebaseID: self.firebaseID,
+                        address: addressTextfield.text ?? "",
+                        city: cityTextfield.text ?? "",
+                        comments: commentsTextview.text ?? "",
+                        date: dateTimePicker.date,
+                        email: emailTextfield.text ?? "",
+                        energyBill: energyBillTextfield.text ?? "",
+                        financeOptions: financeTextfield.text ?? "",
+                        firstName: firstNameTextfield.text ?? "",
+                        homeValue: homeValueTextfield.text ?? "--",
+                        lastName: lastNameTextfield.text ?? "",
+                        numberOfWindows: numberOfWindowsTexfield.text ?? "",
+                        phone: phoneTextfield.text ?? "",
+                        rate: rateTextfield.text ?? "",
+                        reason: reasonTextview.text ?? "",
+                        retailQuote: quoteTextView.text ?? "",
+                        spouse: spouseTextfield.text ?? "",
+                        state: stateTextfield.text ?? "",
+                        userID: user.firebaseID,
+                        yearBuilt: yearBuiltTextfield.text ?? "--",
+                        yearsOwned: yearsOwnedTextfield.text ?? "--",
+                        zip: zipTextfield.text ?? ""
+        )
+        return form
+    }
     
     func fetchTeamAppointments(forDays numberOfDays: Int) async {
         if upcomingAppointmentsByDay.isEmpty {
@@ -563,11 +590,10 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == firstNameTextfield {
             lastNameTextfield.becomeFirstResponder()
+            scrollView.scrollTo(yPosition: scrollOffset, animated: true)
         } else if textField == lastNameTextfield {
             spouseTextfield.becomeFirstResponder()
-            if scheduleView.isVisible {
-                scrollView.scrollTo(yPosition: scrollOffset, animated: true)
-            }
+            scrollView.scrollTo(yPosition: scrollOffset, animated: true)
         } else if textField == spouseTextfield {
             phoneTextfield.becomeFirstResponder()
             scrollView.scrollTo(yPosition: scrollOffset + 260, animated: true)
@@ -585,7 +611,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             scrollView.scrollTo(yPosition: scrollOffset + 260, animated: true)
         } else if textField == stateTextfield {
             zipTextfield.becomeFirstResponder()
-            scrollView.scrollDownBy(points: 88, animated: true)
+            scrollView.scrollTo(yPosition: scrollOffset + 344, animated: true)
         } else if textField == zipTextfield {
             numberOfWindowsTexfield.becomeFirstResponder()
             scrollView.scrollTo(yPosition: scrollOffset + 550, animated: true)
@@ -594,26 +620,24 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             scrollView.scrollTo(yPosition: scrollOffset + 550, animated: true)
         } else if textField == energyBillTextfield {
             yearBuiltTextfield.becomeFirstResponder()
-            scrollView.scrollDownBy(points: 48, animated: true)
         } else if textField == yearBuiltTextfield {
             yearsOwnedTextfield.becomeFirstResponder()
-            scrollView.scrollDownBy(points: 60, animated: true)
         } else if textField == yearsOwnedTextfield {
             homeValueTextfield.becomeFirstResponder()
-            scrollView.scrollDownBy(points: 48, animated: true)
+            scrollView.scrollTo(yPosition: scrollOffset + 706, animated: true)
         } else if textField == homeValueTextfield {
             financeTextfield.becomeFirstResponder()
-            scrollView.scrollDownBy(points: 98, animated: true)
+            scrollView.scrollTo(yPosition: scrollOffset + 804, animated: true)
         } else if textField == financeTextfield {
             quoteTextView.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: 1000, animated: true)
+            scrollView.scrollTo(yPosition: scrollOffset + 1000, animated: true)
         } else if textField == quoteTextView {
             reasonTextview.becomeFirstResponder()
         } else if textField == reasonTextview {
             rateTextfield.becomeFirstResponder()
         } else if textField == rateTextfield {
             commentsTextview.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: 1300, animated: true)
+            scrollView.scrollTo(yPosition: scrollOffset + 1300, animated: true)
         }
         else {
             textField.resignFirstResponder()
@@ -621,6 +645,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         return true
     }
     
+    // Changes phone textfield border color
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentLength = (textField.text ?? "").count
         let newLength = currentLength + string.count - range.length
@@ -635,34 +660,6 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         }
 
         return true
-    }
-    
-    func createForm() -> Form? {
-        guard let user = user else { return nil }
-        let form = Form(firebaseID: self.firebaseID,
-                        address: addressTextfield.text ?? "",
-                        city: cityTextfield.text ?? "",
-                        comments: commentsTextview.text ?? "",
-                        date: dateTimePicker.date,
-                        email: emailTextfield.text ?? "",
-                        energyBill: energyBillTextfield.text ?? "",
-                        financeOptions: financeTextfield.text ?? "",
-                        firstName: firstNameTextfield.text ?? "",
-                        homeValue: homeValueTextfield.text ?? "--",
-                        lastName: lastNameTextfield.text ?? "",
-                        numberOfWindows: numberOfWindowsTexfield.text ?? "",
-                        phone: phoneTextfield.text ?? "",
-                        rate: rateTextfield.text ?? "",
-                        reason: reasonTextview.text ?? "",
-                        retailQuote: quoteTextView.text ?? "",
-                        spouse: spouseTextfield.text ?? "",
-                        state: stateTextfield.text ?? "",
-                        userID: user.firebaseID,
-                        yearBuilt: yearBuiltTextfield.text ?? "--",
-                        yearsOwned: yearsOwnedTextfield.text ?? "--",
-                        zip: zipTextfield.text ?? ""
-        )
-        return form
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
