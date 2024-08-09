@@ -135,11 +135,11 @@ class FormTableViewCell: UITableViewCell {
             outcomeLabel.textColor =  UIColor.outcomeYellow
             dropShadowView.layer.applySketchShadow(color: .outcomeYellow, alpha: 0.6, x: 1.3, y: 2.0, blur: 5.0, spread: 0.0)
         case .pending:
-            cellView.layer.borderColor = UIColor.eden.cgColor
-            outcomeView.backgroundColor = UIColor.eden.withAlphaComponent(alpha)
+            cellView.layer.borderColor = UIColor.steel.cgColor
+            outcomeView.backgroundColor = UIColor.steel.withAlphaComponent(alpha)
             outcomeLabel.text = form.outcome.rawValue.uppercased()
-            outcomeLabel.textColor =  UIColor.eden
-            dropShadowView.layer.applySketchShadow(color: .eden, alpha: 0.6, x: 1.3, y: 2.0, blur: 5.0, spread: 0.0)
+            outcomeLabel.textColor =  UIColor.steel
+            dropShadowView.layer.applySketchShadow(color: .steel, alpha: 0.6, x: 1.3, y: 2.0, blur: 5.0, spread: 0.0)
         case .cancelled:
             cellView.layer.borderColor = UIColor.outcomeRed.cgColor
             outcomeView.backgroundColor = UIColor.outcomeRed.withAlphaComponent(alpha)

@@ -92,7 +92,7 @@ class FormDetailViewController: UIViewController {
             let color: UIColor
             switch outcome {
             case .lead: color = UIColor.outcomeYellow
-            case .pending: color = UIColor.eden
+            case .pending: color = UIColor.steel
             case .sold: color = UIColor.outcomeGreen
             case .rescheduled: color = UIColor.outcomePurple
             case .cancelled: color = UIColor.outcomeRed
@@ -271,7 +271,7 @@ class FormDetailViewController: UIViewController {
         case .lead:
             labelColor = UIColor.outcomeYellow.cgColor
         case .pending:
-            labelColor = UIColor.eden.cgColor
+            labelColor = UIColor.steel.cgColor
             
         case .cancelled:
             labelColor = UIColor.outcomeRed.cgColor

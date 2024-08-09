@@ -82,6 +82,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         UserAccount.currentUser
     }
     private var textFieldScrollPositions: [UITextField: CGFloat] = [:]
+    private var textViewScrollPostitions: [UITextView: CGFloat] = [:]
     var scheduleViewScrollOffset: CGFloat {
         if scheduleView.isVisible {
             return 193
@@ -564,7 +565,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         commentsTextView.delegate = self
         
         textFieldScrollPositions[firstNameTextField] = 0
-        textFieldScrollPositions[lastNameTextField] = 100
+        textFieldScrollPositions[lastNameTextField] = 0
         textFieldScrollPositions[spouseTextField] = 100
         textFieldScrollPositions[phoneTextField] = 230
         textFieldScrollPositions[emailTextField] = 260
@@ -579,6 +580,10 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         textFieldScrollPositions[homeValueTextField] = 804
         textFieldScrollPositions[financeTextField] = 930 + branchScrollOffset
         textFieldScrollPositions[rateTextField] = 1300 + branchScrollOffset
+        
+        textViewScrollPostitions[quoteTextView] = 930 + branchScrollOffset
+        textViewScrollPostitions[reasonTextView] = 1000 + branchScrollOffset
+        textViewScrollPostitions[commentsTextView] = 1300 + branchScrollOffset
 
     }
     
@@ -586,54 +591,40 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == firstNameTextField {
             lastNameTextField.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scheduleViewScrollOffset, animated: true)
         } else if textField == lastNameTextField {
             spouseTextField.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scheduleViewScrollOffset, animated: true)
         } else if textField == spouseTextField {
             phoneTextField.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 230, animated: true)
         } else if textField == phoneTextField {
             emailTextField.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 260, animated: true)
         } else if textField == emailTextField {
             addressTextField.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 260, animated: true)
         } else if textField == addressTextField {
             cityTextField.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 260, animated: true)
         } else if textField == cityTextField {
             stateTextField.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 260, animated: true)
         } else if textField == stateTextField {
             zipTextField.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 344, animated: true)
         } else if textField == zipTextField {
             numberOfWindowsTextField.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 550, animated: true)
         } else if textField == numberOfWindowsTextField {
             energyBillTextField.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 550, animated: true)
         } else if textField == energyBillTextField {
             yearBuiltTextField.becomeFirstResponder()
         } else if textField == yearBuiltTextField {
             yearsOwnedTextField.becomeFirstResponder()
         } else if textField == yearsOwnedTextField {
             homeValueTextField.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 706, animated: true)
         } else if textField == homeValueTextField {
             financeTextField.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 804, animated: true)
         } else if textField == financeTextField {
             quoteTextView.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scheduleViewScrollOffset + branchScrollOffset + 1000, animated: true)
         } else if textField == quoteTextView {
             reasonTextView.becomeFirstResponder()
         } else if textField == reasonTextView {
             rateTextField.becomeFirstResponder()
         } else if textField == rateTextField {
             commentsTextView.becomeFirstResponder()
-            scrollView.scrollTo(yPosition: scheduleViewScrollOffset + 1300, animated: true)
         }
         else {
             textField.resignFirstResponder()
@@ -648,7 +639,16 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     }
 
     private func scrollToTextField(_ textField: UITextField, at scrollPosition: CGFloat) {
-        // Ensure scrollView is properly set up
+        scrollView.scrollTo(yPosition: scrollPosition + scheduleViewScrollOffset, animated: true)
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if let scrollPosition = textViewScrollPostitions[textView] {
+            scrollToTextView(textView, at: scrollPosition)
+        }
+    }
+    
+    private func scrollToTextView(_ textView: UITextView, at scrollPosition: CGFloat) {
         scrollView.scrollTo(yPosition: scrollPosition + scheduleViewScrollOffset, animated: true)
     }
 

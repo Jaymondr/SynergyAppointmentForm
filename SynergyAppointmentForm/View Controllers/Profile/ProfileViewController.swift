@@ -194,7 +194,7 @@ class ProfileViewController: UIViewController {
     
     // MARK: - FUNCTIONS
     private func setupView() {
-        navigationController?.navigationBar.tintColor = .eden
+        navigationController?.navigationBar.tintColor = .steel
         guard let user = UserAccount.currentUser else { return }
         
         // BRANCH LABEL
@@ -210,11 +210,11 @@ class ProfileViewController: UIViewController {
         // REPORT CARD
         reportsView.layer.cornerRadius = 8
         reportsView.layer.borderWidth = 1.5
-        reportsView.layer.borderColor = UIColor.outcomeGreen.cgColor
+        reportsView.layer.borderColor = UIColor.steel.cgColor
         
         // PROFILE CARD
         profileView.layer.borderWidth = 1.5
-        profileView.layer.borderColor = UIColor.eden.cgColor
+        profileView.layer.borderColor = UIColor.steel.cgColor
         profileView.backgroundColor = .clear
         // Name
         if let lastNameFirstLetter = user.lastName.first {

@@ -405,7 +405,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                     let color: UIColor
                     switch outcome {
                     case .lead: color = UIColor.outcomeYellow.withAlphaComponent(1.0)
-                    case .pending: color = UIColor.eden
+                    case .pending: color = UIColor.steel
                     case .sold: color = UIColor.outcomeGreen
                     case .rescheduled: color = UIColor.outcomePurple
                     case .cancelled: color = UIColor.outcomeRed
@@ -425,13 +425,13 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
 
         viewNotesAction.backgroundColor = UIColor.noteYellow
         updateLabelAction.backgroundColor = switch form?.outcome {
-        case .pending: UIColor.eden
+        case .pending: UIColor.steel
         case .sold: UIColor.outcomeGreen
         case .rescheduled: UIColor.outcomePurple
         case .cancelled: UIColor.outcomeRed
         case .ran: UIColor.outcomeBlue
         case .ranIncomplete: UIColor.outcomeRed
-        default: UIColor.eden
+        default: UIColor.steel
         }
         
         let configuration = UISwipeActionsConfiguration(actions: [viewNotesAction, updateLabelAction])

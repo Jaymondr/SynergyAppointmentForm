@@ -42,13 +42,13 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="IfX-iS-t8M">
                                                     <rect key="frame" x="36" y="37.333333333333343" width="321" height="55.666666666666657"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="EMPTY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kPG-1j-yaT">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EMPTY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kPG-1j-yaT">
                                                             <rect key="frame" x="118.33333333333334" y="0.0" width="84.333333333333343" height="31.333333333333332"/>
                                                             <fontDescription key="fontDescription" type="italicSystem" pointSize="26"/>
                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="(Tap here or '+' to add new form)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TS8-C5-qvs">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(Tap here or '+' to add new form)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TS8-C5-qvs">
                                                             <rect key="frame" x="35.333333333333329" y="35.333333333333336" width="250.66666666666669" height="20.333333333333336"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
@@ -135,7 +135,7 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="9Ui-wJ-SWd" userLabel="Date Stack View">
                                                             <rect key="frame" x="245.00000000000003" y="57.666666666666657" width="122.33333333333334" height="21"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="XdU-SK-72q">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Wed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="XdU-SK-72q">
                                                                     <rect key="frame" x="0.0" y="0.0" width="29.666666666666668" height="21"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="ldi-6Q-9ja"/>
@@ -145,7 +145,7 @@
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dec 31st" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3i5-Ma-mg9">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Dec 31st" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3i5-Ma-mg9">
                                                                     <rect key="frame" x="31.666666666666682" y="0.0" width="56.666666666666657" height="21"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="BiJ-Hh-dMN"/>
@@ -586,7 +586,7 @@
                                                         </constraints>
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="plain">
-                                                            <imageReference key="image" image="location.fill.viewfinder" catalog="system" symbolScale="large"/>
+                                                            <imageReference key="image" image="location.viewfinder" catalog="system" symbolScale="large"/>
                                                             <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="20"/>
                                                             <color key="baseForegroundColor" name="outcomePurple"/>
                                                         </buttonConfiguration>
@@ -693,7 +693,7 @@
                                                         </constraints>
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="plain">
-                                                            <imageReference key="image" image="doc.fill" catalog="system" symbolScale="large"/>
+                                                            <imageReference key="image" image="doc" catalog="system" symbolScale="large"/>
                                                             <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="18"/>
                                                             <color key="baseForegroundColor" name="noteYellow"/>
                                                         </buttonConfiguration>
@@ -732,7 +732,7 @@
                                                         </constraints>
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="plain">
-                                                            <imageReference key="image" image="doc.fill" catalog="system" symbolScale="large"/>
+                                                            <imageReference key="image" image="doc" catalog="system" symbolScale="large"/>
                                                             <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="18"/>
                                                             <color key="baseForegroundColor" name="noteYellow"/>
                                                         </buttonConfiguration>
@@ -959,7 +959,7 @@
                                                         </constraints>
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="plain">
-                                                            <imageReference key="image" image="xmark.circle.fill" catalog="system" symbolScale="large"/>
+                                                            <imageReference key="image" image="xmark.circle" catalog="system" symbolScale="large"/>
                                                             <color key="baseForegroundColor" name="outcomeRed"/>
                                                         </buttonConfiguration>
                                                         <connections>
@@ -986,7 +986,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wag-vn-jkV">
                                                 <rect key="frame" x="0.0" y="1212.6666666666667" width="373" height="50"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reason for considering new windows" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="217-aR-tjp">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reason For Considering New Windows" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="217-aR-tjp">
                                                         <rect key="frame" x="0.0" y="0.0" width="323" height="50"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                         <color key="textColor" name="steel"/>
@@ -999,7 +999,7 @@
                                                         </constraints>
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="plain">
-                                                            <imageReference key="image" image="xmark.circle.fill" catalog="system" symbolScale="large"/>
+                                                            <imageReference key="image" image="xmark.circle" catalog="system" symbolScale="large"/>
                                                             <color key="baseForegroundColor" name="outcomeRed"/>
                                                         </buttonConfiguration>
                                                         <connections>
@@ -1057,7 +1057,7 @@
                                                         </constraints>
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="plain">
-                                                            <imageReference key="image" image="xmark.circle.fill" catalog="system" symbolScale="large"/>
+                                                            <imageReference key="image" image="xmark.circle" catalog="system" symbolScale="large"/>
                                                             <color key="baseForegroundColor" name="outcomeRed"/>
                                                         </buttonConfiguration>
                                                         <connections>
@@ -1267,7 +1267,7 @@
                                             <constraint firstAttribute="height" constant="45" id="Aaz-Gk-Gl2"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="34"/>
-                                        <color key="textColor" name="eden"/>
+                                        <color key="textColor" name="steel"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Branch name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aFB-UT-szD">
@@ -1296,7 +1296,7 @@
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain">
                                                     <imageReference key="image" image="info.circle" catalog="system" symbolScale="default"/>
-                                                    <color key="baseForegroundColor" name="eden"/>
+                                                    <color key="baseForegroundColor" name="steel"/>
                                                 </buttonConfiguration>
                                                 <connections>
                                                     <action selector="branchInfoButtonPressed:" destination="65z-N3-3XZ" eventType="touchUpInside" id="2MV-hq-46A"/>
@@ -1310,12 +1310,12 @@
                                             <constraint firstAttribute="height" constant="24" id="F6k-mh-mvg"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" name="eden"/>
+                                        <color key="textColor" name="steel"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H5l-Pl-NpC">
                                         <rect key="frame" x="80.666666666666686" y="181" width="200" height="34.333333333333343"/>
-                                        <color key="backgroundColor" name="eden"/>
+                                        <color key="backgroundColor" name="steel"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="jjC-P4-d0m"/>
                                         </constraints>
@@ -1348,7 +1348,7 @@
                                             <constraint firstAttribute="height" constant="20" id="rXK-N2-QmF"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
-                                        <color key="textColor" name="eden"/>
+                                        <color key="textColor" name="steel"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -1681,7 +1681,7 @@
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="plain">
                                                                     <imageReference key="image" image="text.bubble" catalog="system" symbolScale="large"/>
-                                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="20" weight="medium"/>
+                                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="18" weight="medium"/>
                                                                     <color key="baseForegroundColor" name="outcomeGreen"/>
                                                                 </buttonConfiguration>
                                                                 <connections>
@@ -1696,7 +1696,7 @@
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="plain">
                                                                     <imageReference key="image" image="doc" catalog="system" symbolScale="large"/>
-                                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="20" weight="regular"/>
+                                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="18" weight="regular"/>
                                                                     <color key="baseForegroundColor" name="noteYellow"/>
                                                                 </buttonConfiguration>
                                                                 <connections>
@@ -2388,7 +2388,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zwn-35-cP2">
                                                 <rect key="frame" x="0.0" y="1389.6666666666667" width="373" height="30"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reason for considering new windows" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mt3-Sx-Ag8">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reason For Considering New Windows" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mt3-Sx-Ag8">
                                                         <rect key="frame" x="0.0" y="0.0" width="343" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                         <color key="textColor" name="steel"/>
@@ -2630,12 +2630,11 @@
         <image name="doc.fill" catalog="system" width="115" height="128"/>
         <image name="gear" catalog="system" width="128" height="122"/>
         <image name="info.circle" catalog="system" width="128" height="123"/>
-        <image name="location.fill" catalog="system" width="32" height="32"/>
-        <image name="location.fill.viewfinder" catalog="system" width="128" height="115"/>
+        <image name="location.fill" catalog="system" width="128" height="119"/>
         <image name="location.viewfinder" catalog="system" width="128" height="115"/>
-        <image name="message.fill" catalog="system" width="32" height="32"/>
+        <image name="message.fill" catalog="system" width="128" height="114"/>
         <image name="person.crop.circle" catalog="system" width="128" height="123"/>
-        <image name="phone.fill" catalog="system" width="32" height="32"/>
+        <image name="phone.fill" catalog="system" width="128" height="114"/>
         <image name="slider.vertical.3" catalog="system" width="128" height="110"/>
         <image name="tag.fill" catalog="system" width="128" height="118"/>
         <image name="text.bubble" catalog="system" width="128" height="110"/>
@@ -2643,7 +2642,6 @@
         <image name="trelloSmall" width="23.333333969116211" height="23.666666030883789"/>
         <image name="trelloSmallEden" width="23.333333969116211" height="24"/>
         <image name="xmark.circle" catalog="system" width="128" height="123"/>
-        <image name="xmark.circle.fill" catalog="system" width="128" height="123"/>
         <namedColor name="eden">
             <color red="0.14901960784313725" green="0.3843137254901961" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
