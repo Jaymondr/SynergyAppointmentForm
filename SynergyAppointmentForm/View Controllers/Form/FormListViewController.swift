@@ -706,6 +706,11 @@ extension FormListViewController: FormTableViewCellDelegate, MFMessageComposeVie
                 let text = FormController.shared.createHomeownerText(from: form)
                 self.sendTextMessage(form.phone, message: text)
             }
+        
+        let seeConversationAction = UIAlertAction(title: "See Conversation", style: .default) { _ in
+            self.sendTextMessage(form.phone, message: "")
+        }
+
             
         let directorConfirmationAction = UIAlertAction(title: "Director: Confirmation Text", style: .default) { _ in
             let text = FormController.shared.createDirectorConfirmationText(form: form)
@@ -718,8 +723,7 @@ extension FormListViewController: FormTableViewCellDelegate, MFMessageComposeVie
             alertController.addAction(directorConfirmationAction)
         }
 
-            alertController.addAction(homeownerText)
-            alertController.addAction(cancelAction)
+            alertController.addActions([homeownerText, seeConversationAction, cancelAction])
 
             present(alertController, animated: true, completion: nil)
         }
