@@ -567,11 +567,11 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         textFieldScrollPositions[firstNameTextField] = 0
         textFieldScrollPositions[lastNameTextField] = 0
         textFieldScrollPositions[spouseTextField] = 100
-        textFieldScrollPositions[phoneTextField] = 230
-        textFieldScrollPositions[emailTextField] = 260
-        textFieldScrollPositions[addressTextField] = 260
-        textFieldScrollPositions[cityTextField] = 260
-        textFieldScrollPositions[stateTextField] = 260
+        textFieldScrollPositions[phoneTextField] = 225
+        textFieldScrollPositions[emailTextField] = 225
+        textFieldScrollPositions[addressTextField] = 225
+        textFieldScrollPositions[cityTextField] = 225
+        textFieldScrollPositions[stateTextField] = 225
         textFieldScrollPositions[zipTextField] = 344
         textFieldScrollPositions[numberOfWindowsTextField] = 550
         textFieldScrollPositions[energyBillTextField] = 550

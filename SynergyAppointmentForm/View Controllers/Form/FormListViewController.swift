@@ -57,7 +57,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         // SEARCHBAR
         searchBar.delegate = self
         tableView.refreshControl = refreshControl
-//        tableView.separatorStyle = .none
+        tableView.separatorStyle = .none
         searchBar.setImage(UIImage(systemName: "slider.vertical.3"), for: .bookmark, state: .normal)
 
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
@@ -357,7 +357,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
 
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 92
+        return 95
     }
     
     @objc private func refreshData(_ sender: Any) {
