@@ -163,15 +163,15 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             self.stateTextField.text = address?.state
             self.scrollView.scrollTo(yPosition: self.scheduleViewScrollOffset + 350, animated: true)
             
-            var locationMessage: String {
+            var locationTitle: String {
                 if var address = address?.address {
-                    return "✔\(address)"
+                    return "📍\(address)"
                 } else {
                     return "Location Error📍"
                 }
             }
             
-            var locationTitle: String {
+            var locationMessage: String {
                 if address != nil {
                     return "Please Confirm Address"
                 } else {
@@ -179,7 +179,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
                 }
             }
             
-            let alert = UIAlertController(title: locationMessage, message: locationMessage, preferredStyle: .alert)
+            let alert = UIAlertController(title: locationTitle, message: locationMessage, preferredStyle: .alert)
             
             let confirmAction = UIAlertAction(title: "Confirmed", style: .default) { _ in
                 self.scrollView.scrollTo(yPosition: self.scheduleViewScrollOffset + 350, animated: true)
