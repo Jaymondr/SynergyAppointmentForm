@@ -161,15 +161,17 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             self.zipTextField.text = address?.zip
             self.cityTextField.text = address?.city
             self.stateTextField.text = address?.state
+            self.scrollView.scrollTo(yPosition: self.scheduleViewScrollOffset + 350, animated: true)
             let alert = UIAlertController(title: "\(address?.address ?? "LOCATION ERROR: Please fill manually.")", message: "Please Confirm Address", preferredStyle: .alert)
             
-            let confirmAction = UIAlertAction(title: "Confirm", style: .default) { _ in
+            let confirmAction = UIAlertAction(title: "Confirmed", style: .default) { _ in
                 self.scrollView.scrollTo(yPosition: self.scheduleViewScrollOffset + 350, animated: true)
                 self.numberOfWindowsTextField.becomeFirstResponder()
             }
             
             let manuallyEnterAction = UIAlertAction(title: "Enter Manually", style: .default) { _ in
                 // Ensure the text field layout is updated
+                self.addressTextField.becomeFirstResponder()
                 self.addressTextField.layoutIfNeeded()
                 
                 if let address = self.addressTextField.text,
@@ -183,7 +185,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
                         self.addressTextField.selectedTextRange = self.addressTextField.textRange(from: startPosition, to: startPosition)
                     }
                 }
-                self.addressTextField.becomeFirstResponder()
+                self.scrollView.scrollTo(yPosition: self.scheduleViewScrollOffset + 350, animated: true)
             }
             
             let retryAction = UIAlertAction(title: "Retry", style: .cancel) { _ in
