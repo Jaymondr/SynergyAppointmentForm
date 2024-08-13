@@ -162,7 +162,24 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             self.cityTextField.text = address?.city
             self.stateTextField.text = address?.state
             self.scrollView.scrollTo(yPosition: self.scheduleViewScrollOffset + 350, animated: true)
-            let alert = UIAlertController(title: "\(address?.address ?? "LOCATION ERROR: Please fill manually.")", message: "Please Confirm Address", preferredStyle: .alert)
+            
+            var locationMessage: String {
+                if var address = address?.address {
+                    return "✔\(address)"
+                } else {
+                    return "Location Error📍"
+                }
+            }
+            
+            var locationTitle: String {
+                if address != nil {
+                    return "Please Confirm Address"
+                } else {
+                    return "Please Allow Location Access In iPhone Settings"
+                }
+            }
+            
+            let alert = UIAlertController(title: locationMessage, message: locationMessage, preferredStyle: .alert)
             
             let confirmAction = UIAlertAction(title: "Confirmed", style: .default) { _ in
                 self.scrollView.scrollTo(yPosition: self.scheduleViewScrollOffset + 350, animated: true)
