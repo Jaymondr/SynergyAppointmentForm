@@ -164,7 +164,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             self.scrollView.scrollTo(yPosition: self.scheduleViewScrollOffset + 350, animated: true)
             
             var locationTitle: String {
-                if var address = address?.address {
+                if let address = address?.address {
                     return "📍\(address)"
                 } else {
                     return "Location Error📍"
