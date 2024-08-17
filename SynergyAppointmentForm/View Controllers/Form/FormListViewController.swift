@@ -539,11 +539,13 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             
             destinationVC.form = selectedForm
             destinationVC.delegate = self
+            destinationVC.hidesBottomBarWhenPushed = true
         }
         
         if segue.identifier == "toCreateForm",
            let destinationVC = segue.destination as? CreateFormViewController {
                 destinationVC.delegate = self
+            destinationVC.hidesBottomBarWhenPushed = true
         }
         
         if segue.identifier == "toProfileVC",
