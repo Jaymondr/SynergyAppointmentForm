@@ -10,7 +10,7 @@ import CloudKit
 import Firebase
 import FirebaseFirestore
 
-class Form: FirebaseModel {
+class Form: FirebaseModel, Hashable {
     static var collectionKey: String = "Forms"
     var firebaseID: String
     var address: String
@@ -118,6 +118,11 @@ class Form: FirebaseModel {
         self.userID = userID
         self.zip = zip
         self.rate = rate
+    }
+        
+    // Conformance to Hashable
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(firebaseID)
     }
     
     var firebaseRepresentation: [String : FirestoreType] {

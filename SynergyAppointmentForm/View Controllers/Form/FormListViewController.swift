@@ -76,9 +76,11 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: PROPERTIES
     var forms: [Form] = []
+    var filteredForms: [Form] = []
     var upcomingAppointmentForms: [Form] = []
     var pastAppointmentForms: [Form] = []
     var sortedAppointmentForms: [Form] = []
+    var isFiltering: Bool = false
     
     var formState: FormState {
         if forms.isEmpty {
@@ -112,9 +114,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func loadForms(for firebaseIDs: [String]) {
-        var filteredForms: [Form] = []
         let dispatchGroup = DispatchGroup()
-        
         for firebaseID in firebaseIDs {
             dispatchGroup.enter()
             FirebaseController.shared.getForms(for: firebaseID) { forms, error in
@@ -124,17 +124,18 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                 if let error = error {
                     print("Error fetching forms: \(error)")
                 } else {
-                    filteredForms.append(contentsOf: forms)
+                    self.filteredForms = forms
                 }
             }
         }
         
         dispatchGroup.notify(queue: .main) {
-            self.splitForms(forms: filteredForms)
+            self.splitForms(forms: self.filteredForms)
         }
     }
     
     func startUpFunctions() {
+        isFiltering = false
         // Check for user
         if UserAccount.currentUser == nil {
             presentLoginChoiceVC()
@@ -188,10 +189,12 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
+        isFiltering = true
         print("handle search bar button click")
         guard let user = UserAccount.currentUser, let branch = user.branch else { return }
         FirebaseController.shared.getActiveUsers(for: branch) { users, error in
             if let error = error {
+                self.isFiltering = false
                 print("Error: \(error)")
                 return
             }
@@ -247,6 +250,13 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func filterForms(for searchText: String) {
+        var forms: [Form] {
+            if isFiltering {
+                return self.filteredForms
+            } else {
+                return self.forms
+            }
+        }
         if searchText.isEmpty {
             splitForms(forms: forms)
         } else {
@@ -362,6 +372,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     
     @objc private func refreshData(_ sender: Any) {
         loadForms()
+        isFiltering = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.65) {
             self.refreshControl.endRefreshing()
         }
@@ -587,14 +598,21 @@ extension FormListViewController: NotesViewDelegate {
 
 extension FormListViewController: CreateFormViewDelegate {
     func didAddNewForm(_ form: Form) {
-        if !forms.contains(where: { $0.firebaseID == form.firebaseID }) {
+        if let index = forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {
+            // Update the existing form with the new form
+            forms[index] = form
+            print("Form updated at index \(index)")
+        } else {
+            // Add new form
             print(forms.count)
             forms.append(form)
             print(forms.count)
-            splitForms(forms: forms)
-            tableView.reloadData()
         }
+
+        splitForms(forms: forms)
+        tableView.reloadData()
     }
+    
     
     func didUpdateNew(_ form: Form) {
         if !forms.contains(where: { $0.firebaseID == form.firebaseID }),
