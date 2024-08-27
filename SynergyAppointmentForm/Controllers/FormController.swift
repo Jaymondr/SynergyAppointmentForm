@@ -96,11 +96,20 @@ class FormController {
     
     func getCompletedFormText(from form: Form) -> String {
         guard let user = UserAccount.currentUser else { return "" }
+        var teamName: String {
+            if let userDefaultsDict = UserDefaults.standard.dictionary(forKey: UserAccount.kUser) {
+                if let teamName = userDefaultsDict[UserAccount.CodingKeys.teamName.rawValue] as? String {
+                     return "- \(teamName)"
+                }
+            }
+            return ""
+        }
+
         if user.branch == .raleigh {
             // RALEIGHS FORM LAYOUT
             let formString =
     """
-    \(user.firstName)'s APPT
+    \(user.firstName)'s APPT \(teamName)
     (Created Date: \(Date().formattedDayMonthYear()))
     
     Appointment for: \(form.date.formattedDay()) \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased()), \(form.date.formattedMonth()) \(form.date.formattedDayNumber())
