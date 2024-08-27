@@ -42,13 +42,13 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="IfX-iS-t8M">
                                                     <rect key="frame" x="36" y="37.333333333333343" width="321" height="55.666666666666657"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EMPTY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kPG-1j-yaT">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="EMPTY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kPG-1j-yaT">
                                                             <rect key="frame" x="118.33333333333334" y="0.0" width="84.333333333333343" height="31.333333333333332"/>
                                                             <fontDescription key="fontDescription" type="italicSystem" pointSize="26"/>
                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(Tap here or '+' to add new form)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TS8-C5-qvs">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="(Tap here or '+' to add new form)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TS8-C5-qvs">
                                                             <rect key="frame" x="35.333333333333329" y="35.333333333333336" width="250.66666666666669" height="20.333333333333336"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
@@ -425,7 +425,7 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date/Time: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="81M-wk-NM7">
                                                         <rect key="frame" x="0.0" y="0.0" width="89.666666666666671" height="50"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="HHr-JJ-iOb">
@@ -464,7 +464,7 @@
                                                             <constraint firstAttribute="width" constant="85" id="LKX-1E-raO"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="gcG-Er-mtO">
@@ -487,7 +487,7 @@
                                                             <constraint firstAttribute="width" constant="85" id="qwM-gF-q1A"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="B6u-ox-gua">
@@ -510,7 +510,7 @@
                                                             <constraint firstAttribute="width" constant="85" id="Hdr-Jz-xIN"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Spouse" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="x5m-f3-aZ7">
@@ -563,7 +563,7 @@
                                                             <constraint firstAttribute="width" constant="60" id="cmj-mv-uzt"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="GdM-Sc-2B5">
@@ -601,7 +601,7 @@
                                                             <constraint firstAttribute="width" constant="60" id="qNF-pS-0C8"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="3Xi-t9-FUK">
@@ -640,7 +640,7 @@
                                                             <constraint firstAttribute="width" constant="60" id="lfu-Ar-Vqn"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Street" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="W4H-HC-dP7">
@@ -678,7 +678,7 @@
                                                             <constraint firstAttribute="width" constant="60" id="byv-yW-YeL"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="City" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iqC-q9-dAm">
@@ -701,7 +701,7 @@
                                                             <constraint firstAttribute="width" constant="60" id="rA9-Tf-fJV"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="State" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7HF-df-Hto">
@@ -724,7 +724,7 @@
                                                             <constraint firstAttribute="width" constant="60" id="c15-d1-8aL"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Zip" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5Bw-l7-nQ9">
@@ -777,7 +777,7 @@
                                                             <constraint firstAttribute="width" constant="155" id="kmh-CR-nS6"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Number of Windows" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Prb-yK-aEB">
@@ -800,7 +800,7 @@
                                                             <constraint firstAttribute="width" constant="155" id="7Fm-qc-lG1"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Average Energy Bill" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9uu-sJ-fOJ">
@@ -823,7 +823,7 @@
                                                             <constraint firstAttribute="width" constant="155" id="LuH-fF-GoD"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Year Built" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4Dg-iL-94c">
@@ -846,7 +846,7 @@
                                                             <constraint firstAttribute="width" constant="155" id="z8o-Ph-3qM"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Years Owned" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="h8z-1j-4Hi">
@@ -869,7 +869,7 @@
                                                             <constraint firstAttribute="width" constant="155" id="Gfb-us-zV9"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Home Value" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="o8R-pf-FIb">
@@ -922,7 +922,7 @@
                                                             <constraint firstAttribute="width" constant="155" id="RWt-wR-aCP"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Financing Options" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MyG-fj-sSM">
@@ -942,7 +942,7 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Retail Quote" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7m-KU-1Ws">
                                                         <rect key="frame" x="0.0" y="0.0" width="343" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O4P-Y4-Lqj">
@@ -982,7 +982,7 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reason For Considering New Windows" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="217-aR-tjp">
                                                         <rect key="frame" x="0.0" y="0.0" width="323" height="50"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tXK-VE-EgF">
@@ -1020,7 +1020,7 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rating (1-10):     " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JvC-vQ-Snb">
                                                         <rect key="frame" x="0.0" y="0.0" width="114.66666666666667" height="40"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Rating (REQUIRED)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ts2-ZY-Beg">
@@ -1040,7 +1040,7 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tvJ-JT-dYH">
                                                         <rect key="frame" x="0.0" y="0.0" width="323" height="50"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hdt-t3-rfF">
@@ -1133,7 +1133,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="SAVE">
-                                    <color key="baseForegroundColor" name="steel"/>
+                                    <color key="baseForegroundColor" name="Steel"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="saveButtonPressed:" destination="mzI-Pq-KQL" eventType="touchUpInside" id="9U8-Q6-VpT"/>
@@ -1174,38 +1174,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uvv-HJ-5Iz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5565.6488549618316" y="-235.21126760563382"/>
-        </scene>
-        <!--Item 2-->
-        <scene sceneID="weM-gZ-6sA">
-            <objects>
-                <viewController id="mkP-D0-d03" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Uwo-zb-pty">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="OL6-KC-tXN"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="Vxd-Jb-b3V"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="NB2-dN-1hm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="7188.5496183206105" y="276.76056338028172"/>
-        </scene>
-        <!--Item 1-->
-        <scene sceneID="pUx-5e-p9K">
-            <objects>
-                <viewController id="W4p-6d-gKG" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="9OO-Io-Tm7">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="NDP-Mj-N6x"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="frf-E2-YnC"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LcW-FI-Fx4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="6262" y="-499"/>
         </scene>
         <!--Tab Bar View Controller-->
         <scene sceneID="XNY-3j-tqT">
@@ -1311,7 +1279,7 @@
                                             <constraint firstAttribute="height" constant="45" id="Aaz-Gk-Gl2"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="34"/>
-                                        <color key="textColor" name="steel"/>
+                                        <color key="textColor" name="Steel"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Branch name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aFB-UT-szD">
@@ -1340,7 +1308,7 @@
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain">
                                                     <imageReference key="image" image="info.circle" catalog="system" symbolScale="default"/>
-                                                    <color key="baseForegroundColor" name="steel"/>
+                                                    <color key="baseForegroundColor" name="Steel"/>
                                                 </buttonConfiguration>
                                                 <connections>
                                                     <action selector="branchInfoButtonPressed:" destination="65z-N3-3XZ" eventType="touchUpInside" id="2MV-hq-46A"/>
@@ -1354,12 +1322,12 @@
                                             <constraint firstAttribute="height" constant="24" id="F6k-mh-mvg"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" name="steel"/>
+                                        <color key="textColor" name="Steel"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H5l-Pl-NpC">
                                         <rect key="frame" x="80.666666666666686" y="181" width="200" height="34.333333333333343"/>
-                                        <color key="backgroundColor" name="steel"/>
+                                        <color key="backgroundColor" name="Steel"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="jjC-P4-d0m"/>
                                         </constraints>
@@ -1392,7 +1360,7 @@
                                             <constraint firstAttribute="height" constant="20" id="rXK-N2-QmF"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
-                                        <color key="textColor" name="steel"/>
+                                        <color key="textColor" name="Steel"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -1430,13 +1398,13 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Appointments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WtG-lM-oRH">
                                                 <rect key="frame" x="0.0" y="0.0" width="168.66666666666666" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                                                <nil key="textColor"/>
+                                                <color key="textColor" name="Steel"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Turnover" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H0H-29-nxc">
                                                 <rect key="frame" x="176.66666666666663" y="0.0" width="168.33333333333337" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                                                <nil key="textColor"/>
+                                                <color key="textColor" name="Steel"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -1585,7 +1553,7 @@
                                             <constraint firstAttribute="height" constant="34" id="qai-wI-Avp"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" name="Steel"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aep-UY-0qz">
@@ -1595,7 +1563,9 @@
                                             <constraint firstAttribute="height" constant="34" id="OPb-Yv-Rtm"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" image="slider.vertical.3" catalog="system"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="slider.vertical.3" catalog="system">
+                                            <color key="baseForegroundColor" name="outcomeBlue"/>
+                                        </buttonConfiguration>
                                         <connections>
                                             <action selector="filterButtonPressed:" destination="65z-N3-3XZ" eventType="touchUpInside" id="Sli-KE-J3h"/>
                                         </connections>
@@ -1638,6 +1608,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="naw-jl-VWL">
                         <barButtonItem key="rightBarButtonItem" image="gear" catalog="system" id="SUE-8g-6UK">
+                            <color key="tintColor" name="outcomeBlue"/>
                             <connections>
                                 <action selector="settingsBarButtonPressed:" destination="65z-N3-3XZ" id="esa-7x-kiq"/>
                             </connections>
@@ -1857,7 +1828,7 @@
                                                             <constraint firstAttribute="width" constant="95" id="qfC-be-1SE"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="15" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="X4p-ef-jzr">
@@ -1935,7 +1906,7 @@
                                                             <constraint firstAttribute="width" constant="85" id="Vjg-PF-kX3"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="co6-i7-kPk">
@@ -1958,7 +1929,7 @@
                                                             <constraint firstAttribute="width" constant="85" id="u8Q-Ul-u2o"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Spouse" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="rEb-t7-Nli">
@@ -2012,7 +1983,7 @@
                                                             <constraint firstAttribute="width" constant="55" id="X1c-CS-tSh"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="v7m-5m-1NL">
@@ -2050,7 +2021,7 @@
                                                             <constraint firstAttribute="width" constant="55" id="3Be-gv-l9b"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="dSo-9I-5dP">
@@ -2088,7 +2059,7 @@
                                                             <constraint firstAttribute="width" constant="55" id="j8B-6u-ndi"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Street" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Nq9-se-clN">
@@ -2126,7 +2097,7 @@
                                                             <constraint firstAttribute="width" constant="55" id="apn-aN-Q4H"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="City" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FPV-Ih-DIi">
@@ -2149,7 +2120,7 @@
                                                             <constraint firstAttribute="width" constant="55" id="aNC-Pu-jbn"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="State" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9AB-vd-aGB">
@@ -2172,7 +2143,7 @@
                                                             <constraint firstAttribute="width" constant="55" id="mxy-9i-S3k"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Zip" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bss-iL-rSd">
@@ -2225,7 +2196,7 @@
                                                             <constraint firstAttribute="width" constant="150" id="W6j-HT-xa4"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Number of Windows" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g5d-St-Nxe">
@@ -2249,7 +2220,7 @@
                                                             <constraint firstAttribute="width" constant="150" id="ixq-7Y-2BF"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Average Energy Bill" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OYp-IH-oGU">
@@ -2273,7 +2244,7 @@
                                                             <constraint firstAttribute="width" constant="150" id="suD-CW-CgE"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Year Built" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EIn-Fl-zLO">
@@ -2297,7 +2268,7 @@
                                                             <constraint firstAttribute="width" constant="150" id="qEA-45-X3J"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Years Owned" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="emz-B6-m47">
@@ -2321,7 +2292,7 @@
                                                             <constraint firstAttribute="width" constant="150" id="bnp-f1-zXI"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Home Value" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aaJ-sh-6om">
@@ -2375,7 +2346,7 @@
                                                             <constraint firstAttribute="width" constant="150" id="80L-Dx-rwe"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="OPTIONAL" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Rfj-Oe-38z">
@@ -2396,7 +2367,7 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Retail Quote" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ylR-7Y-HPe">
                                                         <rect key="frame" x="0.0" y="0.0" width="343" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KGQ-dh-lgS">
@@ -2435,7 +2406,7 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reason For Considering New Windows" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mt3-Sx-Ag8">
                                                         <rect key="frame" x="0.0" y="0.0" width="343" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <color key="textColor" name="steel"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BIz-NS-mO9">
@@ -2474,7 +2445,7 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rating (1-10):    " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sG1-Mo-dvX">
                                                         <rect key="frame" x="0.0" y="0.0" width="111" height="40"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <nil key="textColor"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Rating (REQUIRED)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JZF-Al-DTV">
@@ -2495,7 +2466,7 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h5N-jh-vbd">
                                                         <rect key="frame" x="0.0" y="0.0" width="343" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <nil key="textColor"/>
+                                                        <color key="textColor" name="Steel"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rsQ-5I-nRa">
@@ -2595,7 +2566,7 @@
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="SAVE">
-                                    <color key="titleColor" name="steel"/>
+                                    <color key="titleColor" name="Steel"/>
                                 </state>
                                 <connections>
                                     <action selector="saveButtonPressed:" destination="ncR-vK-5yf" eventType="touchUpInside" id="lUi-b9-8Ql"/>
