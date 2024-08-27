@@ -1131,10 +1131,11 @@
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="TBu-Aa-7Bb">
                                 <rect key="frame" x="311.66666666666669" y="5" width="65.333333333333314" height="34.333333333333336"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="SAVE">
-                                    <color key="baseForegroundColor" name="Steel"/>
-                                </buttonConfiguration>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="SAVE">
+                                    <color key="titleColor" name="Steel"/>
+                                </state>
                                 <connections>
                                     <action selector="saveButtonPressed:" destination="mzI-Pq-KQL" eventType="touchUpInside" id="9U8-Q6-VpT"/>
                                 </connections>
