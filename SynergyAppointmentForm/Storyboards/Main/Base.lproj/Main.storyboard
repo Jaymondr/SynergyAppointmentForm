@@ -2637,11 +2637,11 @@
             </objects>
             <point key="canvasLocation" x="1833" y="-275"/>
         </scene>
-        <!--Settings-->
+        <!--Profile-->
         <scene sceneID="DHF-NL-RCY">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ygz-CO-m2h" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" selectedImage="gearshape" catalog="system" id="qNr-mI-WVv">
+                    <tabBarItem key="tabBarItem" title="Profile" image="person" catalog="system" id="qNr-mI-WVv">
                         <color key="badgeColor" name="Steel"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -2669,11 +2669,11 @@
         <image name="doc.fill" catalog="system" width="115" height="128"/>
         <image name="doc.plaintext" catalog="system" width="115" height="128"/>
         <image name="gear" catalog="system" width="128" height="122"/>
-        <image name="gearshape" catalog="system" width="128" height="123"/>
         <image name="info.circle" catalog="system" width="128" height="123"/>
         <image name="location.fill" catalog="system" width="128" height="119"/>
         <image name="location.viewfinder" catalog="system" width="128" height="115"/>
         <image name="message.fill" catalog="system" width="128" height="114"/>
+        <image name="person" catalog="system" width="128" height="121"/>
         <image name="phone.fill" catalog="system" width="128" height="114"/>
         <image name="slider.vertical.3" catalog="system" width="128" height="110"/>
         <image name="tag.fill" catalog="system" width="128" height="118"/>
