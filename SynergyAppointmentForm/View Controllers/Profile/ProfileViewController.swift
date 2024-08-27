@@ -67,12 +67,7 @@ class ProfileViewController: UIViewController {
     }
     
     // MARK: - PROPERTIES
-    var sales: Int = 0
-    var forms: [Form] = [] {
-        didSet {
-            sales = forms.filter( { $0.outcome == .sold } ).count
-        }
-    }
+    var forms: [Form] = []
     
     
     // MARK: - BUTTONS
@@ -229,9 +224,6 @@ class ProfileViewController: UIViewController {
         branchLabel.text = user.branch?.rawValue ?? ""
         // Email
         emailLabel.text = UserAccount.currentUser?.email ?? ""
-        // Sales
-        salesLabel.text = "Sales: \(sales)"
-
 
         // SIGN IN CARD
         signInView.layer.borderWidth = 1.5
@@ -248,8 +240,8 @@ class ProfileViewController: UIViewController {
                 print("Error: \(error)")
             }
             
-            // Get reports for non pending forms only
-            let nonPendingForms = forms.filter({ $0.outcome != .pending })
+            // Get reports for non pending and non lead forms only
+            let nonPendingForms = forms.filter({ $0.outcome != .pending && $0.outcome != .lead })
             
             // ALL
             self.appointmentsLabel.text = "Appointments (\(forms.count))"
@@ -262,6 +254,7 @@ class ProfileViewController: UIViewController {
             let soldCount = ReportController.shared.getNumber(of: .sold, from: nonPendingForms)
             self.salesRate.text = ReportController.shared.calculateTurnoverRate(for: nonPendingForms, outcome: .sold) + "%"
             self.soldNumber.text = "Sold (\(soldCount))"
+            self.salesLabel.text = "Sales: \(soldCount)"
             
             // RAN
             let ranCount = ReportController.shared.getNumber(of: .ran, from: nonPendingForms)
