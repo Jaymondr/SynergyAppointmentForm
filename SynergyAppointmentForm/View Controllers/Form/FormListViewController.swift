@@ -396,7 +396,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                     let action = UIAlertAction(title: outcome.rawValue.capitalized, style: .default) { _ in
                         form.outcome = outcome
                         if outcome == .sold {
-                            UIAlertController.presentDismissingAlert(title: "🎊CONGRATS!🎊", dismissAfter: 3.0)
+                            UIAlertController.presentDismissingAlert(title: "🎊CONGRATS!🎊", dismissAfter: 2.3)
                             self?.vibrateForSuccess()
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                                 self?.confettiView.isVisible = true
