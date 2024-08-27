@@ -1327,7 +1327,7 @@
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H5l-Pl-NpC">
                                         <rect key="frame" x="80.666666666666686" y="181" width="200" height="34.333333333333343"/>
-                                        <color key="backgroundColor" name="Steel"/>
+                                        <color key="backgroundColor" name="outcomeBlue"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="jjC-P4-d0m"/>
                                         </constraints>

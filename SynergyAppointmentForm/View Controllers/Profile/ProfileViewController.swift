@@ -62,13 +62,13 @@ class ProfileViewController: UIViewController {
         setupView()
         getReports(for: nil)
         filterButton.tintColor = .gray
-
+        
         
     }
     
     // MARK: - PROPERTIES
     var forms: [Form] = []
-    
+    var user = UserAccount.currentUser
     
     // MARK: - BUTTONS
     @IBAction func settingsBarButtonPressed(_ sender: Any) {
@@ -76,7 +76,7 @@ class ProfileViewController: UIViewController {
         let deleteAccountAction = UIAlertAction(title: "DELETE ACCOUNT", style: .destructive) { _ in
             guard let user = UserAccount.currentUser else { return }
             guard MFMailComposeViewController.canSendMail() else { return }
-
+            
             let bodyText = "Please delete my account.\nName: \(user.firstName + " " + user.lastName)\nID: \(user.firebaseID)"
             
             let mailComposer = MFMailComposeViewController()
@@ -84,14 +84,14 @@ class ProfileViewController: UIViewController {
             mailComposer.setToRecipients(["coretechniquellc@gmail.com"])
             mailComposer.setSubject("Delete Account")
             mailComposer.setMessageBody(bodyText, isHTML: false)
-
+            
             self.present(mailComposer, animated: true, completion: nil)
         }
         
         // FEEDBACK
         let feedbackAction = UIAlertAction(title: "Submit Feedback", style: .default) { _ in
             guard MFMailComposeViewController.canSendMail() else { return }
-
+            
             let bodyText = "Please enter feedback here... "
             
             let mailComposer = MFMailComposeViewController()
@@ -99,7 +99,7 @@ class ProfileViewController: UIViewController {
             mailComposer.setToRecipients(["coretechniquellc@gmail.com"])
             mailComposer.setSubject("User Feedback")
             mailComposer.setMessageBody(bodyText, isHTML: false)
-
+            
             self.present(mailComposer, animated: true, completion: nil)
         }
         
@@ -108,9 +108,14 @@ class ProfileViewController: UIViewController {
             self.showBranchSelectionAlert()
         }
         
+        // TEAM
+        let teamAction = UIAlertAction(title: "Choose Team", style: .default) { _ in
+            self.showTeamSelectionAlert()
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
-        alert.addActions([branchAction, feedbackAction, deleteAccountAction, cancelAction])
+        alert.addActions([branchAction, teamAction, feedbackAction, deleteAccountAction, cancelAction])
         self.present(alert, animated: true)
         
     }
@@ -130,12 +135,12 @@ class ProfileViewController: UIViewController {
                 FirebaseController.shared.getUser(with: result.user.uid) { user, error in
                     if let error = error {
                         print("Error getting user info from firebas: \(error). Error ")
-                    return
+                        return
                     }
                     guard  let user = user else { print("No User"); return }
-                        // SAVE USER INFORMATION TO USER DEFAULTS
-                        let userDefaultsData = user.toUserDefaultsDictionary()
-                        UserDefaults.standard.set(userDefaultsData, forKey: UserAccount.kUser)
+                    // SAVE USER INFORMATION TO USER DEFAULTS
+                    let userDefaultsData = user.toUserDefaultsDictionary()
+                    UserDefaults.standard.set(userDefaultsData, forKey: UserAccount.kUser)
                     
                     UIAlertController.presentDismissingAlert(title: "\(user.firstName) signed in.", dismissAfter: 1.2)
                     self.configureViewForState()
@@ -162,7 +167,7 @@ class ProfileViewController: UIViewController {
             }
         }
     }
-
+    
     @IBAction func branchInfoButtonPressed(_ sender: Any) {
         showBranchSelectionAlert()
     }
@@ -197,7 +202,7 @@ class ProfileViewController: UIViewController {
         if let branch = user.branch {
             emptyBranchStackView.isHidden = true
             branchLabel.text = branch.rawValue
-
+            
         } else {
             branchLabel.isHidden = true
             emptyBranchStackView.isVisible = true
@@ -224,7 +229,7 @@ class ProfileViewController: UIViewController {
         branchLabel.text = user.branch?.rawValue ?? ""
         // Email
         emailLabel.text = UserAccount.currentUser?.email ?? ""
-
+        
         // SIGN IN CARD
         signInView.layer.borderWidth = 1.5
         signInView.layer.borderColor = UIColor.outcomeBlue.cgColor
@@ -331,12 +336,38 @@ class ProfileViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    func showTeamSelectionAlert() {
+        let alert = UIAlertController(title: "Select Team", message: nil, preferredStyle: .actionSheet)
+        guard let user = user else { return }
+        FirebaseController.shared.getTeamsForBranch(branch: user.branch) { teams, error in
+            for team in teams {
+                if let team {
+                    let teamAction = UIAlertAction(title: "\(team.name).", style: .default) { _ in
+                        self.handleTeamSelection(selectedTeam: team)
+                    }
+                    alert.addAction(teamAction)
+                }
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+            
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true)
+        }
+    }
+    
     func handleBranchSelection(_ selectedBranch: Branch) {
         print("Selected Branch: \(selectedBranch.rawValue)")
         UserAccountController.shared.updateBranch(newBranch: selectedBranch)
         branchLabel.text = selectedBranch.rawValue
         emptyBranchStackView.isHidden = true
         branchLabel.isVisible = true
+    }
+    
+    func handleTeamSelection(selectedTeam: Team) {
+        print("Selected Team: \(selectedTeam.name)")
+        
+        // Add userID to Team and remove from old team
+        // Add TeamID to User Account
     }
 }
 

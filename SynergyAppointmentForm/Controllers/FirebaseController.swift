@@ -209,6 +209,29 @@ class FirebaseController {
     
     
     // MARK: - TEAMS
+    func getTeamsForBranch(branch: Branch?, completion: @escaping (_ teams: [Team?], _ error: Error?) -> Void) {
+        if let branch = branch {
+            db.collection(Team.kCollectionKey).whereField(Team.CodingKeys.branch.rawValue, isEqualTo: branch.rawValue).getDocuments { snap, error in
+                if let error = error {
+                    print("Error: \(error)")
+                    completion([], error)
+                }
+                
+                var teams: [Team?] = []
+                guard let snap = snap else { print("No snap"); completion([], nil); return }
+                let documents = snap.documents
+                
+                for document in documents {
+                    let team = Team(firebaseData: document.data(), firebaseID: document.documentID)
+                    teams.append(team)
+                }
+                completion(teams, nil)
+            }
+        } else {
+            print("No branch")
+        }
+    }
+    
     func getTeam(teamID: String, completion: @escaping (_ team: Team?, _ error: Error?) -> Void) {
         db.collection(Team.kCollectionKey).document(teamID).getDocument { snap, error in
             if let error = error {

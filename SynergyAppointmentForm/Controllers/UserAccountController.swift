@@ -15,10 +15,10 @@ class UserAccountController {
 
     var teamName: String? {
         get {
-            return UserDefaults.standard.string(forKey: Team.kTeamName)
+            return UserDefaults.standard.string(forKey: Team.CodingKeys.name.rawValue)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: Team.kTeamName)
+            UserDefaults.standard.set(newValue, forKey: Team.CodingKeys.name.rawValue)
         }
     }
     

@@ -173,12 +173,12 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             if currentUser.teamID != teamID {
                 // Update UserDefaults to match firebase
                 UserAccountController.shared.updateTeamID(to: teamID)
-                UserDefaults.standard.set(teamID, forKey: Team.kTeamID)
+                UserDefaults.standard.set(teamID, forKey: Team.CodingKeys.teamID.rawValue)
                                 
                 // Fetch team name and update User Defaults
                 FirebaseController.shared.getTeamName(teamID: teamID) { teamName, error in
                     UserAccountController.shared.teamName = teamName 
-                    let userDefaultsTeamName = UserDefaults.standard.string(forKey: Team.kTeamName)
+                    let userDefaultsTeamName = UserDefaults.standard.string(forKey: Team.CodingKeys.name.rawValue)
                     UIAlertController.presentDismissingAlert(title: "\(userDefaultsTeamName ?? "Team/Name")", dismissAfter: 2.0)
                 }
             }
