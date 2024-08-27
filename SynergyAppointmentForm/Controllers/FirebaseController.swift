@@ -209,6 +209,49 @@ class FirebaseController {
     
     
     // MARK: - TEAMS
+    func removeUserFromTeam(userID: String, oldTeamID: String?, completion: @escaping (Bool, Error?) -> Void) {
+        if let oldTeamID {
+            db.collection(Team.kCollectionKey).document(oldTeamID).updateData([
+                Team.CodingKeys.memberIDs.rawValue: FieldValue.arrayRemove([userID])
+            ]) { error in
+                if let error = error {
+                    print("Error: \(error)")
+                    completion(false, error)
+                } else {
+                    print("Removed user id from old team: \(oldTeamID)")
+                    completion(true, nil)
+                }
+            }
+        } else {
+            print("No old team ID")
+        }
+    }
+
+    func addUserToTeam(userID: String, teamID: String, completion: @escaping (Bool, Error?) -> Void) {
+        db.collection(Team.kCollectionKey).document(teamID).updateData([
+            Team.CodingKeys.memberIDs.rawValue: FieldValue.arrayUnion([userID])
+        ]) { error in
+            if let error = error {
+                completion(false, error)
+            } else {
+                completion(true, nil)
+            }
+        }
+    }
+
+    func updateUserTeam(userID: String, teamID: String, completion: @escaping (Bool, Error?) -> Void) {
+        db.collection(UserAccount.collectionKey).document(userID).updateData([
+            UserAccount.CodingKeys.teamID.rawValue: teamID
+        ]) { error in
+            if let error = error {
+                completion(false, error)
+            } else {
+                completion(true, nil)
+            }
+        }
+    }
+    
+    /// Returns teams belonging to specific branch
     func getTeamsForBranch(branch: Branch?, completion: @escaping (_ teams: [Team?], _ error: Error?) -> Void) {
         if let branch = branch {
             db.collection(Team.kCollectionKey).whereField(Team.CodingKeys.branch.rawValue, isEqualTo: branch.rawValue).getDocuments { snap, error in
@@ -232,6 +275,7 @@ class FirebaseController {
         }
     }
     
+    /// Gets team object using teamID
     func getTeam(teamID: String, completion: @escaping (_ team: Team?, _ error: Error?) -> Void) {
         db.collection(Team.kCollectionKey).document(teamID).getDocument { snap, error in
             if let error = error {
@@ -250,7 +294,7 @@ class FirebaseController {
         }
     }
     
-    
+    /// Gets team name from team object in firestore using teamID
     func getTeamName(teamID: String, completion: @escaping (_ teamName: String?, _ error: Error?) -> Void) {
         db.collection(Team.kCollectionKey).document(teamID).getDocument { snap, error in
             if let error = error {
@@ -267,7 +311,7 @@ class FirebaseController {
         }
     }
 
-    
+    /// Asynchornously gets team using teamID
     func getTeamAsync(teamID: String) async throws -> Team {
         let document = db.collection(Team.kCollectionKey).document(teamID)
         
@@ -284,7 +328,7 @@ class FirebaseController {
         }
     }
 
-    
+    /// Asynchronously gets team name using teamID
     func getTeamNameAsync(teamID: String) async throws -> String {
         let document = db.collection(Team.kCollectionKey).document(teamID)
         
@@ -301,7 +345,7 @@ class FirebaseController {
         }
     }
     
-
+    /// Gets the appointments of team members for a given team
     func getTeamAppointmentsAsync(for team: Team?) async throws -> [Form] {
         guard let team = team else {
             throw NSError(domain: "Domain Error", code: 400, userInfo: [NSLocalizedDescriptionKey: "No team provided"])

@@ -337,15 +337,43 @@ class ProfileViewController: UIViewController {
     }
     
     func showTeamSelectionAlert() {
-        let alert = UIAlertController(title: "Select Team", message: nil, preferredStyle: .actionSheet)
-        guard let user = user else { return }
+        var teamName: String {
+            // Retrieve the dictionary from UserDefaults
+            if let userDefaultsDict = UserDefaults.standard.dictionary(forKey: UserAccount.kUser) {
+                // Extract the teamName from the dictionary
+                if let teamName = userDefaultsDict[UserAccount.CodingKeys.teamName.rawValue] as? String {
+                    // Assign the teamName to a variable
+                    print("Retrieved team name: \(teamName)")
+                     return "Current: \(teamName)"
+                } else {
+                    print("teamName key not found or is not a String.")
+                    return "No team"
+                }
+            } else {
+                print("Dictionary for key \(UserAccountController.kTeamName) not found.")
+                return "No team"
+            }
+        }
+        
+        let alert = UIAlertController(title: "Select Team", message: teamName, preferredStyle: .actionSheet)
+        guard let user = UserAccount.currentUser else { return }
         FirebaseController.shared.getTeamsForBranch(branch: user.branch) { teams, error in
             for team in teams {
                 if let team {
-                    let teamAction = UIAlertAction(title: "\(team.name).", style: .default) { _ in
-                        self.handleTeamSelection(selectedTeam: team)
+                    if team.teamID != user.teamID {
+                        let teamAction = UIAlertAction(title: "\(team.name)", style: .default) { _ in
+                            TeamController.shared.handleTeamSelection(userID: user.firebaseID, newTeamID: team.teamID, oldTeamID: user.teamID, teamName: team.name) { success, error in
+                                if success {
+                                    // Show success alert
+                                    UIAlertController.presentDismissingAlert(title: "Success! Added to team \(team.name)", dismissAfter: 2.0)
+                                } else if let error = error {
+                                    // Show error alert with the specific error
+                                    UIAlertController.presentDismissingAlert(title: "Error adding you to team \(team.name)", dismissAfter: 2.0)
+                                }
+                            }
+                        }
+                        alert.addAction(teamAction)
                     }
-                    alert.addAction(teamAction)
                 }
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
@@ -361,13 +389,6 @@ class ProfileViewController: UIViewController {
         branchLabel.text = selectedBranch.rawValue
         emptyBranchStackView.isHidden = true
         branchLabel.isVisible = true
-    }
-    
-    func handleTeamSelection(selectedTeam: Team) {
-        print("Selected Team: \(selectedTeam.name)")
-        
-        // Add userID to Team and remove from old team
-        // Add TeamID to User Account
     }
 }
 
