@@ -14,7 +14,7 @@
         <!--Login Choice View Controller-->
         <scene sceneID="qwY-ww-wD8">
             <objects>
-                <viewController storyboardIdentifier="LoginChoiceViewController" id="xSL-oR-gtz" customClass="LoginChoiceViewController" customModule="SynergyAppointmentForm" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginChoiceViewController" hidesBottomBarWhenPushed="YES" id="xSL-oR-gtz" customClass="LoginChoiceViewController" customModule="SynergyAppointmentForm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KvX-Ov-Pv3">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -85,7 +85,7 @@
         <!--Login View Controller-->
         <scene sceneID="Zgn-aA-Fa1">
             <objects>
-                <viewController storyboardIdentifier="LoginViewController" id="o9p-ZD-aG9" customClass="LoginViewController" customModule="SynergyAppointmentForm" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" hidesBottomBarWhenPushed="YES" id="o9p-ZD-aG9" customClass="LoginViewController" customModule="SynergyAppointmentForm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OOi-Us-O7f">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -182,7 +182,7 @@
         <!--SignUpViewController-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController storyboardIdentifier="SignUpViewController" title="SignUpViewController" id="Y6W-OH-hqX" customClass="SignUpViewController" customModule="SynergyAppointmentForm" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignUpViewController" title="SignUpViewController" hidesBottomBarWhenPushed="YES" id="Y6W-OH-hqX" customClass="SignUpViewController" customModule="SynergyAppointmentForm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
