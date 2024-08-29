@@ -50,6 +50,8 @@
 		678162F32B48C6F500C48A52 /* Branch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678162F22B48C6F500C48A52 /* Branch.swift */; };
 		678162F72B48DFBA00C48A52 /* UserAccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678162F62B48DFBA00C48A52 /* UserAccountController.swift */; };
 		678FD77E2B1A3A3100FB515D /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678FD77D2B1A3A3100FB515D /* UserAccount.swift */; };
+		679B5F5A2C7F8981003F2239 /* TutorialController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679B5F592C7F8981003F2239 /* TutorialController.swift */; };
+		679B5F602C7F8ACF003F2239 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679B5F5F2C7F8ACF003F2239 /* TutorialViewController.swift */; };
 		67A582F52B0D0AA500D4B5DA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A582F42B0D0AA500D4B5DA /* Extensions.swift */; };
 		67A582F82B0D23F300D4B5DA /* FormDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A582F72B0D23F300D4B5DA /* FormDetailViewController.swift */; };
 		67A5C0972B28CDAD00D16249 /* SignUpScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67A5C0962B28CDAD00D16249 /* SignUpScreen.storyboard */; };
@@ -95,6 +97,8 @@
 		678162F22B48C6F500C48A52 /* Branch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Branch.swift; sourceTree = "<group>"; };
 		678162F62B48DFBA00C48A52 /* UserAccountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountController.swift; sourceTree = "<group>"; };
 		678FD77D2B1A3A3100FB515D /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
+		679B5F592C7F8981003F2239 /* TutorialController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialController.swift; sourceTree = "<group>"; };
+		679B5F5F2C7F8ACF003F2239 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		67A582F42B0D0AA500D4B5DA /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		67A582F72B0D23F300D4B5DA /* FormDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDetailViewController.swift; sourceTree = "<group>"; };
 		67A5C0962B28CDAD00D16249 /* SignUpScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SignUpScreen.storyboard; sourceTree = "<group>"; };
@@ -223,6 +227,7 @@
 		674603B62B03DADE00756102 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				679B5F5E2C7F8ABD003F2239 /* Tutorial */,
 				67FEDB822B34B2AC005D4421 /* Form */,
 				67FEDB832B34B2BE005D4421 /* Login */,
 				67ECD72F2B3789D30045E893 /* Profile */,
@@ -264,8 +269,17 @@
 				673F855C2B5A263100465FE0 /* ReportController.swift */,
 				678162F62B48DFBA00C48A52 /* UserAccountController.swift */,
 				67D74ED12C25D4A900E4CD9A /* TeamController.swift */,
+				679B5F592C7F8981003F2239 /* TutorialController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		679B5F5E2C7F8ABD003F2239 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				679B5F5F2C7F8ACF003F2239 /* TutorialViewController.swift */,
+			);
+			path = Tutorial;
 			sourceTree = "<group>";
 		};
 		67A582F62B0D0AB000D4B5DA /* Extensions */ = {
@@ -482,9 +496,11 @@
 				67D2B5BC2C1CE085008E37FD /* Team.swift in Sources */,
 				674603C12B03E51000756102 /* CreateFormViewController.swift in Sources */,
 				67EBEE3F2B0C051C009FD021 /* FirebaseController.swift in Sources */,
+				679B5F5A2C7F8981003F2239 /* TutorialController.swift in Sources */,
 				67ECD72E2B3789CF0045E893 /* ProfileViewController.swift in Sources */,
 				678162F32B48C6F500C48A52 /* Branch.swift in Sources */,
 				673F855A2B4DD68A00465FE0 /* NotesViewController.swift in Sources */,
+				679B5F602C7F8ACF003F2239 /* TutorialViewController.swift in Sources */,
 				674603BC2B03DE0E00756102 /* FormController.swift in Sources */,
 				67A582F82B0D23F300D4B5DA /* FormDetailViewController.swift in Sources */,
 				67CE58AB2B47ACA600D809B4 /* EmptyTableViewCell.swift in Sources */,

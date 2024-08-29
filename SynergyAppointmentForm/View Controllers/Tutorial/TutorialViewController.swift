@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TutorialViewController: UITabBarController {
+class TutorialViewController: UIViewController {
     
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -56,16 +56,19 @@ class TutorialViewController: UITabBarController {
     func addImageToStackView(_ image: UIImage) {
         DispatchQueue.main.async {
             
-        let imageView = UIImageView(image: image)
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        // Set width and height constraints to match the scrollView's height
-            imageView.heightAnchor.constraint(equalTo: self.scrollView.heightAnchor).isActive = true
-            imageView.widthAnchor.constraint(equalTo: self.scrollView.widthAnchor).isActive = true
-        
+            let imageView = UIImageView(image: image)
+             imageView.contentMode = .scaleAspectFill
+             imageView.translatesAutoresizingMaskIntoConstraints = false
+             
+             // Add the image view to the stack view
             self.stackView.addArrangedSubview(imageView)
-        }
+             
+             // Apply constraints
+             NSLayoutConstraint.activate([
+                imageView.widthAnchor.constraint(equalTo: self.scrollView.widthAnchor),
+                imageView.heightAnchor.constraint(equalTo: self.scrollView.heightAnchor)
+             ])
+         }
     }
 }
 

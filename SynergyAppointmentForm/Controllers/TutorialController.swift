@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 
-class Tutorial {
+class TutorialController {
     static let kTutorialCollectionID = "Tutorials"
     var screenshots: [UIImage] = []
     
