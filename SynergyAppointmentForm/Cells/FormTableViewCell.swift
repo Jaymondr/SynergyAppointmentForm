@@ -106,8 +106,8 @@ class FormTableViewCell: UITableViewCell {
     }
     
     func loadView() {
-        dropShadowView.layer.cornerRadius = 10
-        cellView.layer.cornerRadius = 10
+        dropShadowView.layer.cornerRadius = 8
+        cellView.layer.cornerRadius = 8
         cellView.layer.borderWidth = 0.0
         cellView.backgroundColor = .clear
         outcomeView.roundCorners(radius: 8, corners: [.topLeft, .bottomLeft])
@@ -162,6 +162,7 @@ class FormTableViewCell: UITableViewCell {
             cellView.layer.borderColor = UIColor.outcomeBlue.cgColor
             outcomeView.backgroundColor = UIColor.outcomeRed.withAlphaComponent(alpha)
             outcomeLabel.text = form.outcome.rawValue.uppercased()
+            dropShadowView.layer.applySketchShadow(color: .outcomeRed, alpha: 0.6, x: 1.3, y: 2.0, blur: 5.0, spread: 0.0)
             outcomeLabel.textColor =  UIColor.outcomeRed
         case .sold:
             cellView.layer.borderColor = UIColor.outcomeGreen.cgColor

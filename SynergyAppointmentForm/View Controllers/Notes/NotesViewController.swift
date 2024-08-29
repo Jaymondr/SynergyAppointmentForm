@@ -116,8 +116,8 @@ class NotesViewController: UIViewController {
             backgroundView.layer.borderColor = UIColor.outcomeYellow.cgColor
             backgroundView.backgroundColor = UIColor.outcomeYellow.withAlphaComponent(alpha)
         case .pending:
-            backgroundView.layer.borderColor = UIColor.eden.cgColor
-            backgroundView.backgroundColor = UIColor.eden.withAlphaComponent(alpha)
+            backgroundView.layer.borderColor = UIColor.steel.cgColor
+            backgroundView.backgroundColor = UIColor.steel.withAlphaComponent(alpha)
         case .cancelled:
             backgroundView.layer.borderColor = UIColor.outcomeRed.cgColor
             backgroundView.backgroundColor = UIColor.outcomeRed.withAlphaComponent(alpha)
