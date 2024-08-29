@@ -9,6 +9,7 @@ import UIKit
 
 class TutorialViewController: UIViewController {
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -19,6 +20,12 @@ class TutorialViewController: UIViewController {
     
     // MARK: - FUNCTIONS
     func setupView() {
+        defer {
+            activityIndicator.isHidden = true
+            activityIndicator.stopAnimating()
+            }
+        activityIndicator.isVisible = true
+        activityIndicator.startAnimating()
         FirebaseController.shared.getTutorialScreenshotsURL { urls, error in
             if let error = error {
                 print("Failed to get URLs: \(error)")

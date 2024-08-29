@@ -1665,11 +1665,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jLC-4o-4xz">
-                                <rect key="frame" x="0.0" y="59" width="393" height="754"/>
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="DHd-5C-1au">
-                                        <rect key="frame" x="0.0" y="-44" width="393" height="754"/>
+                                        <rect key="frame" x="0.0" y="50" width="393" height="20"/>
                                     </stackView>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="2iL-Xu-FTi">
+                                        <rect key="frame" x="166.66666666666666" y="391" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="2iL-Xu-FTi" secondAttribute="height" multiplier="1:1" id="ePS-WQ-XRO"/>
+                                            <constraint firstAttribute="height" constant="60" id="jAk-Es-6Vq"/>
+                                        </constraints>
+                                        <color key="color" name="outcomeBlue"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.76470588235294112" green="0.7803921568627451" blue="0.80392156862745101" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -1689,11 +1697,14 @@
                             <constraint firstItem="jLC-4o-4xz" firstAttribute="top" secondItem="SWy-CY-0kk" secondAttribute="top" id="3yr-2b-kfw"/>
                             <constraint firstItem="jLC-4o-4xz" firstAttribute="bottom" secondItem="G2s-5G-YVK" secondAttribute="bottom" id="7KL-xb-Erh"/>
                             <constraint firstItem="jLC-4o-4xz" firstAttribute="leading" secondItem="SWy-CY-0kk" secondAttribute="leading" id="PmX-LI-FwV"/>
+                            <constraint firstItem="2iL-Xu-FTi" firstAttribute="centerX" secondItem="SWy-CY-0kk" secondAttribute="centerX" id="Uwx-jN-yzG"/>
+                            <constraint firstItem="2iL-Xu-FTi" firstAttribute="centerY" secondItem="SWy-CY-0kk" secondAttribute="centerY" id="juG-e5-zI3"/>
                             <constraint firstItem="jLC-4o-4xz" firstAttribute="trailing" secondItem="SWy-CY-0kk" secondAttribute="trailing" id="x5p-uE-k18"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="xPq-TD-edX"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="2iL-Xu-FTi" id="uHh-ko-svv"/>
                         <outlet property="scrollView" destination="jLC-4o-4xz" id="z3D-ns-orB"/>
                         <outlet property="stackView" destination="DHd-5C-1au" id="UQ9-La-DTv"/>
                     </connections>

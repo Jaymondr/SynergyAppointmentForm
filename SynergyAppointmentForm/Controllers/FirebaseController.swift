@@ -224,6 +224,7 @@ class FirebaseController {
             }
         } else {
             print("No old team ID")
+            completion(true, nil)
         }
     }
     
