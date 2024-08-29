@@ -20,34 +20,46 @@ class TutorialViewController: UIViewController {
     
     // MARK: - FUNCTIONS
     func setupView() {
-        defer {
-            activityIndicator.isHidden = true
-            activityIndicator.stopAnimating()
-            }
-        activityIndicator.isVisible = true
+        activityIndicator.isHidden = false
         activityIndicator.startAnimating()
+
         FirebaseController.shared.getTutorialScreenshotsURL { urls, error in
             if let error = error {
                 print("Failed to get URLs: \(error)")
+                DispatchQueue.main.async {
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
+                }
                 return
             }
             
             guard let urls = urls else {
                 print("No URLs found")
+                DispatchQueue.main.async {
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
+                }
                 return
             }
             
-            DispatchQueue.main.async {
-                for url in urls {
-                    self.loadImage(from: url) { image in
-                        if let image = image {
-                            self.addImageToStackView(image)
-                        }
+            let group = DispatchGroup()
+            for url in urls {
+                group.enter()
+                self.loadImage(from: url) { image in
+                    if let image = image {
+                        self.addImageToStackView(image)
                     }
+                    group.leave()
                 }
+            }
+
+            group.notify(queue: .main) {
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
             }
         }
     }
+
     
     func loadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
         let task = URLSession.shared.dataTask(with: url) { data, response, error in

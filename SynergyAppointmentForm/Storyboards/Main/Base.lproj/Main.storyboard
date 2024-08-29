@@ -1670,14 +1670,6 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="DHd-5C-1au">
                                         <rect key="frame" x="0.0" y="50" width="393" height="20"/>
                                     </stackView>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="2iL-Xu-FTi">
-                                        <rect key="frame" x="166.66666666666666" y="391" width="60" height="60"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="2iL-Xu-FTi" secondAttribute="height" multiplier="1:1" id="ePS-WQ-XRO"/>
-                                            <constraint firstAttribute="height" constant="60" id="jAk-Es-6Vq"/>
-                                        </constraints>
-                                        <color key="color" name="outcomeBlue"/>
-                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.76470588235294112" green="0.7803921568627451" blue="0.80392156862745101" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -1690,6 +1682,15 @@
                                 <viewLayoutGuide key="contentLayoutGuide" id="LMX-m1-qZz"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="hif-C7-S1R"/>
                             </scrollView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="2iL-Xu-FTi">
+                                <rect key="frame" x="166.66666666666666" y="391" width="60" height="60"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="2iL-Xu-FTi" secondAttribute="height" multiplier="1:1" id="ePS-WQ-XRO"/>
+                                    <constraint firstAttribute="height" constant="60" id="jAk-Es-6Vq"/>
+                                </constraints>
+                                <color key="color" name="outcomePurple"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="SWy-CY-0kk"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1697,8 +1698,8 @@
                             <constraint firstItem="jLC-4o-4xz" firstAttribute="top" secondItem="SWy-CY-0kk" secondAttribute="top" id="3yr-2b-kfw"/>
                             <constraint firstItem="jLC-4o-4xz" firstAttribute="bottom" secondItem="G2s-5G-YVK" secondAttribute="bottom" id="7KL-xb-Erh"/>
                             <constraint firstItem="jLC-4o-4xz" firstAttribute="leading" secondItem="SWy-CY-0kk" secondAttribute="leading" id="PmX-LI-FwV"/>
-                            <constraint firstItem="2iL-Xu-FTi" firstAttribute="centerX" secondItem="SWy-CY-0kk" secondAttribute="centerX" id="Uwx-jN-yzG"/>
-                            <constraint firstItem="2iL-Xu-FTi" firstAttribute="centerY" secondItem="SWy-CY-0kk" secondAttribute="centerY" id="juG-e5-zI3"/>
+                            <constraint firstItem="2iL-Xu-FTi" firstAttribute="centerX" secondItem="SWy-CY-0kk" secondAttribute="centerX" id="jtw-zT-S3p"/>
+                            <constraint firstItem="2iL-Xu-FTi" firstAttribute="centerY" secondItem="SWy-CY-0kk" secondAttribute="centerY" id="peV-lq-rhc"/>
                             <constraint firstItem="jLC-4o-4xz" firstAttribute="trailing" secondItem="SWy-CY-0kk" secondAttribute="trailing" id="x5p-uE-k18"/>
                         </constraints>
                     </view>
@@ -1865,13 +1866,13 @@
                                                         </constraints>
                                                     </stackView>
                                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="hbQ-5a-E9n">
-                                                        <rect key="frame" x="94" y="74" width="185" height="37"/>
+                                                        <rect key="frame" x="94" y="-1" width="185" height="37"/>
                                                         <color key="color" name="outcomePurple"/>
                                                     </activityIndicatorView>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstItem="hbQ-5a-E9n" firstAttribute="centerY" secondItem="wql-dB-qxl" secondAttribute="centerY" id="2pR-Wb-HTe"/>
+                                                    <constraint firstItem="hbQ-5a-E9n" firstAttribute="centerY" secondItem="p4c-ME-2w0" secondAttribute="centerY" id="2pR-Wb-HTe"/>
                                                     <constraint firstItem="p4c-ME-2w0" firstAttribute="centerX" secondItem="wql-dB-qxl" secondAttribute="centerX" id="7oZ-0b-DCz"/>
                                                     <constraint firstAttribute="height" constant="185" id="7sL-Ce-SEt"/>
                                                     <constraint firstItem="hbQ-5a-E9n" firstAttribute="centerX" secondItem="wql-dB-qxl" secondAttribute="centerX" id="HBp-oO-dqg"/>
