@@ -149,12 +149,12 @@ class UserAccount {
     // MARK: FUNCTIONS
     func toUserDefaultsDictionary() -> [String: Any] {
         var userDefaultsDictionary: [String : Any] = [
-            UserAccount.CodingKeys.firebaseID.rawValue:              uID,
-            UserAccount.CodingKeys.firstName.rawValue:               firstName,
-            UserAccount.CodingKeys.lastName.rawValue:                lastName,
-            UserAccount.CodingKeys.email.rawValue:                   email,
-            
+            UserAccount.CodingKeys.firebaseID.rawValue: uID,
+            UserAccount.CodingKeys.firstName.rawValue: firstName,
+            UserAccount.CodingKeys.lastName.rawValue: lastName,
+            UserAccount.CodingKeys.email.rawValue: email
         ]
+        
         if let branch = branch {
             userDefaultsDictionary[UserAccount.CodingKeys.branch.rawValue] = branch.rawValue
         }
@@ -173,6 +173,26 @@ class UserAccount {
         
         return userDefaultsDictionary
     }
+
+    
+    func updateUserDefaults() {
+        if var userDefaultsDict = UserDefaults.standard.dictionary(forKey: UserAccount.kUser) {
+            
+            // Here you can merge or update specific values as needed
+            let newDict = toUserDefaultsDictionary()
+            
+            // Update existing dictionary with new values
+            userDefaultsDict.merge(newDict) { (_, new) in new }
+            
+            // Save back to UserDefaults
+            UserDefaults.standard.set(userDefaultsDict, forKey: UserAccount.kUser)
+        } else {
+            // If the dictionary doesn't exist, create and save a new one
+            let newDict = toUserDefaultsDictionary()
+            UserDefaults.standard.set(newDict, forKey: UserAccount.kUser)
+        }
+    }
+    
     
     func joinTeam(_ teamID: String) {
         self.teamID = teamID

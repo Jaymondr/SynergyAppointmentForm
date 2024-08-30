@@ -1209,73 +1209,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UVQ-OW-6mQ" userLabel="Sign In View">
-                                <rect key="frame" x="16" y="118.99999999999999" width="361" height="196.66666666666663"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="fpW-iP-GSg" userLabel="Sign In">
-                                        <rect key="frame" x="8" y="52.666666666666657" width="345" height="78"/>
-                                        <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KR2-Uv-wdW">
-                                                <rect key="frame" x="0.0" y="0.0" width="345" height="34"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="34" id="vJS-wL-nnG"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" textContentType="email"/>
-                                            </textField>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fZd-mw-gWY">
-                                                <rect key="frame" x="0.0" y="44" width="345" height="34"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="34" id="8Vq-S0-eNV"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" textContentType="password"/>
-                                            </textField>
-                                        </subviews>
-                                    </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pBb-Jr-2V9">
-                                        <rect key="frame" x="80.666666666666686" y="146.66666666666669" width="200" height="34"/>
-                                        <color key="backgroundColor" name="outcomeBlue"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="200" id="5fW-qh-st6"/>
-                                            <constraint firstAttribute="height" constant="34" id="HuB-1B-Esu"/>
-                                        </constraints>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Sign in"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="8"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="signInButtonPressed:" destination="65z-N3-3XZ" eventType="touchUpInside" id="N7n-ib-IPO"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WELCOME!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MIi-bw-65F">
-                                        <rect key="frame" x="118" y="8.0000000000000018" width="125" height="28.666666666666671"/>
-                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
-                                        <color key="textColor" name="outcomeBlue"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="MIi-bw-65F" firstAttribute="centerX" secondItem="UVQ-OW-6mQ" secondAttribute="centerX" id="5Dm-ha-pWv"/>
-                                    <constraint firstItem="pBb-Jr-2V9" firstAttribute="centerX" secondItem="UVQ-OW-6mQ" secondAttribute="centerX" id="5qg-T8-g9z"/>
-                                    <constraint firstItem="fpW-iP-GSg" firstAttribute="top" secondItem="MIi-bw-65F" secondAttribute="bottom" constant="16" id="OX4-QS-AbI"/>
-                                    <constraint firstAttribute="trailing" secondItem="fpW-iP-GSg" secondAttribute="trailing" constant="8" id="U85-pg-kgd"/>
-                                    <constraint firstItem="fpW-iP-GSg" firstAttribute="leading" secondItem="UVQ-OW-6mQ" secondAttribute="leading" constant="8" id="e3f-eX-QzH"/>
-                                    <constraint firstItem="pBb-Jr-2V9" firstAttribute="top" secondItem="fpW-iP-GSg" secondAttribute="bottom" constant="16" id="eKg-Fu-lg4"/>
-                                    <constraint firstItem="MIi-bw-65F" firstAttribute="top" secondItem="UVQ-OW-6mQ" secondAttribute="top" constant="8" id="h92-KN-gqc"/>
-                                    <constraint firstAttribute="bottom" secondItem="pBb-Jr-2V9" secondAttribute="bottom" constant="16" id="uXa-tW-g1P"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kb6-2W-HmQ" userLabel="Profile View">
                                 <rect key="frame" x="16" y="119.00000000000001" width="361" height="231.33333333333337"/>
                                 <subviews>
@@ -1605,11 +1538,8 @@
                             <constraint firstItem="kb6-2W-HmQ" firstAttribute="leading" secondItem="f8n-jS-Ofy" secondAttribute="leading" constant="16" id="4uY-qQ-Qvu"/>
                             <constraint firstItem="qVf-Di-Zvn" firstAttribute="leading" secondItem="f8n-jS-Ofy" secondAttribute="leading" constant="16" id="9RF-3n-mf6"/>
                             <constraint firstItem="f8n-jS-Ofy" firstAttribute="trailing" secondItem="qVf-Di-Zvn" secondAttribute="trailing" constant="16" id="IQ1-cK-0Pl"/>
-                            <constraint firstItem="UVQ-OW-6mQ" firstAttribute="top" secondItem="f8n-jS-Ofy" secondAttribute="top" constant="16" id="WKB-sQ-xZH"/>
                             <constraint firstItem="f8n-jS-Ofy" firstAttribute="trailing" secondItem="kb6-2W-HmQ" secondAttribute="trailing" constant="16" id="a70-no-VwJ"/>
-                            <constraint firstItem="f8n-jS-Ofy" firstAttribute="trailing" secondItem="UVQ-OW-6mQ" secondAttribute="trailing" constant="16" id="cla-P9-vta"/>
                             <constraint firstItem="kb6-2W-HmQ" firstAttribute="top" secondItem="f8n-jS-Ofy" secondAttribute="top" constant="16" id="gIO-cE-aH5"/>
-                            <constraint firstItem="UVQ-OW-6mQ" firstAttribute="leading" secondItem="f8n-jS-Ofy" secondAttribute="leading" constant="16" id="iBf-cv-DyY"/>
                             <constraint firstItem="qVf-Di-Zvn" firstAttribute="top" secondItem="kb6-2W-HmQ" secondAttribute="bottom" constant="16" id="qUL-Yc-16w"/>
                         </constraints>
                     </view>
@@ -1629,12 +1559,10 @@
                         <outlet property="cancelledNumber" destination="Id0-Hp-7Ky" id="SsR-Ru-VOi"/>
                         <outlet property="cancelledRate" destination="i3Y-qk-tJD" id="bLw-gG-lcF"/>
                         <outlet property="emailLabel" destination="Rel-QO-ovw" id="d4o-al-rl8"/>
-                        <outlet property="emailTextField" destination="KR2-Uv-wdW" id="oLH-fK-BZH"/>
                         <outlet property="emptyBranchStackView" destination="ETh-OU-Muw" id="gXC-1d-F2l"/>
                         <outlet property="filterButton" destination="aep-UY-0qz" id="HaT-28-CMt"/>
                         <outlet property="logOutButton" destination="H5l-Pl-NpC" id="2Dj-zN-BGD"/>
                         <outlet property="nameLabel" destination="txY-EO-UMX" id="3Nz-Zg-sjn"/>
-                        <outlet property="passwordTextField" destination="fZd-mw-gWY" id="L64-fW-8IP"/>
                         <outlet property="pendingNumber" destination="rif-de-Aor" id="hUm-Zm-Ds9"/>
                         <outlet property="profileView" destination="kb6-2W-HmQ" id="vQz-WC-Gja"/>
                         <outlet property="ranIncompleteNumber" destination="Wbo-4I-uuR" id="oN8-x8-Oyh"/>
@@ -1647,8 +1575,6 @@
                         <outlet property="salesLabel" destination="rIr-hG-dkt" id="cpk-BK-BLw"/>
                         <outlet property="salesRate" destination="aQ6-h9-9k6" id="CrZ-OM-HZX"/>
                         <outlet property="settingsButton" destination="SUE-8g-6UK" id="kLI-LB-Jcb"/>
-                        <outlet property="signInButton" destination="pBb-Jr-2V9" id="pv0-d0-Z5N"/>
-                        <outlet property="signInView" destination="UVQ-OW-6mQ" id="RBh-GK-S8V"/>
                         <outlet property="soldNumber" destination="N6J-C7-bzp" id="fXg-oL-egM"/>
                     </connections>
                 </viewController>

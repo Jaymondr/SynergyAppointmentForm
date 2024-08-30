@@ -5,6 +5,13 @@
 //  Created by Jaymond Richardson on 12/23/23.
 //
 
+// MARK: - TODO
+/*
+ 1. Need to load team when logged in
+ 
+ 
+ */
+
 import UIKit
 import FirebaseAuth
 import MessageUI
@@ -28,13 +35,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var branchInfoButton: UIButton!
     @IBOutlet weak var branchLabel: UILabel!
-    
-    // SIGN IN CARD
-    @IBOutlet weak var signInView: UIView!
-    @IBOutlet weak var signInButton: UIButton!
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-    
+        
     // REPORTS
     @IBOutlet weak var appointmentsLabel: UILabel!
     @IBOutlet weak var filterButton: UIButton!
@@ -64,6 +65,12 @@ class ProfileViewController: UIViewController {
         filterButton.tintColor = .gray
         
         
+    }
+    
+    override func viewIsAppearing(_ animated: Bool) {
+        super.viewIsAppearing(animated)
+        getReports(for: nil)
+        setupView()
     }
     
     // MARK: - PROPERTIES
@@ -120,36 +127,49 @@ class ProfileViewController: UIViewController {
         
     }
     
-    @IBAction func signInButtonPressed(_ sender: Any) {
-        guard let email = emailTextField.text,
-              let password = passwordTextField.text else { return }
-        passwordTextField.resignFirstResponder()
-        Auth.auth().signIn(withEmail: email, password: password) { result, error in
-            if let error = error {
-                print("There was an error: \(error)")
-                UIAlertController.presentOkAlert(message: "Error: \(error)", actionOptionTitle: "Ok")
-            }
-            if let result = result {
-                // Fetch user
-                print("UID: \(result.user.uid)")
-                FirebaseController.shared.getUser(with: result.user.uid) { user, error in
-                    if let error = error {
-                        print("Error getting user info from firebas: \(error). Error ")
-                        return
-                    }
-                    guard  let user = user else { print("No User"); return }
-                    // SAVE USER INFORMATION TO USER DEFAULTS
-                    let userDefaultsData = user.toUserDefaultsDictionary()
-                    UserDefaults.standard.set(userDefaultsData, forKey: UserAccount.kUser)
-                    
-                    UIAlertController.presentDismissingAlert(title: "\(user.firstName) signed in.", dismissAfter: 1.2)
-                    self.configureViewForState()
-                    self.setupView()
-                    NotificationCenter.default.post(name: .signInNotification, object: nil)
-                }
-            }
-        }
-    }
+//    @IBAction func signInButtonPressed(_ sender: Any) {
+//        guard let email = emailTextField.text,
+//              let password = passwordTextField.text else { return }
+//        passwordTextField.resignFirstResponder()
+//        Auth.auth().signIn(withEmail: email, password: password) { result, error in
+//            if let error = error {
+//                print("There was an error: \(error)")
+//                UIAlertController.presentOkAlert(message: "Error: \(error)", actionOptionTitle: "Ok")
+//            }
+//            if let result = result {
+//                // Fetch user
+//                print("UID: \(result.user.uid)")
+//                FirebaseController.shared.getUser(with: result.user.uid) { user, error in
+//                    if let error = error {
+//                        print("Error getting user info from firebas: \(error). Error ")
+//                        return
+//                    }
+//                    
+//                    guard  let user = user else { print("No User"); return }
+//                    // Might not run if view controller gets dismissed first
+//                    if let teamID = user.teamID {
+//                        FirebaseController.shared.getTeamName(teamID: teamID) { teamName, error in
+//                            if let error = error {
+//                                print("Error getting team name: \(error)")
+//                            }
+//                            if let teamName = teamName {
+//                                UserAccountController.shared.updateTeamNameInUserDefaults(to: teamName)
+//                            }
+//                        }
+//                    }
+//
+//                    // SAVE USER INFORMATION TO USER DEFAULTS
+//                    let userDefaultsData = user.toUserDefaultsDictionary()
+//                    UserDefaults.standard.set(userDefaultsData, forKey: UserAccount.kUser)
+//                    
+//                    UIAlertController.presentDismissingAlert(title: "\(user.firstName) signed in.", dismissAfter: 1.2)
+//                    self.configureViewForState()
+//                    self.setupView()
+//                    NotificationCenter.default.post(name: .signInNotification, object: nil)
+//                }
+//            }
+//        }
+//    }
     
     @IBAction func logOutButtonPressed(_ sender: Any) {
         logOutButton.isHidden = UserAccount.currentUser == nil
@@ -158,9 +178,9 @@ class ProfileViewController: UIViewController {
                 try Auth.auth().signOut()
                 UserDefaults.standard.removeObject(forKey: UserAccount.kUser)
                 UserAccount.currentUser = nil
-                self.configureViewForState()
                 print("Signed out user")
                 NotificationCenter.default.post(name: .signOutNotification, object: nil)
+                self.presentLoginChoiceVC()
                 
             } catch let signOutError as NSError {
                 UIAlertController.presentDismissingAlert(title: signOutError.localizedDescription, dismissAfter: 2.0)
@@ -229,12 +249,7 @@ class ProfileViewController: UIViewController {
         branchLabel.text = user.branch?.rawValue ?? ""
         // Email
         emailLabel.text = UserAccount.currentUser?.email ?? ""
-        
-        // SIGN IN CARD
-        signInView.layer.borderWidth = 1.5
-        signInView.layer.borderColor = UIColor.outcomeBlue.cgColor
-        signInView.backgroundColor = .clear
-        
+                
     }
     
     func getReports(for userID: String?) {
@@ -284,23 +299,20 @@ class ProfileViewController: UIViewController {
     }
     
     private func configureViewForState() {
-        if UserAccount.currentUser == nil {
-            // NOT SIGNED IN
-            hide([profileView, reportsView])
-            show([signInView])
-            
-        } else {
-            // SIGNED IN
-            show([profileView, reportsView])
-            hide([signInView])
-        }
-        
         if UserAccount.currentUser?.accountType == .admin || UserAccount.currentUser?.accountType == .manager {
             show([filterButton])
         } else {
             hide([filterButton])
         }
     }
+    
+    func presentLoginChoiceVC() {
+        let storyboard = UIStoryboard(name: "SignUpScreen", bundle: nil)
+        
+        guard let loginChoiceVC = storyboard.instantiateViewController(withIdentifier: "LoginChoiceViewController") as? LoginChoiceViewController else { return }
+        navigationController?.pushViewController(loginChoiceVC, animated: false)
+    }
+
     
     private func show(_ views: [VisibleToggleable]) {
         for var view in views {
@@ -337,6 +349,14 @@ class ProfileViewController: UIViewController {
     }
     
     func showTeamSelectionAlert() {
+        guard let user = UserAccount.currentUser else { return }
+
+        if user.branch == nil {
+            UIAlertController.presentDismissingAlert(title: "Must Choose Branch First", dismissAfter: 2)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                return
+            }
+        }
         var teamName: String {
             // Retrieve the dictionary from UserDefaults
             if let userDefaultsDict = UserDefaults.standard.dictionary(forKey: UserAccount.kUser) {
@@ -356,8 +376,10 @@ class ProfileViewController: UIViewController {
         }
         
         let alert = UIAlertController(title: "Select Team", message: teamName, preferredStyle: .actionSheet)
-        guard let user = UserAccount.currentUser else { return }
         FirebaseController.shared.getTeamsForBranch(branch: user.branch) { teams, error in
+            if let error = error {
+                print("Error getting teams for branch")
+            }
             for team in teams {
                 if let team {
                     if team.teamID != user.teamID {
