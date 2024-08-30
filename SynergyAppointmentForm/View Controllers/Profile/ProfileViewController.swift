@@ -380,6 +380,10 @@ class ProfileViewController: UIViewController {
             if let error = error {
                 print("Error getting teams for branch")
             }
+            if teams.count == .zero {
+                UIAlertController.presentOkAlert(message: "No teams for your branch. Have branch manager contact Jaymond Richardson to set up teams.", actionOptionTitle: "Dismiss")
+            }
+            
             for team in teams {
                 if let team {
                     if team.teamID != user.teamID {
