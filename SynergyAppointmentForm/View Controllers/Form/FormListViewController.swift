@@ -24,14 +24,15 @@ import MessageUI
  12. Add note screen when user swipes right ✅
  13. Add update label when user swipes right ✅
  14. Fix bug where delete form then create new form then form list shows deleted form until reload
- 15. Fix bug when managers save changes, their userID gets saved and appointment becomes theirs
+ 15. Fix bug when managers save changes, their userID gets saved and appointment becomes theirs ✅
  16. Add reason to form on Raleigh branch ✅
- 17. Add teams
- 18. Add team name 
- 19. Improve look
+ 17. Add teams ✅
+ 18. Add team name ✅
+ 19. Improve look ✅
  20. Add director view
  21. Only load first 20 appointments till user scrolls down
  22. Fix User Defaults duplicate data. (Check startup functions)
+ 23. Add way to quickly fill timeslot for branch managers for users without iphones to fill time spots
  */
 
 class FormListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {

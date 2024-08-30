@@ -7,7 +7,7 @@
 
 // MARK: - TODO
 /*
- 1. Need to load team when logged in
+ 1. Need to load team when logged in ✅
  
  
  */
