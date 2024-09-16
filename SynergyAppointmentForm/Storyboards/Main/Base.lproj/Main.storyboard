@@ -1205,7 +1205,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Asw-k4-ByO">
-                                <rect key="frame" x="0.0" y="191" width="393" height="578"/>
+                                <rect key="frame" x="0.0" y="191" width="393" height="627"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="memberCell" rowHeight="100" id="lgz-dP-X7v" customClass="TeamMemberTableViewCell" customModule="SynergyAppointmentForm" customModuleProvider="target">
@@ -1339,7 +1339,7 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="qe9-ZF-mUk" userLabel="Date Stack View">
                                                             <rect key="frame" x="245.00000000000003" y="57.666666666666671" width="122.33333333333334" height="21"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Sud-GX-r6c">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Wed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Sud-GX-r6c">
                                                                     <rect key="frame" x="0.0" y="0.0" width="29.666666666666668" height="21"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="c6b-JJ-W3s"/>
@@ -1349,7 +1349,7 @@
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dec 31st" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pp6-bL-QEG">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Dec 31st" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pp6-bL-QEG">
                                                                     <rect key="frame" x="31.666666666666682" y="0.0" width="56.666666666666657" height="21"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="eVE-Bm-ixN"/>
@@ -1510,7 +1510,6 @@
                     </tabBar>
                     <connections>
                         <segue destination="IT1-YZ-9Jb" kind="relationship" relationship="viewControllers" id="O5V-i2-6KD"/>
-                        <segue destination="gr6-Bj-MzS" kind="relationship" relationship="viewControllers" id="HrR-7j-GOm"/>
                         <segue destination="Ygz-CO-m2h" kind="relationship" relationship="viewControllers" id="TYq-4y-NWQ"/>
                     </connections>
                 </tabBarController>

@@ -31,19 +31,22 @@ class FormController {
 
         Created Date: \(Date().formattedStringDate())
         
-        Appointment for: \(form.date.formattedDay()) \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased()), \(form.date.formattedMonth()) \(form.date.formattedDayNumber())
+        Appointment for: \(form.date.formattedDay()), \(form.date.formattedMonth()) \(form.date.formattedDayNumber()) @\(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())
         
         \(form.firstName) & \(form.spouse) \(form.lastName)
         
         \(form.address), \(form.city), \(form.state) \(form.zip)
         
         \(form.firstName)'s Phone: \(form.phone)
-        Email: \(form.email)
+        \(form.email.isEmpty ? "" : "Email: \(form.email)")
         
+        Number of Windows: \(form.numberOfWindows.isEmpty ? "--" : "\(form.numberOfWindows)")
         Home Value: \(form.homeValue ?? "--")
         Year Built: \(form.yearBuilt ?? "--")
-        Moved in \(form.yearsOwned) year(s) ago.
-        
+        Moved in \(form.yearsOwned.isEmpty ? "--" : form.yearsOwned) year(s) ago.
+        \(form.homeValue == nil ? "" : "Home Value: \(form.homeValue ?? "--")")
+        \(form.financeOptions.isEmpty ? "" : "\nFinance Options: \(form.financeOptions)")
+
         Rating: \(form.rate)
 
         Previous estimates: \(form.retailQuote)
@@ -82,7 +85,7 @@ class FormController {
         Finance Options: \(form.financeOptions)
         Years Owned: \(form.yearsOwned)
         
-        Reason you need window replacement: \(form.reason)
+        Reason for window replacement: \(form.reason)
         
         Rate 1-10: \(form.rate)
         
@@ -112,8 +115,8 @@ class FormController {
     \(user.firstName)'s APPT \(teamName)
     (Created Date: \(Date().formattedDayMonthYear()))
     
-    Appointment for: \(form.date.formattedDay()) \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased()), \(form.date.formattedMonth()) \(form.date.formattedDayNumber())
-    
+    Appointment for: \(form.date.formattedDay()), \(form.date.formattedMonth()) \(form.date.formattedDayNumber()) @\(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())
+
     \(form.firstName) & \(form.spouse) \(form.lastName)
     
     \(form.address), \(form.city), \(form.state) \(form.zip)
@@ -121,13 +124,17 @@ class FormController {
     \(form.firstName)'s Phone: \(form.phone)
     Email: \(form.email)
     
+    Number of Windows: \(form.numberOfWindows.isEmpty ? "--" : "\(form.numberOfWindows)")
     Home Value: \(form.homeValue ?? "--")
     Year Built: \(form.yearBuilt ?? "--")
-    Moved in \(form.yearsOwned) year(s) ago.
+    Moved in \(form.yearsOwned.isEmpty ? "--" : form.yearsOwned) year(s) ago.
+    \(form.financeOptions.isEmpty ? "" : "\nFinance Options: \(form.financeOptions)")
+    \(form.homeValue == nil ? "" : "\nHome Value: \(form.homeValue ?? "--")")
+    \(form.reason.isEmpty ? "" : "\nReason: \(form.reason)")
     
-    Rating: \(form.rate)
+    Rating: \(form.rate.isEmpty ? "None" : form.rate)
     
-    Previous estimates: \(form.retailQuote)
+    Previous estimates: \(form.retailQuote.isEmpty ? "--" : form.retailQuote)
     
     Comments: \(form.comments)
     """
@@ -135,7 +142,7 @@ class FormController {
         }
         else
         {
-            // OTHER BRANCHES FORM LAYOUT
+    // OTHER BRANCHES FORM LAYOUT
             let formString =
     """
     APT FORM
@@ -158,7 +165,7 @@ class FormController {
     Finance Options: \(form.financeOptions)
     Years Owned: \(form.yearsOwned)
     
-    Reason you need window replacement: \(form.reason)
+    Reason for window replacement: \(form.reason)
     
     Rate 1-10: \(form.rate)
     
