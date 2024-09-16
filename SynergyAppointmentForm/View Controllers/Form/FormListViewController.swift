@@ -33,6 +33,7 @@ import MessageUI
  21. Only load first 20 appointments till user scrolls down
  22. Fix User Defaults duplicate data. (Check startup functions)
  23. Add way to quickly fill timeslot for branch managers for users without iphones to fill time spots
+ 24. Add way to remove inactive users
  */
 
 class FormListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {

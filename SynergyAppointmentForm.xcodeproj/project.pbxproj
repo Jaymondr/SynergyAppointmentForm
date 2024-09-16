@@ -63,6 +63,8 @@
 		67D74ED22C25D4A900E4CD9A /* TeamController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D74ED12C25D4A900E4CD9A /* TeamController.swift */; };
 		67DAFE932B073028003D6B5B /* FormError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DAFE922B073028003D6B5B /* FormError.swift */; };
 		67E4A6692B054BCF00024F06 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E4A6682B054BCF00024F06 /* Address.swift */; };
+		67E5CB322C89F233003984F1 /* TeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E5CB312C89F233003984F1 /* TeamViewController.swift */; };
+		67E5CB342C89F43A003984F1 /* TeamMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E5CB332C89F43A003984F1 /* TeamMemberTableViewCell.swift */; };
 		67EAEF202B14D148006E4995 /* Outcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EAEF1F2B14D148006E4995 /* Outcome.swift */; };
 		67EBEE2B2B0BC629009FD021 /* FormTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EBEE2A2B0BC629009FD021 /* FormTableViewCell.swift */; };
 		67EBEE302B0BC768009FD021 /* FormListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EBEE2F2B0BC768009FD021 /* FormListViewController.swift */; };
@@ -111,6 +113,8 @@
 		67DAFE922B073028003D6B5B /* FormError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormError.swift; sourceTree = "<group>"; };
 		67DAFE952B073FBB003D6B5B /* SynergyAppointmentForm.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SynergyAppointmentForm.entitlements; sourceTree = "<group>"; };
 		67E4A6682B054BCF00024F06 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		67E5CB312C89F233003984F1 /* TeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamViewController.swift; sourceTree = "<group>"; };
+		67E5CB332C89F43A003984F1 /* TeamMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMemberTableViewCell.swift; sourceTree = "<group>"; };
 		67EAEF1F2B14D148006E4995 /* Outcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Outcome.swift; sourceTree = "<group>"; };
 		67EBEE2A2B0BC629009FD021 /* FormTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTableViewCell.swift; sourceTree = "<group>"; };
 		67EBEE2F2B0BC768009FD021 /* FormListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormListViewController.swift; sourceTree = "<group>"; };
@@ -227,6 +231,7 @@
 		674603B62B03DADE00756102 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				67E5CB302C89F211003984F1 /* Team */,
 				679B5F5E2C7F8ABD003F2239 /* Tutorial */,
 				67FEDB822B34B2AC005D4421 /* Form */,
 				67FEDB832B34B2BE005D4421 /* Login */,
@@ -315,6 +320,14 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
+		67E5CB302C89F211003984F1 /* Team */ = {
+			isa = PBXGroup;
+			children = (
+				67E5CB312C89F233003984F1 /* TeamViewController.swift */,
+			);
+			path = Team;
+			sourceTree = "<group>";
+		};
 		67EAEF212B14D14E006E4995 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
@@ -330,6 +343,7 @@
 			children = (
 				67EBEE2A2B0BC629009FD021 /* FormTableViewCell.swift */,
 				67CE58AA2B47ACA600D809B4 /* EmptyTableViewCell.swift */,
+				67E5CB332C89F43A003984F1 /* TeamMemberTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -486,6 +500,7 @@
 				67A5C09B2B28D09D00D16249 /* SignUpViewController.swift in Sources */,
 				674603A42B03D8F700756102 /* SceneDelegate.swift in Sources */,
 				678FD77E2B1A3A3100FB515D /* UserAccount.swift in Sources */,
+				67E5CB342C89F43A003984F1 /* TeamMemberTableViewCell.swift in Sources */,
 				674603B92B03DB0400756102 /* Form.swift in Sources */,
 				67DAFE932B073028003D6B5B /* FormError.swift in Sources */,
 				673F855D2B5A263100465FE0 /* ReportController.swift in Sources */,
@@ -498,6 +513,7 @@
 				67EBEE3F2B0C051C009FD021 /* FirebaseController.swift in Sources */,
 				679B5F5A2C7F8981003F2239 /* TutorialController.swift in Sources */,
 				67ECD72E2B3789CF0045E893 /* ProfileViewController.swift in Sources */,
+				67E5CB322C89F233003984F1 /* TeamViewController.swift in Sources */,
 				678162F32B48C6F500C48A52 /* Branch.swift in Sources */,
 				673F855A2B4DD68A00465FE0 /* NotesViewController.swift in Sources */,
 				679B5F602C7F8ACF003F2239 /* TutorialViewController.swift in Sources */,
