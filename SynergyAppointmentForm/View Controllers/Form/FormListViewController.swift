@@ -741,7 +741,7 @@ extension FormListViewController: FormTableViewCellDelegate, MFMessageComposeVie
 
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
-        if user.accountType != .coordinator {
+        if user.accountType == .director {
             alertController.addAction(directorConfirmationAction)
         }
 
