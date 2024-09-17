@@ -29,7 +29,7 @@ class FormController {
             \(user.firstName)'s APPT \(teamName)
             (Created Date: \(Date().formattedDayMonthYear()))
             
-            Appointment for: \(form.date.formattedDay()), \(form.date.formattedMonth()) \(form.date.formattedDayNumber())@\(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())
+            Appointment for: \(form.date.formattedDay()), \(form.date.formattedMonth()) \(form.date.formattedDayNumber()) @\(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())
                 
             \(form.firstName) \(form.spouse.isEmpty ? form.lastName : "& \(form.spouse) \(form.lastName)")
             
@@ -107,7 +107,7 @@ class FormController {
                 \(user.firstName)'s APPT \(teamName)
                 (Created Date: \(Date().formattedDayMonthYear()))
                 
-                Appointment for: \(form.date.formattedDay()), \(form.date.formattedMonth()) \(form.date.formattedDayNumber())           @\(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())
+                Appointment for: \(form.date.formattedDay()), \(form.date.formattedMonth()) \(form.date.formattedDayNumber()) @\(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())
                 
                 \(form.firstName) \(form.spouse.isEmpty ? form.lastName : "& \(form.spouse) \(form.lastName)")
                 
