@@ -94,7 +94,7 @@ class FormTableViewCell: UITableViewCell {
         dayLabel.text = form.date.formattedDayAbbr() + ","
         dateLabel.text = form.date.formattedDayMonthAbbr() + ":"
         timeLabel.text = "\(form.date.formattedTime())\(form.date.formattedAmpm())"
-        cityStateLabel.text = "\(form.city.uppercased())(\(form.state))"
+        cityStateLabel.text = form.city.isNotEmpty ? "\(form.city.uppercased())(\(form.state))" : form.phone
         if form.spouse.isEmpty {
             nameLabel.text = form.firstName.uppercased() + " " + form.lastName.uppercased()
         } else {
