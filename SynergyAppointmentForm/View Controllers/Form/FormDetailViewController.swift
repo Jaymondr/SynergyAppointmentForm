@@ -318,7 +318,7 @@ class FormDetailViewController: UIViewController {
             let gradientLayer = CAGradientLayer()
             gradientLayer.frame = view.bounds
             gradientLayer.colors = [UIColor.black.cgColor, UIColor.black.cgColor, labelColor] // Gradient colors
-            gradientLayer.locations = [-0.05, 0.4, 2.0] // Gradient locations (start and end)
+            gradientLayer.locations = [-0.05, 0.5, 3.2] // Gradient locations (start and end)
             view.layer.insertSublayer(gradientLayer, at: 0)
             
         } else {

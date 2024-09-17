@@ -501,7 +501,9 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         guard let user = UserAccount.currentUser else { return }
         // DEFAULT IMPLEMENTATIONS
         homeValueStackView.isHidden = true
+        homeValueTextField.isHidden = true
         yearBuiltStackView.isHidden = true
+        yearBuiltTextField.isHidden = true
         trelloButton.isHidden = true
         scheduleView.isHidden = true
         showScheduleButton.isHidden = user.teamID == nil
@@ -529,7 +531,9 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         case .raleigh:
             print("Form For Raleigh")
             homeValueStackView.isVisible = true
+            homeValueTextField.isVisible = true
             yearBuiltStackView.isVisible = true
+            yearBuiltTextField.isVisible = true
             
         case .southJordan:
             print("Form For South Jordan")
@@ -616,7 +620,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         
         textFieldScrollPositions[firstNameTextField] = 0
         textFieldScrollPositions[lastNameTextField] = 0
-        textFieldScrollPositions[spouseTextField] = 100
+        textFieldScrollPositions[spouseTextField] = 0
         textFieldScrollPositions[phoneTextField] = 225
         textFieldScrollPositions[emailTextField] = 225
         textFieldScrollPositions[addressTextField] = 225
@@ -639,47 +643,80 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
     
     // MARK: - TEXTFIELD RETURN METHOD
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        let nextResponder: UIResponder?
+
         if textField == firstNameTextField {
-            lastNameTextField.becomeFirstResponder()
+            nextResponder = lastNameTextField
         } else if textField == lastNameTextField {
-            spouseTextField.becomeFirstResponder()
+            nextResponder = spouseTextField
         } else if textField == spouseTextField {
-            phoneTextField.becomeFirstResponder()
+            nextResponder = phoneTextField
         } else if textField == phoneTextField {
-            emailTextField.becomeFirstResponder()
+            nextResponder = emailTextField
         } else if textField == emailTextField {
-            addressTextField.becomeFirstResponder()
+            nextResponder = addressTextField
         } else if textField == addressTextField {
-            cityTextField.becomeFirstResponder()
+            nextResponder = cityTextField
         } else if textField == cityTextField {
-            stateTextField.becomeFirstResponder()
+            nextResponder = stateTextField
         } else if textField == stateTextField {
-            zipTextField.becomeFirstResponder()
+            nextResponder = zipTextField
         } else if textField == zipTextField {
-            numberOfWindowsTextField.becomeFirstResponder()
+            nextResponder = numberOfWindowsTextField
         } else if textField == numberOfWindowsTextField {
-            energyBillTextField.becomeFirstResponder()
+            nextResponder = energyBillTextField
         } else if textField == energyBillTextField {
-            yearBuiltTextField.becomeFirstResponder()
+            nextResponder = yearBuiltTextField
         } else if textField == yearBuiltTextField {
-            yearsOwnedTextField.becomeFirstResponder()
+            nextResponder = yearsOwnedTextField
         } else if textField == yearsOwnedTextField {
-            homeValueTextField.becomeFirstResponder()
+            nextResponder = homeValueTextField
         } else if textField == homeValueTextField {
-            financeTextField.becomeFirstResponder()
+            nextResponder = financeTextField
         } else if textField == financeTextField {
-            quoteTextView.becomeFirstResponder()
+            nextResponder = quoteTextView
         } else if textField == quoteTextView {
-            reasonTextView.becomeFirstResponder()
+            nextResponder = reasonTextView
         } else if textField == reasonTextView {
-            rateTextField.becomeFirstResponder()
+            nextResponder = rateTextField
         } else if textField == rateTextField {
-            commentsTextView.becomeFirstResponder()
+            nextResponder = commentsTextView
+        } else {
+            nextResponder = nil
         }
-        else {
-            textField.resignFirstResponder()
+
+        // Check if the next responder exists and is not hidden
+        if let nextResponder = nextResponder, let nextView = nextResponder as? UIView, !nextView.isHidden {
+            nextResponder.becomeFirstResponder()
+        } else {
+            // Find the next visible responder
+            if let nextVisibleResponder = findNextVisibleResponder(after: textField) {
+                nextVisibleResponder.becomeFirstResponder()
+            } else {
+                textField.resignFirstResponder()
+            }
         }
+        
         return true
+    }
+
+    func findNextVisibleResponder(after currentResponder: UIResponder) -> UIResponder? {
+        let responders: [UIResponder] = [
+            firstNameTextField, lastNameTextField, spouseTextField, phoneTextField,
+            emailTextField, addressTextField, cityTextField, stateTextField,
+            zipTextField, numberOfWindowsTextField, energyBillTextField, yearBuiltTextField,
+            yearsOwnedTextField, homeValueTextField, financeTextField, quoteTextView,
+            reasonTextView, rateTextField, commentsTextView
+        ]
+        
+        if let currentIndex = responders.firstIndex(of: currentResponder) {
+            for index in (currentIndex + 1)..<responders.count {
+                if let nextResponder = responders[index] as? UIView, !nextResponder.isHidden {
+                    return nextResponder
+                }
+            }
+        }
+        return nil
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
