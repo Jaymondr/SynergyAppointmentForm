@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MessageUI
 
 // MARK: - TODO
 /*
@@ -23,18 +24,22 @@ import UIKit
  12. Add note screen when user swipes right ✅
  13. Add update label when user swipes right ✅
  14. Fix bug where delete form then create new form then form list shows deleted form until reload
- 15. Fix bug when managers save changes, their userID gets saved and appointment becomes theirs
+ 15. Fix bug when managers save changes, their userID gets saved and appointment becomes theirs ✅
  16. Add reason to form on Raleigh branch ✅
- 17. Add teams
- 18. Add team name 
- 19. Improve look
+ 17. Add teams ✅
+ 18. Add team name ✅
+ 19. Improve look ✅
  20. Add director view
  21. Only load first 20 appointments till user scrolls down
  22. Fix User Defaults duplicate data. (Check startup functions)
+ 23. Add way to quickly fill timeslot for branch managers for users without iphones to fill time spots
+ 24. Add way to remove inactive users
  */
 
 class FormListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
+    
+    @IBOutlet weak var confettiView: UIView!
     @IBOutlet weak var addFormBarButton: UIBarButtonItem!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
@@ -73,9 +78,11 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: PROPERTIES
     var forms: [Form] = []
+    var filteredForms: [Form] = []
     var upcomingAppointmentForms: [Form] = []
     var pastAppointmentForms: [Form] = []
     var sortedAppointmentForms: [Form] = []
+    var isFiltering: Bool = false
     
     var formState: FormState {
         if forms.isEmpty {
@@ -109,9 +116,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func loadForms(for firebaseIDs: [String]) {
-        var filteredForms: [Form] = []
         let dispatchGroup = DispatchGroup()
-        
         for firebaseID in firebaseIDs {
             dispatchGroup.enter()
             FirebaseController.shared.getForms(for: firebaseID) { forms, error in
@@ -121,17 +126,18 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                 if let error = error {
                     print("Error fetching forms: \(error)")
                 } else {
-                    filteredForms.append(contentsOf: forms)
+                    self.filteredForms = forms
                 }
             }
         }
         
         dispatchGroup.notify(queue: .main) {
-            self.splitForms(forms: filteredForms)
+            self.splitForms(forms: self.filteredForms)
         }
     }
     
     func startUpFunctions() {
+        isFiltering = false
         // Check for user
         if UserAccount.currentUser == nil {
             presentLoginChoiceVC()
@@ -169,12 +175,12 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             if currentUser.teamID != teamID {
                 // Update UserDefaults to match firebase
                 UserAccountController.shared.updateTeamID(to: teamID)
-                UserDefaults.standard.set(teamID, forKey: Team.kTeamID)
+                UserDefaults.standard.set(teamID, forKey: Team.CodingKeys.teamID.rawValue)
                                 
                 // Fetch team name and update User Defaults
                 FirebaseController.shared.getTeamName(teamID: teamID) { teamName, error in
                     UserAccountController.shared.teamName = teamName 
-                    let userDefaultsTeamName = UserDefaults.standard.string(forKey: Team.kTeamName)
+                    let userDefaultsTeamName = UserDefaults.standard.string(forKey: Team.CodingKeys.name.rawValue)
                     UIAlertController.presentDismissingAlert(title: "\(userDefaultsTeamName ?? "Team/Name")", dismissAfter: 2.0)
                 }
             }
@@ -185,10 +191,12 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
+        isFiltering = true
         print("handle search bar button click")
         guard let user = UserAccount.currentUser, let branch = user.branch else { return }
-        FirebaseController.shared.getUsers(for: branch) { users, error in
+        FirebaseController.shared.getActiveUsers(for: branch) { users, error in
             if let error = error {
+                self.isFiltering = false
                 print("Error: \(error)")
                 return
             }
@@ -204,8 +212,10 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             }
             alert.addAction(allAction)
             
-            for user in users {
-                let userAction = UIAlertAction(title: user.firstName, style: .default) { _ in
+            let sortedUsers = users.sorted { $0.firstName < $1.firstName }
+            
+            for user in sortedUsers {
+                let userAction = UIAlertAction(title: "\(user.firstName.uppercased()) \(user.lastName.first?.uppercased() ?? "").", style: .default) { _ in
                     print("Selected user: \(user.firstName)")
                     self.loadForms(for: [user.firebaseID])
                 }
@@ -242,6 +252,13 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func filterForms(for searchText: String) {
+        var forms: [Form] {
+            if isFiltering {
+                return self.filteredForms
+            } else {
+                return self.forms
+            }
+        }
         if searchText.isEmpty {
             splitForms(forms: forms)
         } else {
@@ -283,7 +300,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
     func setTitleAttributes() {
         if let navigationController = self.navigationController {
             self.navigationItem.title = "FORMS"
-            navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.eden]
+            navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.steel]
             navigationController.navigationBar.titleTextAttributes?[NSAttributedString.Key.font] = UIFont.systemFont(ofSize: 24.0, weight: .medium)
         }
     }
@@ -344,6 +361,7 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
         if let form = self.getFormForIndexPath(indexPath) {
             cell.setCellData(with: form)
             cell.form = form
+            cell.delegate = self
         }
 
         return cell
@@ -351,11 +369,12 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
 
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
+        return 95
     }
     
     @objc private func refreshData(_ sender: Any) {
         loadForms()
+        isFiltering = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.65) {
             self.refreshControl.endRefreshing()
         }
@@ -378,6 +397,14 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                 for outcome in Outcome.allCases {
                     let action = UIAlertAction(title: outcome.rawValue.capitalized, style: .default) { _ in
                         form.outcome = outcome
+                        if outcome == .sold {
+                            UIAlertController.presentDismissingAlert(title: "🎊CONGRATS!🎊", dismissAfter: 2.3)
+                            self?.vibrateForSuccess()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                self?.confettiView.isVisible = true
+                                self?.confettiView.startConfetti()
+                            }
+                        }
                         FirebaseController.shared.updateForm(firebaseID: form.firebaseID, form: form) { updatedForm, error in
                             if let error = error {
                                 UIAlertController.presentDismissingAlert(title: "Failed to Save", dismissAfter: 0.6)
@@ -385,13 +412,13 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
                                 return
                             }
                             self?.tableView.reloadData()
-                            UIAlertController.presentDismissingAlert(title: "Label Updated!", dismissAfter: 0.6)
                         }
                     }
                     
                     let color: UIColor
                     switch outcome {
-                    case .pending: color = UIColor.eden
+                    case .lead: color = UIColor.outcomeYellow.withAlphaComponent(1.0)
+                    case .pending: color = UIColor.steel
                     case .sold: color = UIColor.outcomeGreen
                     case .rescheduled: color = UIColor.outcomePurple
                     case .cancelled: color = UIColor.outcomeRed
@@ -411,13 +438,13 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
 
         viewNotesAction.backgroundColor = UIColor.noteYellow
         updateLabelAction.backgroundColor = switch form?.outcome {
-        case .pending: UIColor.eden
+        case .pending: UIColor.steel
         case .sold: UIColor.outcomeGreen
         case .rescheduled: UIColor.outcomePurple
         case .cancelled: UIColor.outcomeRed
         case .ran: UIColor.outcomeBlue
         case .ranIncomplete: UIColor.outcomeRed
-        default: UIColor.eden
+        default: UIColor.steel
         }
         
         let configuration = UISwipeActionsConfiguration(actions: [viewNotesAction, updateLabelAction])
@@ -525,11 +552,13 @@ class FormListViewController: UIViewController, UITableViewDelegate, UITableView
             
             destinationVC.form = selectedForm
             destinationVC.delegate = self
+            destinationVC.hidesBottomBarWhenPushed = true
         }
         
         if segue.identifier == "toCreateForm",
            let destinationVC = segue.destination as? CreateFormViewController {
                 destinationVC.delegate = self
+            destinationVC.hidesBottomBarWhenPushed = true
         }
         
         if segue.identifier == "toProfileVC",
@@ -571,14 +600,21 @@ extension FormListViewController: NotesViewDelegate {
 
 extension FormListViewController: CreateFormViewDelegate {
     func didAddNewForm(_ form: Form) {
-        if !forms.contains(where: { $0.firebaseID == form.firebaseID }) {
+        if let index = forms.firstIndex(where: { $0.firebaseID == form.firebaseID }) {
+            // Update the existing form with the new form
+            forms[index] = form
+            print("Form updated at index \(index)")
+        } else {
+            // Add new form
             print(forms.count)
             forms.append(form)
             print(forms.count)
-            splitForms(forms: forms)
-            tableView.reloadData()
         }
+
+        splitForms(forms: forms)
+        tableView.reloadData()
     }
+    
     
     func didUpdateNew(_ form: Form) {
         if !forms.contains(where: { $0.firebaseID == form.firebaseID }),
@@ -616,3 +652,135 @@ extension FormListViewController {
         present(alert, animated: true, completion: nil)
     }
 }
+
+
+    // MARK: - CELL DELEGATE FUNCTIONS
+extension FormListViewController: FormTableViewCellDelegate, MFMessageComposeViewControllerDelegate {
+    func getDirectionsButtonPressed(form: Form) {
+        if form.address.isEmpty {
+            UIAlertController.presentDismissingAlert(title: "No Address Found", dismissAfter: 1.0)
+        } else {
+            showMapOptions(form.address)
+        }
+    }
+    
+    func sendMessageButtonPressed(form: Form) {
+        print("Send message delegate")
+        askToSendTextMessage(form)
+    }
+    
+    func callButtonPressed(form: Form) {
+        print("Call button delegate")
+        callPhoneNumber(form.phone)
+    }
+    
+    private func showMapOptions(_ address: String) {
+        let alertController = UIAlertController(title: "Open in Maps", message: "Choose an app", preferredStyle: .actionSheet)
+        
+        let googleMapsAction = UIAlertAction(title: "Google Maps", style: .default) { _ in
+            self.openGoogleMaps(for: address)
+        }
+        let appleMapsAction = UIAlertAction(title: "Apple Maps", style: .default) { _ in
+            self.openAppleMaps(for: address)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alertController.addActions([appleMapsAction, googleMapsAction, cancelAction])
+        
+        self.present(alertController, animated: true)
+        
+    }
+    
+    private func openGoogleMaps(for address: String) {
+        let urlString = "comgooglemaps://?q=\(address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
+        if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            let browserURLString = "https://www.google.com/maps/search/?api=1&query=\(address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
+            if let browserURL = URL(string: browserURLString) {
+                UIApplication.shared.open(browserURL, options: [:], completionHandler: nil)
+            }
+        }
+    }
+    
+    private func openAppleMaps(for address: String) {
+        let urlString = "http://maps.apple.com/?q=\(address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
+        if let url = URL(string: urlString) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+
+    private func callPhoneNumber(_ phoneNumber: String) {
+        if let phoneCallURL = URL(string: "tel://\(phoneNumber)"), UIApplication.shared.canOpenURL(phoneCallURL) {
+            UIApplication.shared.open(phoneCallURL, options: [:], completionHandler: nil)
+        } else {
+            let alert = UIAlertController(title: "Error", message: "Your device cannot make phone calls", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    private func askToSendTextMessage(_ form: Form) {
+        guard let user = UserAccount.currentUser else { return }
+            let alertController = UIAlertController(title: "Send Text Message", message: nil, preferredStyle: .alert)
+
+            let homeownerText = UIAlertAction(title: "Homeowner: Appt. Details", style: .default) { _ in
+                let text = FormController.shared.createHomeownerText(from: form)
+                self.sendTextMessage(form.phone, message: text)
+            }
+        
+        let seeConversationAction = UIAlertAction(title: "See Conversation", style: .default) { _ in
+            self.sendTextMessage(form.phone, message: "")
+        }
+
+            
+        let directorConfirmationAction = UIAlertAction(title: "Director: Confirmation Text", style: .default) { _ in
+            let text = FormController.shared.createDirectorConfirmationText(form: form)
+            self.sendTextMessage(form.phone, message: text)
+            }
+
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        if user.accountType == .director {
+            alertController.addAction(directorConfirmationAction)
+        }
+
+            alertController.addActions([homeownerText, seeConversationAction, cancelAction])
+
+            present(alertController, animated: true, completion: nil)
+        }
+
+    private func sendTextMessage(_ phoneNumber: String, message: String) {
+            if MFMessageComposeViewController.canSendText() {
+                let messageVC = MFMessageComposeViewController()
+                messageVC.body = message
+                messageVC.recipients = [phoneNumber]
+                messageVC.messageComposeDelegate = self
+
+                present(messageVC, animated: true, completion: nil)
+            } else {
+                let alert = UIAlertController(title: "Error", message: "Your device cannot send text messages", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                present(alert, animated: true, completion: nil)
+            }
+        }
+
+        // MARK: - MFMessageComposeViewControllerDelegate
+
+        func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+            switch result {
+            case .cancelled:
+                print("Message cancelled")
+            case .sent:
+                print("Message sent")
+            case .failed:
+                print("Message failed")
+            @unknown default:
+                print("Unknown result")
+            }
+            controller.dismiss(animated: true, completion: nil)
+        }
+}
+
+
+

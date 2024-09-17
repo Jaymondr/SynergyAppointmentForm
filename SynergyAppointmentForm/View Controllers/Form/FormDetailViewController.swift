@@ -36,7 +36,7 @@ class FormDetailViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var numberOfWindowsTextField: UITextField!
     @IBOutlet weak var energyBillTextField: UITextField!
-    @IBOutlet weak var quoteTextField: UITextField!
+    @IBOutlet weak var quoteTextView: UITextView!
     @IBOutlet weak var financeOptionsTextField: UITextField!
     @IBOutlet weak var yearBuiltTextField: UITextField!
     @IBOutlet weak var yearsOwnedTextField: UITextField!
@@ -44,7 +44,6 @@ class FormDetailViewController: UIViewController {
     @IBOutlet weak var reasonTextView: UITextView!
     @IBOutlet weak var rateTextField: UITextField!
     @IBOutlet weak var commentsTextView: UITextView!
-    @IBOutlet weak var blurView: UIView!
     @IBOutlet weak var labelButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
     
@@ -65,17 +64,15 @@ class FormDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.tintColor = UIColor.eden
+        navigationController?.navigationBar.tintColor = UIColor.steel
         setUpView(with: form)
-        if traitCollection.userInterfaceStyle == .dark {
-            blurView.backgroundColor = .black
-            dateTimePicker.tintColor = .lightText
-        } else {
-            let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
-            blurEffectView.frame = blurView.bounds
-
-            blurView.addSubview(blurEffectView)
-        }
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        layoutSubviews() // ADDS BOTTOM BORDER TO TEXTFIELDS
+        
     }
     
     // MARK: PROPERTIES
@@ -100,7 +97,8 @@ class FormDetailViewController: UIViewController {
             
             let color: UIColor
             switch outcome {
-            case .pending: color = UIColor.eden
+            case .lead: color = UIColor.outcomeYellow
+            case .pending: color = UIColor.steel
             case .sold: color = UIColor.outcomeGreen
             case .rescheduled: color = UIColor.outcomePurple
             case .cancelled: color = UIColor.outcomeRed
@@ -180,6 +178,13 @@ class FormDetailViewController: UIViewController {
         FormController.shared.copy(phone: phoneNumber)
     }
     
+    @IBAction func clearQuoteButtonPressed(_ sender: Any) {
+        self.vibrateForButtonPress(.heavy)
+        UIAlertController.presentMultipleOptionAlert(message: "Are you sure you want to clear this section?", actionOptionTitle: "Clear", cancelOptionTitle: "Cancel") {
+            self.quoteTextView.text = ""
+        }
+    }
+    
     @IBAction func clearReasonButtonPressed(_ sender: Any) {
         self.vibrateForButtonPress(.heavy)
         UIAlertController.presentMultipleOptionAlert(message: "Are you sure you want to clear this section?", actionOptionTitle: "Clear", cancelOptionTitle: "Cancel") {
@@ -196,6 +201,15 @@ class FormDetailViewController: UIViewController {
     
     
     // MARK: FUNCTIONS
+    private func layoutSubviews() {
+        // TEXTFIELDS
+        let textFields: [UITextField] = [firstNameTextField, lastNameTextField, spouseTextField, addressTextField, cityTextField, stateTextField, zipTextField, phoneTextField, emailTextField, numberOfWindowsTextField, energyBillTextField, financeOptionsTextField, yearBuiltTextField, yearsOwnedTextField, homeValueTextField, rateTextField]
+        
+        for textField in textFields {
+            textField.addBottomBorder(with: .steel, andHeight: 1)
+        }
+    }
+    
     func setUpView(with form: Form?) {
         guard let form = form else { print("No Form!"); return }
         guard let user = UserAccount.currentUser else { return }
@@ -210,7 +224,7 @@ class FormDetailViewController: UIViewController {
         emailTextField.text = form.email
         numberOfWindowsTextField.text = form.numberOfWindows
         energyBillTextField.text = form.energyBill
-        quoteTextField.text = form.retailQuote
+        quoteTextView.text = form.retailQuote
         financeOptionsTextField.text = form.financeOptions
         yearBuiltTextField.text = form.yearBuilt
         yearsOwnedTextField.text = form.yearsOwned
@@ -269,8 +283,10 @@ class FormDetailViewController: UIViewController {
         var labelColor: CGColor
         
         switch form.outcome {
+        case .lead:
+            labelColor = UIColor.outcomeYellow.cgColor
         case .pending:
-            labelColor = UIColor.eden.cgColor
+            labelColor = UIColor.steel.cgColor
             
         case .cancelled:
             labelColor = UIColor.outcomeRed.cgColor
@@ -291,12 +307,25 @@ class FormDetailViewController: UIViewController {
         // Label Button
         labelButton.configuration?.baseForegroundColor = UIColor(cgColor: labelColor)
         
+        // CORNER RADIUS
+        quoteTextView.layer.cornerRadius = 5.0
+        reasonTextView.layer.cornerRadius = 5.0
+        commentsTextView.layer.cornerRadius = 5.0
+
+        let additionalCommentsTextViews: [UITextView] = [quoteTextView, reasonTextView, commentsTextView]
+        
+        for textView in additionalCommentsTextViews {
+            textView.layer.borderWidth = 1
+            textView.layer.cornerRadius = 8.0
+            textView.layer.borderColor = UIColor.steel.cgColor
+        }
+            
         if traitCollection.userInterfaceStyle == .dark {
             // BACKGROUND
             let gradientLayer = CAGradientLayer()
             gradientLayer.frame = view.bounds
             gradientLayer.colors = [UIColor.black.cgColor, UIColor.black.cgColor, labelColor] // Gradient colors
-            gradientLayer.locations = [-0.05, 0.4, 2.0] // Gradient locations (start and end)
+            gradientLayer.locations = [-0.05, 0.5, 3.2] // Gradient locations (start and end)
             view.layer.insertSublayer(gradientLayer, at: 0)
             
         } else {
@@ -309,9 +338,10 @@ class FormDetailViewController: UIViewController {
         }
     }
     
+    
     func createForm() -> Form? {
         guard let form = form else { UIAlertController.presentDismissingAlert(title: "Error: No Form.", dismissAfter: 0.6); return nil }
-        guard let user = UserAccount.currentUser else { UIAlertController.presentDismissingAlert(title: "Error: No User.", dismissAfter: 0.6); return nil }
+        guard UserAccount.currentUser != nil else { UIAlertController.presentDismissingAlert(title: "Error: No User.", dismissAfter: 0.6); return nil }
         let updatedForm = Form(firebaseID: form.firebaseID,
                                address: addressTextField.text ?? "",
                                city: cityTextField.text ?? "",
@@ -321,19 +351,19 @@ class FormDetailViewController: UIViewController {
                                energyBill: energyBillTextField.text ?? "",
                                financeOptions: financeOptionsTextField.text ?? "",
                                firstName: firstNameTextField.text ?? "",
-                               homeValue: homeValueTextField.text ?? "--",
+                               homeValue: homeValueTextField.text ?? "",
                                lastName: lastNameTextField.text ?? "",
                                notes: form.notes ?? "Notes: ",
                                numberOfWindows: numberOfWindowsTextField.text ?? "",
                                outcome: tag ?? .pending, phone: phoneTextField.text ?? "",
                                rate: rateTextField.text ?? "",
                                reason: reasonTextView.text ?? "",
-                               retailQuote: quoteTextField.text ?? "",
+                               retailQuote: quoteTextView.text ?? "",
                                spouse: spouseTextField.text ?? "",
                                state: stateTextField.text ?? "",
                                userID: form.userID,
-                               yearBuilt: yearBuiltTextField.text ?? "--",
-                               yearsOwned: yearsOwnedTextField.text ?? "--",
+                               yearBuilt: yearBuiltTextField.text ?? "",
+                               yearsOwned: yearsOwnedTextField.text ?? "",
                                zip: zipTextField.text ?? ""
         )
         

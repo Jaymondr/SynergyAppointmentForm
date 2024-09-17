@@ -67,17 +67,19 @@ class UserAccount {
     var firstName: String
     var lastName: String
     var email: String
+    var isActive: Bool?
     var branch: Branch?
     var teamID: String?
     var accountType: AccountType?
 
     
     // MARK: INITIALIZERS
-    init(firebaseID: String, firstName: String, lastName: String, email: String, branch: Branch? = nil, teamID: String? = nil, accountType: AccountType? = nil) {
+    init(firebaseID: String, firstName: String, lastName: String, email: String, isActive: Bool = true, branch: Branch? = nil, teamID: String? = nil, accountType: AccountType? = nil) {
         self.firebaseID = firebaseID
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
+        self.isActive = isActive
         self.branch = branch
         self.teamID = teamID
         self.accountType = accountType
@@ -101,6 +103,10 @@ class UserAccount {
         
         if let accountTypeString = userDefaultsDict[UserAccount.CodingKeys.accountType.rawValue] as? String {
             self.accountType = AccountType(rawValue: accountTypeString)
+        }
+        
+        if let isActive = userDefaultsDict[UserAccount.CodingKeys.isActive.rawValue] as? Bool {
+            self.isActive = isActive
         }
         
         self.firebaseID = firebaseID
@@ -129,6 +135,10 @@ class UserAccount {
             self.accountType = AccountType(rawValue: accountTypeString)
         }
         
+        if let isActive = firebaseData[UserAccount.CodingKeys.isActive.rawValue] as? Bool {
+            self.isActive = isActive
+        }
+        
         self.firebaseID = firebaseID
         self.firstName = firstName
         self.lastName = lastName
@@ -139,12 +149,12 @@ class UserAccount {
     // MARK: FUNCTIONS
     func toUserDefaultsDictionary() -> [String: Any] {
         var userDefaultsDictionary: [String : Any] = [
-            UserAccount.CodingKeys.firebaseID.rawValue:              uID,
-            UserAccount.CodingKeys.firstName.rawValue:               firstName,
-            UserAccount.CodingKeys.lastName.rawValue:                lastName,
-            UserAccount.CodingKeys.email.rawValue:                   email,
-            
+            UserAccount.CodingKeys.firebaseID.rawValue: uID,
+            UserAccount.CodingKeys.firstName.rawValue: firstName,
+            UserAccount.CodingKeys.lastName.rawValue: lastName,
+            UserAccount.CodingKeys.email.rawValue: email
         ]
+        
         if let branch = branch {
             userDefaultsDictionary[UserAccount.CodingKeys.branch.rawValue] = branch.rawValue
         }
@@ -157,8 +167,32 @@ class UserAccount {
             userDefaultsDictionary[UserAccount.CodingKeys.accountType.rawValue] = accountType.rawValue
         }
         
+        if let isActive = isActive {
+            userDefaultsDictionary[UserAccount.CodingKeys.isActive.rawValue] = isActive
+        }
+        
         return userDefaultsDictionary
     }
+
+    
+    func updateUserDefaults() {
+        if var userDefaultsDict = UserDefaults.standard.dictionary(forKey: UserAccount.kUser) {
+            
+            // Here you can merge or update specific values as needed
+            let newDict = toUserDefaultsDictionary()
+            
+            // Update existing dictionary with new values
+            userDefaultsDict.merge(newDict) { (_, new) in new }
+            
+            // Save back to UserDefaults
+            UserDefaults.standard.set(userDefaultsDict, forKey: UserAccount.kUser)
+        } else {
+            // If the dictionary doesn't exist, create and save a new one
+            let newDict = toUserDefaultsDictionary()
+            UserDefaults.standard.set(newDict, forKey: UserAccount.kUser)
+        }
+    }
+    
     
     func joinTeam(_ teamID: String) {
         self.teamID = teamID
@@ -171,6 +205,7 @@ class UserAccount {
     // MARK: ENUMS
     enum CodingKeys: String, CodingKey {
         case accountType = "accountType"
+        case isActive = "isActive"
         case branch = "branch"
         case email = "email"
         case firebaseID = "firebaseID"

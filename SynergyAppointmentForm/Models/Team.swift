@@ -25,9 +25,8 @@ class Team {
     
     // Firebase Collection Key
     static let kCollectionKey = "Teams"
-    static let kTeamID = "teamID"
-    static let kTeamName = "teamName"
     
+    let branch: String
     let teamID: String
     let name: String
     var memberIDs: [String] // Stores only userIDs of reps
@@ -36,9 +35,10 @@ class Team {
     
     var firebaseRepresentation: [String : FirestoreType] {
         var firebaseRepresentation: [String : FirestoreType] = [
+            Team.CodingKeys.branch.rawValue             : branch,
             Team.CodingKeys.teamID.rawValue             : teamID,
             Team.CodingKeys.name.rawValue               : name,
-            Team.CodingKeys.memberIDs.rawValue         : memberIDs,
+            Team.CodingKeys.memberIDs.rawValue          : memberIDs,
             Team.CodingKeys.directorUserIDs.rawValue    : directorUserIDs,
             
         ]
@@ -51,7 +51,8 @@ class Team {
     }
     
     
-    init(teamID: String, name: String) {
+    init(branch: String, teamID: String, name: String) {
+        self.branch = branch
         self.teamID = teamID
         self.name = name
         self.memberIDs = []
@@ -59,12 +60,14 @@ class Team {
     }
     
     required init?(firebaseData: [String : Any], firebaseID: String) {
-        guard let teamID = firebaseData[Team.CodingKeys.teamID.rawValue] as? String,
+        guard let branch = firebaseData[Team.CodingKeys.branch.rawValue] as? String,
+              let teamID = firebaseData[Team.CodingKeys.teamID.rawValue] as? String,
               let name = firebaseData[Team.CodingKeys.name.rawValue] as? String,
               let memberIDs = firebaseData[Team.CodingKeys.memberIDs.rawValue] as? [String],
               let directorUserIDs = firebaseData[Team.CodingKeys.directorUserIDs.rawValue] as? [String]
         else { return nil }
                 
+        self.branch = branch
         self.teamID = teamID
         self.name = name
         self.memberIDs = memberIDs
@@ -96,6 +99,7 @@ class Team {
     // MARK: - ENUMS
     
     enum CodingKeys: String, CaseIterable, CodingKey {
+        case branch = "branch"
         case teamID = "teamID"
         case name = "name"
         case memberIDs = "memberIDs"

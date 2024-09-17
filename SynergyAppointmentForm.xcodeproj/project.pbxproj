@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6711C2A22C740F700009FB69 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6711C2A12C740F700009FB69 /* TabBarViewController.swift */; };
 		6712F7322B620D0900EB35DE /* AccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6712F7312B620D0900EB35DE /* AccountType.swift */; };
 		671FB9022B0C091400D3CFAB /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 671FB9012B0C091400D3CFAB /* FirebaseAnalytics */; };
 		671FB9042B0C091400D3CFAB /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 671FB9032B0C091400D3CFAB /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -49,6 +50,8 @@
 		678162F32B48C6F500C48A52 /* Branch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678162F22B48C6F500C48A52 /* Branch.swift */; };
 		678162F72B48DFBA00C48A52 /* UserAccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678162F62B48DFBA00C48A52 /* UserAccountController.swift */; };
 		678FD77E2B1A3A3100FB515D /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678FD77D2B1A3A3100FB515D /* UserAccount.swift */; };
+		679B5F5A2C7F8981003F2239 /* TutorialController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679B5F592C7F8981003F2239 /* TutorialController.swift */; };
+		679B5F602C7F8ACF003F2239 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679B5F5F2C7F8ACF003F2239 /* TutorialViewController.swift */; };
 		67A582F52B0D0AA500D4B5DA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A582F42B0D0AA500D4B5DA /* Extensions.swift */; };
 		67A582F82B0D23F300D4B5DA /* FormDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A582F72B0D23F300D4B5DA /* FormDetailViewController.swift */; };
 		67A5C0972B28CDAD00D16249 /* SignUpScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67A5C0962B28CDAD00D16249 /* SignUpScreen.storyboard */; };
@@ -60,6 +63,8 @@
 		67D74ED22C25D4A900E4CD9A /* TeamController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D74ED12C25D4A900E4CD9A /* TeamController.swift */; };
 		67DAFE932B073028003D6B5B /* FormError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DAFE922B073028003D6B5B /* FormError.swift */; };
 		67E4A6692B054BCF00024F06 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E4A6682B054BCF00024F06 /* Address.swift */; };
+		67E5CB322C89F233003984F1 /* TeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E5CB312C89F233003984F1 /* TeamViewController.swift */; };
+		67E5CB342C89F43A003984F1 /* TeamMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E5CB332C89F43A003984F1 /* TeamMemberTableViewCell.swift */; };
 		67EAEF202B14D148006E4995 /* Outcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EAEF1F2B14D148006E4995 /* Outcome.swift */; };
 		67EBEE2B2B0BC629009FD021 /* FormTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EBEE2A2B0BC629009FD021 /* FormTableViewCell.swift */; };
 		67EBEE302B0BC768009FD021 /* FormListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EBEE2F2B0BC768009FD021 /* FormListViewController.swift */; };
@@ -76,6 +81,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6711C2A12C740F700009FB69 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		6712F7312B620D0900EB35DE /* AccountType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountType.swift; sourceTree = "<group>"; };
 		673F85572B4DD66000465FE0 /* Notes.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Notes.storyboard; sourceTree = "<group>"; };
 		673F85592B4DD68A00465FE0 /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
@@ -93,6 +99,8 @@
 		678162F22B48C6F500C48A52 /* Branch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Branch.swift; sourceTree = "<group>"; };
 		678162F62B48DFBA00C48A52 /* UserAccountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountController.swift; sourceTree = "<group>"; };
 		678FD77D2B1A3A3100FB515D /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
+		679B5F592C7F8981003F2239 /* TutorialController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialController.swift; sourceTree = "<group>"; };
+		679B5F5F2C7F8ACF003F2239 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		67A582F42B0D0AA500D4B5DA /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		67A582F72B0D23F300D4B5DA /* FormDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDetailViewController.swift; sourceTree = "<group>"; };
 		67A5C0962B28CDAD00D16249 /* SignUpScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SignUpScreen.storyboard; sourceTree = "<group>"; };
@@ -105,6 +113,8 @@
 		67DAFE922B073028003D6B5B /* FormError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormError.swift; sourceTree = "<group>"; };
 		67DAFE952B073FBB003D6B5B /* SynergyAppointmentForm.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SynergyAppointmentForm.entitlements; sourceTree = "<group>"; };
 		67E4A6682B054BCF00024F06 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		67E5CB312C89F233003984F1 /* TeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamViewController.swift; sourceTree = "<group>"; };
+		67E5CB332C89F43A003984F1 /* TeamMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMemberTableViewCell.swift; sourceTree = "<group>"; };
 		67EAEF1F2B14D148006E4995 /* Outcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Outcome.swift; sourceTree = "<group>"; };
 		67EBEE2A2B0BC629009FD021 /* FormTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTableViewCell.swift; sourceTree = "<group>"; };
 		67EBEE2F2B0BC768009FD021 /* FormListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormListViewController.swift; sourceTree = "<group>"; };
@@ -221,10 +231,13 @@
 		674603B62B03DADE00756102 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				67E5CB302C89F211003984F1 /* Team */,
+				679B5F5E2C7F8ABD003F2239 /* Tutorial */,
 				67FEDB822B34B2AC005D4421 /* Form */,
 				67FEDB832B34B2BE005D4421 /* Login */,
 				67ECD72F2B3789D30045E893 /* Profile */,
 				673F855B2B4DD68E00465FE0 /* Notes */,
+				6711C2A12C740F700009FB69 /* TabBarViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -261,8 +274,17 @@
 				673F855C2B5A263100465FE0 /* ReportController.swift */,
 				678162F62B48DFBA00C48A52 /* UserAccountController.swift */,
 				67D74ED12C25D4A900E4CD9A /* TeamController.swift */,
+				679B5F592C7F8981003F2239 /* TutorialController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		679B5F5E2C7F8ABD003F2239 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				679B5F5F2C7F8ACF003F2239 /* TutorialViewController.swift */,
+			);
+			path = Tutorial;
 			sourceTree = "<group>";
 		};
 		67A582F62B0D0AB000D4B5DA /* Extensions */ = {
@@ -298,6 +320,14 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
+		67E5CB302C89F211003984F1 /* Team */ = {
+			isa = PBXGroup;
+			children = (
+				67E5CB312C89F233003984F1 /* TeamViewController.swift */,
+			);
+			path = Team;
+			sourceTree = "<group>";
+		};
 		67EAEF212B14D14E006E4995 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
@@ -313,6 +343,7 @@
 			children = (
 				67EBEE2A2B0BC629009FD021 /* FormTableViewCell.swift */,
 				67CE58AA2B47ACA600D809B4 /* EmptyTableViewCell.swift */,
+				67E5CB332C89F43A003984F1 /* TeamMemberTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -469,18 +500,23 @@
 				67A5C09B2B28D09D00D16249 /* SignUpViewController.swift in Sources */,
 				674603A42B03D8F700756102 /* SceneDelegate.swift in Sources */,
 				678FD77E2B1A3A3100FB515D /* UserAccount.swift in Sources */,
+				67E5CB342C89F43A003984F1 /* TeamMemberTableViewCell.swift in Sources */,
 				674603B92B03DB0400756102 /* Form.swift in Sources */,
 				67DAFE932B073028003D6B5B /* FormError.swift in Sources */,
 				673F855D2B5A263100465FE0 /* ReportController.swift in Sources */,
 				67A582F52B0D0AA500D4B5DA /* Extensions.swift in Sources */,
 				67BB4F152B141B3300067D90 /* FirebaseModel.swift in Sources */,
+				6711C2A22C740F700009FB69 /* TabBarViewController.swift in Sources */,
 				67D74ED22C25D4A900E4CD9A /* TeamController.swift in Sources */,
 				67D2B5BC2C1CE085008E37FD /* Team.swift in Sources */,
 				674603C12B03E51000756102 /* CreateFormViewController.swift in Sources */,
 				67EBEE3F2B0C051C009FD021 /* FirebaseController.swift in Sources */,
+				679B5F5A2C7F8981003F2239 /* TutorialController.swift in Sources */,
 				67ECD72E2B3789CF0045E893 /* ProfileViewController.swift in Sources */,
+				67E5CB322C89F233003984F1 /* TeamViewController.swift in Sources */,
 				678162F32B48C6F500C48A52 /* Branch.swift in Sources */,
 				673F855A2B4DD68A00465FE0 /* NotesViewController.swift in Sources */,
+				679B5F602C7F8ACF003F2239 /* TutorialViewController.swift in Sources */,
 				674603BC2B03DE0E00756102 /* FormController.swift in Sources */,
 				67A582F82B0D23F300D4B5DA /* FormDetailViewController.swift in Sources */,
 				67CE58AB2B47ACA600D809B4 /* EmptyTableViewCell.swift in Sources */,
@@ -644,8 +680,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -678,8 +713,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
