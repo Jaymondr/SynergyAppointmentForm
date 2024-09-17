@@ -1180,7 +1180,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uvv-HJ-5Iz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6353.4351145038163" y="-302.11267605633805"/>
+            <point key="canvasLocation" x="5350" y="-275"/>
         </scene>
         <!--Team View Controller-->
         <scene sceneID="GzU-ES-hHD">
@@ -1906,10 +1906,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jLC-4o-4xz">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="redraw" ambiguous="YES" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="jLC-4o-4xz">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="DHd-5C-1au">
+                                    <stackView opaque="NO" contentMode="scaleAspectFit" ambiguous="YES" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="DHd-5C-1au">
                                         <rect key="frame" x="0.0" y="50" width="393" height="20"/>
                                     </stackView>
                                 </subviews>
@@ -2108,13 +2108,13 @@
                                                         </constraints>
                                                     </stackView>
                                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="hbQ-5a-E9n">
-                                                        <rect key="frame" x="94" y="-1" width="185" height="37"/>
+                                                        <rect key="frame" x="94" y="91.666666666666657" width="185" height="37"/>
                                                         <color key="color" name="outcomePurple"/>
                                                     </activityIndicatorView>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstItem="hbQ-5a-E9n" firstAttribute="centerY" secondItem="p4c-ME-2w0" secondAttribute="centerY" id="2pR-Wb-HTe"/>
+                                                    <constraint firstItem="hbQ-5a-E9n" firstAttribute="centerY" secondItem="fE8-48-Jks" secondAttribute="centerY" id="2pR-Wb-HTe"/>
                                                     <constraint firstItem="p4c-ME-2w0" firstAttribute="centerX" secondItem="wql-dB-qxl" secondAttribute="centerX" id="7oZ-0b-DCz"/>
                                                     <constraint firstAttribute="height" constant="185" id="7sL-Ce-SEt"/>
                                                     <constraint firstItem="hbQ-5a-E9n" firstAttribute="centerX" secondItem="wql-dB-qxl" secondAttribute="centerX" id="HBp-oO-dqg"/>
@@ -2921,7 +2921,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gAn-5j-mir" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5590.0763358778622" y="-302.11267605633805"/>
+            <point key="canvasLocation" x="4505" y="-275"/>
         </scene>
         <!--Forms-->
         <scene sceneID="Oot-7l-Q0a">

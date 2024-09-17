@@ -178,11 +178,29 @@ extension UIScrollView {
 // MARK: - TEXTFIELD
 extension UITextField {
     func addBottomBorder(with color: UIColor, andHeight height: CGFloat) {
+        // Remove any existing bottom border layer
+        self.layer.sublayers?.forEach {
+            if $0.name == "bottomBorder" {
+                $0.removeFromSuperlayer()
+            }
+        }
+        
         let bottomLine = CALayer()
-        bottomLine.frame = CGRect(x: 0, y: self.frame.height - height, width: self.frame.width, height: height)
         bottomLine.backgroundColor = color.cgColor
-        self.borderStyle = .none
+        bottomLine.name = "bottomBorder"
+        
+        // Ensure the bottomLine frame is updated correctly
+        bottomLine.frame = CGRect(x: 0, y: self.bounds.height - height, width: self.bounds.width, height: height)
+        
         self.layer.addSublayer(bottomLine)
+        self.borderStyle = .none
+    }
+    
+    // Call this method from viewDidLayoutSubviews or after setting up the view
+    func updateBottomBorderFrame() {
+        if let bottomBorder = self.layer.sublayers?.first(where: { $0.name == "bottomBorder" }) {
+            bottomBorder.frame = CGRect(x: 0, y: self.bounds.height - bottomBorder.bounds.height, width: self.bounds.width, height: bottomBorder.bounds.height)
+        }
     }
 }
 

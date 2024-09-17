@@ -72,6 +72,12 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
 //        let backButton = UIBarButtonItem.customBackButton(target: self, action: #selector(backButtonPressed))
 //        navigationItem.leftBarButtonItem = backButton
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        layoutSubviews() // ADDS BOTTOM BORDER TO TEXTFIELDS
+        
+    }
         
     // MARK: PROPERTIES
     var firebaseID: String = ""
@@ -497,6 +503,15 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
         self.present(alert, animated: true)
     }
     
+    private func layoutSubviews() {
+        // TEXTFIELDS
+        let textFields: [UITextField] = [firstNameTextField, lastNameTextField, spouseTextField, addressTextField, cityTextField, stateTextField, zipTextField, phoneTextField, emailTextField, numberOfWindowsTextField, energyBillTextField,financeTextField, yearBuiltTextField, yearsOwnedTextField, homeValueTextField, rateTextField]
+        
+        for textField in textFields {
+            textField.addBottomBorder(with: .steel, andHeight: 1)
+        }
+    }
+    
     func setupView() {
         guard let user = UserAccount.currentUser else { return }
         // DEFAULT IMPLEMENTATIONS
@@ -570,14 +585,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             textView.layer.cornerRadius = 8.0
             textView.layer.borderColor = UIColor.steel.cgColor
         }
-        
-        // TEXTFIELDS
-        let textFields: [UITextField] = [firstNameTextField, lastNameTextField, spouseTextField, addressTextField, cityTextField, stateTextField, zipTextField, phoneTextField, emailTextField, numberOfWindowsTextField, energyBillTextField,financeTextField, yearBuiltTextField, yearsOwnedTextField, homeValueTextField, rateTextField]
-        
-        for textField in textFields {
-            textField.addBottomBorder(with: .steel, andHeight: 1)
-        }
-                
+                        
         // LIGHT/DARK MODE
         if traitCollection.userInterfaceStyle == .dark {
             // BACKGROUND

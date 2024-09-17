@@ -69,6 +69,12 @@ class FormDetailViewController: UIViewController {
         
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        layoutSubviews() // ADDS BOTTOM BORDER TO TEXTFIELDS
+        
+    }
+    
     // MARK: PROPERTIES
     
     var form: Form?
@@ -195,6 +201,15 @@ class FormDetailViewController: UIViewController {
     
     
     // MARK: FUNCTIONS
+    private func layoutSubviews() {
+        // TEXTFIELDS
+        let textFields: [UITextField] = [firstNameTextField, lastNameTextField, spouseTextField, addressTextField, cityTextField, stateTextField, zipTextField, phoneTextField, emailTextField, numberOfWindowsTextField, energyBillTextField, financeOptionsTextField, yearBuiltTextField, yearsOwnedTextField, homeValueTextField, rateTextField]
+        
+        for textField in textFields {
+            textField.addBottomBorder(with: .steel, andHeight: 1)
+        }
+    }
+    
     func setUpView(with form: Form?) {
         guard let form = form else { print("No Form!"); return }
         guard let user = UserAccount.currentUser else { return }
@@ -304,15 +319,7 @@ class FormDetailViewController: UIViewController {
             textView.layer.cornerRadius = 8.0
             textView.layer.borderColor = UIColor.steel.cgColor
         }
-        
-        // TEXTFIELDS
-        let textFields: [UITextField] = [firstNameTextField, lastNameTextField, spouseTextField, addressTextField, cityTextField, stateTextField, zipTextField, phoneTextField, emailTextField, numberOfWindowsTextField, energyBillTextField, financeOptionsTextField, yearBuiltTextField, yearsOwnedTextField, homeValueTextField, rateTextField]
-        
-        for textField in textFields {
-            textField.addBottomBorder(with: .steel, andHeight: 1)
-        }
-        
-        
+            
         if traitCollection.userInterfaceStyle == .dark {
             // BACKGROUND
             let gradientLayer = CAGradientLayer()

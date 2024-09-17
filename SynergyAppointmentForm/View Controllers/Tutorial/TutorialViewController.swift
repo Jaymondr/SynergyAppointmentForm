@@ -76,7 +76,7 @@ class TutorialViewController: UIViewController {
         DispatchQueue.main.async {
             
             let imageView = UIImageView(image: image)
-             imageView.contentMode = .scaleAspectFill
+             imageView.contentMode = .scaleAspectFit
              imageView.translatesAutoresizingMaskIntoConstraints = false
              
              // Add the image view to the stack view
