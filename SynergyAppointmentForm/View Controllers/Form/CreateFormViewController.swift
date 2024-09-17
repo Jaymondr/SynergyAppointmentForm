@@ -161,7 +161,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             self.zipTextField.text = address?.zip
             self.cityTextField.text = address?.city
             self.stateTextField.text = address?.state
-            self.scrollView.scrollTo(yPosition: self.scheduleViewScrollOffset + 350, animated: true)
+            self.scrollView.scrollTo(yPosition: self.scheduleViewScrollOffset + 370, animated: true)
             
             var locationTitle: String {
                 if let address = address?.address {
@@ -182,7 +182,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
             let alert = UIAlertController(title: locationTitle, message: locationMessage, preferredStyle: .alert)
             
             let confirmAction = UIAlertAction(title: "Confirmed", style: .default) { _ in
-                self.scrollView.scrollTo(yPosition: self.scheduleViewScrollOffset + 350, animated: true)
+//                self.scrollView.scrollTo(yPosition: self.scheduleViewScrollOffset + 350, animated: true)
                 self.numberOfWindowsTextField.becomeFirstResponder()
             }
             
