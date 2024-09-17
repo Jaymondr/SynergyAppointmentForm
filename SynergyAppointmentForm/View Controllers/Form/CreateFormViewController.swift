@@ -319,7 +319,7 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
                         energyBill: energyBillTextField.text ?? "",
                         financeOptions: financeTextField.text ?? "",
                         firstName: firstNameTextField.text ?? "",
-                        homeValue: homeValueTextField.text ?? "--",
+                        homeValue: homeValueTextField.text ?? "",
                         lastName: lastNameTextField.text ?? "",
                         numberOfWindows: numberOfWindowsTextField.text ?? "",
                         phone: phoneTextField.text ?? "",
@@ -329,8 +329,8 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
                         spouse: spouseTextField.text ?? "",
                         state: stateTextField.text ?? "",
                         userID: user.firebaseID,
-                        yearBuilt: yearBuiltTextField.text ?? "--",
-                        yearsOwned: yearsOwnedTextField.text ?? "--",
+                        yearBuilt: yearBuiltTextField.text ?? "",
+                        yearsOwned: yearsOwnedTextField.text ?? "",
                         zip: zipTextField.text ?? ""
         )
     }

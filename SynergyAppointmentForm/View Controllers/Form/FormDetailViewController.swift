@@ -344,7 +344,7 @@ class FormDetailViewController: UIViewController {
                                energyBill: energyBillTextField.text ?? "",
                                financeOptions: financeOptionsTextField.text ?? "",
                                firstName: firstNameTextField.text ?? "",
-                               homeValue: homeValueTextField.text ?? "--",
+                               homeValue: homeValueTextField.text ?? "",
                                lastName: lastNameTextField.text ?? "",
                                notes: form.notes ?? "Notes: ",
                                numberOfWindows: numberOfWindowsTextField.text ?? "",
@@ -355,8 +355,8 @@ class FormDetailViewController: UIViewController {
                                spouse: spouseTextField.text ?? "",
                                state: stateTextField.text ?? "",
                                userID: form.userID,
-                               yearBuilt: yearBuiltTextField.text ?? "--",
-                               yearsOwned: yearsOwnedTextField.text ?? "--",
+                               yearBuilt: yearBuiltTextField.text ?? "",
+                               yearsOwned: yearsOwnedTextField.text ?? "",
                                zip: zipTextField.text ?? ""
         )
         

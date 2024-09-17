@@ -25,36 +25,28 @@ class FormController {
         if user.branch == .raleigh {
         // RALEIGHS FORM LAYOUT
         let formString =
-        """
-        \(user.firstName)'s APPT
-        (\(teamName))
-
-        Created Date: \(Date().formattedStringDate())
-        
-        Appointment for: \(form.date.formattedDay()), \(form.date.formattedMonth()) \(form.date.formattedDayNumber()) @\(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())
-        
-        \(form.firstName) & \(form.spouse) \(form.lastName)
-        
-        \(form.address), \(form.city), \(form.state) \(form.zip)
-        
-        \(form.firstName)'s Phone: \(form.phone)
-        \(form.email.isEmpty ? "" : "Email: \(form.email)")
-        
-        Number of Windows: \(form.numberOfWindows.isEmpty ? "--" : "\(form.numberOfWindows)")
-        Home Value: \(form.homeValue ?? "--")
-        Year Built: \(form.yearBuilt ?? "--")
-        Moved in \(form.yearsOwned.isEmpty ? "--" : form.yearsOwned) year(s) ago.
-        \(form.homeValue == nil ? "" : "Home Value: \(form.homeValue ?? "--")")
-        \(form.financeOptions.isEmpty ? "" : "\nFinance Options: \(form.financeOptions)")
-
-        Rating: \(form.rate)
-
-        Previous estimates: \(form.retailQuote)
-        
-        Reason: \(form.reason)
-
-        Comments: \(form.comments)
-        """
+            """
+            \(user.firstName)'s APPT \(teamName)
+            (Created Date: \(Date().formattedDayMonthYear()))
+            
+            Appointment for: \(form.date.formattedDay()), \(form.date.formattedMonth()) \(form.date.formattedDayNumber())@\(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())
+                
+            \(form.firstName) \(form.spouse.isEmpty ? form.lastName : "& \(form.spouse) \(form.lastName)")
+            
+            \(form.address), \(form.city), \(form.state) \(form.zip)
+            
+            \(form.firstName.isEmpty ? "" : "\(form.firstName)'s Phone: \(form.phone)")
+            \(form.email.isEmpty ? "" : "Email: \(form.email)\n")
+            \(form.numberOfWindows.isEmpty ? "" : "Number of Windows: \(form.numberOfWindows)")
+            \(form.yearsOwned.isEmpty ? "" : "Moved in \(form.yearsOwned) \(Int(form.yearsOwned) == 1 ? "year" : "years") ago.")
+            \(form.homeValue == nil ? "" : "Home Value: \(form.homeValue ?? "")")
+            \(form.yearBuilt == nil ? "" : "Year Built: \(form.yearBuilt ?? "")")
+            \(form.financeOptions.isEmpty ? "" : "\nFinance Options: \(form.financeOptions)")\(form.reason.isEmpty ? "" :"\n\nReason: \(form.reason)")
+            
+            Rating: \(form.rate.isEmpty ? "None" : form.rate)
+            \(form.retailQuote.isEmpty ? "" : "\nPrevious Estimates: \(form.retailQuote)\n")
+            Comments: \(form.comments)
+            """
             
             UIPasteboard.general.string = formString
             UIAlertController.presentDismissingAlert(title: "Form Copied!", dismissAfter: 0.3)
@@ -63,34 +55,34 @@ class FormController {
         {
         // OTHER BRANCHES FORM LAYOUT
         let formString =
-        """
-        APT FORM
-        Created Date: \(Date().formattedStringDate())
-        
-        Appointment Day: \(form.date.formattedDay())
-        Time: \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())
-        Date: \(form.date.formattedDayMonthShort())
-        Name: \(form.firstName + " " + form.lastName)
-        Spouse: \(form.spouse)
-        Address: \(form.address)
-        Zip: \(form.zip)
-        City: \(form.city)
-        State: \(form.state)
-        Phone: \(form.phone)
-        Email: \(form.email)
-        
-        Number of windows: \(form.numberOfWindows)
-        Energy bill (average): \(form.energyBill)
-        Retail Quote: \(form.retailQuote)
-        Finance Options: \(form.financeOptions)
-        Years Owned: \(form.yearsOwned)
-        
-        Reason for window replacement: \(form.reason)
-        
-        Rate 1-10: \(form.rate)
-        
-        Comments: \(form.comments)
-        """
+            """
+            APT FORM
+            Created Date: \(Date().formattedStringDate())
+            
+            Appointment Day: \(form.date.formattedDay())
+            Time: \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())
+            Date: \(form.date.formattedDayMonthShort())
+            Name: \(form.firstName + " " + form.lastName)
+            Spouse: \(form.spouse)
+            Address: \(form.address)
+            Zip: \(form.zip)
+            City: \(form.city)
+            State: \(form.state)
+            Phone: \(form.phone)
+            Email: \(form.email)
+            
+            Number of windows: \(form.numberOfWindows)
+            Energy bill (average): \(form.energyBill)
+            Retail Quote: \(form.retailQuote)
+            Finance Options: \(form.financeOptions)
+            Years Owned: \(form.yearsOwned)
+            
+            Reason for window replacement: \(form.reason)
+            
+            Rate 1-10: \(form.rate)
+            
+            Comments: \(form.comments)
+            """
             
             UIPasteboard.general.string = formString
             UIAlertController.presentDismissingAlert(title: "Form Copied!", dismissAfter: 0.3)
@@ -111,66 +103,61 @@ class FormController {
         if user.branch == .raleigh {
             // RALEIGHS FORM LAYOUT
             let formString =
-    """
-    \(user.firstName)'s APPT \(teamName)
-    (Created Date: \(Date().formattedDayMonthYear()))
-    
-    Appointment for: \(form.date.formattedDay()), \(form.date.formattedMonth()) \(form.date.formattedDayNumber()) @\(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())
+                """
+                \(user.firstName)'s APPT \(teamName)
+                (Created Date: \(Date().formattedDayMonthYear()))
+                
+                Appointment for: \(form.date.formattedDay()), \(form.date.formattedMonth()) \(form.date.formattedDayNumber())           @\(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())
+                
+                \(form.firstName) \(form.spouse.isEmpty ? form.lastName : "& \(form.spouse) \(form.lastName)")
+                
+                \(form.address), \(form.city), \(form.state) \(form.zip)
+                
+                \(form.firstName.isEmpty ? "" : "\(form.firstName)'s Phone: \(form.phone)")
+                \(form.email.isEmpty ? "" : "Email: \(form.email)\n")
+                \(form.numberOfWindows.isEmpty ? "" : "Number of Windows: \(form.numberOfWindows)")
+                \(form.yearsOwned.isEmpty ? "" : "Moved in \(form.yearsOwned) \(Int(form.yearsOwned) == 1 ? "year" : "years") ago.")
+                \(form.homeValue == nil ? "" : "Home Value: \(form.homeValue ?? "")")
+                \(form.yearBuilt == nil ? "" : "Year Built: \(form.yearBuilt ?? "")")
+                \(form.financeOptions.isEmpty ? "" : "\nFinance Options: \(form.financeOptions)")\(form.reason.isEmpty ? "" :"\n\nReason: \(form.reason)")
 
-    \(form.firstName) & \(form.spouse) \(form.lastName)
-    
-    \(form.address), \(form.city), \(form.state) \(form.zip)
-    
-    \(form.firstName)'s Phone: \(form.phone)
-    Email: \(form.email)
-    
-    Number of Windows: \(form.numberOfWindows.isEmpty ? "--" : "\(form.numberOfWindows)")
-    Home Value: \(form.homeValue ?? "--")
-    Year Built: \(form.yearBuilt ?? "--")
-    Moved in \(form.yearsOwned.isEmpty ? "--" : form.yearsOwned) year(s) ago.
-    \(form.financeOptions.isEmpty ? "" : "\nFinance Options: \(form.financeOptions)")
-    \(form.homeValue == nil ? "" : "\nHome Value: \(form.homeValue ?? "--")")
-    \(form.reason.isEmpty ? "" : "\nReason: \(form.reason)")
-    
-    Rating: \(form.rate.isEmpty ? "None" : form.rate)
-    
-    Previous estimates: \(form.retailQuote.isEmpty ? "--" : form.retailQuote)
-    
-    Comments: \(form.comments)
-    """
+                Rating: \(form.rate.isEmpty ? "None" : form.rate)
+                \(form.retailQuote.isEmpty ? "" : "\nPrevious Estimates: \(form.retailQuote)\n")
+                Comments: \(form.comments)
+                """
             return formString
         }
         else
         {
     // OTHER BRANCHES FORM LAYOUT
             let formString =
-    """
-    APT FORM
-    
-    Appointment Day: \(form.date.formattedDay())
-    Time: \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())
-    Date: \(form.date.formattedDayMonthShort())
-    Name: \(form.firstName + " " + form.lastName)
-    Spouse: \(form.spouse)
-    Address: \(form.address)
-    Zip: \(form.zip)
-    City: \(form.city)
-    State: \(form.state)
-    Phone: \(form.phone)
-    Email: \(form.email)
-    
-    Number of windows: \(form.numberOfWindows)
-    Energy bill (average): \(form.energyBill)
-    Retail Quote: \(form.retailQuote)
-    Finance Options: \(form.financeOptions)
-    Years Owned: \(form.yearsOwned)
-    
-    Reason for window replacement: \(form.reason)
-    
-    Rate 1-10: \(form.rate)
-    
-    Comments: \(form.comments)
-    """
+                """
+                APT FORM
+                
+                Appointment Day: \(form.date.formattedDay())
+                Time: \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())
+                Date: \(form.date.formattedDayMonthShort())
+                Name: \(form.firstName + " " + form.lastName)
+                Spouse: \(form.spouse)
+                Address: \(form.address)
+                Zip: \(form.zip)
+                City: \(form.city)
+                State: \(form.state)
+                Phone: \(form.phone)
+                Email: \(form.email)
+                
+                Number of windows: \(form.numberOfWindows)
+                Energy bill (average): \(form.energyBill)
+                Retail Quote: \(form.retailQuote)
+                Finance Options: \(form.financeOptions)
+                Years Owned: \(form.yearsOwned)
+                
+                Reason for window replacement: \(form.reason)
+                
+                Rate 1-10: \(form.rate)
+                
+                Comments: \(form.comments)
+                """
     return formString
         }
     }
