@@ -373,7 +373,9 @@ class CreateFormViewController: UIViewController, CLLocationManagerDelegate, UIT
                     // Update the schedule UI for the next 3 days
                     updateScheduleUI(with: sortedAppointments, numberOfDays: numberOfDays)
                 } else {
-                    UIAlertController.presentDismissingAlert(title: "No upcoming Appointments found", dismissAfter: 1.5)
+                    // Pass empty arrays to show <OPEN> for each day
+                    let emptyAppointments = Array(repeating: [Form](), count: numberOfDays)
+                    updateScheduleUI(with: emptyAppointments, numberOfDays: numberOfDays)
                 }
                 
             } catch {
