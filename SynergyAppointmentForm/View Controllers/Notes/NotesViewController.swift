@@ -62,11 +62,13 @@ class NotesViewController: UIViewController {
             timeLabel.textColor = .lightText
             dateLabel.textColor = .lightText
             dayLabel.textColor = .lightText
+            cityStateLabel.textColor = .lightText
         } else {
             firstNameLabel.textColor = .black
             timeLabel.textColor = .black
             dateLabel.textColor = .black
             dayLabel.textColor = .black
+            cityStateLabel.textColor = .gray
         }
     }
     
