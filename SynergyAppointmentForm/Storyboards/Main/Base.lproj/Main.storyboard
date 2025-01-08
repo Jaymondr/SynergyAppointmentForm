@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LCc-57-6fh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LCc-57-6fh">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -1512,6 +1512,7 @@
                     <connections>
                         <segue destination="IT1-YZ-9Jb" kind="relationship" relationship="viewControllers" id="O5V-i2-6KD"/>
                         <segue destination="Ygz-CO-m2h" kind="relationship" relationship="viewControllers" id="TYq-4y-NWQ"/>
+                        <segue destination="58e-0U-UEz" kind="relationship" relationship="viewControllers" id="aBI-rH-AUY"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lqJ-1Z-4Hu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2944,6 +2945,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oNU-da-dW9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2759.5419847328244" y="-275.35211267605638"/>
+        </scene>
+        <!--MapNavigationController-->
+        <scene sceneID="Vza-NQ-bNs">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Map" referencedIdentifier="MapNavigationController" id="58e-0U-UEz" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="54t-EU-Nv4"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5sA-nT-yFF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1974" y="628"/>
         </scene>
         <!--Profile-->
         <scene sceneID="DHF-NL-RCY">
