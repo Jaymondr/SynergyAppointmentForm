@@ -672,7 +672,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = SynergyAppointmentForm/SynergyAppointmentForm.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = FD53M4BR3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SynergyAppointmentForm/Resources/Info.plist;
@@ -708,7 +708,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = SynergyAppointmentForm/SynergyAppointmentForm.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = FD53M4BR3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SynergyAppointmentForm/Resources/Info.plist;
