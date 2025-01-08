@@ -17,8 +17,8 @@ class MapViewController: UIViewController {
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
 
-        // Do any additional setup after loading the view.
     }
     
     
@@ -29,7 +29,12 @@ class MapViewController: UIViewController {
     
     // MARK: - FUNCTIONS
     
-    
+    private func setupView() {
+        // MAP CHARACTERISTICS
+        mapView.tintColor = UIColor.green
+        mapView.overrideUserInterfaceStyle = .dark // Force dark mode
+
+    }
     
 
     /*
