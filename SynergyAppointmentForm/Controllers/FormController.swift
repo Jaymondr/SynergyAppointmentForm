@@ -25,33 +25,28 @@ class FormController {
         if user.branch == .raleigh {
         // RALEIGHS FORM LAYOUT
         let formString =
-        """
-        \(user.firstName)'s APPT
-        (\(teamName))
-
-        Created Date: \(Date().formattedStringDate())
-        
-        Appointment for: \(form.date.formattedDay()) \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased()), \(form.date.formattedMonth()) \(form.date.formattedDayNumber())
-        
-        \(form.firstName) & \(form.spouse) \(form.lastName)
-        
-        \(form.address), \(form.city), \(form.state) \(form.zip)
-        
-        \(form.firstName)'s Phone: \(form.phone)
-        Email: \(form.email)
-        
-        Home Value: \(form.homeValue ?? "--")
-        Year Built: \(form.yearBuilt ?? "--")
-        Moved in \(form.yearsOwned) year(s) ago.
-        
-        Rating: \(form.rate)
-
-        Previous estimates: \(form.retailQuote)
-        
-        Reason: \(form.reason)
-
-        Comments: \(form.comments)
-        """
+            """
+            \(user.firstName)'s APPT \(teamName)
+            (Created Date: \(Date().formattedDayMonthYear()))
+            
+            Appointment for: \(form.date.formattedDay()), \(form.date.formattedMonth()) \(form.date.formattedDayNumber()) @\(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())
+                
+            \(form.firstName) \(form.spouse.isEmpty ? form.lastName : "& \(form.spouse) \(form.lastName)")
+            
+            \(form.address), \(form.city), \(form.state) \(form.zip)
+            
+            \(form.firstName.isEmpty ? "" : "\(form.firstName)'s Phone: \(form.phone)")
+            \(form.email.isEmpty ? "" : "Email: \(form.email)\n")
+            \(form.numberOfWindows.isEmpty ? "" : "Number of Windows: \(form.numberOfWindows)")
+            \(form.yearsOwned.isEmpty ? "" : "Moved in \(form.yearsOwned) \(Int(form.yearsOwned) == 1 ? "year" : "years") ago.")
+            \(form.homeValue == nil ? "" : "Home Value: \(form.homeValue ?? "")")
+            \(form.yearBuilt == nil ? "" : "Year Built: \(form.yearBuilt ?? "")")
+            \(form.financeOptions.isEmpty ? "" : "\nFinance Options: \(form.financeOptions)")\(form.reason.isEmpty ? "" :"\n\nReason: \(form.reason)")
+            
+            Rating: \(form.rate.isEmpty ? "None" : form.rate)
+            \(form.retailQuote.isEmpty ? "" : "\nPrevious Estimates: \(form.retailQuote)\n")
+            Comments: \(form.comments)
+            """
             
             UIPasteboard.general.string = formString
             UIAlertController.presentDismissingAlert(title: "Form Copied!", dismissAfter: 0.3)
@@ -60,34 +55,34 @@ class FormController {
         {
         // OTHER BRANCHES FORM LAYOUT
         let formString =
-        """
-        APT FORM
-        Created Date: \(Date().formattedStringDate())
-        
-        Appointment Day: \(form.date.formattedDay())
-        Time: \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())
-        Date: \(form.date.formattedDayMonth())
-        Name: \(form.firstName + " " + form.lastName)
-        Spouse: \(form.spouse)
-        Address: \(form.address)
-        Zip: \(form.zip)
-        City: \(form.city)
-        State: \(form.state)
-        Phone: \(form.phone)
-        Email: \(form.email)
-        
-        Number of windows: \(form.numberOfWindows)
-        Energy bill (average): \(form.energyBill)
-        Retail Quote: \(form.retailQuote)
-        Finance Options: \(form.financeOptions)
-        Years Owned: \(form.yearsOwned)
-        
-        Reason you need window replacement: \(form.reason)
-        
-        Rate 1-10: \(form.rate)
-        
-        Comments: \(form.comments)
-        """
+            """
+            APT FORM
+            Created Date: \(Date().formattedStringDate())
+            
+            Appointment Day: \(form.date.formattedDay())
+            Time: \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())
+            Date: \(form.date.formattedDayMonthShort())
+            Name: \(form.firstName + " " + form.lastName)
+            Spouse: \(form.spouse)
+            Address: \(form.address)
+            Zip: \(form.zip)
+            City: \(form.city)
+            State: \(form.state)
+            Phone: \(form.phone)
+            Email: \(form.email)
+            
+            Number of windows: \(form.numberOfWindows)
+            Energy bill (average): \(form.energyBill)
+            Retail Quote: \(form.retailQuote)
+            Finance Options: \(form.financeOptions)
+            Years Owned: \(form.yearsOwned)
+            
+            Reason for window replacement: \(form.reason)
+            
+            Rate 1-10: \(form.rate)
+            
+            Comments: \(form.comments)
+            """
             
             UIPasteboard.general.string = formString
             UIAlertController.presentDismissingAlert(title: "Form Copied!", dismissAfter: 0.3)
@@ -96,65 +91,73 @@ class FormController {
     
     func getCompletedFormText(from form: Form) -> String {
         guard let user = UserAccount.currentUser else { return "" }
+        var teamName: String {
+            if let userDefaultsDict = UserDefaults.standard.dictionary(forKey: UserAccount.kUser) {
+                if let teamName = userDefaultsDict[UserAccount.CodingKeys.teamName.rawValue] as? String {
+                     return "- \(teamName)"
+                }
+            }
+            return ""
+        }
+
         if user.branch == .raleigh {
             // RALEIGHS FORM LAYOUT
             let formString =
-    """
-    \(user.firstName)'s APPT
-    (Created Date: \(Date().formattedDayMonthYear()))
-    
-    Appointment for: \(form.date.formattedDay()) \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased()), \(form.date.formattedMonth()) \(form.date.formattedDayNumber())
-    
-    \(form.firstName) & \(form.spouse) \(form.lastName)
-    
-    \(form.address), \(form.city), \(form.state) \(form.zip)
-    
-    \(form.firstName)'s Phone: \(form.phone)
-    Email: \(form.email)
-    
-    Home Value: \(form.homeValue ?? "--")
-    Year Built: \(form.yearBuilt ?? "--")
-    Moved in \(form.yearsOwned) year(s) ago.
-    
-    Rating: \(form.rate)
-    
-    Previous estimates: \(form.retailQuote)
-    
-    Comments: \(form.comments)
-    """
+                """
+                \(user.firstName)'s APPT \(teamName)
+                (Created Date: \(Date().formattedDayMonthYear()))
+                
+                Appointment for: \(form.date.formattedDay()), \(form.date.formattedMonth()) \(form.date.formattedDayNumber()) @\(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())
+                
+                \(form.firstName) \(form.spouse.isEmpty ? form.lastName : "& \(form.spouse) \(form.lastName)")
+                
+                \(form.address), \(form.city), \(form.state) \(form.zip)
+                
+                \(form.firstName.isEmpty ? "" : "\(form.firstName)'s Phone: \(form.phone)")
+                \(form.email.isEmpty ? "" : "Email: \(form.email)\n")
+                \(form.numberOfWindows.isEmpty ? "" : "Number of Windows: \(form.numberOfWindows)")
+                \(form.yearsOwned.isEmpty ? "" : "Moved in \(form.yearsOwned) \(Int(form.yearsOwned) == 1 ? "year" : "years") ago.")
+                \(form.homeValue == nil ? "" : "Home Value: \(form.homeValue ?? "")")
+                \(form.yearBuilt == nil ? "" : "Year Built: \(form.yearBuilt ?? "")")
+                \(form.financeOptions.isEmpty ? "" : "\nFinance Options: \(form.financeOptions)")\(form.reason.isEmpty ? "" :"\n\nReason: \(form.reason)")
+
+                Rating: \(form.rate.isEmpty ? "None" : form.rate)
+                \(form.retailQuote.isEmpty ? "" : "\nPrevious Estimates: \(form.retailQuote)\n")
+                Comments: \(form.comments)
+                """
             return formString
         }
         else
         {
-            // OTHER BRANCHES FORM LAYOUT
+    // OTHER BRANCHES FORM LAYOUT
             let formString =
-    """
-    APT FORM
-    
-    Appointment Day: \(form.date.formattedDay())
-    Time: \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())
-    Date: \(form.date.formattedDayMonth())
-    Name: \(form.firstName + " " + form.lastName)
-    Spouse: \(form.spouse)
-    Address: \(form.address)
-    Zip: \(form.zip)
-    City: \(form.city)
-    State: \(form.state)
-    Phone: \(form.phone)
-    Email: \(form.email)
-    
-    Number of windows: \(form.numberOfWindows)
-    Energy bill (average): \(form.energyBill)
-    Retail Quote: \(form.retailQuote)
-    Finance Options: \(form.financeOptions)
-    Years Owned: \(form.yearsOwned)
-    
-    Reason you need window replacement: \(form.reason)
-    
-    Rate 1-10: \(form.rate)
-    
-    Comments: \(form.comments)
-    """
+                """
+                APT FORM
+                
+                Appointment Day: \(form.date.formattedDay())
+                Time: \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased())
+                Date: \(form.date.formattedDayMonthShort())
+                Name: \(form.firstName + " " + form.lastName)
+                Spouse: \(form.spouse)
+                Address: \(form.address)
+                Zip: \(form.zip)
+                City: \(form.city)
+                State: \(form.state)
+                Phone: \(form.phone)
+                Email: \(form.email)
+                
+                Number of windows: \(form.numberOfWindows)
+                Energy bill (average): \(form.energyBill)
+                Retail Quote: \(form.retailQuote)
+                Finance Options: \(form.financeOptions)
+                Years Owned: \(form.yearsOwned)
+                
+                Reason for window replacement: \(form.reason)
+                
+                Rate 1-10: \(form.rate)
+                
+                Comments: \(form.comments)
+                """
     return formString
         }
     }
@@ -163,11 +166,11 @@ class FormController {
         guard let user = UserAccount.currentUser else { return }
         let trelloString = form.spouse.isNotEmpty ?
         """
-        \(form.date.formattedDay()) \(form.date.formattedDayMonth()) @\(form.date.formattedTime()) \(form.firstName) & \(form.spouse) \(form.lastName) (\(form.city)) -\(user.firstName)
+        \(form.date.formattedDay()) \(form.date.formattedDayMonthShort()) @\(form.date.formattedTime()) \(form.firstName) & \(form.spouse) \(form.lastName) (\(form.city)) -\(user.firstName)
         """
         :
         """
-        \(form.date.formattedDay()) \(form.date.formattedDayMonth()) @\(form.date.formattedTime()) \(form.firstName) \(form.lastName) (\(form.city)) -\(user.firstName)
+        \(form.date.formattedDay()) \(form.date.formattedDayMonthShort()) @\(form.date.formattedTime()) \(form.firstName) \(form.lastName) (\(form.city)) -\(user.firstName)
         """
         UIPasteboard.general.string = trelloString
 
@@ -193,7 +196,7 @@ class FormController {
         """
         Hey \(form.firstName), it's \(user.firstName) with \(user.companyName) Windows.
         
-        Your appointment is good to go for \(form.date.formattedDay()) \(form.date.formattedDayMonth()) at \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased()). Thanks for your time, and if you need anything just call or text!
+        Your appointment is good to go for \(form.date.formattedDay()) \(form.date.formattedDayMonthShort()) at \(form.date.formattedTime())\(form.date.formattedAmpm().lowercased()). Thanks for your time, and if you need anything just call or text!
         
         - \(user.firstName)
         """
@@ -213,7 +216,7 @@ class FormController {
     }
     
     func createFollowUpText(from form: Form) -> String {
-        guard let user = UserAccount.currentUser else { return "No User"}
+        guard let user = UserAccount.currentUser else { print("No User"); return ""}
         
         let text = """
             Hey \(form.firstName), it's \(user.firstName) with \(user.companyName) Windows.
@@ -222,16 +225,48 @@ class FormController {
             """
         return text
     }
+    
+    func createDirectorConfirmationText(form: Form) -> String {
+        guard let user = UserAccount.currentUser else { print("No User"); return ""}
+        let calendar = Calendar.current
+        var tomorrow = calendar.date(byAdding: .day, value: 1, to: Date())
+        var spouseString: String? {
+            if form.spouse.isNotEmpty {
+                return " and \(form.spouse)?"
+            } else {
+                return nil
+            }
+        }
+        var appointmentDateString: String {
+            if form.date.formattedDay() == Date().formattedDay() {
+                return "today at \(form.date.formattedTime()) \(form.date.formattedAmpm().uppercased())"
+            } else if form.date.formattedDay() == tomorrow?.formattedDay() {
+                return "tomorrow at \(form.date.formattedTime())\(form.date.formattedAmpm().uppercased())"
+            } else {
+                return "at \(form.date.formattedTime())\(form.date.formattedAmpm().uppercased()) on \(form.date.formattedDay()), \(form.date.formattedDayMonth())"
+            }
+        }
+        let text = """
+        Hi \(form.firstName),
+        
+        This is \(user.firstName), the Marketing Director at Energy One Windows of \(user.branch?.rawValue ?? "America"). I'm looking forward to meeting you, and plan to stop by \(appointmentDateString). Does that time still work for you\(spouseString ?? "?")
+        
+        Best regards,
+        \(user.firstName)
+        Marketing Director
+        """
+        return text
+    }
             
     func prepareToSendMessage(form: Form, phoneNumber: String, viewController: UIViewController) {
         // CREATE ALERT
-        let title: String = "Select Message Type"
+        let title: String = "Select Text Message Type"
         let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         
         // ACTIONS
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
-        let homeownerTextAction = UIAlertAction(title: "Homeowner Text", style: .default) { _ in
+        let homeownerTextAction = UIAlertAction(title: "Homeowner Appt. Details", style: .default) { _ in
             let text = FormController.shared.createHomeownerText(from: form)
             self.sendMessage(body: text, recipients: [phoneNumber], alert: alert, viewController: viewController)
         }

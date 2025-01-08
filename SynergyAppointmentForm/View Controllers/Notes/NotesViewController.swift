@@ -62,17 +62,19 @@ class NotesViewController: UIViewController {
             timeLabel.textColor = .lightText
             dateLabel.textColor = .lightText
             dayLabel.textColor = .lightText
+            cityStateLabel.textColor = .lightText
         } else {
             firstNameLabel.textColor = .black
             timeLabel.textColor = .black
             dateLabel.textColor = .black
             dayLabel.textColor = .black
+            cityStateLabel.textColor = .gray
         }
     }
     
     func setFormData(with form: Form) {
         dayLabel.text = form.date.formattedDay()
-        dateLabel.text = form.date.formattedDayMonth()
+        dateLabel.text = form.date.formattedDayMonthShort()
         timeLabel.text = "\(form.date.formattedTime())\(form.date.formattedAmpm())"
         cityStateLabel.text = "\(form.city.uppercased())(\(form.state))"
         if form.spouse.isEmpty {
@@ -116,8 +118,8 @@ class NotesViewController: UIViewController {
             backgroundView.layer.borderColor = UIColor.outcomeYellow.cgColor
             backgroundView.backgroundColor = UIColor.outcomeYellow.withAlphaComponent(alpha)
         case .pending:
-            backgroundView.layer.borderColor = UIColor.eden.cgColor
-            backgroundView.backgroundColor = UIColor.eden.withAlphaComponent(alpha)
+            backgroundView.layer.borderColor = UIColor.steel.cgColor
+            backgroundView.backgroundColor = UIColor.steel.withAlphaComponent(alpha)
         case .cancelled:
             backgroundView.layer.borderColor = UIColor.outcomeRed.cgColor
             backgroundView.backgroundColor = UIColor.outcomeRed.withAlphaComponent(alpha)

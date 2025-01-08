@@ -5,6 +5,13 @@
 //  Created by Jaymond Richardson on 12/23/23.
 //
 
+// MARK: - TODO
+/*
+ 1. Need to load team when logged in ✅
+ 
+ 
+ */
+
 import UIKit
 import FirebaseAuth
 import MessageUI
@@ -28,13 +35,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var branchInfoButton: UIButton!
     @IBOutlet weak var branchLabel: UILabel!
-    
-    // SIGN IN CARD
-    @IBOutlet weak var signInView: UIView!
-    @IBOutlet weak var signInButton: UIButton!
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-    
+        
     // REPORTS
     @IBOutlet weak var appointmentsLabel: UILabel!
     @IBOutlet weak var filterButton: UIButton!
@@ -63,16 +64,18 @@ class ProfileViewController: UIViewController {
         getReports(for: nil)
         filterButton.tintColor = .gray
         
+        
+    }
+    
+    override func viewIsAppearing(_ animated: Bool) {
+        super.viewIsAppearing(animated)
+        getReports(for: nil)
+        setupView()
     }
     
     // MARK: - PROPERTIES
-    var sales: Int = 0
-    var forms: [Form] = [] {
-        didSet {
-            sales = forms.filter( { $0.outcome == .sold } ).count
-        }
-    }
-    
+    var forms: [Form] = []
+    var user = UserAccount.currentUser
     
     // MARK: - BUTTONS
     @IBAction func settingsBarButtonPressed(_ sender: Any) {
@@ -80,7 +83,7 @@ class ProfileViewController: UIViewController {
         let deleteAccountAction = UIAlertAction(title: "DELETE ACCOUNT", style: .destructive) { _ in
             guard let user = UserAccount.currentUser else { return }
             guard MFMailComposeViewController.canSendMail() else { return }
-
+            
             let bodyText = "Please delete my account.\nName: \(user.firstName + " " + user.lastName)\nID: \(user.firebaseID)"
             
             let mailComposer = MFMailComposeViewController()
@@ -88,14 +91,14 @@ class ProfileViewController: UIViewController {
             mailComposer.setToRecipients(["coretechniquellc@gmail.com"])
             mailComposer.setSubject("Delete Account")
             mailComposer.setMessageBody(bodyText, isHTML: false)
-
+            
             self.present(mailComposer, animated: true, completion: nil)
         }
         
         // FEEDBACK
         let feedbackAction = UIAlertAction(title: "Submit Feedback", style: .default) { _ in
             guard MFMailComposeViewController.canSendMail() else { return }
-
+            
             let bodyText = "Please enter feedback here... "
             
             let mailComposer = MFMailComposeViewController()
@@ -103,7 +106,7 @@ class ProfileViewController: UIViewController {
             mailComposer.setToRecipients(["coretechniquellc@gmail.com"])
             mailComposer.setSubject("User Feedback")
             mailComposer.setMessageBody(bodyText, isHTML: false)
-
+            
             self.present(mailComposer, animated: true, completion: nil)
         }
         
@@ -112,43 +115,61 @@ class ProfileViewController: UIViewController {
             self.showBranchSelectionAlert()
         }
         
+        // TEAM
+        let teamAction = UIAlertAction(title: "Choose Team", style: .default) { _ in
+            self.showTeamSelectionAlert()
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
-        alert.addActions([branchAction, feedbackAction, deleteAccountAction, cancelAction])
+        alert.addActions([branchAction, teamAction, feedbackAction, deleteAccountAction, cancelAction])
         self.present(alert, animated: true)
         
     }
     
-    @IBAction func signInButtonPressed(_ sender: Any) {
-        guard let email = emailTextField.text,
-              let password = passwordTextField.text else { return }
-        passwordTextField.resignFirstResponder()
-        Auth.auth().signIn(withEmail: email, password: password) { result, error in
-            if let error = error {
-                print("There was an error: \(error)")
-                UIAlertController.presentOkAlert(message: "Error: \(error)", actionOptionTitle: "Ok")
-            }
-            if let result = result {
-                // Fetch user
-                print("UID: \(result.user.uid)")
-                FirebaseController.shared.getUser(with: result.user.uid) { user, error in
-                    if let error = error {
-                        print("Error getting user info from firebas: \(error). Error ")
-                    return
-                    }
-                    guard  let user = user else { print("No User"); return }
-                        // SAVE USER INFORMATION TO USER DEFAULTS
-                        let userDefaultsData = user.toUserDefaultsDictionary()
-                        UserDefaults.standard.set(userDefaultsData, forKey: UserAccount.kUser)
-                    
-                    UIAlertController.presentDismissingAlert(title: "\(user.firstName) signed in.", dismissAfter: 1.2)
-                    self.configureViewForState()
-                    self.setupView()
-                    NotificationCenter.default.post(name: .signInNotification, object: nil)
-                }
-            }
-        }
-    }
+//    @IBAction func signInButtonPressed(_ sender: Any) {
+//        guard let email = emailTextField.text,
+//              let password = passwordTextField.text else { return }
+//        passwordTextField.resignFirstResponder()
+//        Auth.auth().signIn(withEmail: email, password: password) { result, error in
+//            if let error = error {
+//                print("There was an error: \(error)")
+//                UIAlertController.presentOkAlert(message: "Error: \(error)", actionOptionTitle: "Ok")
+//            }
+//            if let result = result {
+//                // Fetch user
+//                print("UID: \(result.user.uid)")
+//                FirebaseController.shared.getUser(with: result.user.uid) { user, error in
+//                    if let error = error {
+//                        print("Error getting user info from firebas: \(error). Error ")
+//                        return
+//                    }
+//                    
+//                    guard  let user = user else { print("No User"); return }
+//                    // Might not run if view controller gets dismissed first
+//                    if let teamID = user.teamID {
+//                        FirebaseController.shared.getTeamName(teamID: teamID) { teamName, error in
+//                            if let error = error {
+//                                print("Error getting team name: \(error)")
+//                            }
+//                            if let teamName = teamName {
+//                                UserAccountController.shared.updateTeamNameInUserDefaults(to: teamName)
+//                            }
+//                        }
+//                    }
+//
+//                    // SAVE USER INFORMATION TO USER DEFAULTS
+//                    let userDefaultsData = user.toUserDefaultsDictionary()
+//                    UserDefaults.standard.set(userDefaultsData, forKey: UserAccount.kUser)
+//                    
+//                    UIAlertController.presentDismissingAlert(title: "\(user.firstName) signed in.", dismissAfter: 1.2)
+//                    self.configureViewForState()
+//                    self.setupView()
+//                    NotificationCenter.default.post(name: .signInNotification, object: nil)
+//                }
+//            }
+//        }
+//    }
     
     @IBAction func logOutButtonPressed(_ sender: Any) {
         logOutButton.isHidden = UserAccount.currentUser == nil
@@ -157,16 +178,16 @@ class ProfileViewController: UIViewController {
                 try Auth.auth().signOut()
                 UserDefaults.standard.removeObject(forKey: UserAccount.kUser)
                 UserAccount.currentUser = nil
-                self.configureViewForState()
                 print("Signed out user")
                 NotificationCenter.default.post(name: .signOutNotification, object: nil)
+                self.presentLoginChoiceVC()
                 
             } catch let signOutError as NSError {
                 UIAlertController.presentDismissingAlert(title: signOutError.localizedDescription, dismissAfter: 2.0)
             }
         }
     }
-
+    
     @IBAction func branchInfoButtonPressed(_ sender: Any) {
         showBranchSelectionAlert()
     }
@@ -194,14 +215,14 @@ class ProfileViewController: UIViewController {
     
     // MARK: - FUNCTIONS
     private func setupView() {
-        navigationController?.navigationBar.tintColor = .eden
+        navigationController?.navigationBar.tintColor = .steel
         guard let user = UserAccount.currentUser else { return }
         
         // BRANCH LABEL
         if let branch = user.branch {
             emptyBranchStackView.isHidden = true
             branchLabel.text = branch.rawValue
-
+            
         } else {
             branchLabel.isHidden = true
             emptyBranchStackView.isVisible = true
@@ -210,11 +231,11 @@ class ProfileViewController: UIViewController {
         // REPORT CARD
         reportsView.layer.cornerRadius = 8
         reportsView.layer.borderWidth = 1.5
-        reportsView.layer.borderColor = UIColor.outcomeGreen.cgColor
+        reportsView.layer.borderColor = UIColor.steel.cgColor
         
         // PROFILE CARD
         profileView.layer.borderWidth = 1.5
-        profileView.layer.borderColor = UIColor.eden.cgColor
+        profileView.layer.borderColor = UIColor.steel.cgColor
         profileView.backgroundColor = .clear
         // Name
         if let lastNameFirstLetter = user.lastName.first {
@@ -228,15 +249,7 @@ class ProfileViewController: UIViewController {
         branchLabel.text = user.branch?.rawValue ?? ""
         // Email
         emailLabel.text = UserAccount.currentUser?.email ?? ""
-        // Sales
-        salesLabel.text = "Sales: \(sales)"
-
-
-        // SIGN IN CARD
-        signInView.layer.borderWidth = 1.5
-        signInView.layer.borderColor = UIColor.outcomeBlue.cgColor
-        signInView.backgroundColor = .clear
-        
+                
     }
     
     func getReports(for userID: String?) {
@@ -247,8 +260,8 @@ class ProfileViewController: UIViewController {
                 print("Error: \(error)")
             }
             
-            // Get reports for non pending forms only
-            let nonPendingForms = forms.filter({ $0.outcome != .pending })
+            // Get reports for non pending and non lead forms only
+            let nonPendingForms = forms.filter({ $0.outcome != .pending && $0.outcome != .lead })
             
             // ALL
             self.appointmentsLabel.text = "Appointments (\(forms.count))"
@@ -261,6 +274,7 @@ class ProfileViewController: UIViewController {
             let soldCount = ReportController.shared.getNumber(of: .sold, from: nonPendingForms)
             self.salesRate.text = ReportController.shared.calculateTurnoverRate(for: nonPendingForms, outcome: .sold) + "%"
             self.soldNumber.text = "Sold (\(soldCount))"
+            self.salesLabel.text = "Sales: \(soldCount)"
             
             // RAN
             let ranCount = ReportController.shared.getNumber(of: .ran, from: nonPendingForms)
@@ -285,23 +299,20 @@ class ProfileViewController: UIViewController {
     }
     
     private func configureViewForState() {
-        if UserAccount.currentUser == nil {
-            // NOT SIGNED IN
-            hide([profileView, reportsView])
-            show([signInView])
-            
-        } else {
-            // SIGNED IN
-            show([profileView, reportsView])
-            hide([signInView])
-        }
-        
         if UserAccount.currentUser?.accountType == .admin || UserAccount.currentUser?.accountType == .manager {
             show([filterButton])
         } else {
             hide([filterButton])
         }
     }
+    
+    func presentLoginChoiceVC() {
+        let storyboard = UIStoryboard(name: "SignUpScreen", bundle: nil)
+        
+        guard let loginChoiceVC = storyboard.instantiateViewController(withIdentifier: "LoginChoiceViewController") as? LoginChoiceViewController else { return }
+        navigationController?.pushViewController(loginChoiceVC, animated: false)
+    }
+
     
     private func show(_ views: [VisibleToggleable]) {
         for var view in views {
@@ -335,6 +346,67 @@ class ProfileViewController: UIViewController {
         }
         
         present(alert, animated: true, completion: nil)
+    }
+    
+    func showTeamSelectionAlert() {
+        guard let user = UserAccount.currentUser else { return }
+
+        if user.branch == nil {
+            UIAlertController.presentDismissingAlert(title: "Must Choose Branch First", dismissAfter: 2)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                return
+            }
+        }
+        var teamName: String {
+            // Retrieve the dictionary from UserDefaults
+            if let userDefaultsDict = UserDefaults.standard.dictionary(forKey: UserAccount.kUser) {
+                // Extract the teamName from the dictionary
+                if let teamName = userDefaultsDict[UserAccount.CodingKeys.teamName.rawValue] as? String {
+                    // Assign the teamName to a variable
+                    print("Retrieved team name: \(teamName)")
+                     return "Current: \(teamName)"
+                } else {
+                    print("teamName key not found or is not a String.")
+                    return "No team"
+                }
+            } else {
+                print("Dictionary for key \(UserAccountController.kTeamName) not found.")
+                return "No team"
+            }
+        }
+        
+        let alert = UIAlertController(title: "Select Team", message: teamName, preferredStyle: .actionSheet)
+        FirebaseController.shared.getTeamsForBranch(branch: user.branch) { teams, error in
+            if let error = error {
+                print("Error getting teams for branch")
+            }
+            if teams.count == .zero {
+                UIAlertController.presentOkAlert(message: "No teams for your branch. Have branch manager contact Jaymond Richardson to set up teams.", actionOptionTitle: "Dismiss")
+            }
+            
+            for team in teams {
+                if let team {
+                    if team.teamID != user.teamID {
+                        let teamAction = UIAlertAction(title: "\(team.name)", style: .default) { _ in
+                            TeamController.shared.handleTeamSelection(userID: user.firebaseID, newTeamID: team.teamID, oldTeamID: user.teamID, teamName: team.name) { success, error in
+                                if success {
+                                    // Show success alert
+                                    UIAlertController.presentDismissingAlert(title: "Success! Added to team \(team.name)", dismissAfter: 2.0)
+                                } else if let error = error {
+                                    // Show error alert with the specific error
+                                    UIAlertController.presentDismissingAlert(title: "Error adding you to team \(team.name)", dismissAfter: 2.0)
+                                }
+                            }
+                        }
+                        alert.addAction(teamAction)
+                    }
+                }
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+            
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true)
+        }
     }
     
     func handleBranchSelection(_ selectedBranch: Branch) {

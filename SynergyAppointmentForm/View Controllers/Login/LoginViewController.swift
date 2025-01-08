@@ -39,7 +39,20 @@ class LoginViewController: UIViewController {
                         print("Error getting user info from firebas: \(error). Error ")
                     return
                     }
+                    
                     guard  let user = user else { print("No User"); return }
+                    
+                    // Might not run if view controller gets dismissed first
+                    if let teamID = user.teamID {
+                        FirebaseController.shared.getTeamName(teamID: teamID) { teamName, error in
+                            if let error = error {
+                                print("Error getting team name: \(error)")
+                            }
+                            if let teamName = teamName {
+                                UserAccountController.shared.updateTeamNameInUserDefaults(to: teamName)
+                            }
+                        }
+                    }
                         // SAVE USER INFORMATION TO USER DEFAULTS
                         let userDefaultsData = user.toUserDefaultsDictionary()
                         UserDefaults.standard.set(userDefaultsData, forKey: UserAccount.kUser)

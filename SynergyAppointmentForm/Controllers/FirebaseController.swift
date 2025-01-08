@@ -31,7 +31,7 @@ import FirebaseFirestore
 
 class FirebaseController {
     static let shared = FirebaseController()
-
+    
     let approvedEmailsCollectionID = "ApprovedEmailList"
     
     let db = Firestore.firestore()
@@ -68,33 +68,33 @@ class FirebaseController {
             }
         }
     }
-
+    
     // READ
     func getForms(for userID: String, completion: @escaping (_ forms: [Form], _ error: Error? ) -> Void) {
         db.collection(Form.CodingKeys.collectionID.rawValue)
             .whereField(Form.CodingKeys.userID.rawValue, isEqualTo: userID)
             .getDocuments { snapshot, error in
-            if let error = error {
-                print("There was an error getting forms: \(error)")
-                completion([], error)
-                return
-            }
-            guard let documents = snapshot?.documents else {
-                completion([], nil)
+                if let error = error {
+                    print("There was an error getting forms: \(error)")
+                    completion([], error)
                     return
-            }
-            var forms: [Form] = []
-            for document in documents {
-                let data = document.data()
-                guard let form = Form(firebaseData: data, firebaseID: document.documentID) else {
-                    print("Error creating form from firebaseData")
+                }
+                guard let documents = snapshot?.documents else {
                     completion([], nil)
                     return
                 }
-                forms.append(form)
+                var forms: [Form] = []
+                for document in documents {
+                    let data = document.data()
+                    guard let form = Form(firebaseData: data, firebaseID: document.documentID) else {
+                        print("Error creating form from firebaseData")
+                        completion([], nil)
+                        return
+                    }
+                    forms.append(form)
+                }
+                completion(forms, nil)
             }
-            completion(forms, nil)
-        }
     }
     
     // UPDATE
@@ -132,7 +132,7 @@ class FirebaseController {
         // ADD CREATED DATE
         let createdDate = Timestamp(date: Date())
         data["createdDate"] = createdDate
-    
+        
         docRef.setData(data) { error in
             if let error = error {
                 completion(nil, error)
@@ -163,7 +163,7 @@ class FirebaseController {
             }
         }
     }
-        
+    
     func getUser(with firebaseID: String, completion: @escaping (_ user: UserAccount?, _ error: Error? ) -> Void) {
         let docRef = db.collection(UserAccount.collectionKey).document(firebaseID)
         docRef.getDocument(completion: { document, error in
@@ -186,29 +186,96 @@ class FirebaseController {
     func getActiveUsers(for branch: Branch, completion: @escaping (_ users: [UserAccount], _ error: Error?) -> Void) {
         db.collection(UserAccount.collectionKey)
             .whereField(UserAccount.CodingKeys.branch.rawValue, isEqualTo: branch.rawValue)
-            .whereField(UserAccount.CodingKeys.isActive.rawValue, isEqualTo: true)
             .getDocuments { snap, error in
-            if let error = error {
-                print("There was an error getting users for \(branch.rawValue)")
-                completion([], error)
-            }
-            
-            if let docs = snap?.documents {
-                var users: [UserAccount] = []
-                for doc in docs {
-                    let data = doc.data()
-                    if let user = UserAccount(firebaseData: data, firebaseID: doc.documentID) {
-                        users.append(user)
-                    }
+                if let error = error {
+                    print("There was an error getting users for \(branch.rawValue)")
+                    completion([], error)
                 }
-                print("Users for branch count: \(users.count)")
-                completion(users, nil)
+                
+                if let docs = snap?.documents {
+                    var users: [UserAccount] = []
+                    for doc in docs {
+                        let data = doc.data()
+                        if let user = UserAccount(firebaseData: data, firebaseID: doc.documentID) {
+                            users.append(user)
+                        }
+                    }
+                    print("Users for branch count: \(users.count)")
+                    completion(users, nil)
+                }
             }
-        }
     }
     
     
     // MARK: - TEAMS
+    func removeUserFromTeam(userID: String, oldTeamID: String?, completion: @escaping (Bool, Error?) -> Void) {
+        if let oldTeamID {
+            db.collection(Team.kCollectionKey).document(oldTeamID).updateData([
+                Team.CodingKeys.memberIDs.rawValue: FieldValue.arrayRemove([userID])
+            ]) { error in
+                if let error = error {
+                    print("Error: \(error)")
+                    completion(false, error)
+                } else {
+                    print("Removed user id from old team: \(oldTeamID)")
+                    completion(true, nil)
+                }
+            }
+        } else {
+            print("No old team ID")
+            completion(true, nil)
+        }
+    }
+    
+    func addUserToTeam(userID: String, teamID: String, completion: @escaping (Bool, Error?) -> Void) {
+        db.collection(Team.kCollectionKey).document(teamID).updateData([
+            Team.CodingKeys.memberIDs.rawValue: FieldValue.arrayUnion([userID])
+        ]) { error in
+            if let error = error {
+                completion(false, error)
+            } else {
+                completion(true, nil)
+            }
+        }
+    }
+    
+    func updateUserTeam(userID: String, teamID: String, completion: @escaping (Bool, Error?) -> Void) {
+        db.collection(UserAccount.collectionKey).document(userID).updateData([
+            UserAccount.CodingKeys.teamID.rawValue: teamID
+        ]) { error in
+            if let error = error {
+                completion(false, error)
+            } else {
+                completion(true, nil)
+            }
+        }
+    }
+    
+    /// Returns teams belonging to specific branch
+    func getTeamsForBranch(branch: Branch?, completion: @escaping (_ teams: [Team?], _ error: Error?) -> Void) {
+        if let branch = branch {
+            db.collection(Team.kCollectionKey).whereField(Team.CodingKeys.branch.rawValue, isEqualTo: branch.rawValue).getDocuments { snap, error in
+                if let error = error {
+                    print("Error: \(error)")
+                    completion([], error)
+                }
+                
+                var teams: [Team?] = []
+                guard let snap = snap else { print("No snap"); completion([], nil); return }
+                let documents = snap.documents
+                
+                for document in documents {
+                    let team = Team(firebaseData: document.data(), firebaseID: document.documentID)
+                    teams.append(team)
+                }
+                completion(teams, nil)
+            }
+        } else {
+            print("No branch")
+        }
+    }
+    
+    /// Gets team object using teamID
     func getTeam(teamID: String, completion: @escaping (_ team: Team?, _ error: Error?) -> Void) {
         db.collection(Team.kCollectionKey).document(teamID).getDocument { snap, error in
             if let error = error {
@@ -227,7 +294,7 @@ class FirebaseController {
         }
     }
     
-    
+    /// Gets team name from team object in firestore using teamID
     func getTeamName(teamID: String, completion: @escaping (_ teamName: String?, _ error: Error?) -> Void) {
         db.collection(Team.kCollectionKey).document(teamID).getDocument { snap, error in
             if let error = error {
@@ -243,8 +310,8 @@ class FirebaseController {
             }
         }
     }
-
     
+    /// Asynchornously gets team using teamID
     func getTeamAsync(teamID: String) async throws -> Team {
         let document = db.collection(Team.kCollectionKey).document(teamID)
         
@@ -260,8 +327,8 @@ class FirebaseController {
             throw error
         }
     }
-
     
+    /// Asynchronously gets team name using teamID
     func getTeamNameAsync(teamID: String) async throws -> String {
         let document = db.collection(Team.kCollectionKey).document(teamID)
         
@@ -278,7 +345,7 @@ class FirebaseController {
         }
     }
     
-
+    /// Gets the appointments of team members for a given team
     func getTeamAppointmentsAsync(for team: Team?) async throws -> [Form] {
         guard let team = team else {
             throw NSError(domain: "Domain Error", code: 400, userInfo: [NSLocalizedDescriptionKey: "No team provided"])
@@ -293,7 +360,7 @@ class FirebaseController {
                     .whereField(Form.CodingKeys.date.rawValue, isGreaterThan: now)
                     .whereField(Form.CodingKeys.userID.rawValue, isEqualTo: id)
                     .whereField(Form.CodingKeys.outcome.rawValue, isEqualTo: Outcome.pending.rawValue)
-//                    .whereField(Form.CodingKeys.outcome.rawValue, isEqualTo: Outcome.rescheduled.rawValue) // Cannot query
+                //                    .whereField(Form.CodingKeys.outcome.rawValue, isEqualTo: Outcome.rescheduled.rawValue) // Cannot query
                     .getDocuments()
                 
                 for document in querySnapshot.documents {
@@ -309,7 +376,7 @@ class FirebaseController {
         
         return upcomingAppointmentForms
     }
-
+    
     
     // MARK: - APPROVED EMAILS
     func getApprovedEmails(completion: @escaping (_ approvedEmails: [String]?) -> Void) {
@@ -329,5 +396,30 @@ class FirebaseController {
                 completion(nil)
             }
         })
+    }
+    
+    func getTutorialScreenshotsURL(completion: @escaping (_ dataURLs: [URL]?, _ error: Error?) -> Void) {
+        db.collection(TutorialController.kTutorialCollectionID).document(Tutorials.welcome.rawValue).getDocument { snap, error in
+            if let error = error {
+                print("Error fetching tutorials: \(error)")
+                completion(nil, error)
+                return
+            }
+            
+            guard let snap = snap, let data = snap.data() else {
+                print("Uh oh, no document, or error")
+                completion(nil, nil)
+                return
+            }
+            
+            // Assuming the field that contains the array of URLs is called "imageUrls"
+            if let urlStrings = data[TutorialController.CodingKeys.screenshots.rawValue] as? [String] {
+                let urls = urlStrings.compactMap { URL(string: $0) }
+                completion(urls, nil)
+            } else {
+                print("No URLs found or field is not an array of strings")
+                completion(nil, nil)
+            }
+        }
     }
 }

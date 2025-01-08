@@ -15,10 +15,10 @@ class UserAccountController {
 
     var teamName: String? {
         get {
-            return UserDefaults.standard.string(forKey: Team.kTeamName)
+            return UserDefaults.standard.string(forKey: Team.CodingKeys.name.rawValue)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: Team.kTeamName)
+            UserDefaults.standard.set(newValue, forKey: Team.CodingKeys.name.rawValue)
         }
     }
     
@@ -46,7 +46,7 @@ class UserAccountController {
             }
         }
     }
-    
+        
     func updateAccountType(to accountType: AccountType) {
         guard let user = UserAccount.currentUser else { return }
         // Update locally
@@ -80,20 +80,6 @@ class UserAccountController {
         if var userDefaultsDict = UserDefaults.standard.dictionary(forKey: UserAccount.kUser) {
             userDefaultsDict[UserAccount.CodingKeys.teamID.rawValue] = teamID
             UserDefaults.standard.set(userDefaultsDict, forKey: UserAccount.kUser)
-
-            // Update in Firebase
-            /*
-            let userRef = Firestore.firestore().collection(UserAccount.collectionKey).document(user.uID)
-            userRef.updateData([UserAccount.CodingKeys.teamID.rawValue: teamID]) {error in
-                if let error = error {
-                    print("Error updating teamID  in Firebase: \(error.localizedDescription)")
-                    // Handle error as needed
-                } else {
-                    print("Team ID updated successfully in Firebase!")
-                    
-                }
-            }
-             */
         }
     }
     
@@ -101,7 +87,7 @@ class UserAccountController {
     
     func updateTeamNameInUserDefaults(to teamName: String) {
         // Update UserDefaults
-        if var userDefaultsDict = UserDefaults.standard.dictionary(forKey: UserAccountController.kTeamName) {
+        if var userDefaultsDict = UserDefaults.standard.dictionary(forKey: UserAccount.kUser) {
             userDefaultsDict[UserAccount.CodingKeys.teamName.rawValue] = teamName
             UserDefaults.standard.set(userDefaultsDict, forKey: UserAccount.kUser)
         }
