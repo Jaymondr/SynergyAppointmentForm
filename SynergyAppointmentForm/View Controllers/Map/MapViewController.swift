@@ -84,14 +84,34 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: - Load Saved Pins
     private func loadSavedPins() {
-        let savedPins = UserDefaults.standard.array(forKey: pinIdentifier) as? [[String: Double]] ?? []
-        for pinData in savedPins {
-            if let latitude = pinData["latitude"], let longitude = pinData["longitude"] {
-                let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                addPin(at: coordinate)
+        FirebaseController.shared.fetchPins { [weak self] pins, error in
+            if let error = error {
+                print("Error loading pins: \(error.localizedDescription)")
+                return
+            }
+
+            guard let pins = pins else {
+                print("No pins found.")
+                return
+            }
+
+            // Iterate through the fetched pins and add them to the map
+            for pin in pins {
+                let coordinate = pin.location.coordinate
+                self?.addPin(at: coordinate)
             }
         }
     }
+
+//    private func loadSavedPins() {
+//        let savedPins = UserDefaults.standard.array(forKey: pinIdentifier) as? [[String: Double]] ?? []
+//        for pinData in savedPins {
+//            if let latitude = pinData["latitude"], let longitude = pinData["longitude"] {
+//                let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+//                addPin(at: coordinate)
+//            }
+//        }
+//    }
 
 
     /*
