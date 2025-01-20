@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d1L-IA-sOO">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="777"/>
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="767"/>
                                 <standardMapConfiguration key="preferredConfiguration"/>
                             </mapView>
                         </subviews>
@@ -30,7 +30,7 @@
                             <constraint firstItem="d1L-IA-sOO" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="BzZ-HD-5Dy"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="d1L-IA-sOO" secondAttribute="trailing" id="Uzy-w4-yfF"/>
                             <constraint firstItem="d1L-IA-sOO" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="uSi-Ts-jnz"/>
-                            <constraint firstAttribute="bottom" secondItem="d1L-IA-sOO" secondAttribute="bottom" constant="75" id="wZ1-i0-Yah"/>
+                            <constraint firstAttribute="bottom" secondItem="d1L-IA-sOO" secondAttribute="bottom" constant="85" id="wZ1-i0-Yah"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="TTs-Qf-0eA"/>

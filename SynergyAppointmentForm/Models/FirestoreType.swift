@@ -17,7 +17,9 @@ extension Double: FirestoreType {}
 extension NSNull: FirestoreType {}
 extension Bool: FirestoreType {}
 extension Timestamp: FirestoreType {}
-extension Dictionary: FirestoreType where Key == String, Value == FirestoreType {}
+extension GeoPoint: FirestoreType {}
+extension Dictionary: FirestoreType where Key == String, Value == FirestoreType
+{}
 extension Array: FirestoreType {}
 extension FieldValue: FirestoreType {}
 extension DocumentReference: FirestoreType {}

@@ -36,6 +36,55 @@ class FirebaseController {
     
     let db = Firestore.firestore()
     
+    // MARK: - PINS
+    // CREATE
+    func createPin(pin: Pin, completion: @escaping (_ pin: Pin?, _ error: Error?) -> Void) {
+        let documentReference = db.collection(Pin.CodingKeys.collectionID.rawValue).document()
+
+        // Prepare data to save, including the generated firebaseID
+        var data = pin.firebaseRepresentation
+        data[Pin.CodingKeys.firebaseID.rawValue] = documentReference.documentID // Save Firestore document ID as the Pin ID
+        
+        // Save the data to Firestore
+        documentReference.setData(data) { error in
+            if let error = error {
+                print("Error saving pin: \(error.localizedDescription)")
+                completion(nil, error)
+            } else {
+                print("Pin saved successfully!")
+                // Initialize a new Pin instance with the saved data
+                let savedPin = Pin(firebaseData: data, firebaseID: documentReference.documentID)
+                completion(savedPin, nil)
+            }
+        }
+    }
+
+    
+    // READ
+    func fetchPins(completion: @escaping ([Pin]?, Error?) -> Void) {
+        // Fetch all documents from the "pins" collection
+        db.collection(Pin.CodingKeys.collectionID.rawValue).getDocuments { (snapshot, error) in
+            if let error = error {
+                print("Error fetching pins: \(error.localizedDescription)")
+                completion(nil, error)
+                return
+            }
+
+            // Map the documents into Pin objects
+            let pins = snapshot?.documents.compactMap { document -> Pin? in
+                let data = document.data()
+                guard let pin = Pin(firebaseData: data, firebaseID: document.documentID) else {
+                    return nil
+                }
+                return pin
+            }
+            
+            // Return the fetched pins
+            completion(pins, nil)
+        }
+    }
+
+    
     // MARK: FORMS
     // CREATE
     func saveForm(form: Form, completion: @escaping (_ form: Form?, _ error: Error?) -> Void) {

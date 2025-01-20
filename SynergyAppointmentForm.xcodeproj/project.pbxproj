@@ -36,6 +36,7 @@
 		671FB9322B0C091400D3CFAB /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 671FB9312B0C091400D3CFAB /* FirebaseRemoteConfigSwift */; };
 		671FB9342B0C091400D3CFAB /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 671FB9332B0C091400D3CFAB /* FirebaseStorage */; };
 		671FB9362B0C091400D3CFAB /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 671FB9352B0C091400D3CFAB /* FirebaseStorageCombine-Community */; };
+		672129DC2D3ED5DF0042632F /* PinController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 672129DB2D3ED5D90042632F /* PinController.swift */; };
 		673F85582B4DD66000465FE0 /* Notes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 673F85572B4DD66000465FE0 /* Notes.storyboard */; };
 		673F855A2B4DD68A00465FE0 /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673F85592B4DD68A00465FE0 /* NotesViewController.swift */; };
 		673F855D2B5A263100465FE0 /* ReportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673F855C2B5A263100465FE0 /* ReportController.swift */; };
@@ -49,6 +50,8 @@
 		674603C12B03E51000756102 /* CreateFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674603C02B03E51000756102 /* CreateFormViewController.swift */; };
 		6777BAAE2D2F123500A0D306 /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6777BAAD2D2F123500A0D306 /* Map.storyboard */; };
 		6777BAB22D2F145C00A0D306 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6777BAB12D2F145C00A0D306 /* MapViewController.swift */; };
+		6777BAB42D2F224C00A0D306 /* VisitResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6777BAB32D2F222A00A0D306 /* VisitResult.swift */; };
+		6777BAB62D2F22D400A0D306 /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6777BAB52D2F22D100A0D306 /* Pin.swift */; };
 		678162F32B48C6F500C48A52 /* Branch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678162F22B48C6F500C48A52 /* Branch.swift */; };
 		678162F72B48DFBA00C48A52 /* UserAccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678162F62B48DFBA00C48A52 /* UserAccountController.swift */; };
 		678FD77E2B1A3A3100FB515D /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678FD77D2B1A3A3100FB515D /* UserAccount.swift */; };
@@ -85,6 +88,7 @@
 /* Begin PBXFileReference section */
 		6711C2A12C740F700009FB69 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		6712F7312B620D0900EB35DE /* AccountType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountType.swift; sourceTree = "<group>"; };
+		672129DB2D3ED5D90042632F /* PinController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinController.swift; sourceTree = "<group>"; };
 		673F85572B4DD66000465FE0 /* Notes.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Notes.storyboard; sourceTree = "<group>"; };
 		673F85592B4DD68A00465FE0 /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
 		673F855C2B5A263100465FE0 /* ReportController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportController.swift; sourceTree = "<group>"; };
@@ -100,6 +104,8 @@
 		674603C02B03E51000756102 /* CreateFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFormViewController.swift; sourceTree = "<group>"; };
 		6777BAAD2D2F123500A0D306 /* Map.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
 		6777BAB12D2F145C00A0D306 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		6777BAB32D2F222A00A0D306 /* VisitResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitResult.swift; sourceTree = "<group>"; };
+		6777BAB52D2F22D100A0D306 /* Pin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
 		678162F22B48C6F500C48A52 /* Branch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Branch.swift; sourceTree = "<group>"; };
 		678162F62B48DFBA00C48A52 /* UserAccountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountController.swift; sourceTree = "<group>"; };
 		678FD77D2B1A3A3100FB515D /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
@@ -263,6 +269,7 @@
 			children = (
 				67E4A6682B054BCF00024F06 /* Address.swift */,
 				674603B82B03DB0400756102 /* Form.swift */,
+				6777BAB52D2F22D100A0D306 /* Pin.swift */,
 				678FD77D2B1A3A3100FB515D /* UserAccount.swift */,
 				67BB4F122B141A6000067D90 /* FirestoreType.swift */,
 				67BB4F142B141B3300067D90 /* FirebaseModel.swift */,
@@ -275,6 +282,7 @@
 		674603BD2B03DE1300756102 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				672129DB2D3ED5D90042632F /* PinController.swift */,
 				674603BB2B03DE0E00756102 /* FormController.swift */,
 				67EBEE3E2B0C051C009FD021 /* FirebaseController.swift */,
 				673F855C2B5A263100465FE0 /* ReportController.swift */,
@@ -361,6 +369,7 @@
 		67EAEF212B14D14E006E4995 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
+				6777BAB32D2F222A00A0D306 /* VisitResult.swift */,
 				67EAEF1F2B14D148006E4995 /* Outcome.swift */,
 				678162F22B48C6F500C48A52 /* Branch.swift */,
 				6712F7312B620D0900EB35DE /* AccountType.swift */,
@@ -521,6 +530,7 @@
 				67EBEE302B0BC768009FD021 /* FormListViewController.swift in Sources */,
 				67BB4F132B141A6000067D90 /* FirestoreType.swift in Sources */,
 				67E4A6692B054BCF00024F06 /* Address.swift in Sources */,
+				6777BAB62D2F22D400A0D306 /* Pin.swift in Sources */,
 				6712F7322B620D0900EB35DE /* AccountType.swift in Sources */,
 				67EBEE2B2B0BC629009FD021 /* FormTableViewCell.swift in Sources */,
 				67FEDB852B34B2D3005D4421 /* LoginViewController.swift in Sources */,
@@ -529,6 +539,7 @@
 				67EAEF202B14D148006E4995 /* Outcome.swift in Sources */,
 				674603A22B03D8F700756102 /* AppDelegate.swift in Sources */,
 				67A5C09B2B28D09D00D16249 /* SignUpViewController.swift in Sources */,
+				6777BAB42D2F224C00A0D306 /* VisitResult.swift in Sources */,
 				674603A42B03D8F700756102 /* SceneDelegate.swift in Sources */,
 				678FD77E2B1A3A3100FB515D /* UserAccount.swift in Sources */,
 				67E5CB342C89F43A003984F1 /* TeamMemberTableViewCell.swift in Sources */,
@@ -549,6 +560,7 @@
 				673F855A2B4DD68A00465FE0 /* NotesViewController.swift in Sources */,
 				679B5F602C7F8ACF003F2239 /* TutorialViewController.swift in Sources */,
 				674603BC2B03DE0E00756102 /* FormController.swift in Sources */,
+				672129DC2D3ED5DF0042632F /* PinController.swift in Sources */,
 				67A582F82B0D23F300D4B5DA /* FormDetailViewController.swift in Sources */,
 				67CE58AB2B47ACA600D809B4 /* EmptyTableViewCell.swift in Sources */,
 				6777BAB22D2F145C00A0D306 /* MapViewController.swift in Sources */,
