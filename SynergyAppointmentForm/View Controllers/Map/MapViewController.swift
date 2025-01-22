@@ -11,117 +11,177 @@ import MapKit
 class MapViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: - OUTLETS
-
+    @IBOutlet weak var addVisitDetailsButton: UIButton!
+    @IBOutlet weak var addressLabel: UILabel!
+    @IBOutlet weak var logVisitButton: UIButton!
+    @IBOutlet weak var pinView: UIView!
     @IBOutlet weak var mapView: MKMapView!
-    private let pinIdentifier = "Pin"
-
+    @IBOutlet weak var currentLocationButton: UIButton!
+    
+    
     
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupView()
-        
-        
         loadSavedPins()
-
-
+        dismissPinView()
+        
     }
-    
     
     
     // MARK: - PROPERTIES
+    private let pinIdentifier = "Pin"
+    private let locationManager = CLLocationManager()
+    private var pins: [Pin]?
+    private var pin: Pin?
     
-    
-    
-    // MARK: - FUNCTIONS
-    
+    // MARK: - SETUP
     private func setupView() {
-        // Delegate
         mapView.delegate = self
         
-        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-        mapView.addGestureRecognizer(longPressGesture)
-
+        // Add tap gesture recognizer
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        mapView.addGestureRecognizer(tapGesture)
         
-        // MAP CHARACTERISTICS
-        mapView.tintColor = UIColor.green
-        mapView.overrideUserInterfaceStyle = .dark // Force dark mode
-
+        // Map customization
+        mapView.tintColor = .green
+        mapView.overrideUserInterfaceStyle = .dark
+        
+        // Current location button style
+        currentLocationButton.backgroundColor = .steelAccent
+        currentLocationButton.layer.cornerRadius = currentLocationButton.frame.width / 2
     }
     
-    // MARK: - Gesture Handling
-    @objc private func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
-        if gestureRecognizer.state == .began {
-            let location = gestureRecognizer.location(in: mapView)
-            let coordinate = mapView.convert(location, toCoordinateFrom: mapView)
-            addPin(at: coordinate)
-            savePin(coordinate: coordinate)
-        }
+    // MARK: - GESTURE HANDLING
+    @objc private func handleTap(_ gestureRecognizer: UITapGestureRecognizer) {
+        let location = gestureRecognizer.location(in: mapView)
+        let coordinate = mapView.convert(location, toCoordinateFrom: mapView)
+        var annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        
+        addPin(at: coordinate)
+        showPinView(for: annotation)
+        
     }
     
-    // MARK: - Add Pin
+    // MARK: - PIN HANDLING
     private func addPin(at coordinate: CLLocationCoordinate2D) {
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
         mapView.addAnnotation(annotation)
+        self.pin = Pin(coordinate: coordinate)
     }
     
-    // MARK: - Save Pin
     private func savePin(coordinate: CLLocationCoordinate2D) {
-        // Create a Pin object using the new initializer that takes CLLocationCoordinate2D
         let pin = Pin(coordinate: coordinate)
-
-        // Call the createPin function from your FirebaseController
+        var annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        
         FirebaseController.shared.createPin(pin: pin) { savedPin, error in
             if let error = error {
                 print("Error saving pin: \(error.localizedDescription)")
-            } else if let savedPin = savedPin {
-                print("Pin saved successfully with ID: \(savedPin.firebaseID)")
+                return
             }
+            print("Pin saved successfully with ID: \(savedPin?.firebaseID ?? "Unknown ID")")
         }
     }
     
-    // MARK: - Load Saved Pins
     private func loadSavedPins() {
         FirebaseController.shared.fetchPins { [weak self] pins, error in
             if let error = error {
                 print("Error loading pins: \(error.localizedDescription)")
                 return
             }
-
-            guard let pins = pins else {
-                print("No pins found.")
-                return
-            }
-
-            // Iterate through the fetched pins and add them to the map
-            for pin in pins {
-                let coordinate = pin.location.coordinate
-                self?.addPin(at: coordinate)
-            }
+            self?.pins = pins
+            pins?.forEach { self?.addPin(at: $0.location.coordinate) }
         }
     }
-
-//    private func loadSavedPins() {
-//        let savedPins = UserDefaults.standard.array(forKey: pinIdentifier) as? [[String: Double]] ?? []
-//        for pinData in savedPins {
-//            if let latitude = pinData["latitude"], let longitude = pinData["longitude"] {
-//                let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-//                addPin(at: coordinate)
-//            }
-//        }
-//    }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    // MARK: - PINVIEW
+    private func dismissPinView() {
+        UIView.animate(withDuration: 0.3) {
+            self.pinView.transform = CGAffineTransform(translationX: 0, y: self.pinView.frame.height)
+        }
     }
-    */
-
+    
+    private func showPinView(for annotation: MKAnnotation) {
+        UIView.animate(withDuration: 0.3) {
+            self.pinView.transform = .identity
+        }
+        
+        let location = CLLocation(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
+        getAddress(from: location) { [weak self] address in
+            guard let address = address else {
+                self?.addressLabel.text = "Lat: \(annotation.coordinate.latitude), Lon: \(annotation.coordinate.longitude)"
+                return
+            }
+            self?.addressLabel.text = "\(address.address), \(address.city), \(address.state) \(address.zip)"
+        }
+    }
+    
+    // MARK: - LOCATION
+    private func centerMapOnUserLocation() {
+        guard let location = locationManager.location?.coordinate else {
+            print("User location not available.")
+            return
+        }
+        let region = MKCoordinateRegion(
+            center: location,
+            latitudinalMeters: 500,
+            longitudinalMeters: 500
+        )
+        mapView.setRegion(region, animated: true)
+    }
+    
+    private func getAddress(from location: CLLocation, completion: @escaping (Address?) -> Void) {
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(location) { placemarks, error in
+            if let error = error {
+                print("Error retrieving address: \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
+            
+            guard let place = placemarks?.first,
+                  let address = place.name,
+                  let zip = place.postalCode,
+                  let city = place.locality,
+                  let state = place.administrativeArea else {
+                completion(nil)
+                return
+            }
+            completion(Address(address: address, zip: zip, city: city, state: state))
+        }
+    }
+    
+    // MARK: - BUTTON ACTIONS
+    @IBAction func dismissPinViewButtonPressed(_ sender: Any) {
+        dismissPinView()
+    }
+    
+    @IBAction func addVisitDetailsButtonPressed(_ sender: Any) {
+        print("Visit Details Button Pressed")
+    }
+    
+    @IBAction func logVisitButtonPressed(_ sender: Any) {
+        print("Log visit button pressed")
+        
+        if let coordinate = pin?.location.coordinate {
+            savePin(coordinate: coordinate)
+            dismissPinView()
+        } else {
+            print("No pin")
+        }
+    }
+    
+    @IBAction func currentLocationButtonPressed(_ sender: Any) {
+        centerMapOnUserLocation()
+    }
+    
+    // MARK: - MKMapViewDelegate
+    func mapView(_ mapView: MKMapView, didSelect annotation: MKAnnotation) {
+        showPinView(for: annotation)
+    }
 }

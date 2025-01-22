@@ -4,10 +4,12 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Map view configurations" minToolsVersion="14.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="UIMenu" message="Requires Xcode 11 or later." minToolsVersion="11.0" requiredIntegratedClassName="UICommandDiff"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -23,19 +25,113 @@
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="767"/>
                                 <standardMapConfiguration key="preferredConfiguration"/>
                             </mapView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hdo-kG-y0m">
+                                <rect key="frame" x="0.0" y="552" width="393" height="300"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address: 327 Conrad Lane" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UN2-tv-gfa">
+                                        <rect key="frame" x="8" y="24" width="377" height="73"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="73" id="bqc-An-LJo"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vhy-mv-uOy">
+                                        <rect key="frame" x="68.666666666666671" y="152" width="255.66666666666663" height="35"/>
+                                        <color key="tintColor" name="Steel"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="LOG VISIT"/>
+                                        <connections>
+                                            <action selector="logVisitButtonPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="2oO-eO-kLP"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nD3-vk-t24">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="22"/>
+                                        <color key="tintColor" name="Steel"/>
+                                        <state key="normal">
+                                            <imageReference key="image" image="chevron.down" catalog="system" symbolScale="large"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="dismissPinViewButtonPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="iGK-Hg-2PT"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yOA-4K-e6Y">
+                                        <rect key="frame" x="68.666666666666671" y="113" width="255.66666666666663" height="35"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="35" id="k80-08-CWc"/>
+                                        </constraints>
+                                        <color key="tintColor" name="Steel"/>
+                                        <menu key="menu" id="MzG-SJ-mPa">
+                                            <children>
+                                                <command title="Item 1" menuElementState="on" id="3yA-PW-6w3"/>
+                                                <command title="Item 2" id="wSM-JT-ZEJ"/>
+                                            </children>
+                                        </menu>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="ADD VISIT DETAILS"/>
+                                        <connections>
+                                            <action selector="addVisitDetailsButtonPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="ndd-Ve-omy"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="nD3-vk-t24" firstAttribute="top" secondItem="Hdo-kG-y0m" secondAttribute="top" id="3EO-Ow-qbD"/>
+                                    <constraint firstItem="UN2-tv-gfa" firstAttribute="top" secondItem="Hdo-kG-y0m" secondAttribute="top" constant="24" id="5AE-mx-fIc"/>
+                                    <constraint firstAttribute="trailing" secondItem="UN2-tv-gfa" secondAttribute="trailing" constant="8" id="79s-ej-Hou"/>
+                                    <constraint firstItem="vhy-mv-uOy" firstAttribute="top" secondItem="yOA-4K-e6Y" secondAttribute="bottom" constant="4" id="9WA-MJ-U9E"/>
+                                    <constraint firstItem="vhy-mv-uOy" firstAttribute="height" secondItem="yOA-4K-e6Y" secondAttribute="height" id="A4C-Sq-FjC"/>
+                                    <constraint firstItem="nD3-vk-t24" firstAttribute="leading" secondItem="Hdo-kG-y0m" secondAttribute="leading" id="Kn5-tm-t2Z"/>
+                                    <constraint firstAttribute="trailing" secondItem="nD3-vk-t24" secondAttribute="trailing" id="W8v-ur-Raf"/>
+                                    <constraint firstItem="UN2-tv-gfa" firstAttribute="leading" secondItem="Hdo-kG-y0m" secondAttribute="leading" constant="8" id="WDs-XU-w8T"/>
+                                    <constraint firstItem="yOA-4K-e6Y" firstAttribute="top" secondItem="UN2-tv-gfa" secondAttribute="bottom" constant="16" id="YJX-Bv-Tzn"/>
+                                    <constraint firstItem="vhy-mv-uOy" firstAttribute="centerX" secondItem="yOA-4K-e6Y" secondAttribute="centerX" id="ZVU-cX-bTD"/>
+                                    <constraint firstItem="vhy-mv-uOy" firstAttribute="width" secondItem="yOA-4K-e6Y" secondAttribute="width" id="a1x-lr-7xF"/>
+                                    <constraint firstAttribute="height" constant="300" id="ei6-9M-WLS"/>
+                                    <constraint firstItem="yOA-4K-e6Y" firstAttribute="centerX" secondItem="Hdo-kG-y0m" secondAttribute="centerX" id="feN-7C-1qg"/>
+                                    <constraint firstItem="yOA-4K-e6Y" firstAttribute="width" secondItem="Hdo-kG-y0m" secondAttribute="width" multiplier="0.65" id="hJa-XK-v64"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zIx-m9-2Iw">
+                                <rect key="frame" x="343" y="132" width="42" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="zIx-m9-2Iw" secondAttribute="height" multiplier="1:1" id="3et-Dw-zsS"/>
+                                    <constraint firstAttribute="height" constant="42" id="Gbk-KW-t0h"/>
+                                </constraints>
+                                <color key="tintColor" name="Steel"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain">
+                                    <imageReference key="image" image="location" catalog="system" symbolScale="default"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="27" weight="medium"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="currentLocationButtonPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="lQl-xz-lye"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="zIx-m9-2Iw" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="29" id="2oc-UT-HyI"/>
+                            <constraint firstAttribute="bottom" secondItem="Hdo-kG-y0m" secondAttribute="bottom" id="857-Is-xlk"/>
+                            <constraint firstItem="Hdo-kG-y0m" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="9uC-Pz-hcT"/>
                             <constraint firstItem="d1L-IA-sOO" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="BzZ-HD-5Dy"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="d1L-IA-sOO" secondAttribute="trailing" id="Uzy-w4-yfF"/>
                             <constraint firstItem="d1L-IA-sOO" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="uSi-Ts-jnz"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="zIx-m9-2Iw" secondAttribute="trailing" constant="8" id="vEf-DC-cpm"/>
                             <constraint firstAttribute="bottom" secondItem="d1L-IA-sOO" secondAttribute="bottom" constant="85" id="wZ1-i0-Yah"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Hdo-kG-y0m" secondAttribute="trailing" id="wls-Ei-oVo"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="TTs-Qf-0eA"/>
                     <connections>
+                        <outlet property="addVisitDetailsButton" destination="MzG-SJ-mPa" id="9g4-nE-XBT"/>
+                        <outlet property="addressLabel" destination="UN2-tv-gfa" id="QJ3-YC-g91"/>
+                        <outlet property="currentLocationButton" destination="zIx-m9-2Iw" id="HLo-vt-COC"/>
+                        <outlet property="logVisitButton" destination="vhy-mv-uOy" id="avH-w1-ywj"/>
                         <outlet property="mapView" destination="d1L-IA-sOO" id="1wr-mq-8l3"/>
+                        <outlet property="pinView" destination="Hdo-kG-y0m" id="na4-oT-iUt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -66,7 +162,12 @@
         </scene>
     </scenes>
     <resources>
+        <image name="chevron.down" catalog="system" width="128" height="70"/>
+        <image name="location" catalog="system" width="128" height="119"/>
         <image name="map" catalog="system" width="128" height="112"/>
+        <namedColor name="Steel">
+            <color red="0.1803921568627451" green="0.2196078431372549" blue="0.29411764705882354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="steelAccent">
             <color red="0.82352941176470584" green="0.84705882352941175" blue="0.89411764705882357" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
